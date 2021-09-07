@@ -21,14 +21,4 @@ public class HomeController {
 	public String join() {
 		return "join";
 	}
-	
-	@RequestMapping(value = "jejusituation_main.do", method = RequestMethod.GET)
-	public String jejusituation_main() {
-		return "page_jejusituation/jejusituation";
-	}
-	
-	@RequestMapping(value = "jejusituation_rest.do", method = RequestMethod.GET)
-	public String jejusituation_detail() {
-		return "page_jejusituation/jejusituation_rest";
-	}
 }
