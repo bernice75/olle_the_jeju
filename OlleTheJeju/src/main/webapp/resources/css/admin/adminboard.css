@@ -1,0 +1,48 @@
+.main {
+    grid-column-start: 2;
+    grid-column-end: 9;
+    margin-left: 10%;
+}
+
+/* 우측 메뉴 */
+.admin_nav{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    text-align: center;
+    color: black;
+    padding-top: 100px;
+}
+.admin_nav_align{
+    text-align: left;
+    float: right;
+}
+
+/* 게시글 관리 */
+.tour_info_title, .user_help_title,
+.jeju_wrong_title, .pick_plan_title{
+    font-size: 20px;
+}
+.tour_info, .pick_plan,
+.user_help, .jeju_wrong{
+    padding-bottom: 20px;
+}
+.user_plan{
+    margin-top: 54px;
+    width: 80%;
+}
+.user_plan table {
+    width: 100%;
+    height: fit-content;
+    text-align: center;
+}
+.table{
+    border: 1px solid black;
+}
+.paging{
+    margin-left: 40%;
+}
+hr{
+    float: left;
+    width: 100%;
+    background: black;
+}

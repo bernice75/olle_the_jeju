@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'cafe24_ddh';
+    src: url('../../font/Cafe24Dangdanghae.ttf');
+}
+@font-face {
+    font-family: 'cafe24_djh';
+    src: url('../../font/Cafe24Danjunghae.ttf');
+}
+@font-face {
+    font-family: 'cafe24_sph';
+    src: url('../../font/Cafe24Simplehae.ttf');
+}
+
+*{
+    padding:0;
+    margin:0;
+    font-size:16px;
+    font-family: 'cafe24_djh';
+}
+
+nav.header{
+    position:sticky;
+    top:0;
+    background-color:#3498db;
+}
+
+nav.header div.title{
+    font-size:50px;
+    font-weight: bold;
+    color:white;
+    padding:10px;
+}
+button#home{
+    width:100px;
+    height:100px;
+    background-image: url(../../img/home.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    border:3px solid black;
+    border-radius:40%;
+    position:fixed;
+    top:80vh;
+    right:1vh;
+}

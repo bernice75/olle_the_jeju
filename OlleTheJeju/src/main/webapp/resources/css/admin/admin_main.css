@@ -1,0 +1,46 @@
+/* 관리자 네비 */
+.main {
+    grid-column-start: 2;
+    grid-column-end: 9;
+    margin-left: 10%;
+}
+
+/* 우측 메뉴 */
+.admin_nav{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    text-align: center;
+    color: black;
+    padding-top: 100px;
+}
+.admin_nav_align{
+    text-align: left;
+    float: right;
+}
+.user_plan{
+    margin-top: 54px;
+    width: 80%;
+}
+.plan_title{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    font-size: 22px;
+    font-weight: bold;
+}
+/* 회원 관리 */
+.admin_user_table{
+    text-align: center;
+    margin: auto;
+}
+.admin_user_table table {
+    width: 100%;
+    height: fit-content;
+}
+.admin_user_table table select {
+    width: fit-content;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.admin_user_paging{
+    text-align: center;
+}

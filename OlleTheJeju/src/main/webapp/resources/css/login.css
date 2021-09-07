@@ -1,0 +1,114 @@
+.log_container {
+    display: grid;
+    color: white;
+    width: 100%;
+    height: 100%;
+}
+
+.log_container{
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 0.2fr 1fr 10fr 3fr;
+}
+.log_logo{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    background: royalblue;
+    text-align: center;
+}
+
+.log_logRegi{
+    grid-column-start: 3;
+    grid-column-end: 9;
+    background: coral;
+}
+
+.log_nav{
+    grid-column-start: 1;
+    grid-column-end: 9;
+    background: green;
+}
+
+.log_main{
+    grid-column-start: 1;
+    grid-column-end: 9;
+    text-align: center;
+
+}
+
+.log_footer{
+    grid-column-start: 1;
+    grid-column-end: 9;
+    background: cadetblue;
+}
+
+.login_img{
+    border: 1px solid rgba(0,0 ,0, 0.1);
+    padding: 20px;
+    width: 500px;
+}
+
+form {
+    border: 1px solid rgba(0,0 ,0, 0.1);
+}
+
+form header {
+    color: black;
+    padding: 5px 0;
+}
+
+form hr {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.row label {
+    color: black;
+    width: 30%;
+}
+
+.row .col-8 {
+    width: 70%;
+}
+
+.log_center .col-xs-10 {
+    width : 100%;
+}
+
+.loginbutton{
+    border: 1px solid rgba(0,0 ,0, 0.1);
+    padding: 15px;
+    width: 500px;
+}
+
+.find{
+    font-size: 10px;
+}
+
+.id{
+    padding: 20px;
+}
+
+.local_login{
+    font-size: 22px;
+    width: 500px;
+}
+
+.log_center{
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 50%;
+}
+
+form img {
+    vertical-align: middle;
+    width: 200px;
+}
