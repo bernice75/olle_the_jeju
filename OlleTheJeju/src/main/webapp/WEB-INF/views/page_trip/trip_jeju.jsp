@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<% request.setCharacterEncoding("UTF-8"); %>
+<% response.setContentType("text/html; charset=UTF-8"); %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -46,53 +50,21 @@
                     <div class="dialect">
                         <table class="table">
                             <tr class="table-secondary">
-                                <th>
+                                <th style="width: 50%;">
                                     방언
                                 </th>
-                                <th>
+                                <th style="width: 50%;">
                                     뜻풀이
                                 </th>
                             </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
+       
+                            <c:forEach var="val" begin="0" end="9">
+                            	<tr>
+                                	<td>${dia[val]} </td>
+                                	<td>${kor[val]}</td>
+                            	</tr>
+                            </c:forEach>
+     
                         </table>
                     </div>
                 </div>
