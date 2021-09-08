@@ -6,10 +6,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>제주상황-맛집예약/현황</title>
-        <link href="<%=request.getContextPath() %>/resources/css/navi.css" rel="stylesheet" type="text/css" />
-        <link href="<%=request.getContextPath() %>/resources/css/jejusituation/jejusituation_rest.css" rel="stylesheet" type="text/css" />
-        <!-- <link href="js/jejusituation_rest.js" rel="script" type="text/javascript"/> -->
-        <link href="<%=request.getContextPath() %>/resources/css/footer.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/jejusituation/jejusituation_rest.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/footer.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -18,42 +17,7 @@
     </head>
     <body>
         <div class="wrapper">
-            <div class="logo item">
-                <a href=".././index.html"><img class="logo" src="../img/logo.png"></a>
-            </div>
-            <div class="header item">
-                <div class="headerbtn">
-                    <button>로그인</button>
-                    <button>회원가입</button>
-                </div>
-            </div>
-            <div class="nav item">
-                <ul class="navi">
-                    <li><a href="#">Home</a></li>
-                    <li>
-                        <a href="#">관광일정<i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-                        <ul>
-                            <li><a href="#">관광명소</a></li>
-                            <li><a href="#">착한가격업소</a></li>
-                            <li><a href="#">맛집15선</a></li>
-                            <li><a href="#">방언사전</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">추천일정</a>
-                    </li>
-                    <li><a href="#">나만의일정</a></li>
-                    <li>
-                        <a href="jejusituation_main.do">제주상황<i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-                        <ul>
-                            <li><a href="#">코로나상황</a></li>
-                            <li><a href="#">관광지혼잡도</a></li>
-                            <li><a href="jejusituation_rest.do">맛집예약/현황</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">고객지원</a></li>
-                </ul>
-            </div>
+            <jsp:include page="../include/header.jsp"></jsp:include>
 
             <div class="main">
                 <br><br>
@@ -150,48 +114,8 @@
                 <div class="paging"> 페이징 처리 </div>
                 <br><br><br>
             </div>
-
-            <!-- footer -->
-            <footer class="footer item">
-                <div class="aboutUs">
-                    <div class="olle_inner_wrap">
-                        <div class="info">About Us</div>
-                        <div class="business_info">
-                            <ul class="txtWrap">
-                                <li style="color:#86868c">상상속 여행을 현실로, 올레더제주</li>
-                                <li style="color:#86868c">contact : ollethejeju@gmail.com</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="navigations">
-                    <div class="olle_inner_wrap">
-                        <div class="info">Navigations</div>
-                        <div class="business_nav">
-                            <ul class="txtWrap nav1">
-                                <li style="color:#86868c">Home</li>
-                                <li style="color:#86868c">관광일정</li>
-                                <li style="color:#86868c">추천일정</li>
-                            </ul>
-                            <ul class="txtWrap nav2">
-                                <li style="color:#86868c">나만의 일정</li>
-                                <li style="color:#86868c">제주상황</li>
-                                <li style="color:#86868c">고객지원</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="jejuMap">
-                    <div class="olle_inner_wrap">
-                        <div class="info">JeJu Map Down</div>
-                        <div class="business_info">
-                            <i class="fa fa-map fa-5x" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="copyright">Copyright@ 2021 Alll rights reserved</div>
-            </footer>
+			<jsp:include page="../include/footer.jsp"></jsp:include>
         </div>
-        <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jejusituation/jejusituation_rest.js"></script>
+        <script type="text/javascript" src="./resources/js/jejusituation/jejusituation_rest.js"></script>
     </body>
 </html>
