@@ -17,13 +17,13 @@ import org.w3c.dom.NodeList;
 @Repository
 public class TripDao {
 	
-	public List getDialect() {
+	public List getDialect(String page) {
 		
 		List bang = new ArrayList();
 		try {
 			bang.clear();
 			
-			URL url = new URL("http://www.jeju.go.kr/rest/JejuDialectService/getJejuDialectServiceList?authApiKey=&startPage=1&pageSize=2077");
+			URL url = new URL("http://www.jeju.go.kr/rest/JejuDialectService/getJejuDialectServiceList?authApiKey=&page="+page+"&pageSize=10");
 			InputStream stream = url.openStream();
 			char ch=0;
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -54,13 +54,13 @@ public class TripDao {
 		return bang;
 	}
 	
-	public List getKor() {
+	public List getKor(String page) {
 		
 		List kor= new ArrayList();
 		try {
 			kor.clear();
 			
-			URL url = new URL("http://www.jeju.go.kr/rest/JejuDialectService/getJejuDialectServiceList?authApiKey=&startPage=1&pageSize=2077");
+			URL url = new URL("http://www.jeju.go.kr/rest/JejuDialectService/getJejuDialectServiceList?authApiKey=&page="+page+"&pageSize=10");
 			InputStream stream = url.openStream();
 			char ch=0;
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -88,6 +88,8 @@ public class TripDao {
 		
 		return kor;
 	}
+	
+
 	
 	private static String getTagValue(String sTag, Element eElement) {
 		NodeList nlist = eElement.getElementsByTagName(sTag).item(0).getChildNodes(); //sTag에 들어온 element중 첫번째 노드의 자식 노드들을 저장

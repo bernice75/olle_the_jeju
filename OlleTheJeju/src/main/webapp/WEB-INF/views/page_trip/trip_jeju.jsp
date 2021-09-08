@@ -18,9 +18,57 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        
+        <script type="text/javascript">
+        	$(function(){
+        		var p = $("#page").val();
+        			page(p);
+       		 });
+        	
+     	   	function page(p){
+     	   		$(".page").empty();
+     	   		
+     	   		if((p%10)==0){ 
+     	   			var i=p-9;
+     	   		}else if((p%10)>=1){
+     	   			var i = (Math.floor(p/10)*10)+1;
+     	   		}
+     	   		var j = i+10;
+     	   		
+    			for(i; i<j; i++){
+    				if(i>716){//716 마지막페이지
+    					break;
+    				
+    				}else if(i==p){
+    					$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>"+i+"</a>");
+    				}else{
+    					$(".page").append("<a style='margin:3px;' href='trip_jeju_page.do?page="+i+"'>"+i+"</a>");
+    				}
+    			}	
+        	}
+     	   	
+     	   	function prev(){
+     	   		var p = $("#page").val();
+     	   		if(p>10){
+     		   		var first = parseInt($(".page").children('a:eq(0)').text())-1;
+ 	  	 			window.location.href= 'trip_jeju_page.do?page='+first;
+     	   		}else{
+     	   			alert("첫번째 페이지 입니다.");
+     	   		}
+     	   	}
+     	   	
+     	   	function next(){
+     	   		var p = $("#page").val();
+     	   		if(p<711){
+     		   		var last = parseInt($(".page").children('a:eq(9)').text())+1;
+ 	  	 			window.location.href= 'trip_jeju_page.do?page='+last;
+     	   		}else{
+     	   			alert("마지막 페이지 입니다.");
+     	   		}
+     	   	}
+        </script>
     </head>
 	<body>
+	<input type="hidden" value="${page}" id="page">
 		<div class="wrapper">
 			<jsp:include page="../include/header.jsp"></jsp:include>
 			<div class="main">
@@ -45,9 +93,11 @@
                     <input class="form-control search1" type="search" placeholder="검색어 입력">
                     <button class="btn btn-outline-secondary search2"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
+               
                 <br>
                 <div class="desc">
                     <div class="dialect">
+                    	<small style="grid-column-start: 1; grid-column-end: 2;">* 아래아가 안보일 경우: 새굴림 폰트 설치</small>
                         <table class="table">
                             <tr class="table-secondary">
                                 <th style="width: 50%;">
@@ -60,8 +110,8 @@
        
                             <c:forEach var="val" begin="0" end="9">
                             	<tr>
-                                	<td>${dia[val]} </td>
-                                	<td>${kor[val]}</td>
+                                	<td style="font-family:'새굴림';">${dia[val]} </td>
+                                	<td style="font-family:'새굴림';">${kor[val]}</td>
                             	</tr>
                             </c:forEach>
      
@@ -70,7 +120,9 @@
                 </div>
                 <br><br><br>
                 <div class="paging">
-                    페이징 처리
+                			<a href="#" onclick="prev();">&lt;&lt;</a>
+							<span class="page"></span>
+                			<a href="#" onclick="next();">&gt;&gt;</a>
                 </div>
                 <br><br><br><br>
 			</div>

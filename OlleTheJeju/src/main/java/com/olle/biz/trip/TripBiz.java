@@ -14,14 +14,14 @@ public class TripBiz {
 	private TripDao td;
 	
 	
-	public List getDialect() {
-		List result = td.getDialect();
+	public List getDialect(String page) {
+		List result = td.getDialect(page);
 		
 		return result;
 	}
 	
-	public List getKor() {
-		List result = td.getKor();
+	public List getKor(String page) {
+		List result = td.getKor(page);
 		
 		return result;
 	}
