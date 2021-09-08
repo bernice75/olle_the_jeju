@@ -22,13 +22,7 @@
            <ul class="navi">
                <li><a href="home.do">Home</a></li>
                <li>
-                   <a href="#">관광일정<i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-                   <ul class="slide one">
-                       <li><a href="trip_main.do">관광명소</a></li>
-                       <li><a href="trip_main.do">착한가격업소</a></li>
-                       <li><a href="trip_main.do">맛집15선</a></li>
-                       <li><a href="trip_jeju.do">방언사전</a></li>
-                   </ul>
+                   <a href="trip_main.do">관광일정</a>
                </li>
                <li>
                    <a href="suggest_main.do">추천일정</a>

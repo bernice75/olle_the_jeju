@@ -2,25 +2,26 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>제주상황 main</title>
-		<link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>제주상황 Main</title>
+        <link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/jejusituation/jejusituation.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/jejusituation/jejusituation.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/footer.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        <script src="./resources/js/suggest/suggest_main.js" type="text/javascript"></script>
-	</head>
-	<body>
-		<div class="wrapper">
-			<jsp:include page="../include/header.jsp"></jsp:include>
-			<div class="main">
-				<!-- 제주 상황 메인 이미지 -->
+    </head>
+    <body>
+        <div class="wrapper">
+           <jsp:include page="../include/header.jsp"></jsp:include>
+
+            <div class="main">
+                <!-- 제주 상황 메인 이미지 -->
                 <div class="main-img">
                     <div class="main-img-text">
                         <div class="main-img-text1">제주상황</div>
@@ -55,8 +56,8 @@
                     </div>
                 </div>
                 <br><br><br>
-			</div>
-			<jsp:include page="../include/footer.jsp"></jsp:include>
-		</div>
-	</body>
+            </div>
+             <jsp:include page="../include/footer.jsp"></jsp:include>
+        </div>
+    </body>
 </html>
