@@ -16,32 +16,27 @@ public class CustomBizImpl implements CustomBiz{
 	
 	@Override
 	public List<CustomDto> selectList() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.selectList();
 	}
 
 	@Override
 	public CustomDto selectOne(int plan_num) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.selectOne(plan_num);
 	}
 
 	@Override
 	public int insert(CustomDto dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.insert(dto);
 	}
 
 	@Override
 	public int update(CustomDto dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.update(dto);
 	}
 
 	@Override
 	public int delete(int plan_num) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dao.delete(plan_num);
 	}
 	
 }
