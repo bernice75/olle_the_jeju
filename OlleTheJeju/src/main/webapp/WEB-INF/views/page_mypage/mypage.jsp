@@ -140,9 +140,7 @@
 	                        <input type="button" class="btn btn-primary btn-block" onclick="updateCheck();" value="정보수정">
 	                        <!-- <input type="button" class="btn btn-primary btn-block" onclick="" value="회원탈퇴"> -->
 	                        <!-- Button trigger modal -->
-	                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-	                            회원탈퇴
-	                        </button>
+	                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">회원탈퇴</button>
 	                        <!-- Modal 시작 -->
 	                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	                            <div class="modal-dialog">
@@ -157,7 +155,6 @@
 	                                        <p class="modal-text1">탈퇴 후 재 로그인이 불가능합니다.</p>
 	                                        <p class="modal-text2">정말 탈퇴 하시겠습니까 ? 비밀번호를 입력하세요.</p>
 	                                        <br>
-	                                        
 	                                        <div class="col-sm-6">
 	                                            <input type="text" class="form-control" id="leave-pw" name="leave-pw" value="${userdetail.leave-pw }" >
 	                                        </div>
