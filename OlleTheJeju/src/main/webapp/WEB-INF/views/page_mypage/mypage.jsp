@@ -94,12 +94,6 @@
 	                        </div>
 	                    </div>
 	                    <div class="mb-3 row">
-	                        <label for="gender" class="col-sm-3 col-form-label">성별</label>
-	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" id="gender" value="${userdetail.gender }" readonly="readonly">
-	                        </div>
-	                    </div>
-	                    <div class="mb-3 row">
 	                        <label for="phone" class="col-sm-3 col-form-label">전화번호</label>
 	                        <div class="col-sm-6">
 	                            <input type="phone" class="form-control" id="phone" value="${userdetail.phone }" readonly="readonly">
