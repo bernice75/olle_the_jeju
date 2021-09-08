@@ -67,14 +67,14 @@
                         </div>
                     </div>
                     <div class="nail2" onclick="openModal();">
-                        <img class="store" src="../img/logo.png" alt="ex"/>
+                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
                         <div class="nail1-text1 text">맛집명
                             <span class="nail1-text2 text">양식</span>
                         </div>
                         <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
                     </div>
                     <div class="nail3" onclick="openModal();">
-                        <img class="store" src="<%=request.getContextPath() %>/resources/img/logo.png" alt="ex"/>
+                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
                         <div class="nail1-text1 text">맛집명
                             <span class="nail1-text2 text">양식</span>
                         </div>
@@ -84,21 +84,21 @@
                 <br><br><br>
                 <div class="nail">
                     <div class="nail4" onclick="openModal();">
-                        <img class="store" src="<%=request.getContextPath() %>/resources/img/logo.png" alt="ex"/>
+                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
                         <div class="nail1-text1 text">맛집명
                             <span class="nail1-text2 text">양식</span>
                         </div>
                         <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
                     </div>
                     <div class="nail5" onclick="openModal();">
-                        <img class="store" src="<%=request.getContextPath() %>/resources/img/logo.png" alt="ex"/>
+                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
                         <div class="nail1-text1 text">맛집명
                             <span class="nail1-text2 text">양식</span>
                         </div>
                         <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
                     </div>
                     <div class="nail6" onclick="openModal();">
-                        <img class="store" src="../img/logo.png" alt="ex"/>
+                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
                         <div class="nail1-text1 text">맛집명
                             <span class="nail1-text2 text">양식</span>
                         </div>
