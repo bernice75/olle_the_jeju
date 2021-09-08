@@ -1,5 +1,6 @@
 var myModal=document.querySelector(".my-modal");
 var myModal2=document.querySelector(".my-modal2");
+var clCnt=0;
 
 function openModal(){
     myModal.style.display="flex";
@@ -7,7 +8,11 @@ function openModal(){
 
 function closeModal(){
     myModal.style.display="none";
-    history.go(-1);
+    clCnt++;
+    if(clCnt>=1){
+        clCnt=0;
+        history.back();
+    }
 }
 
 function openModal2(){
@@ -16,5 +21,5 @@ function openModal2(){
 
 function closeModal2(){
     myModal2.style.display="none";
-    history.go(-1);
+  //  history.go(-1);
 }
