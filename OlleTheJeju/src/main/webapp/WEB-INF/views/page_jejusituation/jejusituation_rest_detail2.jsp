@@ -4,97 +4,128 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>제주상황-맛집예약/현황(썸네일 클릭시 팝업창-매장확인)</title>
+        <title>제주상황-맛집예약/현황(썸네일 클릭시 팝업창2-예약정보입력)</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="./resources/css/jejusituation/jejusituation_rest_detail2.css" rel="stylesheet" type="text/css" />
+        <link href="<%=request.getContextPath() %>/resources/css/jejusituation/jejusituation_rest_detail2.css" rel="stylesheet" type="text/css" />
         <!-- <link href="js/jejusituation_rest.js" rel="script" type="text/javascript"/> -->
+        <!-- 합쳐지고 최소화된 최신 CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <!-- 부가적인 테마 -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css"/>
     </head>
+            <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/locales-all.min.js"></script>
     <body>
         <div class="wrapper">
             <div class="main">
                 <br>
                 <br>
-                <br>
-                <br>
-                <br>
-              <!--모달창-->
-            <div class="my-modal">
-                <div class="close-btn" onclick="closeModal();">❌</div>
-                <iframe src="jejusituation_detail2.do" title="모달창">
-
-                </iframe>
-            </div>
                 <!-- 썸네일 -->
                 <div class="nail-first">
                     <div class="nail1">
-                        이미지 삽입
+                        <div class="exp">
+                            날짜선택
+                         </div>   
+                        <div id="calendar">
+
+                        </div>
                     </div>
                     <div class="nail2">
-                        <div class="tablebox">
-                            <table class="table">
-                                <tr>
-                                    <th>상호명 :</th>
-                                    <td>어디어디어디</td>
-                                </tr>
-                                <tr>
-                                    <th>전화번호 :</th>
-                                    <td>02-1123-4567</td>
-                                </tr>
-                                <tr>
-                                    <th>주소 :</th>
-                                    <td>서울시 강남구 서초동 어디 123</td>
-                                </tr>
-                                <tr>
-                                    <th>운영시간 :</th>
-                                    <td>09:00 ~ 20:00</td>
-                                </tr>
-                                <tr>
-                                    <th>홈페이지 :</th>
-                                    <td>1234@12345.com</td>
-                                </tr>
-                            </table>
-                        </div>
+                        <div class="exp">
+                            시간선택<br/><br/>
+                            ※브레이크 타임: 14~16시
+                         </div> 
+                         <div class="res-time">
+                             <div class="part">오전</div>
+                            <input type="button" class="time" name="time" value="9:00">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" value="9:30">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" value="10:00">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" value="10:30">
+                            <br/>
+                            <input type="button" class="time" name="time" value="11:00">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" value="11:30">
+                            <br/>
+                            <div class="part">오후</div>
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="12:00">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="12:30">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="13:00">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="13:30">
+                            <br/>
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="16:00">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="16:30">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="17:00">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="17:30">&nbsp;&nbsp;
+                            <br/>
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="18:00">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="18:30">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="19:00">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="19:30">&nbsp;&nbsp;
+                            <br/>
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="20:00">&nbsp;&nbsp;
+                            <input type="button" class="time" name="time" onclick="checkBtn(this);" value="20:30">&nbsp;&nbsp;
+                            <br/>
+                            <div class="clearfix">
+                                <div class="enable-reg">
+                                    <div class="enable"></div><span class="text-time">&nbsp;&nbsp;가능</span>&nbsp;&nbsp;<div class="unable"></div><span class="text-time">&nbsp;&nbsp;불가</span>
+                                </div>
+                            </div>
+                         </div>  
                     </div>
                 </div>
                 <br><br>
                 <div class="nail-second">   
                     <div class="nail3">
-                        <div class="tablebox2">
-                            <table class="table">
-                                <tr>
-                                    <th>메뉴 :</th>
-                                </tr>
-                                <tr>
-                                    <td>쿠바샌드위치 세트 15,000원</td>
-                                    <td>쿠바샌드위치 세트 15,000원</td>
-                                    <td>쿠바샌드위치 세트 15,000원</td>
-                                </tr>
-                                <tr>
-                                    <td>쿠바샌드위치 세트 15,000원</td>
-                                    <td>쿠바샌드위치 세트 15,000원</td>
-                                    <td>쿠바샌드위치 세트 15,000원</td>
-                                </tr>
-                                <tr>
-                                    <td>쿠바샌드위치 세트 15,000원</td>
-                                    <td>쿠바샌드위치 세트 15,000원</td>
-                                    <td>쿠바샌드위치 세트 15,000원</td>
-                                </tr>
-                            </table>
+                        <div class="exp">
+                            인원 선택
                         </div>
+                        <div class="range">
+                            <input type="button" id="minus" value="➖" onclick="decCnt();"/>
+                            <input type="number" id="cnt" name="visiters" value="1"/>
+                            <input type="button" id="plus" value="➕" onclick="incCnt();"/>&nbsp;&nbsp;명
+                        </div>
+                    </div>
+                    <div class="nail4">
+                        <div class="exp">
+                            예약자정보 입력
+                        </div>    
+                        <br><br>
+                        <table class="table">
+                            <tr>
+                                <th>예약자</th>
+                                <td><input type="text" name="name" placeholder="성함을 입력하세요"></td>
+                            </tr>
+                            <tr>
+                                <th>연락처</th>
+                                <td><input type="text" name="phone" placeholder="연락처를 입력하세요"></td>
+                            </tr>
+                            <tr>
+                                <th>이메일</th>
+                                <td><input type="text" name="email" placeholder="이메일을 입력하세요"></td>
+                            </tr>
+                            <tr>
+                                <th>요청사항</th>
+                                <td><input type="text" name="require" placeholder="업체에 요청하실 사항을 입력하세요"></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 <br><br>
+                <hr class="bottom-line">
+                <div class="bottom-reseved-check">
+                    예약날짜, 시간, 명수 (확인)
+                </div>
                 <div class="bottom-btn">
-                    <input type="button" name="reverved" value="예약하기" onclick="location.href='jejusituation_detail2.do';"/>
+                    <input id="btn1" type="submit" name="reserved" value="예약완료">
                 </div>
             </div>
         </div>
-        <script type="text/javascript" src="./resources/js/jejusituation/jejusituation_rest.js"></script>
-        <script src="./resources/js/jejusituation/calendar_rendering.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jejusituation/jejusituation_rest.js"></script>
+        <script src="<%=request.getContextPath() %>/resources/js/jejusituation/calendar_rendering.js"></script>
     </body>
 </html>
