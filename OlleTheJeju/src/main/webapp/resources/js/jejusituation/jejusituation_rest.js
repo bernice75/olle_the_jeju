@@ -8,11 +8,11 @@ function openModal(){
 
 function closeModal(){
     myModal.style.display="none";
-    clCnt++;
-    if(clCnt>=1){
-        clCnt=0;
-        history.back();
-    }
+    //clCnt++;
+    //if(clCnt>=1){
+    //    clCnt=0;
+    //    history.back();
+    //}
 }
 
 function openModal2(){
