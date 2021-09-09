@@ -40,6 +40,8 @@
     				if(i>716){//716 마지막페이지
     					break;
     				
+    				}else if(p==999){
+    					$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>"+1+"</a>");
     				}else if(i==p){
     					$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>"+i+"</a>");
     				}else{
@@ -114,28 +116,27 @@
                                     뜻풀이
                                 </th>
                             </tr>
-                          <c:choose>
-                        	  <c:when test="${fn:length(dia)<5 }">
-							    	 <tr>
-                                		<td style="font-family:'새굴림'; height:55px;">${dia} </td>
-                              		 	<td style="font-family:'새굴림'; height:55px;">${kor}</td>
-                            		 </tr>                        	 
-                        	  	<c:forEach var="val" begin="0" end="${10-fn:length(dia)}">
-							    	 <tr>
-                                		<td style="font-family:'새굴림'; height:55px;"> </td>
-                              		 	<td style="font-family:'새굴림'; height:55px;"></td>
-                            		 </tr>
-                            	</c:forEach>                        
-                         	 </c:when>
-                         	 <c:when test="${fn:length(dia)>5 }">  
-                          		<c:forEach var="val" begin="0" end="${fn:length(dia)-1}">
-                            			<tr>
-                                			<td style="font-family:'새굴림';">${dia[val]} </td>
-                              	 		 	<td style="font-family:'새굴림';">${kor[val]}</td>
+							<c:choose>
+								<c:when test="${fn:length(dia) ne 0 }">
+									<c:forEach var="val" begin="0" end="9">
+									    <tr>
+                                			<td style="font-family:'새굴림'; height:55px;">${dia[val]} </td>
+                              	 		 	<td style="font-family:'새굴림'; height:55px;">${kor[val]}</td>
                             			</tr>
-                          	  </c:forEach>
-                         </c:when>
-    					 </c:choose>
+                            		</c:forEach>
+								</c:when>
+								<c:otherwise>
+										<tr>
+                                			<td style="font-family:'새굴림'; height:55px;" colspan="2">검색결과가 없습니다.</td>
+                            			</tr>
+									<c:forEach var="val" begin="0" end="8">
+										<tr>
+                                			<td style="font-family:'새굴림'; height:55px;"></td>
+                              	 		 	<td style="font-family:'새굴림'; height:55px;"></td>
+                            			</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
                         </table>
                     </div>
                 </div>
