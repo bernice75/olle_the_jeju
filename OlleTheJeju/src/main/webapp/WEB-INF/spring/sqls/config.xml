@@ -5,10 +5,14 @@
 <configuration>
 	<typeAliases>
 		<!-- <typeAlias type="com.mvc.upgrade.model.dto.BoardDto" alias="boardDto"/>  -->
+		<typeAlias type="com.olle.dto.mypage.MypageDto" alias="mypageDto"/>
+		
 	</typeAliases>
 	
 	<mappers>
 		<!-- <mapper resource="/mybatis/board-mapper.xml"/>  -->
+		<mapper resource="/mybatis/mypage-mapper.xml"/>
 	</mappers>
+
 
 </configuration>
