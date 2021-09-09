@@ -14,7 +14,8 @@
 		<typeAlias type="com.olle.dto.etc.DibDto" alias="dibDto"/>
 		<typeAlias type="com.olle.dto.etc.BookingDto" alias="bookingDto"/>
 		<typeAlias type="com.olle.dto.faq.FaqDto" alias="faqDto"/>
-		<typeAlias type="com.olle.dto.etc.SupprotDto" alias="supprotDto"/>
+		<typeAlias type="com.olle.dto.etc.SupportDto" alias="supportDto"/>
+		<typeAlias type="com.olle.dto.etc.ReportDto" alias="reportDto"/>
 		<typeAlias type="com.olle.dto.etc.FoodDto" alias="foodDto"/>
 		<typeAlias type="com.olle.dto.etc.DateDto" alias="dateDto"/>
 	</typeAliases>
@@ -31,7 +32,7 @@
 		<mapper resource="/mybatis/dib-mapper.xml"/>
 		<mapper resource="/mybatis/booking-mapper.xml"/>
 		<mapper resource="/mybatis/faq-mapper.xml"/>
-		<mapper resource="/mybatis/supprot-mapper.xml"/>
+		<mapper resource="/mybatis/support-mapper.xml"/>
 		<mapper resource="/mybatis/report-mapper.xml"/>
 		<mapper resource="/mybatis/food-mapper.xml"/>
 		<mapper resource="/mybatis/date-mapper.xml"/>
