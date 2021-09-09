@@ -1,11 +1,20 @@
 package com.olle.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.olle.biz.mypage.MypageBiz;
+import com.olle.biz.mypage.MypageBizImple;
+
 @Controller
 public class MypageController {
+	
+	private MypageBiz biz = new MypageBizImple();
+	//이렇게 하시면 됩니당 오 에러업네용오 안나
+	
+	
 	//회원정보 조회
 	@RequestMapping(value = "mypage_main.do", method = RequestMethod.GET)
 	public String mypage_main() {

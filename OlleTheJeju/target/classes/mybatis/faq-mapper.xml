@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="faq">
+  	<resultMap type="faqDto" id="faqMap">
+  		<result property="faq_number" column="FAQ_NUMBER"></result>
+  		<result property="faq_title" column="FAQ_TITLE"></result>
+  		<result property="faq_content" column="FAQ_CONTENT"></result>
+  		<result property="faq_writer" column="FAQ_WRITER"></result>
+  		<result property="faq_regdate" column="FAQ_REGDATE"></result>
+  		<result property="faq_num" column="FAQ_NUM"></result>
+  	</resultMap>
+  	
+  	<select id="selectList" resultMap="faqMap">
+
+	</select>
+	
+	<select id="selectOne" resultType="faqDto">
+
+	</select>
+	
+	<insert id="insert" parameterType="faqDto">
+		INSERT INTO OLLE_FAQ
+		VALUES()
+	</insert>
+	
+	<update id="update" parameterType="faqDto">
+		UPDATE OLLE_FAQ
+		SET 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM OLLE_FAQ
+		WHERE BOOK_NUM = #{book_num}
+	</delete>
+  </mapper>

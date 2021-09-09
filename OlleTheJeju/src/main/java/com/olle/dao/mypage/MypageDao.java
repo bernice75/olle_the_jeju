@@ -19,7 +19,7 @@ public interface MypageDao {
 	public int mypageLeave(String user_id, String user_pw);
 	
 	//회원 자진 탈퇴
-	public int mypageDelete(String user_id);
+	public int mypageDelete(String user_id, String user_pw);
 	
 	//내가 작성한 게시글 조회
 	public List<MemberDto> myWriteList(String user_nick, int pageNum);
