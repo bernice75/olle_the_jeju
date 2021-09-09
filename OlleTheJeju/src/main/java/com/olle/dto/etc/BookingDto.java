@@ -3,7 +3,6 @@ package com.olle.dto.etc;
 import java.util.Date;
 
 public class BookingDto {
-	
 	private int book_num;
 	private int situ_num;
 	private String book_name;
@@ -28,6 +27,7 @@ public class BookingDto {
 		this.book_phone = book_phone;
 		this.book_content = book_content;
 	}
+	
 	public int getBook_num() {
 		return book_num;
 	}
@@ -76,10 +76,4 @@ public class BookingDto {
 	public void setBook_content(String book_content) {
 		this.book_content = book_content;
 	}
-	
-	
-	
-	
-	
-
 }
