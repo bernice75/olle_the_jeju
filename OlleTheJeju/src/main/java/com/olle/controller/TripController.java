@@ -67,6 +67,18 @@ public class TripController {
 		
 		return "page_trip/trip_jeju";
 	}
-	
+
+	@RequestMapping(value="/trip_jeju_search.do")
+	public String trip_jeju_search(Model model, String search) {
+		logger.info("TRIP_JEJU : SEARCH "+search);
+		
+		List result = tb.getSearch(search);
+		
+		model.addAttribute("page","1");
+		model.addAttribute("dia", result.get(0));
+		model.addAttribute("kor",result.get(1));
+		
+		return "page_trip/trip_jeju";
+	}
 	
 }

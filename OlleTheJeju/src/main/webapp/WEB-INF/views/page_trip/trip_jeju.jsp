@@ -4,6 +4,8 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -65,6 +67,11 @@
      	   			alert("마지막 페이지 입니다.");
      	   		}
      	   	}
+     	   	function search(){
+     	   		var search = $("#search").val();
+     	   		location.href='trip_jeju_search.do?search='+search;
+     	   		
+     	   	}
         </script>
     </head>
 	<body>
@@ -90,8 +97,8 @@
                 </div>
                 <br>
                 <div class="search">
-                    <input class="form-control search1" type="search" placeholder="검색어 입력">
-                    <button class="btn btn-outline-secondary search2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <input class="form-control search1" id="search" type="search" placeholder="검색어 입력">
+                    <button class="btn btn-outline-secondary search2" onclick="search();"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
                
                 <br>
@@ -100,21 +107,35 @@
                     	<small style="grid-column-start: 1; grid-column-end: 2;">* 아래아가 안보일 경우: 새굴림 폰트 설치</small>
                         <table class="table">
                             <tr class="table-secondary">
-                                <th style="width: 50%;">
+                                <th style="width: 50%; height:55px;">
                                     방언
                                 </th>
-                                <th style="width: 50%;">
+                                <th style="width: 50%; height:55px;">
                                     뜻풀이
                                 </th>
                             </tr>
-       
-                            <c:forEach var="val" begin="0" end="9">
-                            	<tr>
-                                	<td style="font-family:'새굴림';">${dia[val]} </td>
-                                	<td style="font-family:'새굴림';">${kor[val]}</td>
-                            	</tr>
-                            </c:forEach>
-     
+                          <c:choose>
+                        	  <c:when test="${fn:length(dia)<5 }">
+							    	 <tr>
+                                		<td style="font-family:'새굴림'; height:55px;">${dia} </td>
+                              		 	<td style="font-family:'새굴림'; height:55px;">${kor}</td>
+                            		 </tr>                        	 
+                        	  	<c:forEach var="val" begin="0" end="${10-fn:length(dia)}">
+							    	 <tr>
+                                		<td style="font-family:'새굴림'; height:55px;"> </td>
+                              		 	<td style="font-family:'새굴림'; height:55px;"></td>
+                            		 </tr>
+                            	</c:forEach>                        
+                         	 </c:when>
+                         	 <c:when test="${fn:length(dia)>5 }">  
+                          		<c:forEach var="val" begin="0" end="${fn:length(dia)-1}">
+                            			<tr>
+                                			<td style="font-family:'새굴림';">${dia[val]} </td>
+                              	 		 	<td style="font-family:'새굴림';">${kor[val]}</td>
+                            			</tr>
+                          	  </c:forEach>
+                         </c:when>
+    					 </c:choose>
                         </table>
                     </div>
                 </div>
