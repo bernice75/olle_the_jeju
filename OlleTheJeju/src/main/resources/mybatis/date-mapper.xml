@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "date">
+	<resultMap type="dateDto" id="dateMap">
+		<result property="date_num" column="DATE_NUM"/>
+		<result property="board_num" column="BOARD_NUM"/>
+		<result property="table_num" column="TABLE_NUM"/>
+		<result property="date_n" column="DATE_N"/>
+		<result property="group_num" column="GROUP_NUM"/>
+		<result property="date_name" column="DATE_NAME"/>
+		<result property="date_addr" column="DATE_ADDR"/>
+	</resultMap>
+	
+	<select id="selectList" resultMap="dateMap">
+
+	</select>
+	
+	<select id="selectOne" resultType="dateDto">
+
+	</select>
+	
+	<insert id="insert" parameterType="dateDto">
+		INSERT INTO OLLE_DATE
+		VALUES()
+	</insert>
+	
+	<update id="update" parameterType="dateDto">
+		UPDATE OLLE_DATE
+		SET 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM OLLE_DATE
+		WHERE DATE_NUM = #{date_num}
+	</delete>
+</mapper>

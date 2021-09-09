@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "support">
+	<resultMap type="supportDto" id="supportMap">
+		<result property="sup_num" column="SUP_NUM"/>
+		<result property="chat_group" column="CHAT_GROUP"/>
+		<result property="from_user" column="FROM_USER"/>
+		<result property="to_user" column="TO_USER"/>
+		<result property="sup_content" column="SUP_CONTENT"/>
+		<result property="sup_regdate" column="SUP_REGDATE"/>
+	</resultMap>
+	
+	<select id="selectList" resultMap="supportMap">
+
+	</select>
+	
+	<select id="selectOne" resultType="supportDto">
+
+	</select>
+	
+	<insert id="insert" parameterType="supportDto">
+		INSERT INTO OLLE_SUPPORT
+		VALUES()
+	</insert>
+	
+	<update id="update" parameterType="supportDto">
+		UPDATE OLLE_SUPPORT
+		SET 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM OLLE_SUPPORT
+		WHERE SUP_NUM = #{sup_num}
+	</delete>
+</mapper>
