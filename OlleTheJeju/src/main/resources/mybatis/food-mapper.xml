@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "food">
+	<resultMap type="foodDto" id="foodMap">
+		<result property="food_num" column="FOOD_NUM"/>
+		<result property="situ_num" column="SITU_NUM"/>
+		<result property="group_num" column="GROUP_NUM"/>
+		<result property="food_name" column="FOOD_NAME"/>
+	</resultMap>
+	
+	<select id="selectList" resultMap="foodMap">
+
+	</select>
+	
+	<select id="selectOne" resultType="foodDto">
+
+	</select>
+	
+	<insert id="insert" parameterType="foodDto">
+		INSERT INTO OLLE_FOOD
+		VALUES()
+	</insert>
+	
+	<update id="update" parameterType="foodDto">
+		UPDATE OLLE_FOOD
+		SET 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM OLLE_FOOD
+		WHERE FOOD_NUM = #{food_num}
+	</delete>
+</mapper>

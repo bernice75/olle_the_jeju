@@ -4,11 +4,38 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<!-- <typeAlias type="com.mvc.upgrade.model.dto.BoardDto" alias="boardDto"/>  -->
+		<typeAlias type="com.olle.dto.member.MemberDto" alias="memberDto"/>
+		<typeAlias type="com.olle.dto.customplan.CustomDto" alias="customDto"/>
+		<typeAlias type="com.olle.dto.jejusituation.JejuDto" alias="jejuDto"/>
+		<typeAlias type="com.olle.dto.trip.TripDto" alias="tripDto"/>
+		<typeAlias type="com.olle.dto.etc.ImgDto" alias="imgDto"/>
+		<typeAlias type="com.olle.dto.suggest.SuggestDto" alias="suggestDto"/>
+		<typeAlias type="com.olle.dto.etc.HashtagDto" alias="hashtagDto"/>
+		<typeAlias type="com.olle.dto.etc.DibDto" alias="dibDto"/>
+		<typeAlias type="com.olle.dto.etc.BookingDto" alias="bookingDto"/>
+		<typeAlias type="com.olle.dto.faq.FaqDto" alias="faqDto"/>
+		<typeAlias type="com.olle.dto.etc.SupprotDto" alias="supprotDto"/>
+		<typeAlias type="com.olle.dto.etc.FoodDto" alias="foodDto"/>
+		<typeAlias type="com.olle.dto.etc.DateDto" alias="dateDto"/>
 	</typeAliases>
 	
 	<mappers>
-		<!-- <mapper resource="/mybatis/board-mapper.xml"/>  -->
+		<mapper resource="/mybatis/member-mapper.xml"/>
+		<mapper resource="/mybatis/mypage-mapper.xml"/>
+		<mapper resource="/mybatis/custom-mapper.xml"/>
+		<mapper resource="/mybatis/jeju-mapper.xml"/>
+		<mapper resource="/mybatis/trip-mapper.xml"/>
+		<mapper resource="/mybatis/img-mapper.xml"/>
+		<mapper resource="/mybatis/suggest-mapper.xml"/>
+		<mapper resource="/mybatis/hashtag-mapper.xml"/>
+		<mapper resource="/mybatis/dib-mapper.xml"/>
+		<mapper resource="/mybatis/booking-mapper.xml"/>
+		<mapper resource="/mybatis/faq-mapper.xml"/>
+		<mapper resource="/mybatis/supprot-mapper.xml"/>
+		<mapper resource="/mybatis/report-mapper.xml"/>
+		<mapper resource="/mybatis/food-mapper.xml"/>
+		<mapper resource="/mybatis/date-mapper.xml"/>
 	</mappers>
+
 
 </configuration>

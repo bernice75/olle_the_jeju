@@ -2,11 +2,8 @@ package com.olle.dto.trip;
 
 import java.util.Date;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class TripDto {
-	private int trip_num; 
+	private int trip_num;
 	private String trip_kategorie;
 	private String trip_title;
 	private String trip_content;
@@ -15,13 +12,14 @@ public class TripDto {
 	private String trip_nail;
 	private String trip_addr;
 	private String trip_phone;
-	private int trip_views;
+	private int views;
 	private int trip_push;
+	
 	public TripDto() {
 		super();
 	}
 	public TripDto(int trip_num, String trip_kategorie, String trip_title, String trip_content, String trip_writer,
-			Date trip_regdate, String trip_nail, String trip_addr, String trip_phone, int trip_views, int trip_push) {
+			Date trip_regdate, String trip_nail, String trip_addr, String trip_phone, int views, int trip_push) {
 		super();
 		this.trip_num = trip_num;
 		this.trip_kategorie = trip_kategorie;
@@ -32,9 +30,10 @@ public class TripDto {
 		this.trip_nail = trip_nail;
 		this.trip_addr = trip_addr;
 		this.trip_phone = trip_phone;
-		this.trip_views = trip_views;
+		this.views = views;
 		this.trip_push = trip_push;
 	}
+	
 	public int getTrip_num() {
 		return trip_num;
 	}
@@ -89,11 +88,11 @@ public class TripDto {
 	public void setTrip_phone(String trip_phone) {
 		this.trip_phone = trip_phone;
 	}
-	public int getTrip_views() {
-		return trip_views;
+	public int getViews() {
+		return views;
 	}
-	public void setTrip_views(int trip_views) {
-		this.trip_views = trip_views;
+	public void setViews(int views) {
+		this.views = views;
 	}
 	public int getTrip_push() {
 		return trip_push;
@@ -101,6 +100,4 @@ public class TripDto {
 	public void setTrip_push(int trip_push) {
 		this.trip_push = trip_push;
 	}
-	
-	
 }
