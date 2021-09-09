@@ -26,4 +26,9 @@ public class TripBiz {
 		return result;
 	}
 	
+	public List getSearch(String search) {
+		List result = td.getSearch(search);
+		
+		return result;
+	}
 }

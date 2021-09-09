@@ -25,7 +25,6 @@ public class TripDao {
 			
 			URL url = new URL("http://www.jeju.go.kr/rest/JejuDialectService/getJejuDialectServiceList?authApiKey=&page="+page+"&pageSize=10");
 			InputStream stream = url.openStream();
-			char ch=0;
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(stream);
@@ -62,7 +61,6 @@ public class TripDao {
 			
 			URL url = new URL("http://www.jeju.go.kr/rest/JejuDialectService/getJejuDialectServiceList?authApiKey=&page="+page+"&pageSize=10");
 			InputStream stream = url.openStream();
-			char ch=0;
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(stream);
@@ -97,4 +95,45 @@ public class TripDao {
 		return nValue.getNodeValue(); //노드 값 반환
 	}
 	
+	public List getSearch(String search) {
+		
+		List result = new ArrayList();
+		
+		try {
+			
+			result.clear();
+			
+			URL url = new URL("http://www.jeju.go.kr/rest/JejuDialectService/getJejuDialectServiceList?authApiKey=&pageSize=7159");
+			InputStream stream = url.openStream();
+			char ch=0;
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(stream);
+			doc.getDocumentElement().normalize();//normalize 사용으로 텍스트 정규화
+			
+			System.out.println("Root element :"+ doc.getDocumentElement().getNodeName());
+			NodeList jeju = doc.getElementsByTagName("item"); //item element를 NodeList에 저장
+			for(int i=0; i<jeju.getLength(); i++) {
+				Node nNode = jeju.item(i);
+				
+				if(nNode.getNodeType() == Node.ELEMENT_NODE) {//nNode의 타입이 element인지 확인
+					Element eElement = (Element) nNode;
+					
+					if(search.contains(getTagValue("contents",eElement))||search.contains(getTagValue("siteName",eElement))) {
+						
+						String k=getTagValue("contents",eElement);
+						String b=getTagValue("siteName",eElement);
+						result.add(b);
+						result.add(k);
+						
+					}
+				}
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }
