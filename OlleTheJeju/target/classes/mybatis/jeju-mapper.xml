@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "jeju">
+	<resultMap type="jejuDto" id="jejuMap">
+		<result property="situ_num" column="SITU_NUM"/>
+		<result property="situ_name" column="SITU_NAME"/>
+		<result property="situ_writer" column="SITU_WRITER"/>
+		<result property="situ_regdate" column="SITU_REGDATE"/>
+		<result property="situ_phone" column="SITU_PHONE"/>
+		<result property="situ_addr" column="SITU_ADDR"/>
+		<result property="situ_time" column="SITU_TIME"/>
+		<result property="situ_home" column="SITU_HOME"/>
+	</resultMap>
+	
+	<select id="selectList" resultMap="jejuMap">
+
+	</select>
+	
+	<select id="selectOne" resultType="jejuDto">
+
+	</select>
+	
+	<insert id="insert" parameterType="jejuDto">
+		INSERT INTO OLLE_SITUATION
+		VALUES()
+	</insert>
+	
+	<update id="update" parameterType="jejuDto">
+		UPDATE OLLE_SITUATION
+		SET 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM OLLE_SITUATION
+		WHERE SITU_NUM = #{situ_num}
+	</delete>
+</mapper>

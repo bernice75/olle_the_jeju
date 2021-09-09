@@ -5,7 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.olle.dto.mypage.MypageDto;
+import com.olle.dto.member.MemberDto;
 
 public class MypageDaoImpl implements MypageDao {
 	
@@ -13,12 +13,12 @@ public class MypageDaoImpl implements MypageDao {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public MypageDto mypageInfo(String user_id) {
+	public MemberDto mypageInfo(String user_id) {
 		return null;
 	}
 
 	@Override
-	public int mypageInfoUpdate(MypageDto userUpdate) {
+	public int mypageInfoUpdate(MemberDto userUpdate) {
 		return 0;
 	}
 
@@ -33,12 +33,12 @@ public class MypageDaoImpl implements MypageDao {
 	}
 
 	@Override
-	public List<MypageDto> myWriteList(String user_nick, int pageNum) {
+	public List<MemberDto> myWriteList(String user_nick, int pageNum) {
 		return null;
 	}
 
 	@Override
-	public List<MypageDto> myDibList(String user_nick, int pageNum) {
+	public List<MemberDto> myDibList(String user_nick, int pageNum) {
 		return null;
 	}
 	
