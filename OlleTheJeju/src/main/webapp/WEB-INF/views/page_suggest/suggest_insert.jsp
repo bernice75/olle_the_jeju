@@ -85,7 +85,9 @@
                                 </section>
                                 <section>
                                     <label for="hash_content">해시태그 : </label>
-                                    <input type="tel" class="form-control" name="hash_content" placeholder="콤마(,)로 구분">
+                                    <input type="text" class="form-control" id="hashtag" name="hash_content" placeholder="콤마(,)로 구분" onchange="hash();">
+                                    <input type="hidden" class="form-control hashtag" name="hash_content">
+                                    <div class="hash_inner"></div>
                                 </section>
                             </fieldset>
                         </div>
