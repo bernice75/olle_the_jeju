@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>나만의 이정 insert</title>
+		<title>나만의 일정 insert</title>
 		<link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/customplan/customplan_insert.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/footer.css" rel="stylesheet" type="text/css" />
@@ -89,7 +89,9 @@
                                 </section>
                                 <section>
                                     <label for="hash_content">해시태그 : </label>
-                                    <input type="tel" class="form-control" name="hash_content" placeholder="콤마(,)로 구분">
+                                    <input type="text" class="form-control" id="hashtag" placeholder="콤마(,)로 구분" onchange="hash();">
+                                    <input type="hidden" class="form-control hashtag" name="hash_content">
+                                    <div class="hash_inner"></div>
                                 </section>
                             </fieldset>
                         </div>
