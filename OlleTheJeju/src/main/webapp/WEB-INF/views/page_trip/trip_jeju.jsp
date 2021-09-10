@@ -37,18 +37,72 @@
      	   		var j = i+10;
      	   		
     			for(i; i<j; i++){
-    				if(i>716){//716 마지막페이지
+    				if(i>716&&p!=999){//716 마지막페이지
     					break;
-    				
-    				}else if(p==999){
-    					$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>"+1+"</a>");
     				}else if(i==p){
     					$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>"+i+"</a>");
+    				}else if(p==999){
+    					
+    					var s=$("#size").val();
+    	     	   		
+    	     	   		$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>1</a>");
+    	     	   		
+    	     	   		for(var j=0; j<9; j++){
+    	     	   				$(".page").append("<a style='margin: 3px;' href='#' onclick='searchPage(this.text)'>"+(j+2)+"</a>")
+    	     	   		}
     				}else{
     					$(".page").append("<a style='margin:3px;' href='trip_jeju_page.do?page="+i+"'>"+i+"</a>");
     				}
     			}	
         	}
+     	   
+
+     	   	function searchPage(p){
+     	   		console.log(p);
+     	   		var val = ((parseInt(p)-1)*10)+1;
+     	   		$(".remove").remove();
+	   				var d = "<c:out value='${dia}'/>";
+ 	   				console.log(d[1])
+ 	   				var dia=d.split(",");
+ 	   				//var k=	"<c:out value='${}'/>";
+ 	   			for(var j=0; j<10; j++){
+
+ 	   				
+				    var t = '<tr class="remove">'+
+        				'<td style="font-family:'+'새굴림'+'; height:55px;" >'+dia[val]+'</td>'+
+      	 		 		'<td style="font-family:'+'새굴림'+'; height:55px;" >'+dia[val]+'</td>'+
+    					'</tr>';
+    				$(".table").append(t);
+    				val++;
+ 	   			}
+ 	   			console.log(p);
+     	   		if(p<11){
+     	   			$(".page").empty();
+     	   			for(var i=1; i<10; i++){
+     	   				if(i==p){
+     	   				$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>"+i+"</a>");
+     	   				}else{
+     	   					$(".page").append("<a style='margin: 3px;' href='#' onclick='searchPage(this.text)'>"+i+"</a>");
+     	   				}
+     	   			}
+     	   		}else{
+         	   		if((p%10)==0){ 
+         	   			var o = p-9;
+         	   		}else if((p%10)>=1){
+         	   			var o = (Math.floor(p/10)*10)+1;
+         	   		}
+     	   			for(var i=0; i<10; i++){
+     	   				if(i==p){
+     	   				$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>"+o+"</a>");
+     	   				}else{
+     	   					$(".page").append("<a style='margin: 3px;' href='#' onclick='searchPage(this.text)'>"+o+"</a>")
+     	   				}
+     	   			}
+         	   		
+     	   		}
+     	   		
+     	   	}
+
      	   	
      	   	function prev(){
      	   		var p = $("#page").val();
@@ -77,7 +131,8 @@
         </script>
     </head>
 	<body>
-	<input type="hidden" value="${page}" id="page">
+		<input type="hidden" value="${page}" id="page">
+		<input type="hidden" value="${fn:length(dia) }" id="size">
 		<div class="wrapper">
 			<jsp:include page="../include/header.jsp"></jsp:include>
 			<div class="main">
@@ -119,9 +174,9 @@
 							<c:choose>
 								<c:when test="${fn:length(dia) ne 0 }">
 									<c:forEach var="val" begin="0" end="9">
-									    <tr>
-                                			<td style="font-family:'새굴림'; height:55px;">${dia[val]} </td>
-                              	 		 	<td style="font-family:'새굴림'; height:55px;">${kor[val]}</td>
+									    <tr class="remove">
+                                			<td style="font-family:'새굴림'; height:55px;" >${dia[val]} </td>
+                              	 		 	<td style="font-family`:'새굴림'; height:55px;" >${kor[val]}</td>
                             			</tr>
                             		</c:forEach>
 								</c:when>
@@ -142,9 +197,9 @@
                 </div>
                 <br><br><br>
                 <div class="paging">
-                			<a href="#" onclick="prev();">&lt;&lt;</a>
-							<span class="page"></span>
-                			<a href="#" onclick="next();">&gt;&gt;</a>
+                		<a href="#" onclick="prev();">&lt;&lt;</a>
+						<span class="page"></span>
+                		<a href="#" onclick="next();">&gt;&gt;</a>
                 </div>
                 <br><br><br><br>
 			</div>
