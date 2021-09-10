@@ -12,7 +12,7 @@
 		<meta charset="UTF-8">
 		<title>관광정보 방언사전</title>
 		<link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
-        <link href="./resources/css/trip/trip_jeju.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/trip/trip_jeju.css?var=1" rel="stylesheet" type="text/css" />
         <link href="./resources/css/footer.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -42,71 +42,17 @@
     				}else if(i==p){
     					$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>"+i+"</a>");
     				}else if(p==999){
-    					
-    					var s=$("#size").val();
-    	     	   		
     	     	   		$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>1</a>");
-    	     	   		
-    	     	   		for(var j=0; j<9; j++){
-    	     	   				$(".page").append("<a style='margin: 3px;' href='#' onclick='searchPage(this.text)'>"+(j+2)+"</a>")
-    	     	   		}
+    	     	   		break;
     				}else{
     					$(".page").append("<a style='margin:3px;' href='trip_jeju_page.do?page="+i+"'>"+i+"</a>");
     				}
     			}	
         	}
-     	   
-
-     	   	function searchPage(p){
-     	   		console.log(p);
-     	   		var val = ((parseInt(p)-1)*10)+1;
-     	   		$(".remove").remove();
-	   				var d = "<c:out value='${dia}'/>";
- 	   				console.log(d[1])
- 	   				var dia=d.split(",");
- 	   				//var k=	"<c:out value='${}'/>";
- 	   			for(var j=0; j<10; j++){
-
- 	   				
-				    var t = '<tr class="remove">'+
-        				'<td style="font-family:'+'새굴림'+'; height:55px;" >'+dia[val]+'</td>'+
-      	 		 		'<td style="font-family:'+'새굴림'+'; height:55px;" >'+dia[val]+'</td>'+
-    					'</tr>';
-    				$(".table").append(t);
-    				val++;
- 	   			}
- 	   			console.log(p);
-     	   		if(p<11){
-     	   			$(".page").empty();
-     	   			for(var i=1; i<10; i++){
-     	   				if(i==p){
-     	   				$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>"+i+"</a>");
-     	   				}else{
-     	   					$(".page").append("<a style='margin: 3px;' href='#' onclick='searchPage(this.text)'>"+i+"</a>");
-     	   				}
-     	   			}
-     	   		}else{
-         	   		if((p%10)==0){ 
-         	   			var o = p-9;
-         	   		}else if((p%10)>=1){
-         	   			var o = (Math.floor(p/10)*10)+1;
-         	   		}
-     	   			for(var i=0; i<10; i++){
-     	   				if(i==p){
-     	   				$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>"+o+"</a>");
-     	   				}else{
-     	   					$(".page").append("<a style='margin: 3px;' href='#' onclick='searchPage(this.text)'>"+o+"</a>")
-     	   				}
-     	   			}
-         	   		
-     	   		}
-     	   		
-     	   	}
-
      	   	
      	   	function prev(){
      	   		var p = $("#page").val();
-     	   		if(p>10){
+     	   		if(p>10&&p!=999){
      		   		var first = parseInt($(".page").children('a:eq(0)').text())-1;
  	  	 			window.location.href= 'trip_jeju_page.do?page='+first;
      	   		}else{
@@ -132,7 +78,6 @@
     </head>
 	<body>
 		<input type="hidden" value="${page}" id="page">
-		<input type="hidden" value="${fn:length(dia) }" id="size">
 		<div class="wrapper">
 			<jsp:include page="../include/header.jsp"></jsp:include>
 			<div class="main">
@@ -173,7 +118,7 @@
                             </tr>
 							<c:choose>
 								<c:when test="${fn:length(dia) ne 0 }">
-									<c:forEach var="val" begin="0" end="9">
+									<c:forEach var="val" begin="0" end="${fn:length(dia)-1}">
 									    <tr class="remove">
                                 			<td style="font-family:'새굴림'; height:55px;" >${dia[val]} </td>
                               	 		 	<td style="font-family`:'새굴림'; height:55px;" >${kor[val]}</td>
@@ -184,12 +129,6 @@
 										<tr>
                                 			<td style="font-family:'새굴림'; height:55px;" colspan="2">검색결과가 없습니다.</td>
                             			</tr>
-									<c:forEach var="val" begin="0" end="8">
-										<tr>
-                                			<td style="font-family:'새굴림'; height:55px;"></td>
-                              	 		 	<td style="font-family:'새굴림'; height:55px;"></td>
-                            			</tr>
-									</c:forEach>
 								</c:otherwise>
 							</c:choose>
                         </table>
