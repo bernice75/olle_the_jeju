@@ -19,7 +19,7 @@
 		<div class="wrapper">
 			<jsp:include page="include/header.jsp"></jsp:include>
 			<div class="col-md-6 col-xs-10">
-                <form>
+                <form action="register.do" method="post">
                     <header>회원가입 with NAVER</header>
                     <fieldset>                  
                         <section>
@@ -35,7 +35,7 @@
                                 <div class="col col-8">
                                     <label class="input">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="userId" name="userId" placeholder="영문/숫자만 사용가능, 4~12자">
+                                            <input type="text" class="form-control" id="user_id" name="user_id" placeholder="영문/숫자만 사용가능, 4~12자">
                                             <span class="input-group-btn">
                                                 <button class="btn-u btn-u-red" type="button" id="user_id_chk">중복확인</button>
                                             </span>
@@ -50,7 +50,7 @@
                                 <div class="col col-8">
                                     <label class="input">
                                         <div class="input-group icon">
-                                            <input type="password" class="form-control" id="userPw" name="userPw" maxlength="18" placeholder="영문/숫자만 사용가능, 4~8자">
+                                            <input type="text" class="form-control" id="user_pw" name="user_pw" maxlength="18" placeholder="영문/숫자만 사용가능, 4~8자">
                                             <i class="icon-append fa fa-lock" aria-hidden="true"></i>
                                         </div>
                                     </label>
@@ -63,7 +63,7 @@
                                 <div class="col col-8">
                                     <label class="input">
                                         <div class="input-group icon">
-                                            <input type="password" class="form-control" id="pwChk" name="pwChk" maxlength="18" placeholder="비밀번호 재입력">
+                                            <input type="text" class="form-control" id="pwChk" name="pwChk" maxlength="18" placeholder="비밀번호 재입력">
                                             <i class="icon-append fa fa-lock"></i>
                                         </div>
                                     </label>
@@ -76,7 +76,7 @@
                                 <div class="col col-8">
                                     <label class="input">
                                         <div class="input-group icon">
-                                            <input type="text" class="form-control" id="userName" name="userName">
+                                            <input type="text" class="form-control" id="user_name" name="user_name">
                                             <i class="icon-append fa fa-user"></i>
                                         </div>
                                     </label>
@@ -89,7 +89,7 @@
                                 <div class="col col-8">
                                     <label class="input">
                                         <div class="input-group icon">
-                                            <input type="number" class="form-control" id="userAge" name="userAge">
+                                            <input type="number" class="form-control" id="user_age" name="user_age">
                                             <i class="icon-append fa fa-user"></i>
                                         </div>
                                     </label>
@@ -102,7 +102,7 @@
                                 <div class="col col-8">
                                     <label class="input">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="userNick" name="userNick">
+                                            <input type="text" class="form-control" id="user_nick" name="user_nick">
                                             <span class="input-group-btn">
                                                 <button onclick="" id="nickChk" class="btn-u btn-u-red" type="button">중복확인</button>
                                             </span>
@@ -117,7 +117,7 @@
                                 <div class="col col-8">
                                     <label class="input">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="userEmail" name="userEmail">
+                                            <input type="text" class="form-control" id="user_email" name="user_email">
                                             <span class="input-group-btn">
                                                 <button onclick="" id="emailChk" class="btn-u btn-u-red" type="button">이메일 인증</button>
                                             </span>
@@ -131,7 +131,7 @@
                                 <label class="label col col-4">가입구분</label>
                                 <div class="col col-8">
                                     <label class="input">
-                                        <select id="userMember" name="userMember" class="form-control  col-5">
+                                        <select id="user_member" name="user_member" class="form-control  col-5">
                                         <option value="N">----</option>
                                         <option value="개인">개인</option>
                                         <option value="사업자">사업자</option>
@@ -145,7 +145,7 @@
                                 <label class="label col col-4">전화번호</label>
                                 <div class="col col-8">
                                     <label class="input">
-                                        <input type="text" class="form-control" id="userPhone" name="userPhone" placeholder="'-'을 제외하고 입력'">
+                                        <input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="'-'을 제외하고 입력'">
                                     </label>
                                 </div>
                             </div>
@@ -156,10 +156,23 @@
                                 <div class="col col-8">
                                     <label class="input">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="userAddr" id="userAddr">
+                                            <input type="text" class="form-control" name="user_addr" id="user_addr">
                                             <span class="input-group-btn">
                                                 <button onclick="" id="addressEmailChk" class="btn-u btn-u-red" type="button">우편번호 찾기</button>
                                             </span>
+                                           <input type="text" class="form-control" name="user_addrdetail" id="user_addrdetail">
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                         </section>
+                         <section>
+                             <div class="row">
+                                <label class="label col col-4">상세주소</label>
+                                <div class="col col-8">
+                                    <label class="input">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="user_addrdetail" id="user_addrdetail">
                                         </div>
                                     </label>
                                 </div>
@@ -183,68 +196,68 @@
             </div>
 			<jsp:include page="include/footer.jsp"></jsp:include>
 		</div>
-	</body>
-</html>
-
-<script>
-
+		
+<script type="text/javascript">
 // 회원가입 저장
 function btn_usrSave() {
-	const userId = $("#userId").val();	// 아이디
-	const userPw = $("#userPw").val();	// 비밀번호
+	const user_id = $("#user_id").val();	// 아이디
+	const user_pw = $("#user_pw").val();	// 비밀번호
 	const pwChk = $("#pwChk").val();	// 비밀번호 확인
-	const userName = $("#userName").val();	// 이름
-	const userAge = $("#userAge").val();	// 나이
-	const userNick = $("#userNick").val();	// 닉네임
-	const userEmail = $("#userEmail").val();	// 이메일
-	const userMember = $("#userMember").val();	// 가입구분
-	const userPhone = $("#userPhone").val();	// 전화번호
-	const userAddr = $("#userAddr").val();	// 주소
+	const user_name = $("#user_name").val();	// 이름
+	const user_age = $("#user_age").val();	// 나이
+	const user_nick = $("#user_nick").val();	// 닉네임
+	const user_email = $("#user_email").val();	// 이메일
+	const user_member = $("#user_member").val();	// 가입구분
+	const user_phone = $("#user_phone").val();	// 전화번호
+	const user_addr = $("#user_addr").val();	// 주소
+	const user_addrdetail = $("#user_addrdetail").val();	// 주소
 	
-	console.log("userId :: " + userId);
-	console.log("userPw :: " + userPw);
+	console.log("user_id :: " + user_id);
+	console.log("user_pw :: " + user_pw);
 	console.log("pwChk :: " + pwChk);
-	console.log("userName :: " + userName);
-	console.log("userAge :: " + userAge);
-	console.log("userNick :: " + userNick);
-	console.log("userEmail :: " + userEmail);
-	console.log("userMember :: " + userMember);
-	console.log("userPhone :: " + userPhone);
-	console.log("userAddr :: " + userAddr);
+	console.log("user_name :: " + user_name);
+	console.log("user_age :: " + user_age);
+	console.log("user_nick :: " + user_nick);
+	console.log("user_email :: " + user_email);
+	console.log("user_member :: " + user_member);
+	console.log("user_phone :: " + user_phone);
+	console.log("user_addr :: " + user_addr);
+	console.log("user_addrdetail :: " + user_addrdetail);
 	
-	if(userId == null || userId == "") {
+	if(user_id == null || user_id == "") {
 		alert("아이디를 입력해주세요");
 		return false;
-	} else if(userPw == null || userPw == "") {
+	} else if(user_pw == null || user_pw == "") {
 		alert("비밀번호를 입력해주세요");
 		return false;
 	}
 
 	
-	if(userPw != pwChk) {
+	if(user_pw != pwChk) {
 		alert("비밀번호를 확인해주세요.");
 		return false;
 	}
 	
-	if(userMember == "N") {
+	if(user_member == "N") {
 		alert("가입구분을 선택해주세요.");
 		return false;
 	}
 	
 	var form = {
-			 userId: userId
-			,userPw: userPw
-			,userName: userName
-			,userAge: userAge
-			,userNick: userNick
-			,userEmail: userEmail
-			,userMember: userMember
-			,userPhone: userPhone
-			,userAddr: userAddr
+			user_id: user_id
+			,user_pw: user_pw
+			,user_name: user_name
+			,user_age: user_age
+			,user_nick: user_nick
+			,user_email: user_email
+			,user_member: user_member
+			,user_phone: user_phone
+			,user_addr: user_addr
+			,user_addrdetail: user_addrdetail
     }
 	
 	$.ajax({
-		 url: "userInsert.do"
+		 url: "register.do"
 		,data: form
 		,success: function(data){
 			alert("회원가입이 완료되었습니다.");
@@ -259,3 +272,6 @@ function btn_usrSave() {
 	
 	}
 </script>
+	</body>
+</html>
+

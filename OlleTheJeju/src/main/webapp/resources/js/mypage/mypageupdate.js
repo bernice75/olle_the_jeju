@@ -93,6 +93,7 @@ function addressForm() {
 	}).open();
 }
 
+
 //회원정보 수정 비밀번호 체크
 function updateCheck(){
 	console.log(password);
@@ -111,6 +112,7 @@ function updateCheck(){
 	}
 	form.submit();
 }
+
 
 
 

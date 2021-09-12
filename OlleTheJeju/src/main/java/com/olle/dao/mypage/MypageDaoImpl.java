@@ -1,12 +1,15 @@
 package com.olle.dao.mypage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.olle.dao.member.MemberDao;
 import com.olle.dto.member.MemberDto;
 
 @Repository
@@ -31,7 +34,7 @@ public class MypageDaoImpl implements MypageDao {
 	}
 
 	//회원정보 수정
-	@Override
+	/*@Override
 	public int mypageInfoUpdate(MemberDto userUpdate) {
 		int res = 0;
 		
@@ -42,8 +45,28 @@ public class MypageDaoImpl implements MypageDao {
 			e.printStackTrace();
 		}
 		return res;
+	}*/
+	@Override
+	public void mypageInfoUpdate(MemberDto dto) {
+		sqlSession.update(NAMESPACE+"updateUser", dto);
 	}
 
+	/* 다시 수정해야함
+	 * //회원정보 수정 비밀번호 체크
+	public boolean checkPw(String user_id, String user_pw) {
+		
+		boolean result = false;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("user_id", user_id);
+		map.put("user_pw", user_pw);
+		
+		int count = sqlSession.selectOne(NAMESPACE+"checkPw", map);
+		if(count == 1)result = true;
+		
+		return result;
+	}*/
+	
+	
 	//회원강제 탈퇴(관리자 권한/신고수적용)
 	@Override
 	public int mypageLeave(String user_id, String user_pw) {
@@ -98,6 +121,8 @@ public class MypageDaoImpl implements MypageDao {
 		}
 		return diblist;
 	}
+
+	
 
 	//문의사항 (실시간 채팅)
 	

@@ -38,6 +38,15 @@
   		WHERE USER_ID=#{user_id}
   	</update>
   	
+  	<!-- 다시수정해야함 -->
+  	<!-- 회원정보 수정 비밀번호 체크 -->
+  	<!--<select id="checkPw" resultType="int">
+  		SELECT COUNT(*)
+  		FROM OLLE_USER
+  		WHERE USER_ID=#{user_id} AND USER_PW=#{user_pw}
+  	</select>
+  	-->
+  	
   	<!-- 회원 강제 탈퇴 (신고수가 5회이상 관리자가 강제탈퇴 시킬 경우 회원 상태값은 Y로 변경되고 삭제는 아님 /계정 사용불가) -->
   	<update id="leaveUser" parameterType="memberDto">
   		UPDATE OLLE_USER 
@@ -48,7 +57,7 @@
   	<!-- 회원 자진 탈퇴(로그인한 본인이 직접 탈퇴를 진행할 경우 db에서 user정보 삭제) -->
   	<delete id="deleteUser" parameterType="memberDto">
   		DELETE FROM OLLE_USER  
-  		WHERE USER_ID=#{user_id}
+  		WHERE USER_ID=#{user_id} AND USER_PW=#{user_pw}
   	</delete>
   	
   	<!-- 내가쓴 게시글 조회 -->

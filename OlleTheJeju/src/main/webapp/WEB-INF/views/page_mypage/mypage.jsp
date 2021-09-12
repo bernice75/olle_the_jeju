@@ -53,7 +53,7 @@
 	                <br><br>
 	                <!-- 우측, 유저 정보 form -->
 	                <form id="mypage_form" name="mypage_form" action="info_update.do" method="post">
-	                    <input type="hidden" value="${dto.user_id }">
+	                    <input type="hidden" name="mypage_form" value="${dto.user_id }">
 	                    
 	                    <div class="mb-3 row">
 	                        <label for="name" class="col-sm-3 col-form-label">이름</label>
@@ -81,13 +81,13 @@
 	                    <div class="mb-3 row">
 	                        <label for="password" class="col-sm-3 col-form-label">기존 비밀번호</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" id="password" name="password" value="">
+	                            <input type="password" class="form-control" id="password" name="password" value="">
 	                        </div>
 	                    </div>
 	                    <div class="mb-3 row">
 	                        <label for="newpassword" class="col-sm-3 col-form-label">신규 비밀번호</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" id="newpassword" name="newpassword" value="">
+	                            <input type="password" class="form-control" id="newpassword" name="newpassword" value="">
 	                        </div>
 	                    </div>
 	                    <div class="mb-3 row">
@@ -120,7 +120,7 @@
 	                    </div>
 	                    <div class="btn_group">
 	                        <input type="button" class="btn btn-primary btn-block" onclick="location.href='../page_mypage/mypageplan.html'" value="취소">
-	                        <input type="button" class="btn btn-primary btn-block" onclick="updateCheck();" value="정보수정">
+	                        <input type="submit" class="btn btn-primary btn-block" onclick="" value="정보수정">
 	                        <!-- <input type="button" class="btn btn-primary btn-block" onclick="" value="회원탈퇴"> -->
 	                        <!-- Button trigger modal -->
 	                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">회원탈퇴</button>
@@ -140,14 +140,14 @@
                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                      </div>
                      <!-- 회원탈퇴 모달창 -->
-                     <form action="MypageController" method="POST">
-                     <input type="hidden" name="command" value="userleave">
+                     <form action="mypageDelete.do" method="POST">
+                     <input type="hidden" value="${dto.user_id }">
                          <div class="modal-body" >
                              <p class="modal-text1">탈퇴 후 재 로그인이 불가능합니다.</p>
                              <p class="modal-text2">정말 탈퇴 하시겠습니까 ? 비밀번호를 입력하세요.</p>
                              <br>
                              <div class="col-sm-6">
-                                 <input type="text" class="form-control" id="leave-pw" name="leave-pw" value="${dto.user_pw }" >
+                                 <input type="text" class="form-control" id="leave-pw" name="leave-pw" value="" >
                              </div>
                              <br>
                          </div>

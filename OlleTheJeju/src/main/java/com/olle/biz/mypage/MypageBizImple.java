@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.olle.dao.member.MemberDao;
 import com.olle.dao.mypage.MypageDao;
 import com.olle.dto.member.MemberDto;
 
@@ -21,10 +22,20 @@ public class MypageBizImple implements MypageBiz{
 	}
 
 	//마이페이지 회원정보 수정
-	@Override
+	/*@Override
 	public int mypageInfoUpdate(MemberDto userUpdate) {
 		return dao.mypageInfoUpdate(userUpdate);
+	}*/
+	@Override
+	public void mypageInfoUpdate(MemberDto dto) {
+		dao.mypageInfoUpdate(dto);
 	}
+	
+	/* 다시 수정해야함
+	 * //회원정보 수정 비밀번호 체크
+		public boolean checkPw(String user_id, String user_pw) {
+			return dao.checkPw(user_id, user_pw);
+		}*/
 
 	//회원 강제 탈퇴
 	@Override
@@ -49,6 +60,8 @@ public class MypageBizImple implements MypageBiz{
 	public List<MemberDto> myDibList(String user_nick, int pageNum) {
 		return dao.myDibList(user_nick, pageNum);
 	}
+
+	
 
 	//문의사항 (실시간 채팅)
 	

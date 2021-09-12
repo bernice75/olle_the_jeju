@@ -10,7 +10,12 @@ public interface MypageBiz {
 	public MemberDto mypageInfo(String user_id);
 		
 	//마이페이지 회원정보 수정
-	public int mypageInfoUpdate(MemberDto userUpdate);
+	/*public int mypageInfoUpdate(MemberDto userUpdate);*/
+	public void mypageInfoUpdate(MemberDto dto);
+	
+	/* 다시 수정해야함
+	 * //회원정보 수정 비밀번호 체크
+	public boolean checkPw(String user_id, String user_pw);*/
 	
 	//회원 강제 탈퇴
 	public int mypageLeave(String user_id, String user_pw);

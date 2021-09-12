@@ -27,7 +27,13 @@ public class MemberController {
 	 * @return
 	 * 회원 정보를 저장한다.
 	 */
-	@RequestMapping(value="userInsert.do")
+	@RequestMapping(value="join.do")
+	public String userInsertForm() {
+		
+		return "join";
+	}
+	
+	@RequestMapping(value="register.do")
 	@ResponseBody
 	public String userInsert(MemberDto dto) {
 		
