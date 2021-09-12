@@ -22,17 +22,32 @@ CREATE TABLE OLLE_USER(
 	USER_NAME VARCHAR2(300) NOT NULL, 
 	USER_AGE NUMBER NOT NULL,
 	USER_ADDR VARCHAR2(3000)NOT NULL,
-	USER_ADDRDETAIL VARCHAR2(3000)NOT NULL, 
+	USER_ADDRDETAIL VARCHAR2(3000), 
 	USER_PHONE VARCHAR2(100) NOT NULL, 
 	USER_EMAIL VARCHAR2(200) NOT NULL, 
 	USER_MEMBER VARCHAR2(50)  NOT NULL, 
 	USER_STATUS VARCHAR2(300) NOT NULL, 
 	USER_WARNING NUMBER NOT NULL, 
 	USER_REGDATE DATE  DEFAULT SYSDATE NOT NULL, 
-	USER_SECDATE DATE  DEFAULT SYSDATE NOT NULL, 
+	USER_SECDATE DATE, 
 	USER_IMG VARCHAR2(1000) NOT NULL, 
 	USER_NICK VARCHAR2(500) NOT NULL
 );
+
+select * from olle_user;
+
+SELECT COUNT(USER_ID)
+		FROM OLLE_USER
+		WHERE USER_ID = '1234';
+
+insert into olle_user
+values('admin', 'admin', 'admin', 0, '서울','4층', '010-4568-1234', 'admin@ac.kr', '개인', 'N', 0, SYSDATE, null, 'test.jpg', 'admin');
+insert into olle_user
+values('1234', '1234', 'user12324', 24, '관악구 남부순환로 1497','1층', '010-1234-1234', '1234@naver.com', '개인', 'N', 0, SYSDATE, null, 'test.jpg', '1234');
+insert into olle_user
+values('12345', '12345', 'user123245', 24, '관악구 남부순환로 1497','1층', '010-1234-1234', '12345@naver.com', '개인', 'N', 0, SYSDATE, null, 'test.jpg', '12345');
+insert into olle_user
+values('12346', '12346', 'user123246', 24, '관악구 남부순환로 1497','1층', '010-1234-1234', '12346@naver.com', '개인', 'N', 0, SYSDATE, null, 'test.jpg', '12346');
 
 ALTER TABLE OLLE_USER ADD CONSTRAINT USER_MEMBER_CHK CHECK (USER_MEMBER IN ('개인', '사업자'));
 ALTER TABLE OLLE_USER ADD CONSTRAINT USER_WARNING_CHK CHECK(USER_WARNING < 6);
