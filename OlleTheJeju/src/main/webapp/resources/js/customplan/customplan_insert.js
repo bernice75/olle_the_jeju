@@ -122,22 +122,48 @@ function createList(obj) {
     $(obj).attr('disabled', true);
 }
 
-
-function hash(){
-	var hash = $("#hashtag").val();
-
-	var splitedArray = hash.split(',');
-	var linkedContent = '';
-
-	for(var word in splitedArray)
-	{
-	word = splitedArray[word];
-
-	if(word.indexOf(',') == 0)
-	{
-		 word = '<div>'+word+'</div>';
+function hash() {
+	var hash = $('#hashtag').val().replace(" ", ""); //해시태그 적은 값 받아오기
+	var text = $(".hashtag").val();
+	if(text == '') {
+		//hidden input에 값이 없을 경우 바로 넣어주면 된다.
+		$(".hashtag").val(hash);
+	} else {
+		//hidden input에 값이 있을 경우 합쳐서 넣어주면 된다.
+		$(".hashtag").val('');
+		var new_text = text + "," + hash;
+		$(".hashtag").val(new_text);
 	}
-	linkedContent += word+',';
+	$('#hashtag').val(''); //적었던 값 삭제
+	var arr = []; //각각의 해시태그를 저장할 배열 생성
+	arr = $(".hashtag").val().split(","); //적은 값을 나눠 배열에 저장
+	
+	if($(".hash_inner").children().length > 0) {
+		//해시태그 컨테이너에 이미 존재하는 요소가 있는지 보고 있으면 모두 삭제
+		$(".hash_inner").children().remove();
 	}
-	$(".hash_inner").append(linkedContent);
+	
+	for(var i = 0; i < arr.length; i++) {
+		var tag = document.createElement('div');
+		tag.setAttribute('class', 'tag ' + (i + 1));
+		var button = document.createElement('button');
+		button.setAttribute('class', 'button ' + (i + 1));
+		button.setAttribute('type', 'button');
+		button.setAttribute('onclick', 'deleteTag(this);');
+		$(".hash_inner").append(tag);
+		$('.tag.' + (i + 1)).text('#' + arr[i]);
+		$('.tag.' + (i + 1)).append(button);
+		$('.button.' + (i + 1)).text('x');
+	}
+}
+
+function deleteTag(obj) {
+	var text = $(obj).parent().text().substring(1, $(obj).parent().text().indexOf('x'));
+    var arr = [];
+    arr = $(".hashtag").val().split(",");
+    
+    var filterArr = arr.filter((element) => element !== text);
+    $(".hashtag").val(filterArr);
+    
+ 	$(obj).parent().remove();
 }

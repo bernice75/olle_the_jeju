@@ -3,23 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace = "member">
+<mapper namespace = "com.olle.dao.member">
 	<resultMap type="memberDto" id="memberMap">
-		<result property="user_id" column="USER_ID"/>
-		<result property="user_pw" column="USER_PW"/>
-		<result property="user_name" column="USER_NAME"/>
-		<result property="user_age" column="USER_AGE"/>
-		<result property="user_addr" column="USER_ADDR"/>
-		<result property="user_addrdetail" column="USER_ADDRDETAIL"/>
-		<result property="user_phone" column="USER_PHONE"/>
-		<result property="user_email" column="USER_EMAIL"/>
-		<result property="user_member" column="USER_MEMBER"/>
-		<result property="user_status" column="USER_STATUS"/>
-		<result property="user_warning" column="USER_WARNING"/>
-		<result property="user_regdate" column="USER_REGDATE"/>
-		<result property="user_secdate" column="USER_SECDATE"/>
-		<result property="user_img" column="USER_IMG"/>
-		<result property="user_nick" column="USER_NICK"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="userPw" column="USER_PW"/>
+		<result property="userName" column="USER_NAME"/>
+		<result property="userAge" column="USER_AGE"/>
+		<result property="userAddr" column="USER_ADDR"/>
+		<result property="userAddrdetail" column="USER_ADDRDETAIL"/>
+		<result property="userPhone" column="USER_PHONE"/>
+		<result property="userEmail" column="USER_EMAIL"/>
+		<result property="userMember" column="USER_MEMBER"/>
+		<result property="userStatus" column="USER_STATUS"/>
+		<result property="userWarning" column="USER_WARNING"/>
+		<result property="userRegdate" column="USER_REGDATE"/>
+		<result property="userSecdate" column="USER_SECDATE"/>
+		<result property="userImg" column="USER_IMG"/>
+		<result property="userNick" column="USER_NICK"/>
 	</resultMap>
 	
 	<select id="selectList" resultMap="memberMap">
@@ -30,9 +30,34 @@
 
 	</select>
 	
-	<insert id="insert" parameterType="memberDto">
-		INSERT INTO OLLE_USER
-		VALUES()
+	<insert id="userInsert" parameterType="com.olle.dto.member.MemberDto">
+		INSERT INTO OLLE_USER (
+			 USER_ID 
+			,USER_PW 
+			,USER_NAME 
+			,USER_AGE 
+			,USER_ADDR 
+			,USER_PHONE 
+			,USER_EMAIL 
+			,USER_MEMBER 
+			,USER_STATUS
+			,USER_WARNING
+			,USER_IMG
+			,USER_NICK 
+		) VALUES (
+			 #{userId}
+			,#{userPw}
+			,#{userName}
+			,#{userAge}
+			,#{userAddr}
+			,#{userPhone}
+			,#{userEmail}
+			,#{userMember}
+			,0
+			,0
+			,'test'
+			,#{userNick}
+			)
 	</insert>
 	
 	<update id="update" parameterType="memberDto">
