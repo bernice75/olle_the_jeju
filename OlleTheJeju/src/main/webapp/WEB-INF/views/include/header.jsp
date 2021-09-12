@@ -15,7 +15,7 @@
 	           	<button type="button"class="btn btn-warning" onclick="location.href='mypage_main.do'">마이페이지</button>
 	           	<button type="button"class="btn btn-warning" onclick="location.href='admin_main.do'">관리자페이지</button>
 	            <button type="button"class="btn btn-warning" onclick="location.href='login.do'">로그인</button>
-	            <button type="button" class="btn btn-info" onclick="location.href='join.do'">회원가입</button>
+	            <button type="button" class="btn btn-info" onclick="location.href='joinForm.do'">회원가입</button>
            </div>
        </div>
        <div class="nav item">

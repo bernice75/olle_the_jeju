@@ -1,34 +1,42 @@
-
-
-.col-md-6 {
-    grid-column-start: 2;
-    grid-column-end: 7;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    height: max-content;
-    position: relative;
-    min-height: 1px;
-    width: 80% !important;
+.main {
+    grid-column-start: 1;
+    grid-column-end: 9;
+    background: #F8F8FA;
 }
 
 form {
     display: block;
     box-shadow: none;
     border: 1px solid #eee;
-    margin: 0;
+    margin: 10px auto;
     outline: none;
     color: black;
+    width: 800px;
+    text-align: center;
+    background: white;
 }
 
 form fieldset {
     border: none;
     margin: 0;
-    padding: 25px 30px 5px;
+    padding: 25px 60px;
 }
 
 form section {
     margin-bottom: 20px;
+}
+
+form input, select {
+	border: 1px solid #e7e7e7;
+    box-shadow: 1px 1px 4px 2px #e0e0e0;
+}
+
+form i {
+    box-shadow: 1px 1px 4px 2px #e0e0e0;
+}
+
+form button {
+	box-shadow: 2px 2px 2px 2px #e0e0e0;
 }
 
 form header {
@@ -75,8 +83,7 @@ form .label.col {
     margin: 0;
     padding-top: 10px;
     font-size: 100%;
-    text-align: left;
-    white-space: normal;
+    text-align: center;
     color: inherit;
 }
 
