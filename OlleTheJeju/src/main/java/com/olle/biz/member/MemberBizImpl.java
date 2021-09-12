@@ -1,5 +1,7 @@
 package com.olle.biz.member;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +14,27 @@ public class MemberBizImpl implements MemberBiz{
 	@Autowired
 	private MemberDao memberDao;
 
-	/**
-	 * 회원 정보를 저장한다.
-	 */
 	@Override
 	public int userInsert(MemberDto dto) {
-		System.out.println("MemberBizImpl userInsert");
-		System.out.println(dto);
+		System.out.println("회원가입");
 		return memberDao.userInsert(dto);
+	}
+
+	@Override
+	public int idChk(String user_id) {
+		System.out.println("dao 실행 시작");
+		return memberDao.idChk(user_id);
+	}
+	
+	@Override
+	public int nickChk(String user_nick) {
+		System.out.println("dao 실행 시작");
+		return memberDao.nickChk(user_nick);
+	}
+
+	@Override
+	public List<MemberDto> userList() {
+		return null;
 	}
 
 }
