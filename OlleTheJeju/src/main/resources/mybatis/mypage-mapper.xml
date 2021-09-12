@@ -25,7 +25,7 @@
   	</resultMap>
   	
   	<!-- 단일 회원 정보 조회 -->
-  	<select id="selectOneUser" parameterType="int" resultType="memberDto">
+  	<select id="selectOneUser" parameterType="String" resultType="memberDto">
 	  	SELECT *
 	  	FROM OLLE_USER
 	  	WHERE USER_ID=#{user_id}
@@ -58,6 +58,10 @@
   	</select>
   	
   	<!-- 내가 찜한 게시글 조회 -->
+  	<select id="mydiblist" resultMap="memberMap">
+  		<!-- SELECT USER_ID, , MYTITLE, MYCONTENT, MYDATE
+  		FROM OLLE_USER -->
+  	</select>
   	
   	
   	<!-- 문의내역 채팅 -->

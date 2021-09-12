@@ -15,10 +15,10 @@ public interface MypageDao {
 	//마이페이지 회원정보 수정
 	public int mypageInfoUpdate(MemberDto userUpdate);
 	
-	//회원 강제 탈퇴
+	//회원 강제 탈퇴(관리자 권한/신고수적용)
 	public int mypageLeave(String user_id, String user_pw);
 	
-	//회원 자진 탈퇴
+	//회원 자진 탈퇴(로그인한 본인이 탈퇴시 계정삭제)
 	public int mypageDelete(String user_id, String user_pw);
 	
 	//내가 작성한 게시글 조회
