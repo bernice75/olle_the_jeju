@@ -1,7 +1,7 @@
 .main {
     grid-column-start: 1;
     grid-column-end: 9;
-    
+    background: #F8F8FA;
 }
 .main-img {
     background-image: url("../img/jeju_main04.png");

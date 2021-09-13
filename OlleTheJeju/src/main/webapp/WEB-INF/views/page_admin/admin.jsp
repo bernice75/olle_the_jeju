@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -53,15 +54,11 @@
 	                        <th>강제 탈퇴</th>
 	                        <th>수정여부</th>
 	                    </tr>
-	                    <tr>
-	                        <td>user</td>
-	                        <td>1994 / 5 / 20</td>
-	                        <td>
-	                            <select class="form-control">
-	                                <option>개인</option>
-	                                <option>사업자</option>
-	                            </select>
-	                        </td>
+	                    <c:forEach var="user" items="${userList }">
+	                    	<tr>
+	                        <td>${user.user_id }</td>
+	                        <td>${user.user_regdate }</td>
+	                        <td>${user.user_member }</td>
 	                        <td>
 	                            <select class="form-control">
 	                                <option>예</option>
@@ -72,6 +69,8 @@
 	                            <button class="btn btn-primary btn-block" onclick="">수정</button>
 	                        </td>
 	                    </tr>
+	                    </c:forEach>
+	                    
 	                </table>
 	            </div>    
 	        </div>
