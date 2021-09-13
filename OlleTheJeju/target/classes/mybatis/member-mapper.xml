@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace = "member">
-	<resultMap type="memberDto" id="memberMap">
+	<resultMap id="memberMap" type="memberDto">
 		<result property="user_id" column="USER_ID"/>
 		<result property="user_pw" column="USER_PW"/>
 		<result property="user_name" column="USER_NAME"/>
@@ -22,17 +22,32 @@
 		<result property="user_nick" column="USER_NICK"/>
 	</resultMap>
 	
+	<select id="idChk" parameterType="string" resultType="int">
+		SELECT COUNT(USER_ID)
+		FROM OLLE_USER
+		WHERE USER_NICK = #{user_id}
+	</select>
+	
+	<select id="nickChk" parameterType="string" resultType="int">
+		SELECT COUNT(USER_NICK)
+		FROM OLLE_USER
+		WHERE USER_NICK = #{user_nick}
+	</select>
+	
 	<select id="selectList" resultMap="memberMap">
-
+		SELECT *
+		FROM OLLE_USER
 	</select>
 	
-	<select id="selectOne" resultType="memberDto">
-
-	</select>
+	<select id="selectUser" parameterType="string" resultType="memberDto">
+        SELECT *
+        FROM OLLE_USER
+        WHERE USER_ID = #{user_id}
+     </select>
 	
-	<insert id="insert" parameterType="memberDto">
+	<insert id="userInsert" parameterType="memberDto">
 		INSERT INTO OLLE_USER
-		VALUES()
+		VALUES(#{user_id}, #{user_pw}, #{user_name}, #{user_age}, #{user_addr}, #{user_addrdetail}, #{user_phone}, #{user_email}, #{user_member}, 'N', 0, SYSDATE, null, 'test.jpg', #{user_nick})
 	</insert>
 	
 	<update id="update" parameterType="memberDto">

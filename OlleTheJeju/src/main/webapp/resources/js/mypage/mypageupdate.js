@@ -93,26 +93,55 @@ function addressForm() {
 	}).open();
 }
 
-//회원정보 수정 비밀번호 체크
-$(document).ready(function(){
-	function updateCheck(){
-		console.log(password);
-		var form = document.mypage_form;
-		//비밀번호 체크
-		var password = form.new_password.value;
-		
-		//8자리 이상, 숫자 포함, 영대 문자 포함, 영소 문자 포함, 특수문자 포함
-		var reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-		if(password != ""){
-			if(reg.test(password) == false){
-				alert("비밀번호는 8자리 이상, 숫자/대문자/특수 문자를 포함해야 합니다");
-				form.password.focus();
-				return false;
+ //회원정보 수정 - 기존 비밀번호 확인
+function pwChkForm() {
+	var pw = $("#password").val();
+	var newPw = $("#newpassword").val();
+	
+	if(pw == newPw) {
+		alert("기존과 같은 비밀번호는 사용할 수 없습니다.");
+		$("#newpassword").focus();
+	} else {
+		alert("새로운 비밀번호를 입력하셨습니다.");
+		$.ajax({
+			url: "newPw.do",
+			type: "POST",
+			data: {user_pw: pw, new_pw:newPw},
+			dataType: "text",
+			success: function(data){
+				if(data > 0) {
+					alert("성공적으로 변경되었습니다.");
+					location.href="mypage_main.do";
+				} else {
+					alert("변경에 오류가 있습니다.");
+				}
+			},
+			error: function(){
+			    alert("비밀번호 수정에 실패했습니다. \n 관리자에게 문의하세요.");
+			    location.href="mypage_main.do";
 			}
-		}
-		form.submit();
+		});
 	}
-});
+}
 
+//회원정보 수정
+/*$(document).ready(function(){
+	$("#updateCheck").click(function(){
+		if(confirm("수정하시겠습니까?")){
+			document.mypage_form.action="${path}/user/updateUser.do";
+			document.mypage_form.submit();
+		}
+	});
+});*/
+
+//회원탈퇴
+$(document).ready(function(){
+	$("#btnDelete").click(function(){
+		if(confirm("삭제하시겠습니까?")){
+			document.deletemodal.action="${path}/user/delete.do";
+			document.deletemodal.submit();
+		}
+	});
+});
 
 

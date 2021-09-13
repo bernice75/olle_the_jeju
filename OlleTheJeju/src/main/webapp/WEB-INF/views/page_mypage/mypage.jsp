@@ -16,6 +16,8 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+        <script src="./resources/js/mypage/mypageupdate.js" type="text/javascript"></script>
+        
 	</head>
 	<body>
 		<div class="wrapper">
@@ -26,11 +28,11 @@
 	            <div class="myp_nav_align">
 	                <p style="font-size: 22px;padding-left: 30px;">마이페이지</p>
 	                <br>
-	                <ul style="list-style: none;">
-	                    <li><a href="mypage_plan.do">나의 일정</a></li><br>
-	                    <li><a href="mypage_inquire.do">문의 내역</a></li><br>
-	                    <li><a href="mypage_main.do">회원 정보 수정</a></li><br>
-	                    <li><a href="mypage_warn.do">신고 확인</a></li><br>
+	                <ul style="list-style: none;">            
+	                    <li><a href="mypage_plan.do">나의 일정</a></li>
+	                    <li><a href="mypage_main.do">회원 정보 수정</a></li>
+	                    <li><a href="mypage_inquire.do">문의 내역</a></li>
+	                    <li><a href="mypage_warn.do">신고 확인</a></li>
 	              </ul>
 	            </div>
 	        </div>
@@ -50,13 +52,13 @@
 	                </div>
 	                <br><br>
 	                <!-- 우측, 유저 정보 form -->
-	                <form id="mypage_form" name="mypage_form" action="userController" method="post">
-	                    <input type="hidden" name="command" value="info_update">
+	                <form id="mypage_form" name="mypage_form" action="updateUser.do" method="post">
+	                    <input type="hidden" name="mypage_form" value="${dto.user_id }">
 	                    
 	                    <div class="mb-3 row">
 	                        <label for="name" class="col-sm-3 col-form-label">이름</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" id="name" value="${userdetail.name }" readonly="readonly">
+	                            <input type="text" class="form-control" id="name" value="${dto.user_name }" readonly="readonly">
 	                        </div>
 	                    </div>
 	                    
@@ -64,7 +66,7 @@
 	                    <div class="mb-3 row">
 	                        <label for="nickname" class="col-sm-3 col-form-label">닉네임</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" id="nickname" value="${userdetail.nickname }" readonly="readonly">
+	                            <input type="text" class="form-control" id="nickname" value="${dto.user_nick }" readonly="readonly">
 	                        </div>
 	                        <!--<button class="btn btn-default">변경</button>-->
 	                    </div>
@@ -72,53 +74,39 @@
 	                    <div class="mb-3 row">
 	                        <label for="id" class="col-sm-3 col-form-label">아이디</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" id="id" value="${userdetail.id }" readonly="readonly">
+	                            <input type="text" class="form-control" id="id" value="${dto.user_id }" readonly="readonly">
 	                        </div>
 	                    </div>
 	                    
 	                    <div class="mb-3 row">
 	                        <label for="password" class="col-sm-3 col-form-label">기존 비밀번호</label>
 	                        <div class="col-sm-6">
-	                            <input type="password" class="form-control" id="password" name="password" value="${userdetail.password }">
+	                            <input type="password" class="form-control" id="password" name="password" value="">
 	                        </div>
 	                    </div>
 	                    <div class="mb-3 row">
 	                        <label for="newpassword" class="col-sm-3 col-form-label">신규 비밀번호</label>
 	                        <div class="col-sm-6">
-	                            <input type="newpassword" class="form-control" id="newpassword" name="newpassword" value="${userdetail.newpassword }">
+	                            <input type="password" class="form-control" id="newpassword" name="newpassword" value="">
 	                        </div>
 	                    </div>
 	                    <div class="mb-3 row">
 	                        <label for="email" class="col-sm-3 col-form-label">이메일</label>
 	                        <div class="col-sm-6">
-	                            <input type="email" class="form-control" id="email" value="${userdetail.email }" readonly="readonly">
+	                            <input type="email" class="form-control" id="email" value="${dto.user_email }" readonly="readonly">
 	                        </div>
 	                    </div>
 	                    <div class="mb-3 row">
 	                        <label for="phone" class="col-sm-3 col-form-label">전화번호</label>
 	                        <div class="col-sm-6">
-	                            <input type="phone" class="form-control" id="phone" value="${userdetail.phone }" readonly="readonly">
+	                            <input type="text" class="form-control" id="phone" value="${dto.user_phone }" readonly="readonly">
 	                        </div>
 	                    </div>
-	                    <div class="mb-3 row">
-	                        <label for="birth" class="col-sm-3 col-form-label">생년월일</label>
-	                            <div class="col-sm-2">
-	                                <input type="year" class="form-control" id="year" value="${userdetail.year }" readonly="readonly">
-	                            </div>
-	                            <div class="col-sm-1">
-	                                <input type="month" class="form-control" id="month" value="${userdetail.month }" readonly="readonly">
-	                            </div>
-	                            <label for="month" class="col-sm-1 col-form-label">월</label>
-	                            <div class="col-sm-1">
-	                                <input type="date" class="form-control" id="date" value="${userdetail.date }" readonly="readonly">
-	                            </div>
-	                            <label for="date" class="col-sm-1 col-form-label">일</label>
-	                    </div>
-	
+	                    
 	                    <div class="mb-3 row">
 	                        <label for="address" class="col-sm-3 col-form-label">주소</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" id="address1" name="address1" value="${userdetail.address }" readonly="readonly">
+	                            <input type="text" class="form-control" id="address1" name="address1" value="${dto.user_addr }" readonly="readonly">
 	                        </div>
 	                        <div class="col-sm-2">
 	                            <input type="button" class="btn btn-primary btn-block" onclick="addressForm();" value="주소찾기">
@@ -127,49 +115,51 @@
 	                    <div class="mb-3 row">
 	                        <label for="address" class="col-sm-3 col-form-label">상세주소</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" id="address2" name="address2" value="${userdetail.address_detail }" >
+	                            <input type="text" class="form-control" id="address2" name="address2" value="${dto.user_addrdetail }" >
 	                        </div>
 	                    </div>
 	                    <div class="btn_group">
 	                        <input type="button" class="btn btn-primary btn-block" onclick="location.href='../page_mypage/mypageplan.html'" value="취소">
-	                        <input type="button" class="btn btn-primary btn-block" onclick="updateCheck();" value="정보수정">
+	                        <input type="submit" class="btn btn-primary btn-block"  value="정보수정" onclick="pwChkForm();">
 	                        <!-- <input type="button" class="btn btn-primary btn-block" onclick="" value="회원탈퇴"> -->
 	                        <!-- Button trigger modal -->
 	                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">회원탈퇴</button>
-	                        <!-- Modal 시작 -->
-	                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	                            <div class="modal-dialog">
-	                            <div class="modal-content">
-	                                <div class="modal-header">
-	                                <h5 class="modal-title" id="staticBackdropLabel">회원 탈퇴</h5>
-	                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	                                </div>
-	                                <form action="userController" method="POST">
-	                                <input type="hidden" name="command" value="userleave">
-	                                    <div class="modal-body" >
-	                                        <p class="modal-text1">탈퇴 후 재 로그인이 불가능합니다.</p>
-	                                        <p class="modal-text2">정말 탈퇴 하시겠습니까 ? 비밀번호를 입력하세요.</p>
-	                                        <br>
-	                                        <div class="col-sm-6">
-	                                            <input type="text" class="form-control" id="leave-pw" name="leave-pw" value="${userdetail.leave-pw }" >
-	                                        </div>
-	                                        <br>
-	                                    </div>
-	                                    <div class="modal-footer">
-	                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-	                                        <button type="submit" class="btn btn-primary">회원탈퇴</button>
-	                                    </div>
-	                                </form>
-	                            </div>
-	                            </div>
-	                        </div>
-	                        <!-- Modal 끝-->
+	                       
 	                    </div>
 	                    <br>
 	                </form>
 	            </div> 
 	        </main>
 	        <br><br><br><br>
+	         <!-- Modal 시작 -->
+             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                 <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                     <h5 class="modal-title" id="staticBackdropLabel">회원 탈퇴</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <!-- 회원탈퇴 모달창 -->
+                     <form name="deletemodal" action="deleteUser.do" method="POST">
+                     <input type="hidden" value="${dto.user_id }">
+                         <div class="modal-body" >
+                             <p class="modal-text1">탈퇴 후 재 로그인이 불가능합니다.</p>
+                             <p class="modal-text2">정말 탈퇴 하시겠습니까 ? 비밀번호를 입력하세요.</p>
+                             <br>
+                             <div class="col-sm-6">
+                                 <input type="text" class="form-control" id="leave-pw" name="leave-pw" value="" >
+                             </div>
+                             <br>
+                         </div>
+                         <div class="modal-footer">
+                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                             <button type="button" class="btn btn-primary" id="btnDelete">회원탈퇴</button>
+                         </div>
+                     </form>
+                 </div>
+                 </div>
+             </div>
+             <!-- Modal 끝-->
 			<jsp:include page="../include/footer.jsp"></jsp:include>
 		</div>
 	</body>

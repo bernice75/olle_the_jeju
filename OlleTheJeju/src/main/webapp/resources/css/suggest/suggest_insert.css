@@ -174,3 +174,21 @@
     width: 70px;
     margin-left: 25px;
 }
+
+.hash_inner {
+	margin-top: 5px;
+	display: flex;
+}
+.hash_inner .tag {
+	background-color: beige;
+    border-radius: 5px;
+    padding: 3px;
+}
+.hash_inner .tag:not(:last-child) {
+	margin-right: 10px;
+}
+.hash_inner .tag .button {
+	border: none;
+    background: none;
+    padding: 0 5px;
+}
