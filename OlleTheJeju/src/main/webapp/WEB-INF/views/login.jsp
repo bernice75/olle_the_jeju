@@ -19,46 +19,42 @@
 	<body>
 		<div class="wrapper">
 			<jsp:include page="include/header.jsp"></jsp:include>
-			<div class="log_main">
-                <div class="log_center">
-                    <div class="col-md-6 col-xs-10">
-                        <form>
-                            <header>네이버 아이디로 로그인</header>
-                            <hr>
-                            <fieldset>                  
-                                <section>
-                                <a href=""><img src="./resources/img/naver_login.png"></a>
-                                </section>
-                            </fieldset>
-                            <hr>
-                            <header>올레더제주 로그인</header>
-                            <fieldset>                  
-                                <section>
-                                    <div class="row">
-                                        <label class="label col col-4">아이디</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="user_id">
-                                        </div>
-                                    </div>
-                                </section>
-                                <section>
-                                    <div class="row">
-                                        <label class="label col col-4">비밀번호</label>
-                                        <div class="input-group">
-                                            <input type="password" class="form-control" name="user_pw">
-                                        </div>
-                                    </div>
-                                </section>
-                                <footer style="text-align:center">
-                                    <a class="btn-u btn-u-lg" href="">로그인</a>
-                                    <a class="btn-u btn-u-lg btn-u-default" href="">회원가입</a>
-                                    <br>
-                                    <a href="" class="find">아이디 비밀번호 찾기</a>
-                                </footer>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
+			<div class="main">
+                <form>
+                    <header>네이버 아이디로 로그인</header>
+                    <hr>
+                    <fieldset>                  
+                        <section>
+                        <a href=""><img src="./resources/img/naver_login.png"></a>
+                        </section>
+                    </fieldset>
+                    <hr>
+                    <header>올레더제주 로그인</header>
+                    <fieldset>                  
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">아이디</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="user_id">
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <div class="row">
+                                <label class="label col col-4">비밀번호</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" name="user_pw">
+                                </div>
+                            </div>
+                        </section>
+                        <div style="text-align:center">
+                        	<a type="button" class="btn-u btn-u-lg" onclick="">로그인</a>
+                        	<a type="button" class="btn-u btn-u-lg" onclick="location.href='joinForm.do'">회원가입</a>
+                            <br><br>
+                            <a href="" class="find">아이디 비밀번호 찾기</a>
+                        </div>
+                    </fieldset>
+                </form>
             </div>
 			<jsp:include page="include/footer.jsp"></jsp:include>
 		</div>

@@ -54,24 +54,6 @@ img {
     width: 200px;
 }
 
-form section {
-    margin-bottom: 20px;
-}
-
-.btn-u {
-    border: 0;
-    color: #fff;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: 400;
-    padding: 7px 13px;
-    position: relative;
-    background: #72c02c;
-    white-space: nowrap;
-    display: inline-block;
-    text-decoration: none;
-}
-
 .row {
     display: flex;
     flex-direction: row;
@@ -130,6 +112,19 @@ form .icon-append, form .icon-prepend {
     width: 66.67%;
 }
 
+.btn-u {
+    border: 0;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 400;
+    padding: 7px 13px;
+    position: relative;
+    background: #72c02c;
+    white-space: nowrap;
+    display: inline-block;
+    text-decoration: none;
+}
 .btn-block:hover {
     font-weight: bold;
     color: royalblue;

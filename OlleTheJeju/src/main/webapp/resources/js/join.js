@@ -119,6 +119,54 @@ function findAddr() {
 	}).open();
 }
 
+//메일 인증
+function emailChkForm() {
+	var emailChk = $("#emailChk")[0].title;
+	var userEmail = $("#user_email").val().trim();
+	
+	if(userEmail == null || userEmail == "") {
+		alert("메일이 입력되지 않았습니다.");
+		$("#user_email").focus();
+	} else {
+		if(!confirm("작성하신 메일이 '" + userEmail + "' 이 맞으십니까?")) {
+			//아니오를 클릭했을 경우 로직
+			alert("메일을 다시 입력해주세요.");
+			$("#user_email").focus();
+		} else {
+			//예를 클릭했을 경우 로직
+			alert("작성하신 메일로 인증번호가 전송됩니다.");
+			$('#user_email_chk').prop('readonly', false);
+			
+			$.ajax({
+				url: "emailChk.do",
+				type: "POST",
+				data: { user_email: userEmail },
+				success: function(data){
+					$("#email_number").val(data);
+					alert("메일이 발송되었습니다. \n 인증번호를 입력해주세요.");
+				},
+				error: function(){
+				    alert("메일 발송에 실패했습니다. \n 관리자에게 문의하세요.");
+				}
+			});
+		}
+	}
+}
+//인증번호 체크
+function emailNumberChk() {
+	var emailChk = $('#user_email_chk').val().trim();
+	var emailChkNumber = $("#email_number").val();
+					
+	if(emailChkNumber == emailChk) {
+		alert("인증번호가 일치합니다. \n 인증이 완료되었습니다.");
+		$('#user_email_chk').prop('readonly', true);
+		$("#emailChk")[0].title = "y";
+	} else {
+		alert("인증번호가 일치하지 않습니다. \n 다시 입력해주세요.");
+		$('#user_email_chk').focus();
+	}
+}
+
 // 회원가입 정보 저장
 function btn_usrSave() {
 	var agree = $("#agree").val();
@@ -126,8 +174,15 @@ function btn_usrSave() {
 	if(agree == "on") {
 		var idTitle = $("#user_id_chk")[0].title;
 		var nickChk = $("#user_nick_chk")[0].title;
-		if(idTitle == "n" || nickChk == "n") {
-			alert("id 또는 닉네임 중복확인 처리가 되지 않았습니다.");
+		var emailChk = $("#emailChk")[0].title;
+		if(idTitle == "n") {
+			alert("id 중복확인 처리가 되지 않았습니다.");
+		}
+		if(nickChk == "n") {
+			alert("닉네임 중복확인 처리가 되지 않았습니다.");
+		}
+		if(emailChk == "n") {
+			alert("메일인증이 처리되지 않았습니다.");
 		}
 		const userId = $("#user_id").val();	// 아이디
 		const userPw = $("#user_pw").val();	// 비밀번호
@@ -194,5 +249,4 @@ function btn_usrSave() {
 	} else {
 		alert("약관에 동의해주세요.");
 	}
-	
 }

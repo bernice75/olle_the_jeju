@@ -119,8 +119,10 @@
                                     <label class="input">
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="user_email" name="user_email" onclick="idChkForm();">
+                                            <input type="text" class="form-control" id="user_email_chk" readonly="readonly" onchange="emailNumberChk();">
                                             <span class="input-group-btn">
-                                                <button onclick="" id="emailChk" class="btn-u btn-u-red" type="button">이메일 인증</button>
+                                            	<button class="btn-u btn-u-red" type="button" id="emailChk" title="n" onclick="emailChkForm();">이메일인증</button>
+                                            	<input type="hidden" id="email_number">
                                             </span>
                                         </div>
                                     </label>
