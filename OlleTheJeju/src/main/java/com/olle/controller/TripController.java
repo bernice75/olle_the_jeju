@@ -1,6 +1,7 @@
 package com.olle.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,12 +41,11 @@ public class TripController {
 	public String trip_jeju(Model model) {
 		logger.info("TRIP_JEJU : SELECT ALL");
 		
-		List dia = tb.getDialect("1");
-		List kor = tb.getKor("1");
+		Map<String, List> result = tb.getJeju("1");
 		
 		model.addAttribute("page", "1");
-		model.addAttribute("dia", dia);
-		model.addAttribute("kor", kor);
+		model.addAttribute("dia", result.get("dia"));
+		model.addAttribute("kor", result.get("kor"));
 		
 		return "page_trip/trip_jeju";
 	}
@@ -54,16 +54,11 @@ public class TripController {
 	public String trip_jeju_page(Model model, String page) {
 		logger.info("TRIP_JEJU : SELECT "+page+" PAGE");
 		
-		List dia = tb.getDialect(page);
-		List kor = tb.getKor(page);
-		
-		for(int i=0; i<dia.size(); i++) {
-			System.out.println(dia.get(i));
-		}
+		Map<String, List> result = tb.getJeju(page);
 		
 		model.addAttribute("page", page);
-		model.addAttribute("dia", dia);
-		model.addAttribute("kor", kor);
+		model.addAttribute("dia", result.get("dia"));
+		model.addAttribute("kor", result.get("kor"));
 		
 		return "page_trip/trip_jeju";
 	}
@@ -72,11 +67,11 @@ public class TripController {
 	public String trip_jeju_search(Model model, String search) {
 		logger.info("TRIP_JEJU : SEARCH "+search);
 		
-		List result = tb.getSearch(search);
+		Map<String, List> result = tb.getSearch(search);
 		
-		model.addAttribute("page","1");
-		model.addAttribute("dia", result.get(0));
-		model.addAttribute("kor",result.get(1));
+		model.addAttribute("page","999");
+		model.addAttribute("dia", result.get("dia"));
+		model.addAttribute("kor", result.get("kor"));
 		
 		return "page_trip/trip_jeju";
 	}

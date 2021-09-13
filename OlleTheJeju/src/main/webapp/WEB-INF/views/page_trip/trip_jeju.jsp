@@ -12,7 +12,7 @@
 		<meta charset="UTF-8">
 		<title>관광정보 방언사전</title>
 		<link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
-        <link href="./resources/css/trip/trip_jeju.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/trip/trip_jeju.css?var=1" rel="stylesheet" type="text/css" />
         <link href="./resources/css/footer.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -20,62 +20,10 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        <script type="text/javascript">
-        	$(function(){
-        		var p = $("#page").val();
-        			page(p);
-       		 });
-        	
-     	   	function page(p){
-     	   		$(".page").empty();
-     	   		
-     	   		if((p%10)==0){ 
-     	   			var i=p-9;
-     	   		}else if((p%10)>=1){
-     	   			var i = (Math.floor(p/10)*10)+1;
-     	   		}
-     	   		var j = i+10;
-     	   		
-    			for(i; i<j; i++){
-    				if(i>716){//716 마지막페이지
-    					break;
-    				
-    				}else if(i==p){
-    					$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>"+i+"</a>");
-    				}else{
-    					$(".page").append("<a style='margin:3px;' href='trip_jeju_page.do?page="+i+"'>"+i+"</a>");
-    				}
-    			}	
-        	}
-     	   	
-     	   	function prev(){
-     	   		var p = $("#page").val();
-     	   		if(p>10){
-     		   		var first = parseInt($(".page").children('a:eq(0)').text())-1;
- 	  	 			window.location.href= 'trip_jeju_page.do?page='+first;
-     	   		}else{
-     	   			alert("첫번째 페이지 입니다.");
-     	   		}
-     	   	}
-     	   	
-     	   	function next(){
-     	   		var p = $("#page").val();
-     	   		if(p<711){
-     		   		var last = parseInt($(".page").children('a:eq(9)').text())+1;
- 	  	 			window.location.href= 'trip_jeju_page.do?page='+last;
-     	   		}else{
-     	   			alert("마지막 페이지 입니다.");
-     	   		}
-     	   	}
-     	   	function search(){
-     	   		var search = $("#search").val();
-     	   		location.href='trip_jeju_search.do?search='+search;
-     	   		
-     	   	}
-        </script>
+		<script src="./resources/js/trip/trip_jeju.js" type="text/javascript"></script>     	
     </head>
 	<body>
-	<input type="hidden" value="${page}" id="page">
+		<input type="hidden" value="${page}" id="page">
 		<div class="wrapper">
 			<jsp:include page="../include/header.jsp"></jsp:include>
 			<div class="main">
@@ -114,36 +62,29 @@
                                     뜻풀이
                                 </th>
                             </tr>
-                          <c:choose>
-                        	  <c:when test="${fn:length(dia)<5 }">
-							    	 <tr>
-                                		<td style="font-family:'새굴림'; height:55px;">${dia} </td>
-                              		 	<td style="font-family:'새굴림'; height:55px;">${kor}</td>
-                            		 </tr>                        	 
-                        	  	<c:forEach var="val" begin="0" end="${10-fn:length(dia)}">
-							    	 <tr>
-                                		<td style="font-family:'새굴림'; height:55px;"> </td>
-                              		 	<td style="font-family:'새굴림'; height:55px;"></td>
-                            		 </tr>
-                            	</c:forEach>                        
-                         	 </c:when>
-                         	 <c:when test="${fn:length(dia)>5 }">  
-                          		<c:forEach var="val" begin="0" end="${fn:length(dia)-1}">
-                            			<tr>
-                                			<td style="font-family:'새굴림';">${dia[val]} </td>
-                              	 		 	<td style="font-family:'새굴림';">${kor[val]}</td>
+							<c:choose>
+								<c:when test="${fn:length(dia) ne 0 }">
+									<c:forEach var="val" begin="0" end="${fn:length(dia)-1}">
+									    <tr class="remove">
+                                			<td style="font-family:'새굴림'; height:55px;" >${dia[val]} </td>
+                              	 		 	<td style="font-family`:'새굴림'; height:55px;" >${kor[val]}</td>
                             			</tr>
-                          	  </c:forEach>
-                         </c:when>
-    					 </c:choose>
+                            		</c:forEach>
+								</c:when>
+								<c:otherwise>
+										<tr>
+                                			<td style="font-family:'새굴림'; height:55px;" colspan="2">검색결과가 없습니다.</td>
+                            			</tr>
+								</c:otherwise>
+							</c:choose>
                         </table>
                     </div>
                 </div>
                 <br><br><br>
                 <div class="paging">
-                			<a href="#" onclick="prev();">&lt;&lt;</a>
-							<span class="page"></span>
-                			<a href="#" onclick="next();">&gt;&gt;</a>
+                		<a href="#" onclick="prev();">&lt;&lt;</a>
+						<span class="page"></span>
+                		<a href="#" onclick="next();">&gt;&gt;</a>
                 </div>
                 <br><br><br><br>
 			</div>
