@@ -1,94 +1,90 @@
-.log_container {
-    display: grid;
-    color: white;
-    width: 100%;
-    height: 100%;
-}
-
-.log_container{
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 0.2fr 1fr 10fr 3fr;
-}
-.log_logo{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    background: royalblue;
-    text-align: center;
-}
-
-.log_logRegi{
-    grid-column-start: 3;
-    grid-column-end: 9;
-    background: coral;
-}
-
-.log_nav{
+.main {
     grid-column-start: 1;
     grid-column-end: 9;
-    background: green;
+    background: #F8F8FA;
 }
-
-.log_main{
-    grid-column-start: 1;
-    grid-column-end: 9;
-    text-align: center;
-
-}
-
-.log_footer{
-    grid-column-start: 1;
-    grid-column-end: 9;
-    background: cadetblue;
-}
-
-.login_img{
-    border: 1px solid rgba(0,0 ,0, 0.1);
-    padding: 20px;
-    width: 500px;
-}
-
 form {
-    border: 1px solid rgba(0,0 ,0, 0.1);
+    display: block;
+    box-shadow: none;
+    border: 1px solid #eee;
+    margin: 10px auto;
+    outline: none;
+    color: black;
+    width: 500px;
+    text-align: center;
+    background: white;
+}
+form fieldset {
+    border: none;
+    margin: 0;
+    padding: 25px 0;
+}
+form section {
+    margin-bottom: 20px;
+}
+form input, select {
+	border: 1px solid #e7e7e7;
+    box-shadow: 1px 1px 4px 2px #e0e0e0;
+}
+form button {
+	box-shadow: 2px 2px 2px 2px #e0e0e0;
 }
 
 form header {
-    color: black;
-    padding: 5px 0;
+    text-align: center;
+    color: inherit;
+    display: block;
+    font-size: 20px;
+    background: #fff;
+    font-weight: 400;
+    padding: 8px 30px;
 }
 
-form hr {
-    margin-top: 10px !important;
-    margin-bottom: 10px !important;
+img {
+    vertical-align: middle;
+    width: 200px;
 }
 
 .row {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start;
 }
 
-.row label {
-    color: black;
-    width: 30%;
+.input-group {
+	width: 40% !important;
 }
 
-.row .col-8 {
-    width: 70%;
+form .label.col {
+    width: 33.33%;
+    margin: 0;
+    padding-top: 10px;
+    font-size: 100%;
+    text-align: end;
+    color: inherit;
 }
 
-.log_center .col-xs-10 {
-    width : 100%;
+form .input, form .select, form .textarea, form .radio, form .checkbox, form .toggle, form .button {
+    position: relative;
+    display: block;
 }
 
-.loginbutton{
-    border: 1px solid rgba(0,0 ,0, 0.1);
-    padding: 15px;
-    width: 500px;
+form .input {
+    width: 100%;
+}
+
+form input, form select {
+    border-radius: 0 !important;
+    border: 0 !important;
+}
+
+.col-8 {
+    width: 66.67%;
 }
 
 .find{
-    font-size: 10px;
+    font-size: 15px;
+    text-decoration: none;
 }
 
 .id{
@@ -111,4 +107,22 @@ form hr {
 form img {
     vertical-align: middle;
     width: 200px;
+}
+
+.btn-u {
+    border: 0;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 400;
+    padding: 7px 13px;
+    position: relative;
+    background: #72c02c;
+    white-space: nowrap;
+    display: inline-block;
+    text-decoration: none;
+}
+.btn-block:hover {
+    font-weight: bold;
+    color: royalblue;
 }
