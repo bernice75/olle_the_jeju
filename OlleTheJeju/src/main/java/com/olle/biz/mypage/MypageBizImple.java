@@ -15,27 +15,27 @@ public class MypageBizImple implements MypageBiz{
 	@Autowired
 	private MypageDao dao;
 	
-	//마이페이지 회원정보 조회
+	//회원정보 조회
 	@Override
 	public MemberDto mypageInfo(String user_id) {
 		return dao.mypageInfo(user_id);
 	}
 
-	//마이페이지 회원정보 수정
+	//회원정보 수정
 	/*@Override
-	public int mypageInfoUpdate(MemberDto userUpdate) {
-		return dao.mypageInfoUpdate(userUpdate);
+	public int userUpdate(MemberDto userUpdate) {
+		return dao.userUpdate(userUpdate);
 	}*/
 	@Override
-	public void mypageInfoUpdate(MemberDto dto) {
-		dao.mypageInfoUpdate(dto);
+	public int newPw(String user_pw, String new_pw) {
+		return dao.newPw(user_pw, new_pw);
 	}
 	
-	/* 다시 수정해야함
-	 * //회원정보 수정 비밀번호 체크
-		public boolean checkPw(String user_id, String user_pw) {
-			return dao.checkPw(user_id, user_pw);
-		}*/
+	//회원정보 수정 및 삭제를 위한 비밀번호체크
+	@Override
+	public boolean checkPw(String user_id, String user_pw) {
+		return dao.checkPw(user_id, user_pw);
+	}
 
 	//회원 강제 탈퇴
 	@Override
@@ -44,9 +44,12 @@ public class MypageBizImple implements MypageBiz{
 	}
 
 	//회원 자진 탈퇴
-	@Override
+	/*@Override
 	public int mypageDelete(String user_id, String user_pw) {
 		return dao.mypageDelete(user_id, user_pw);
+	}*/
+	public void deleteUser(String user_id) {
+		dao.deleteUser(user_id);
 	}
 
 	//내가 작성한 게시글 조회
@@ -60,6 +63,8 @@ public class MypageBizImple implements MypageBiz{
 	public List<MemberDto> myDibList(String user_nick, int pageNum) {
 		return dao.myDibList(user_nick, pageNum);
 	}
+
+	
 
 	
 

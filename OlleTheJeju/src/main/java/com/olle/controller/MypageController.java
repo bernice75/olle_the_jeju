@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.olle.biz.mypage.MypageBiz;
@@ -33,12 +35,12 @@ public class MypageController {
 		return "page_mypage/mypage";
 	}
 	
-	//회원정보 수정
-	/*@RequestMapping(value="info_update.do", method=RequestMethod.GET)
-	public String mypage_update(HttpSession session, Model model, MemberDto userUpdate) {
-		logger.info("info_update");
+	//회원정보 수정(수정전 내용인데 사용할지도 모르니 남겨놓음)
+	/*@RequestMapping(value="userUpdate.do", method=RequestMethod.GET)
+	public String userUpdate(HttpSession session, Model model, MemberDto userUpdate) {
+		logger.info("userUpdate");
 		
-		int res = biz.mypageInfoUpdate(userUpdate);
+		int res = biz.userUpdate(userUpdate);
 		
 		if(res>0) {
 			return "redirect:mypage_plan.do";
@@ -46,19 +48,17 @@ public class MypageController {
 			return "redirect:mypage_main.do?user_id="+userUpdate.getUser_id();
 		}
 	}*/
-	@RequestMapping(value="info_update.do", method=RequestMethod.GET)
-	public String update(MemberDto dto){
-		logger.info("updateUser");
+	@RequestMapping(value="newPw.do", method=RequestMethod.POST)
+	@ResponseBody
+	public int newPw(String user_pw, String new_pw) {
+		int res = 0;
 		
-		biz.mypageInfoUpdate(dto);
-		System.out.println("회원정보 수정 성공");
+		res = biz.newPw(user_pw, new_pw);
 		
-		return "redirect:mypage_plan.do";
+		return res;
 	}
 	
-	
-	/* 다시 수정해야함
-	 * //회원정보 수정 비밀번호 체크
+	/* //회원정보 수정 및 삭제 비밀번호 체크
 	@RequestMapping(value="info_update.do", method=RequestMethod.GET)
 	public String mypage_updateChk(@ModelAttribute MemberDto dto, Model model) {
 		boolean result = biz.checkPw(dto.getUser_id(), dto.getUser_pw());
@@ -79,26 +79,24 @@ public class MypageController {
 	//회원 강제 탈퇴
 	
 	//회원 자진 탈퇴 (삭제)
-	@RequestMapping(value="mypageDelete.do", method=RequestMethod.GET)
-	public String mypageDelete(String user_id, String user_pw, MemberDto dto, HttpSession session, RedirectAttributes rttr) {
-		logger.info("mypageDelete");
-		//세션에 있는 member를 가져와 member 변수에 넣어준다
-		MemberDto member = (MemberDto)session.getAttribute("member");
+	@RequestMapping(value="deleteUser.do", method= {RequestMethod.GET, RequestMethod.POST})
+	//@RequestParam : get or post 방식으로 전달된 변수값
+	public String deleteUser(@RequestParam String user_id, @RequestParam String user_pw, Model model) {
+		logger.info("deleteUser");
+		System.out.println("삭제");
+		//비밀번호 체크
+		boolean result = biz.checkPw(user_id, user_pw);
 		
-		//세션에 있는 비밀번호
-		String sessionPass = member.getUser_pw();
-		
-		//dto로 들어오는 비밀번호
-		String dtoPass = dto.getUser_pw();
-		
-		//세션에 있는 비밀번호와 비교
-		if(!(sessionPass.equals(dtoPass))){
-			rttr.addFlashAttribute("msg", false);
-			return "redirect: home.do";
+		//비밀번호가 맞으면 리턴
+		if(result) {
+			biz.deleteUser(user_id);
+			return "home.do";
+		}else { //비밀번호가 틀릴경우 메시지 출력
+			model.addAttribute("message", "비밀번호 불일치");
+			model.addAttribute("dto", biz.mypageInfo(user_id));
+			return "mypage_main.do?user_id="+user_id;
 		}
-		biz.mypageDelete(user_id, user_pw);
-		session.invalidate();
-		return "redirect: home.do";
+		
 	}
 	
 	//내가쓴 게시글 조회

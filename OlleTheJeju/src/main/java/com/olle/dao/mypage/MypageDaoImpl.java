@@ -35,37 +35,41 @@ public class MypageDaoImpl implements MypageDao {
 
 	//회원정보 수정
 	/*@Override
-	public int mypageInfoUpdate(MemberDto userUpdate) {
+	public int userUpdate(MemberDto userUpdate) {
 		int res = 0;
 		
 		try {
-			res = sqlSession.update(NAMESPACE+"updateUser");
+			res = sqlSession.update(NAMESPACE+"userUpdate");
 		} catch (Exception e) {
-			System.out.println("[error] : mypageInfoUpdate");
+			System.out.println("[error] : userUpdate");
 			e.printStackTrace();
 		}
 		return res;
 	}*/
 	@Override
-	public void mypageInfoUpdate(MemberDto dto) {
-		sqlSession.update(NAMESPACE+"updateUser", dto);
-	}
-
-	/* 다시 수정해야함
-	 * //회원정보 수정 비밀번호 체크
-	public boolean checkPw(String user_id, String user_pw) {
+	public int newPw(String user_pw, String new_pw) {
+		MemberDto dto = new MemberDto();
+		dto.setUser_pw(user_pw);
+		dto.setUser_id(new_pw);
 		
+		int res = 0;
+		
+		res = sqlSession.update(NAMESPACE + "newPw", dto);
+		return res;
+	};
+	
+	//회원정보 수정 및 삭제를 위한 비밀번호체크
+	@Override
+	public boolean checkPw(String user_id, String user_pw) {
 		boolean result = false;
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("user_id", user_id);
 		map.put("user_pw", user_pw);
 		
 		int count = sqlSession.selectOne(NAMESPACE+"checkPw", map);
-		if(count == 1)result = true;
-		
+		if(count == 1) result = true;
 		return result;
-	}*/
-	
+	}
 	
 	//회원강제 탈퇴(관리자 권한/신고수적용)
 	@Override
@@ -82,7 +86,7 @@ public class MypageDaoImpl implements MypageDao {
 	}
 
 	//회원 자진탈퇴(로그인한 본인이 탈퇴시 계정삭제)
-	@Override
+	/*@Override
 	public int mypageDelete(String user_id, String user_pw) {
 		int res = 0;
 		try {
@@ -92,6 +96,10 @@ public class MypageDaoImpl implements MypageDao {
 			e.printStackTrace();
 		}
 		return res;
+	}*/
+	@Override
+	public void deleteUser(String user_id) {
+		sqlSession.delete(NAMESPACE+"deleteUser", user_id);
 	}
 
 	//내가 작성한 게시글 조회

@@ -16,7 +16,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        
+        <script src="./resources/js/mypage/mypageupdate.js" type="text/javascript"></script>
         
 	</head>
 	<body>
@@ -52,7 +52,7 @@
 	                </div>
 	                <br><br>
 	                <!-- 우측, 유저 정보 form -->
-	                <form id="mypage_form" name="mypage_form" action="info_update.do" method="post">
+	                <form id="mypage_form" name="mypage_form" action="updateUser.do" method="post">
 	                    <input type="hidden" name="mypage_form" value="${dto.user_id }">
 	                    
 	                    <div class="mb-3 row">
@@ -120,7 +120,7 @@
 	                    </div>
 	                    <div class="btn_group">
 	                        <input type="button" class="btn btn-primary btn-block" onclick="location.href='../page_mypage/mypageplan.html'" value="취소">
-	                        <input type="submit" class="btn btn-primary btn-block" onclick="" value="정보수정">
+	                        <input type="submit" class="btn btn-primary btn-block"  value="정보수정" onclick="pwChkForm();">
 	                        <!-- <input type="button" class="btn btn-primary btn-block" onclick="" value="회원탈퇴"> -->
 	                        <!-- Button trigger modal -->
 	                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">회원탈퇴</button>
@@ -140,7 +140,7 @@
                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                      </div>
                      <!-- 회원탈퇴 모달창 -->
-                     <form action="mypageDelete.do" method="POST">
+                     <form name="deletemodal" action="deleteUser.do" method="POST">
                      <input type="hidden" value="${dto.user_id }">
                          <div class="modal-body" >
                              <p class="modal-text1">탈퇴 후 재 로그인이 불가능합니다.</p>
@@ -153,7 +153,7 @@
                          </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                             <button type="submit" class="btn btn-primary">회원탈퇴</button>
+                             <button type="button" class="btn btn-primary" id="btnDelete">회원탈퇴</button>
                          </div>
                      </form>
                  </div>
