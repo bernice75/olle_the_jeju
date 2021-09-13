@@ -6,7 +6,7 @@
   <!-- dao 인터페이스에서 작성한 namespace 작성 -->
   <mapper namespace="user">
   	<!--config.xml에서 Alias MypageDto를 별칭 mypageDto로 지정  -->
-  	<resultMap type="memberDto" id="mypageMap">
+  	<resultMap type="memberDto" id="memberMap">
   		<result property="user_id" column="USER_ID"></result>
   		<result property="user_pw" column="USER_PW"></result>
   		<result property="user_name" column="USER_NAME"></result>
@@ -25,18 +25,36 @@
   	</resultMap>
   	
   	<!-- 단일 회원 정보 조회 -->
-  	<select id="selectOneUser" parameterType="int" resultType="memberDto">
+  	<select id="selectOneUser" parameterType="String" resultType="memberDto">
 	  	SELECT *
 	  	FROM OLLE_USER
 	  	WHERE USER_ID=#{user_id}
   	</select>
   	
+  	
   	<!-- 회원 정보 수정 -->
-  	<update id="updateUser" parameterType="memberDto">
+  	<!-- <update id="updateUser" parameterType="memberDto">
   		UPDATE OLLE_USER
   		SET USER_PW=#{user_pw}, USER_ADDR=#{user_addr}, USER_ADDRDETAIL=#{user_addrdetail} 
   		WHERE USER_ID=#{user_id}
+  	</update> -->
+  	
+  	
+  	<!-- 비밀번호 수정 -->
+  	<update id="newPw" parameterType="memberDto">
+  		UPDATE OLLE_USER
+  		SET USER_PW = #{user_id}
+  		WHERE USER_PW = #{user_pw}
   	</update>
+  	
+  	
+  	<!-- 회원정보 수정 및 삭제를 위한 비밀번호체크 -->
+  	<select id="checkPw" resultType="int">
+  		SELECT COUNT(*)
+  		FROM OLLE_USER
+  		WHERE USER_ID=#{user_id} AND USER_PW=#{user_pw}
+  	</select>
+  	
   	
   	<!-- 회원 강제 탈퇴 (신고수가 5회이상 관리자가 강제탈퇴 시킬 경우 회원 상태값은 Y로 변경되고 삭제는 아님 /계정 사용불가) -->
   	<update id="leaveUser" parameterType="memberDto">
@@ -48,16 +66,20 @@
   	<!-- 회원 자진 탈퇴(로그인한 본인이 직접 탈퇴를 진행할 경우 db에서 user정보 삭제) -->
   	<delete id="deleteUser" parameterType="memberDto">
   		DELETE FROM OLLE_USER  
-  		WHERE USER_ID=#{user_id}
+  		WHERE USER_ID=#{user_id} AND USER_PW=#{user_pw}
   	</delete>
   	
   	<!-- 내가쓴 게시글 조회 -->
-  	<select id="mywritelist" resultMap="mypageMap">
+  	<select id="mywritelist" resultMap="memberMap">
   		<!-- SELECT USER_ID, , MYTITLE, MYCONTENT, MYDATE
   		FROM OLLE_USER -->
   	</select>
   	
   	<!-- 내가 찜한 게시글 조회 -->
+  	<select id="mydiblist" resultMap="memberMap">
+  		<!-- SELECT USER_ID, , MYTITLE, MYCONTENT, MYDATE
+  		FROM OLLE_USER -->
+  	</select>
   	
   	
   	<!-- 문의내역 채팅 -->
