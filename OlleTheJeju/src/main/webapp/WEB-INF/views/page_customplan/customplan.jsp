@@ -33,7 +33,7 @@
                         <br>
                         <p class="main-img-box-p2">나만의 일정을 모두와 공유하는</p>
                         <p class="main-img-box-p2">함께하는 JEJU 여행!!</p>
-                        <input class="btn btn-primary" type="button" value="나만의 일정 만들기" onclick="location.href='customplan_loginChk.do'">
+                        <input class="btn btn-primary" type="button" value="나만의 일정 만들기" onclick="location.href='customplan_insert.do'">
                     </div>
                 </div>
 

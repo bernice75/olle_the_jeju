@@ -34,15 +34,4 @@ public class CustomplanController {
 		return "page_customplan/customplan_insert";
 	}
 	
-	//로그인 여부, 멤버 여부 검사
-	@RequestMapping(value = "customplan_loginChk.do", method = RequestMethod.GET)
-	public String customplan_loginChk(Model model) {
-		
-		String id = (String) session.getAttribute("user_id");
-		logger.info("회원 id: " + id);
-		
-		MemberDto dto = MemberBiz.idChk(id);
-		
-		return null;
-	}
 }
