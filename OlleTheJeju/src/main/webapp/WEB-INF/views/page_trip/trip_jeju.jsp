@@ -20,61 +20,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        <script type="text/javascript">
-        	$(function(){
-        		var p = $("#page").val();
-        			page(p);
-       		 });
-        	
-     	   	function page(p){
-     	   		$(".page").empty();
-     	   		
-     	   		if((p%10)==0){ 
-     	   			var i=p-9;
-     	   		}else if((p%10)>=1){
-     	   			var i = (Math.floor(p/10)*10)+1;
-     	   		}
-     	   		var j = i+10;
-     	   		
-    			for(i; i<j; i++){
-    				if(i>716&&p!=999){//716 마지막페이지
-    					break;
-    				}else if(i==p){
-    					$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>"+i+"</a>");
-    				}else if(p==999){
-    	     	   		$(".page").append("<a style='margin:3px; text-decoration:underline !important;'>1</a>");
-    	     	   		break;
-    				}else{
-    					$(".page").append("<a style='margin:3px;' href='trip_jeju_page.do?page="+i+"'>"+i+"</a>");
-    				}
-    			}	
-        	}
-     	   	
-     	   	function prev(){
-     	   		var p = $("#page").val();
-     	   		if(p>10&&p!=999){
-     		   		var first = parseInt($(".page").children('a:eq(0)').text())-1;
- 	  	 			window.location.href= 'trip_jeju_page.do?page='+first;
-     	   		}else{
-     	   			alert("첫번째 페이지 입니다.");
-     	   		}
-     	   	}
-     	   	
-     	   	function next(){
-     	   		var p = $("#page").val();
-     	   		if(p<711){
-     		   		var last = parseInt($(".page").children('a:eq(9)').text())+1;
- 	  	 			window.location.href= 'trip_jeju_page.do?page='+last;
-     	   		}else{
-     	   			alert("마지막 페이지 입니다.");
-     	   		}
-     	   	}
-     	   	function search(){
-     	   		var search = $("#search").val();
-     	   		location.href='trip_jeju_search.do?search='+search;
-     	   		
-     	   	}
-        </script>
+		<script src="./resources/js/trip/trip_jeju.js" type="text/javascript"></script>     	
     </head>
 	<body>
 		<input type="hidden" value="${page}" id="page">
