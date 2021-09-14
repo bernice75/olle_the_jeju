@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,9 +16,10 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        
+        <script src="./resources/js/trip/trip_jeju.js" type="text/javascript"></script>
     </head>
 	<body>
+		<input type="hidden" value="${page}" id="page">
 		<div class="wrapper">
 			<jsp:include page="../include/header.jsp"></jsp:include>
 			<div class="main">
@@ -34,71 +37,49 @@
                     <div class="menu1">관광명소</div>
                     <div class="menu2">착한가격 업소</div>
                     <div class="menu3">맛집 15선</div>
-                    <div class="menu4">방언 사전</div>
+                    <div class="menu4" onclick="locationn.href='trip_jeju.do'">방언 사전</div>
                 </div>
                 <br>
                 <div class="search">
-                    <input class="form-control search1" type="search" placeholder="검색어 입력">
-                    <button class="btn btn-outline-secondary search2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    <input class="form-control search1" id="search" type="search" placeholder="검색어 입력">
+                    <button class="btn btn-outline-secondary search2"onclick="search();"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
                 <br>
                 <div class="desc">
                     <div class="dialect">
+                    	<small style="grid-column-start: 1; grid-column-end: 2;">* 아래아가 안보일 경우: 새굴림 폰트 설치</small>
                         <table class="table">
                             <tr class="table-secondary">
-                                <th>
-                                    방언
+                                <th style="width: 50%; height:55px;">
+                                   	 방언
                                 </th>
-                                <th>
-                                    뜻풀이
+                                <th style="width: 50%; height:55px;">
+                                	 뜻풀이
                                 </th>
                             </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
-                            <tr>
-                                <td>혼저옵서예</td>
-                                <td>어서오세요</td>
-                            </tr>
+                            <c:choose>
+								<c:when test="${fn:length(dia) ne 0 }">
+									<c:forEach var="val" begin="0" end="${fn:length(dia)-1}">
+									    <tr class="remove">
+                                			<td style="font-family:'새굴림'; height:55px;" >${dia[val]} </td>
+                              	 		 	<td style="font-family`:'새굴림'; height:55px;" >${kor[val]}</td>
+                            			</tr>
+                            		</c:forEach>
+								</c:when>
+								<c:otherwise>
+										<tr>
+                                			<td style="font-family:'새굴림'; height:55px;" colspan="2">검색결과가 없습니다.</td>
+                            			</tr>
+								</c:otherwise>
+							</c:choose>
                         </table>
                     </div>
                 </div>
                 <br><br><br>
                 <div class="paging">
-                    페이징 처리
+                		<a href="#" onclick="prev();">&lt;&lt;</a>
+						<span class="page"></span>
+                		<a href="#" onclick="next();">&gt;&gt;</a>
                 </div>
                 <br><br><br><br>
 			</div>

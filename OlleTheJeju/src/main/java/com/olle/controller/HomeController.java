@@ -3,7 +3,6 @@ package com.olle.controller;
 import java.util.Properties;
 import java.util.Random;
 
-import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -11,22 +10,33 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 public class HomeController {
 	
 	@RequestMapping(value = "home.do", method = RequestMethod.GET)
-	public String home() {
+	public String home(HttpServletRequest req, HttpSession session) {
+		String user_id = req.getParameter("user_id");
+		
+		if(user_id == null || user_id == "") {
+			session.setAttribute("idChk", false);
+		} else {
+			session.setAttribute("idChk", true);
+			session.setAttribute("user_id", user_id);
+		}
 		return "home";
 	}
 	
 	@RequestMapping(value = "loginForm.do", method = RequestMethod.GET)
-	public String login() {
+	public String loginForm() {
 		return "login";
 	}
 	
@@ -40,8 +50,8 @@ public class HomeController {
 	public String emailChk(String user_email) {
 		//메일 서버 생성
 		String host = "smtp.naver.com";
-		final String user = "ollejeju_lsj"; // 자신의 네이버 계정('@naver.com'은 적지 말 것)
-		final String password = "ollejeju_1234!!";// 자신의 네이버 패스워드
+		final String user = "bernice159"; // 자신의 네이버 계정('@naver.com'은 적지 말 것)
+		final String password = "alfla112233!";// 자신의 네이버 패스워드
 		int port = 465;
 		// 메일 받을 주소
 		System.out.println("user_email: " + user_email);

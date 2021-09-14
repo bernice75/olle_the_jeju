@@ -37,4 +37,8 @@ public class MemberBizImpl implements MemberBiz{
 		return null;
 	}
 
+	@Override
+	public String login(String user_id, String user_pw) {
+		return memberDao.login(user_id, user_pw);
+	}
 }
