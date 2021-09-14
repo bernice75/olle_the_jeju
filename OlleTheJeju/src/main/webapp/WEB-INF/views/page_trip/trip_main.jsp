@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -33,7 +34,7 @@
                     <div class="menu1">관광명소</div>
                     <div class="menu2">착한가격 업소</div>
                     <div class="menu3">맛집 15선</div>
-                    <div class="menu4">방언 사전</div>
+                    <div class="menu4" onclick="location.href='trip_jeju.do'">방언 사전</div>
                 </div>
                 <br><br>
                 <div class="nail">
@@ -90,10 +91,14 @@
                     </div>
                 </div>
                 <br>
-                <div class="write">
-                    <button class="btn btn-outline-secondary" onclick="location.href='trip_insert.do'">글등록</button>
-                </div>
-                <br>
+                <c:choose>
+                	<c:when test="${sessionScope.user_id eq 'admin' }">
+                		<div class="write">
+		                    <button class="btn btn-outline-secondary" onclick="location.href='trip_insert.do'">글등록</button>
+		                </div>
+		                <br><br>
+                	</c:when>
+                </c:choose>
                 <div class="paging">
                     1 | 2 | 3 | 4 | 5 
                 </div>

@@ -10,28 +10,17 @@ import com.olle.biz.member.MemberBiz;
 import com.olle.dto.member.MemberDto;
 
 import java.io.IOException;
-import java.lang.reflect.Member;
-import java.util.Date;
-import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class MemberController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
 	@Autowired
 	private MemberBiz memberBiz;
 	
-	/**
-	 * @param dto
-	 * @return
-	 * 회원 정보를 저장한다.
-	 */
+	//회원가입
 	@RequestMapping(value="userInsert.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String userInsert(String user_id, String user_pw, String user_name, int user_age, String user_addr,
@@ -52,6 +41,32 @@ public class MemberController {
 		memberBiz.userInsert(dto);	// 회원 정보를 저장
 		
 		return "loginForm.do";
+	}
+	
+	//로그인
+	@RequestMapping(value = "login.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String login(String user_id, String user_pw, HttpServletRequest request) throws IOException {
+		String res = memberBiz.login(user_id, user_pw);
+		HttpSession session = request.getSession();
+
+		if(res == null || res == "") {
+			session.setAttribute("loginChk", false);
+		} else {
+			session.setAttribute("loginChk", true);
+	        session.setAttribute("user_id", user_id);
+		}
+		
+		return res;
+	}
+	
+	//로그아웃
+	@RequestMapping(value = "logout.do", method = RequestMethod.POST)
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		
+		return "redirect:home.do";
 	}
 	
 	//아이디 중복체크

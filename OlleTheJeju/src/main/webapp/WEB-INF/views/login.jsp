@@ -14,13 +14,13 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-
+		<script src="./resources/js/login.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div class="wrapper">
 			<jsp:include page="include/header.jsp"></jsp:include>
 			<div class="main">
-                <form>
+                <form action="login.do" method="POST">
                     <header>네이버 아이디로 로그인</header>
                     <hr>
                     <fieldset>                  
@@ -29,13 +29,13 @@
                         </section>
                     </fieldset>
                     <hr>
-                    <header>올레더제주 로그인</header>
+                    <header>OLLE THE JEJU 로그인</header>
                     <fieldset>                  
                         <section>
                             <div class="row">
                                 <label class="label col col-4">아이디</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="user_id">
+                                    <input type="text" class="form-control" name="user_id" id="user_id">
                                 </div>
                             </div>
                         </section>
@@ -43,12 +43,12 @@
                             <div class="row">
                                 <label class="label col col-4">비밀번호</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" name="user_pw">
+                                    <input type="password" class="form-control" name="user_pw" id="user_pw" autocomplete="off">
                                 </div>
                             </div>
                         </section>
                         <div style="text-align:center">
-                        	<a type="button" class="btn-u btn-u-lg" onclick="">로그인</a>
+                        	<a type="button" class="btn-u btn-u-lg" onclick="loginForm();">로그인</a>
                         	<a type="button" class="btn-u btn-u-lg" onclick="location.href='joinForm.do'">회원가입</a>
                             <br><br>
                             <a href="" class="find">아이디 비밀번호 찾기</a>

@@ -85,4 +85,15 @@ public class MemberDaoImpl implements MemberDao {
 		return userList;
 	}
 
+	@Override
+	public String login(String user_id, String user_pw) {
+		MemberDto dto = new MemberDto();
+		dto.setUser_id(user_id);
+		dto.setUser_pw(user_pw);
+		
+		String res = sqlSession.selectOne(NAMESPACE + "login", dto);
+		
+		return res;
+	}
+
 }
