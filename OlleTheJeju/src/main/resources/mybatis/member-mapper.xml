@@ -34,6 +34,12 @@
 		WHERE USER_NICK = #{user_nick}
 	</select>
 	
+	<select id="login" parameterType="memberDto" resultType="String">
+		SELECT USER_ID
+		FROM OLLE_USER
+		WHERE USER_ID = #{user_id} AND USER_PW = #{user_pw}
+	</select>
+	
 	<select id="selectList" resultMap="memberMap">
 		SELECT *
 		FROM OLLE_USER

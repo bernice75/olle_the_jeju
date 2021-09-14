@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,10 +13,24 @@
        </div>
        <div class="header item">
            <div class="headerbtn">
-	           	<button type="button"class="btn btn-warning" onclick="location.href='mypage_main.do'">마이페이지</button>
-	           	<button type="button"class="btn btn-warning" onclick="location.href='admin_main.do'">관리자페이지</button>
-	            <button type="button"class="btn btn-warning" onclick="location.href='loginForm.do'">로그인</button>
-	            <button type="button" class="btn btn-info" onclick="location.href='joinForm.do'">회원가입</button>
+           <c:choose>
+	           	<c:when test="${sessionScope.idChk == false }">
+	           		<button type="button"class="btn btn-warning" onclick="location.href='loginForm.do'">로그인</button>
+	            	<button type="button" class="btn btn-info" onclick="location.href='joinForm.do'">회원가입</button>
+	           	</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${sessionScope.user_id eq 'admin' }">
+							<button type="button"class="btn btn-warning" onclick="location.href='admin_main.do'">관리자페이지</button>
+							<button type="button"class="btn btn-warning" onclick="logout();">로그아웃</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button"class="btn btn-warning" onclick="location.href='mypage_main.do?user_id=${sessionScope.user_id}'">${sessionScope.user_id}님의 마이페이지</button>
+							<button type="button"class="btn btn-warning" onclick="logout();">로그아웃</button>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+           </c:choose>
            </div>
        </div>
        <div class="nav item">
@@ -40,4 +55,13 @@
            </ul>
        </div>
 	</body>
+	<script type="text/javascript">
+		function logout() {
+			if(confirm("정말 로그아웃 하시겠습니까?")) {
+				//예 눌렀을 경우
+				alert("정상적으로 로그아웃 되었습니다.");
+				location.href="home.do";
+			}
+		}
+	</script>
 </html>
