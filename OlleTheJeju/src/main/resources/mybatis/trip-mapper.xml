@@ -18,8 +18,10 @@
 		<result property="trip_push" column="TRIP_PUSH"/>
 	</resultMap>
 	
-	<select id="selectList" resultMap="tripMap">
-
+	<select id="placeList" resultMap="tripMap">
+		SELECT * 
+		FROM OLLE_TRIP
+		WHERE TRIP_KATEGORIE = '명소'
 	</select>
 	
 	<select id="selectOne" resultType="tripDto">
@@ -28,7 +30,7 @@
 	
 	<insert id="insert" parameterType="tripDto">
 		INSERT INTO OLLE_TRIP
-		VALUES()
+		VALUES(TRIPSEQ.NEXTVAL, #{trip_kategorie},#{trip_title},#{trip_content},'admin',SYSDATE,'nail',#{trip_addr},#{trip_phone},#{trip_detail},'0','0')
 	</insert>
 	
 	<update id="update" parameterType="tripDto">
