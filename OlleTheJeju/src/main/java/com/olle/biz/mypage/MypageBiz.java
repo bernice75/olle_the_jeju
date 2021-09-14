@@ -18,14 +18,13 @@ public interface MypageBiz {
 	public boolean checkPw(String user_id, String user_pw);
 	
 	//회원 강제 탈퇴
-	public int mypageLeave(String user_id, String user_pw);
+	public int mypageLeave(String user_id, int user_warning);
 	
 	//회원 자진 탈퇴
-	/*public int mypageDelete(String user_id, String user_pw);*/
-	public void deleteUser(String user_id);
+	public int deleteUser(String user_id, String user_pw);
 	
 	//내가 작성한 게시글 조회
-	public List<MemberDto> myWriteList(String user_nick, int pageNum);
+	public List<MemberDto> myWriteList(String user_id, int pageNum);
 	
 	//내가 찜한 게시글 조회 
 	public List<MemberDto> myDibList(String user_nick, int pageNum);
@@ -33,5 +32,5 @@ public interface MypageBiz {
 	//문의사항 (실시간 채팅)
 	
 	//신고확인
-
+	public MemberDto mypageWarn(String user_id);
 }

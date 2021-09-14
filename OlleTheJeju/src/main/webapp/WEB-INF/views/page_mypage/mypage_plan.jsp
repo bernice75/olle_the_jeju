@@ -67,7 +67,7 @@
 	                        <br>
 	                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;29 </span>
 	                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
-	                        <span class="thum_text_span2"style="font-size: 12px;">신고수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
+	                        <span class="thum_text_span2"style="font-size: 12px;">조회수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
 	                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
 	                    </div>
 	                </div>
@@ -92,7 +92,7 @@
 	                        <br>
 	                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;29 </span>
 	                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
-	                        <span class="thum_text_span2"style="font-size: 12px;">신고수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
+	                        <span class="thum_text_span2"style="font-size: 12px;">조회수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
 	                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
 	                    </div>
 	                </div>
@@ -117,7 +117,7 @@
 	                        <br>
 	                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;29 </span>
 	                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
-	                        <span class="thum_text_span2"style="font-size: 12px;">신고수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
+	                        <span class="thum_text_span2"style="font-size: 12px;">조회수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
 	                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
 	                    </div>
 	                </div>
@@ -174,7 +174,7 @@
 	                        <br>
 	                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;29 </span>
 	                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
-	                        <span class="thum_text_span2"style="font-size: 12px;">신고수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
+	                        <span class="thum_text_span2"style="font-size: 12px;">조회수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
 	                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
 	                    </div>
 	                </div>
@@ -199,7 +199,7 @@
 	                        <br>
 	                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;29 </span>
 	                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
-	                        <span class="thum_text_span2"style="font-size: 12px;">신고수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
+	                        <span class="thum_text_span2"style="font-size: 12px;">조회수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
 	                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
 	                    </div>
 	                </div>
@@ -224,7 +224,7 @@
 	                        <br>
 	                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;29 </span>
 	                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
-	                        <span class="thum_text_span2"style="font-size: 12px;">신고수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
+	                        <span class="thum_text_span2"style="font-size: 12px;">조회수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
 	                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
 	                    </div>
 	                </div>

@@ -73,7 +73,7 @@ public class MypageDaoImpl implements MypageDao {
 	
 	//회원강제 탈퇴(관리자 권한/신고수적용)
 	@Override
-	public int mypageLeave(String user_id, String user_pw) {
+	public int mypageLeave(String user_id, int user_warning) {
 		int res = 0;
 		
 		try {
@@ -86,25 +86,19 @@ public class MypageDaoImpl implements MypageDao {
 	}
 
 	//회원 자진탈퇴(로그인한 본인이 탈퇴시 계정삭제)
-	/*@Override
-	public int mypageDelete(String user_id, String user_pw) {
-		int res = 0;
-		try {
-			res = sqlSession.delete(NAMESPACE+"deleteUser", user_id);
-		} catch (Exception e) {
-			System.out.println("[error]  :  mypageDelete");
-			e.printStackTrace();
-		}
-		return res;
-	}*/
 	@Override
-	public void deleteUser(String user_id) {
-		sqlSession.delete(NAMESPACE+"deleteUser", user_id);
+	public int deleteUser(String user_id, String user_pw) {
+		MemberDto dto = new MemberDto();
+		dto.setUser_id(user_id);
+		dto.setUser_pw(user_pw);
+		
+		int res = sqlSession.delete(NAMESPACE+"userDelete", dto);
+		return res;
 	}
 
 	//내가 작성한 게시글 조회
 	@Override
-	public List<MemberDto> myWriteList(String user_nick, int pageNum) {
+	public List<MemberDto> myWriteList(String user_id, int pageNum) {
 		List<MemberDto> list = new ArrayList<MemberDto>();
 		
 		try {
@@ -118,7 +112,7 @@ public class MypageDaoImpl implements MypageDao {
 
 	//내가 찜한 게시글 조회 
 	@Override
-	public List<MemberDto> myDibList(String user_nick, int pageNum) {
+	public List<MemberDto> myDibList(String user_id, int pageNum) {
 		List<MemberDto> diblist = new ArrayList<MemberDto>();
 		
 		try {
@@ -130,10 +124,20 @@ public class MypageDaoImpl implements MypageDao {
 		return diblist;
 	}
 
-	
-
 	//문의사항 (실시간 채팅)
 	
 	//신고확인
-
+	@Override
+	public MemberDto mypageWarn(String user_id) {
+		
+		MemberDto dto = null;
+		
+		try {
+			dto = sqlSession.selectOne(NAMESPACE+"mypageWarn", user_id);
+		} catch (Exception e) {
+			System.out.println("[error] : mypageWarn");
+			e.printStackTrace();
+		}
+		return dto;
+	}
 }

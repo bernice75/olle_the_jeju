@@ -50,9 +50,9 @@
 	
 	                <div class="warn_box">
 	                    <div class="user_warn_text">
-	                        <p>현재 <!-- user id jstl처리  --><b>user</b> 님의 신고 된 게시글 횟수는</p>
+	                        <p>현재 <!-- user id jstl처리  --><b>${dto.user_name}</b> 님의 신고 된 게시글 횟수는</p>
 	                        <p style="color: red;">
-	                            <!-- user 경고 횟수 jstl처리  -->2회
+	                            <!-- user 경고 횟수 jstl처리  -->${dto.user_warning }회
 	                        </p>
 	                        <p>입니다.</p>
 	                    </div>

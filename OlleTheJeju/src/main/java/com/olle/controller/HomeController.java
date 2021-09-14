@@ -40,8 +40,8 @@ public class HomeController {
 	public String emailChk(String user_email) {
 		//메일 서버 생성
 		String host = "smtp.naver.com";
-		final String user = ""; // 자신의 네이버 계정('@naver.com'은 적지 말 것)
-		final String password = "";// 자신의 네이버 패스워드
+		final String user = "ollejeju_lsj"; // 자신의 네이버 계정('@naver.com'은 적지 말 것)
+		final String password = "ollejeju_1234!!";// 자신의 네이버 패스워드
 		int port = 465;
 		// 메일 받을 주소
 		System.out.println("user_email: " + user_email);

@@ -39,37 +39,33 @@ public class MypageBizImple implements MypageBiz{
 
 	//회원 강제 탈퇴
 	@Override
-	public int mypageLeave(String user_id, String user_pw) {
-		return dao.mypageLeave(user_id, user_pw);
+	public int mypageLeave(String user_id, int user_warning) {
+		return dao.mypageLeave(user_id, user_warning);
 	}
 
 	//회원 자진 탈퇴
-	/*@Override
-	public int mypageDelete(String user_id, String user_pw) {
-		return dao.mypageDelete(user_id, user_pw);
-	}*/
-	public void deleteUser(String user_id) {
-		dao.deleteUser(user_id);
+	public int deleteUser(String user_id, String user_pw) {
+		return dao.deleteUser(user_id, user_pw);
 	}
 
 	//내가 작성한 게시글 조회
 	@Override
-	public List<MemberDto> myWriteList(String user_nick, int pageNum) {
-		return dao.myWriteList(user_nick, pageNum);
+	public List<MemberDto> myWriteList(String user_id, int pageNum) {
+		return dao.myWriteList(user_id, pageNum);
 	}
 
 	//내가 찜한 게시글 조회 
 	@Override
-	public List<MemberDto> myDibList(String user_nick, int pageNum) {
-		return dao.myDibList(user_nick, pageNum);
+	public List<MemberDto> myDibList(String user_id, int pageNum) {
+		return dao.myDibList(user_id, pageNum);
 	}
-
-	
-
-	
 
 	//문의사항 (실시간 채팅)
 	
 	//신고확인
+	@Override
+	public MemberDto mypageWarn(String user_id) {
+		return dao.mypageWarn(user_id);
+	}
 	
 }

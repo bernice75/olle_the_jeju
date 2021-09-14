@@ -37,9 +37,11 @@
 	            </div>
 	        </div>
 	        <!-- mypage 좌측 nav 끝 -->
-	        <!-- 유저 정보 입력 -->
+	        <!--  우측, 유저 정보 입력 -->
 	        <main class="main item">
 	            <div class="user_update">
+	            <form id="mypage_form" name="mypage_form" action="updateUser.do" method="post">
+	        	<input type="hidden" name="mypage_form" value="${dto.user_id }">
 	                <div class="update_title">
 	                    <p style="font-size: 25px;"><b>회원 정보 수정</b></p>
 	                </div>
@@ -51,10 +53,6 @@
 	                    <p style="font-size: 11px;">1mb 이하의 JPEG파일만 등록 가능합니다</p>
 	                </div>
 	                <br><br>
-	                <!-- 우측, 유저 정보 form -->
-	                <form id="mypage_form" name="mypage_form" action="updateUser.do" method="post">
-	                    <input type="hidden" name="mypage_form" value="${dto.user_id }">
-	                    
 	                    <div class="mb-3 row">
 	                        <label for="name" class="col-sm-3 col-form-label">이름</label>
 	                        <div class="col-sm-6">
@@ -123,12 +121,11 @@
 	                        <input type="submit" class="btn btn-primary btn-block"  value="정보수정" onclick="pwChkForm();">
 	                        <!-- <input type="button" class="btn btn-primary btn-block" onclick="" value="회원탈퇴"> -->
 	                        <!-- Button trigger modal -->
-	                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">회원탈퇴</button>
-	                       
+	                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">회원탈퇴</button> 
 	                    </div>
 	                    <br>
-	                </form>
-	            </div> 
+	                    </form>
+	            	</div> 
 	        </main>
 	        <br><br><br><br>
 	         <!-- Modal 시작 -->
@@ -140,7 +137,7 @@
                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                      </div>
                      <!-- 회원탈퇴 모달창 -->
-                     <form name="deletemodal" action="deleteUser.do" method="POST">
+                     <form name="deletemodal">
                      <input type="hidden" value="${dto.user_id }">
                          <div class="modal-body" >
                              <p class="modal-text1">탈퇴 후 재 로그인이 불가능합니다.</p>
@@ -153,7 +150,7 @@
                          </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                             <button type="button" class="btn btn-primary" id="btnDelete">회원탈퇴</button>
+                             <button type="button" class="btn btn-primary" id="btnDelete" onclick="userDelete();">회원탈퇴</button>
                          </div>
                      </form>
                  </div>
