@@ -53,23 +53,23 @@
                             <fieldset>
                                 <section>
                                     <label for="trip_title">장소명 : </label>
-                                    <input type="text" class="form-control" name="trip_title">
+                                    <input type="text" class="form-control" name="trip_title" required>
                                 </section>
                                 <section>
                                     <label for="trip_content">기본정보 : </label>
-                                    <textarea rows="8" cols="40" class="form-control" name="trip_content"></textarea>
+                                    <textarea rows="8" cols="40" class="form-control" name="trip_content" required></textarea>
                                 </section>
                                 <section>
                                     <label for="trip_addr">주소 : </label>
-                                    <input type="text" class="form-control" name="trip_addr">
+                                    <input type="text" class="form-control" name="trip_addr" required>
                                 </section>
                                 <section>
                                     <label for="trip_phone">전화번호 : </label>
-                                    <input type="tel" class="form-control" name="trip_phone">
+                                    <input type="tel" class="form-control" name="trip_phone" required>
                                 </section>
                                 <section>
                                     <label for="hash_content">카테고리 : </label>
-                                    <select name="trip_kategorie" class="form-control">
+                                    <select name="trip_kategorie" class="form-control" required>
                                     	<option value="명소">관광</option>
                                     	<option value="가격">착한가격업소</option>
                                     	<option value="맛집">맛집</option>

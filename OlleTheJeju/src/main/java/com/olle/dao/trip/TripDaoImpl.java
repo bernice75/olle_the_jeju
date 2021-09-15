@@ -139,33 +139,102 @@ public class TripDaoImpl implements TripDao {
 	}
 	
 	@Override
-	public List selectList(String kategorie) {
-		List result = new ArrayList();
-		
-		String sql = "";
+	public List<TripDto> selectList(String kategorie, int page) {
+		List<TripDto> result = new ArrayList<TripDto>();
+		int pageP = (page-1)*6;
+		int pageN = page*6;
+		System.out.println("pageP: "+pageP);
+		System.out.println("pageN: "+pageN);
+		Map map = new HashMap();
+		map.put("pageP", pageP);
+		map.put("pageN", pageN);
 		
 		if(kategorie.equals("명소")) {
-			sql = "placeList";
+			map.put("name", "명소");
 		}else if(kategorie.equals("맛집")) {
-			sql= "eatList";
-		}else if(kategorie.equals("착한가격")) {
-			sql = "goodList";
+			map.put("name", "맛집");
+		}else if(kategorie.equals("가격")) {
+			map.put("name", "가격");
+		}else {
+			map.put("name", "명소");
 		}
+		System.out.println(map.get("name"));
 		try {
-			result = sqlSession.selectList(NAMESPACE+sql);
-		
+			result = sqlSession.selectList(NAMESPACE+"selectList",map);
+			System.out.println("실행"+result.size());
+			
 		} catch (Exception e) {
-			System.out.println("[ERROR : PLACELIST]");
+			System.out.println("[ERROR : SELECT_TRIP_LIST]");
 			e.printStackTrace();
 		}
 		
 		
 		return result;
 	}
+	
+	@Override
+	public int getAllCount(String kategorie) {
+		int cnt=0;
+		try {
+			cnt = sqlSession.selectOne(NAMESPACE+"count", kategorie);
+		} catch (Exception e) {
+			System.out.println("[ERROR : COUNT]");
+			e.printStackTrace();
+		}
+		return cnt;
+	}
+	
+	@Override
+	public TripDto selectOne(int trip_num) {
+		TripDto dto = null;
+		
+		try {
+			dto = sqlSession.selectOne(NAMESPACE+"selectOne",trip_num);
+			sqlSession.update(NAMESPACE+"viewsUpdate",trip_num);
+		} catch (Exception e) {
+			System.out.println("[ERROR : SELECT_TRIP_ONE]");
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
 
 	@Override
-	public TripDto selectOne() {
-		// TODO Auto-generated method stub
-		return null;
+	public int update(TripDto dto) {
+		int res=0;
+		
+		try {
+			res = sqlSession.update(NAMESPACE+"update",dto);
+		} catch (Exception e) {
+			System.out.println("[ERROR: TRIP_UPDATE]");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int delete(int trip_num) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.delete(NAMESPACE+"delete",trip_num);
+		} catch (Exception e) {
+			System.out.println("[ERROR : TRIP_DELETE]");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	@Override
+	public void likeUpdate(int trip_num) {
+		int res = 0;
+		try {
+			res = sqlSession.update(NAMESPACE+"likeUpdate",trip_num);
+		}catch(Exception e) {
+			System.out.println("[ERROR : TRIP_LIKE]");
+			e.printStackTrace();
+		}
 	}
 }

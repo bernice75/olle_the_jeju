@@ -18,14 +18,29 @@
 		<result property="trip_push" column="TRIP_PUSH"/>
 	</resultMap>
 	
-	<select id="placeList" resultMap="tripMap">
+	<select id="selectList" resultMap="tripMap">
+	<![CDATA[
 		SELECT * 
+		FROM (SELECT ROWNUM AS ROW_NUM, A.* 
+    	    FROM (SELECT * 
+                FROM OLLE_TRIP
+                WHERE TRIP_KATEGORIE =#{name}
+                ORDER BY TRIP_NUM DESC)
+     	   A) 
+		WHERE ROW_NUM<=#{pageN} AND ROW_NUM>#{pageP}]]>
+		
+	</select>
+	
+	<select id="count" resultType="int" parameterType="String">
+		SELECT COUNT(*)
 		FROM OLLE_TRIP
-		WHERE TRIP_KATEGORIE = '명소'
+		WHERE TRIP_KATEGORIE=#{kategorie}
 	</select>
 	
 	<select id="selectOne" resultType="tripDto">
-
+		SELECT *
+		FROM OLLE_TRIP
+		WHERE TRIP_NUM=#{trip_num}
 	</select>
 	
 	<insert id="insert" parameterType="tripDto">
@@ -35,9 +50,16 @@
 	
 	<update id="update" parameterType="tripDto">
 		UPDATE OLLE_TRIP
-		SET 
+		SET TRIP_KATEGORIE=#{trip_kategorie},TRIP_TITLE=#{trip_title},TRIP_CONTENT=#{trip_content},TRIP_ADDR=#{trip_addr},TRIP_PHONE=#{trip_phone},TRIP_DETAIL=#{trip_detail} WHERE TRIP_NUM=#{trip_num}
 	</update>
-	
+	<update id="viewsUpdate" parameterType="int">
+		UPDATE OLLE_TRIP
+		SET TRIP_VIEWS=(SELECT TRIP_VIEWS FROM OLLE_TRIP WHERE TRIP_NUM=#{trip_num})+1 WHERE TRIP_NUM=#{trip_num}
+	</update>
+	<update id="likeUpdate" parameterType="int">
+		UPDATE OLLE_TRIP
+		SET TRIP_PUSH=(SELECT TRIP_PUSH FROM OLLE_TRIP WHERE TRIP_NUM=#{trip_num})+1 WHERE TRIP_NUM=#{trip_num}	
+	</update>
 	<delete id="delete" parameterType="int">
 		DELETE FROM OLLE_TRIP
 		WHERE TRIP_NUM = #{trip_num}

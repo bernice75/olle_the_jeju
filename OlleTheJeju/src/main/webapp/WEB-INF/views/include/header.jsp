@@ -22,7 +22,7 @@
            <ul class="navi">
                <li><a href="home.do">Home</a></li>
                <li>
-                   <a href="trip_main.do">관광일정</a>
+                   <a href="trip_main.do?kategorie=명소&page=1">관광일정</a>
                </li>
                <li>
                    <a href="suggest_main.do">추천일정</a>

@@ -38,10 +38,10 @@
                 </div>
                 <br><br>
                 <div class="menu">
-                    <div class="menu1">관광명소</div>
-                    <div class="menu2">착한가격 업소</div>
-                    <div class="menu3">맛집 15선</div>
-                    <div class="menu4">방언 사전</div>
+                    <div class="menu1"><a href="trip_main.do?kategorie=명소&page=1" style="color:black;">관광명소</a></div>
+                    <div class="menu2"><a href="trip_main.do?kategorie=가격&page=1" style="color:black;"> 착한가격 업소</a></div>
+                    <div class="menu3"><a href="trip_main.do?kategorie=맛집&page=1" style="color:black;">맛집 15선</a></div>
+                    <div class="menu4" onclick='location.href="trip_jeju.do"'>방언 사전</div>
                 </div>
                 <br>
                 <div class="search">

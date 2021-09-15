@@ -32,7 +32,7 @@
                 </div>
                 <br><br>
                 <div class="nail">
-                    <div class="nail1" onclick="location.href='trip_main.do'">
+                    <div class="nail1" onclick="location.href='trip_main.do?kategorie=명소&page=1'">
                         <div class="nail1-text">관광일정</div>
                     </div>
                     <div class="nail2" onclick="location.href='suggest_main.do'">
