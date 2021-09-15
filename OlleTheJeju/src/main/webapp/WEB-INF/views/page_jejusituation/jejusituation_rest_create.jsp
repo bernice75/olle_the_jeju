@@ -22,6 +22,8 @@
                 <br>
                 <br>
                 <br>
+                <form action="registerStore.do" method="post" encType="multipart/form-data">
+                <input type="hidden" name="writer" value="${user.user_name }"/>
                 <!-- 썸네일 -->
                 <div class="nail-first">
                     <div class="nail1">
@@ -33,7 +35,7 @@
                             <table class="table">
                                 <tr>
                                     <th>상호명 :</th>
-                                    <td><input type="text" name="company"></td>
+                                    <td><input type="text" name="name"></td>
                                 </tr>
                                 <tr>
                                     <th>전화번호 :</th>
@@ -93,6 +95,7 @@
                     <input id="btn1" type="submit" name="create" value="등록">
                     <input id="btn2" type="button" name="cancel" value="취소">
                 </div>
+                </form>
             </div>
             
         </div>
