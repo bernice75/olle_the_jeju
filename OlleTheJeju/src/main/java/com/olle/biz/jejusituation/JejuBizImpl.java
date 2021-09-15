@@ -2,14 +2,13 @@ package com.olle.biz.jejusituation;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -17,10 +16,18 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.olle.dao.jejusituation.JejuDao;
+import com.olle.dto.etc.ImgDto;
 import com.olle.dto.jejusituation.CoronaDto;
+import com.olle.dto.jejusituation.JejuDto;
+import com.olle.dto.jejusituation.menu.MenuDto;
 
 @Service
 public class JejuBizImpl implements JejuBiz{
+	
+	@Autowired
+	private JejuDao dao;
+	
 	//코로나 정보 가져오기
 	@Override
 	public List<CoronaDto> searchData() {
@@ -116,5 +123,26 @@ public class JejuBizImpl implements JejuBiz{
 		  }
 		  return val.getNodeValue();
 	  }
+
+
+	@Override
+	public int getMaxJejuDtoNum() {
+		// TODO Auto-generated method stub
+		return dao.getMaxJejuDtoNum();
+	}
+
+
+	@Override
+	public int saveStore(JejuDto dto) {
+		// TODO Auto-generated method stub
+		return dao.saveStore(dto);
+	}
+
+
+	@Override
+	public int saveStore(JejuDto dto, ImgDto img, List<MenuDto> list) {
+		// TODO Auto-generated method stub
+		return dao.saveStore(dto, img, list);
+	}
 
 }

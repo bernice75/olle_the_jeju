@@ -41,4 +41,9 @@ public class MemberBizImpl implements MemberBiz{
 	public String login(String user_id, String user_pw) {
 		return memberDao.login(user_id, user_pw);
 	}
+	@Override
+	public MemberDto selectUser(String user_id) {
+		// TODO Auto-generated method stub
+		return memberDao.selectUser(user_id);
+	}
 }
