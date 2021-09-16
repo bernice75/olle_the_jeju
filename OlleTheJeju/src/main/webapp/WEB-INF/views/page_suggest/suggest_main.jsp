@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -103,10 +104,14 @@
                     </div>
                 </div>
                 <br>
-                <div class="write">
-                    <button class="btn btn-outline-secondary" onclick="location.href='suggest_insert.do'">글등록</button>
-                </div>
-                <br><br>
+                <c:choose>
+                	<c:when test="${sessionScope.user_id eq 'admin' }">
+                		<div class="write">
+		                    <button class="btn btn-outline-secondary" onclick="location.href='suggest_insert.do'">글등록</button>
+		                </div>
+		                <br><br>
+                	</c:when>
+                </c:choose>
                 <div class="paging">
                     페이징 처리
                 </div>
