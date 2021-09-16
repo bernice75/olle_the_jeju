@@ -32,6 +32,7 @@
 }
 .menu div:hover {
     background: lightgray;
+    cursor: pointer;
 }
 .search{
     text-align: center;

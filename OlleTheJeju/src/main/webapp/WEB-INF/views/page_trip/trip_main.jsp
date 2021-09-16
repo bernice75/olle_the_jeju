@@ -4,7 +4,7 @@
 <%@ page import="com.olle.dto.trip.TripDto" %>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ page import="com.olle.dao.trip.Paging" %>
+<%@ page import="com.olle.dto.trip.Paging" %>
 <!DOCTYPE html>
 <html>
 	<head>

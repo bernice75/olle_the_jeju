@@ -1,4 +1,4 @@
-package com.olle.dao.trip;
+package com.olle.dto.trip;
 
 public class Paging {
 	private int page; //현재페이지(get)
