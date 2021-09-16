@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -15,8 +18,222 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script src="./resources/js/customplan/customplan_insert.js" type="text/javascript"></script>
+		<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx142479165b1048a5b99ae1b5a05f5d1b"></script>
+		<script type="text/javascript">
+			var map;
+			
+			// 페이지가 로딩이 된 후 호출하는 함수입니다.
+			function initTmap(){
+				// map 생성
+				// Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다
+				map = new Tmapv2.Map("map_div", {
+					center: new Tmapv2.LatLng(33.506336, 126.49514),// 지도 초기 좌표
+					width: "770px", // map의 width 설정
+					height: "600px" // map의 height 설정
+				});
+			
+
+				// 지도 객체 생성 후 마커를 등록하는 함수를 수행합니다.
+				addMarkersTooMuch();
+			}
+			
+			var markers = []; //마커병합 저장
+			var positions = []; //위치정보 병합 저장
+			var titles = []; //타이틀 병합 저장
+			var labels = []; //레이블 병합 저장
+			var address = [];
+			var phoneno = [];
+			
+			var tripList = ${trip};
+			//console.log(tripList);
+			var trip_markers = [];
+			var trip_label = [];
+			var trip_title = [];
+			var trip_address = [];
+			var trip_phoneno = [];
+			var content = [];
+	        
+	        for(idx in tripList) {
+	        	trip_markers[idx] = new Tmapv2.LatLng(tripList[idx].latitude, tripList[idx].longitude);
+	        	trip_label[idx] = tripList[idx].label;
+	        	trip_title[idx] = tripList[idx].title;
+	        	trip_address[idx] = tripList[idx].address;
+	        	trip_phoneno[idx] = tripList[idx].phoneno;
+	        }
+	        positions.push(trip_markers);
+	        titles.push(trip_title);
+	        labels.push(trip_label);
+	        address.push(trip_address);
+	        phoneno.push(trip_phoneno);
+			
+			var content= "<div class='popup' style='position: static; top: 320px; left : 320px; height: fit-content !important; display: flex; font-size: 14px; box-shadow: 5px 5px 5px #00000040; border-radius: 10px; width : 400px; height:100px; background-color: rgba(0, 0, 0, 0.6); align-items: center; padding: 5px; color: #fff;'>"+
+			   "<div class='img-box' style='width: 110px; height: 90px; border-radius: 10px; background: #f5f5f5 url(resources/images/sample/p-sk-logo.png) no-repeat center;'><button style='margin-top: 31px;' class='btn-primary addList' onclick='list_add();'>추가</button></div>"+
+			   "<div class='info-box' style='margin-left: 10px;'>"+
+			   "<p style='margin-bottom: 7px;'>"+
+			   "<span class='tit' style=' font-size: 16px; font-weight: bold;'>"+trip_title[idx]+"</span>"+
+			   "<p>"+
+			   "<span class='new-addr'>"+trip_address[idx]+"</span>"+
+			   "</p>"+
+			   "<p>"+
+			   "<span class='old-addr'>"+trip_phoneno[idx]+"</span>"+
+			   "</p>"+
+			   "</div>"+
+			   "<button type='button' class='btn-close' aria-label='close' style='position: absolute; top: 10px; right: 10px; display: block; width: 15px; height: 15px;' onclick='infoWindow.setVisible(false);'></button>" +
+			   "</div>";
+	        
+			function addMarkersTooMuch() {
+				removeMarkers(); // 지도에 새로 등록하기 위해 모든 마커를 지우는 함수입니다.
+				
+
+				
+		        
+		        //---------------------------------관광지 마커 그리기 시작
+		        for (idx in tripList) {
+		        	//Marker 객체 생성.
+		            var marker_trip = new Tmapv2.Marker({
+						position: trip_markers[idx], //Marker의 중심좌표 설정.
+						icon: "./resources/img/marker_trip.png",
+ 						label: trip_label[idx], //Marker의 라벨.
+ 						title: trip_title[idx], //Marker 타이틀. 
+						/* content: content, //Popup 표시될 text */
+						border:'0px solid #FF0000',//Popup의 테두리 border 설정.
+						type: 2, //Popup의 type 설정.
+						map: map //Marker가 표시될 Map 설정.
+					});
+		            marker_trip.setMap(map); //Marker가 표시될 Map 설정.
+		            markers.push(marker_trip);
+		            
+		            
+					//popUp 객체 생성 end ============================================
+			         /* 
+		            marker_trip.addListener("click", function(evt) {
+	        	 		alert("클릭");
+	        	 		trip_popup = new Tmapv2.InfoWindow({
+							position: trip_markers[idx], //Popup 이 표출될 맵 좌표
+							content: content[idx], //Popup 표시될 text
+							border :'0px solid #FF0000', //Popup의 테두리 border 설정.
+							type: 2, //Popup의 type 설정.
+							map: map //Popup이 표시될 맵 객체
+						});
+			            trip_popup.setMap(map);
+					});	*/   
+
+		            openPopup(tripList[idx].latitude, tripList[idx].longitude, content);
+		            
+		        	};
+		        	
+		        	//for문 end
+		        	
+		        	function openPopup(lat, lon, content) {
+		        		marker_trip.addListener("click", function(evt) {
+		        			//Popup 객체 생성.
+		        			infoWindow = new Tmapv2.InfoWindow({
+		        			position: new Tmapv2.LatLng(lat, lon), //Popup 이 표출될 맵 좌표
+		        			content: content, //Popup 표시될 text
+		        			type: 2, //Popup의 type 설정.
+		        			map: map //Popup이 표시될 맵 객체
+		        			});
+	        			});
+		        	}
+		        	
+		        	function onClose(popup){
+		        		infoWindow.setVisible(false);
+		        	}
+		        	
+		        	
+		        	//마우스 클릭 이벤트
+		       
+		        
+		        /* ================================================= 숙박
+		        var hotelList = ${hotel};
+		        //console.log(hotelList);
+		        var hotel_markers = [];
+				var hotel_label = [];
+				var hotel_title = [];
+		        
+		        for(idx in hotelList) {
+		        	hotel_markers[idx] = new Tmapv2.LatLng(hotelList[idx].lat, hotelList[idx].lon);
+		        	hotel_label[idx] = "숙박";
+		        	hotel_title[idx] = hotelList[idx].title;
+		        }
+		        positions.push(hotel_markers);
+		        titles.push(hotel_title);
+		        labels.push(hotel_label);
+		        
+		        markerCluster = new Tmapv2.extension.MarkerCluster({
+		     		markers: markers, // 마커들이 담긴 배열
+		     		map: map // 지도 객체
+		     	});*/
+		    } 
+			
+		
+			// 모든 마커를 제거하는 함수입니다.
+			function removeMarkers() {
+				for (var i = 0; i < markers.length; i++) {
+					markers[i].setMap(null);
+				}
+				markers = [];
+			}
+			
+			function findAddr() {
+				var foodList = [];
+		        foodList = ${food};
+		        
+		        var addr = [];
+		        var food_lat = [];
+		        var food_lon = [];
+		        var resultInfo = [];
+		        
+		        for(idx in foodList) {
+		        	$.ajax({
+						method : "GET",
+						url : "https://apis.openapi.sk.com/tmap/geo/fullAddrGeo?version=1&format=json&callback=result",
+						async : false,
+						data : {
+							"appKey" : "l7xx142479165b1048a5b99ae1b5a05f5d1b",
+							"coordType" : "WGS84GEO",
+							"fullAddr" : foodList[idx].safe_addr
+						},
+						success : function(response) {
+							resultInfo[idx] = response.coordinateInfo;
+							console.log(resultInfo[idx]);
+							
+							// 검색 결과 정보가 없을 때 처리
+							if (resultInfo[idx].coordinate.length == 0) {
+								$("#result").text("요청 데이터가 올바르지 않습니다.");
+							} else {
+								var resultCoordinate = resultInfo[idx].coordinate[0];
+								if (resultCoordinate.lon.length > 0) {
+									// 구주소
+									food_lon[idx] = resultCoordinate.lon;
+									food_lat[idx] = resultCoordinate.lat;
+								} else { 
+									// 신주소
+									food_lon[idx] = resultCoordinate.newLon;
+									food_lat[idx] = resultCoordinate.newLat
+								}
+							}
+						},
+						error : function(request, status, error) {
+							console.log(request);
+							console.log("code:"+request.status + "\n message:" + request.responseText +"\n error:" + error);
+							// 에러가 발생하면 마커초기화
+							map.setCenter(new Tmapv2.LatLng(33.506336, 126.49514));
+						
+						}
+					});
+		        }
+			}
+			
+			function list_add(){
+				$(".map_list").append("sdfdsf");
+			} 
+			
+			
+		</script>
+	
 	</head>
-	<body>
+	<body onload="initTmap()">
 		<div class="wrapper">
 			<jsp:include page="../include/header.jsp"></jsp:include>
 			<div class="main">
@@ -27,7 +244,7 @@
                         당일 여행부터 4일 이상의 여행까지,<br>
                         개인의 취향과 시간에 맞게 다양한 여행 일정을 계획해 더욱 즐거운 제주도 여행을 경험하세요!</p><br><br>
                     <h2>사진 첨부 및 게시글 등록</h2>
-                    </p>
+                    
                 </div>
                 <br>
                 <form>
@@ -63,10 +280,10 @@
                                     <label for="sug_content">내용 : </label>
                                     <textarea rows="10" cols="40" class="form-control" name="sug_content"></textarea>
                                 </section>
-                                <section>
+                                <!-- <section>
                                     <label for="plan_term" style="margin-right: 90px;">시작일 : <input type="date" id="plan_term" class="form-control plan_term_start" name="plan_term_start"></label>
                                     <label for="plan_term">마감일 : <input type="date" class="form-control plan_term_end" name="plan_term_end" onchange="date();"></label>
-                                </section>
+                                </section> -->
                                 <section>
                                     <label for="tendency">성향 : </label>
                                     <div class="btn-group-toggle" data-toggle="buttons">
@@ -106,17 +323,20 @@
                     </div>
 
                 </form>
-
+				
+				<!-- 지도 ============================================= 지도 -->
                     <br><br>
+                <form>
                     <div class="suggest_text">
                         <div class="day-btn">
                             <h3>일정 등록</h3>
                         </div>
                         <hr class="line">
                         <div class="main-second">
-                            <div class="main-map">
-                            </div>
+                            <div id="map_div"></div>
+                            <div class="map_list"></div>	
                         </div>
+					
                     </div>
                     <br><br>
                     <div class="bottom-btn-group2">

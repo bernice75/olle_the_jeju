@@ -89,7 +89,7 @@ function createList(obj) {
             $('.map_list').hide();
             var map_list = document.createElement('div'); //일정목록을 감싸는 div
             map_list.setAttribute('class', 'map_list ' + class_name);
-            $('.main-map').append(map_list);
+            $("#map_div > div").append(map_list);
             //div 클래스 중 버튼과 동일한 클래스인 경우에만 글 삽입
             if($('.map_list.'+class_name).children().length == 0) {
                 var br = document.createElement('br');

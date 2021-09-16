@@ -27,11 +27,11 @@ public class Interceptor implements HandlerInterceptor{
 //		session.setAttribute("login", request);
 		
 		
-		if(request.getSession().getAttribute("login") != null) {
+		if(request.getSession().getAttribute("user_id") != null) {
 			return true;
 		}
 		
-		if(request.getSession().getAttribute("login") == null) {
+		if(request.getSession().getAttribute("user_id") == null) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();	
 			out.println("<script>alert('로그인이 필요합니다.'); location.href='loginForm.do';</script>");			 
