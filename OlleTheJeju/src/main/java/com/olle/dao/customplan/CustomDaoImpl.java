@@ -29,8 +29,17 @@ public class CustomDaoImpl implements CustomDao{
 
 	@Override
 	public int insert(CustomDto dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int res = 0;
+		
+		try {
+			res = sqlSession.insert(NAMESPACE+"insert", dto);
+		} catch (Exception e) {
+			System.out.println("[error] : insert");
+			e.printStackTrace();
+		}
+		
+		return res;
 	}
 
 	@Override

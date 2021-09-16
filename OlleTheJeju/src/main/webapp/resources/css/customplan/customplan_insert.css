@@ -120,9 +120,10 @@
     height: 600px;
     margin-left: 10px;
     background-color: #f1f1f1;
-    overflow: auto;
+    overflow: scroll;
     border-radius: 20px;
     float: left;
+    padding: 20px;
 }
 
 .list{
@@ -150,7 +151,10 @@
 
 .list_inner{
     text-align: left;
-    padding-top: 10px;
+	background-color: white;
+	border-radius: 20px;
+	padding: 20px;
+	margin-top: 20px;
 }
 .course_name{
     font-size: 20px;

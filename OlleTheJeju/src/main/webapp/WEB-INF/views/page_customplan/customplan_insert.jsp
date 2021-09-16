@@ -38,11 +38,6 @@
 			}
 			
 			var markers = []; //마커병합 저장
-			var positions = []; //위치정보 병합 저장
-			var titles = []; //타이틀 병합 저장
-			var labels = []; //레이블 병합 저장
-			var address = [];
-			var phoneno = [];
 			
 			var tripList = ${trip};
 			//console.log(tripList);
@@ -60,32 +55,9 @@
 	        	trip_address[idx] = tripList[idx].address;
 	        	trip_phoneno[idx] = tripList[idx].phoneno;
 	        }
-	        positions.push(trip_markers);
-	        titles.push(trip_title);
-	        labels.push(trip_label);
-	        address.push(trip_address);
-	        phoneno.push(trip_phoneno);
-			
-			var content= "<div class='popup' style='position: static; top: 320px; left : 320px; height: fit-content !important; display: flex; font-size: 14px; box-shadow: 5px 5px 5px #00000040; border-radius: 10px; width : 400px; height:100px; background-color: rgba(0, 0, 0, 0.6); align-items: center; padding: 5px; color: #fff;'>"+
-			   "<div class='img-box' style='width: 110px; height: 90px; border-radius: 10px; background: #f5f5f5 url(resources/images/sample/p-sk-logo.png) no-repeat center;'><button style='margin-top: 31px;' class='btn-primary addList' onclick='list_add();'>추가</button></div>"+
-			   "<div class='info-box' style='margin-left: 10px;'>"+
-			   "<p style='margin-bottom: 7px;'>"+
-			   "<span class='tit' style=' font-size: 16px; font-weight: bold;'>"+trip_title[idx]+"</span>"+
-			   "<p>"+
-			   "<span class='new-addr'>"+trip_address[idx]+"</span>"+
-			   "</p>"+
-			   "<p>"+
-			   "<span class='old-addr'>"+trip_phoneno[idx]+"</span>"+
-			   "</p>"+
-			   "</div>"+
-			   "<button type='button' class='btn-close' aria-label='close' style='position: absolute; top: 10px; right: 10px; display: block; width: 15px; height: 15px;' onclick='infoWindow.setVisible(false);'></button>" +
-			   "</div>";
 	        
 			function addMarkersTooMuch() {
 				removeMarkers(); // 지도에 새로 등록하기 위해 모든 마커를 지우는 함수입니다.
-				
-
-				
 		        
 		        //---------------------------------관광지 마커 그리기 시작
 		        for (idx in tripList) {
@@ -117,9 +89,24 @@
 						});
 			            trip_popup.setMap(map);
 					});	*/   
-
+					var content= "<div class='popup' style='position: static; top: 320px; left : 320px; height: fit-content !important; display: flex; font-size: 14px; box-shadow: 5px 5px 5px #00000040; border-radius: 10px; width : 400px; height:100px; background-color: rgba(0, 0, 0, 0.6); align-items: center; padding: 5px; color: #fff;'>"+
+					   "<div class='img-box' style='width: 110px; height: 90px; border-radius: 10px; background: #f5f5f5 url(resources/images/sample/p-sk-logo.png) no-repeat center;'>"+
+					   "<input type='button' style='margin-top: 31px;' class='btn-primary addList' value='추가' onclick='addList(this);'></div>" +
+					   "<div class='info-box' style='margin-left: 10px;'>"+
+					   "<p style='margin-bottom: 7px;'>"+
+					   "<span class='tit' style=' font-size: 16px; font-weight: bold;'>"+trip_title[idx]+"</span>"+
+					   "<p>"+
+					   "<span class='new-addr'>"+trip_address[idx]+"</span>"+
+					   "</p>"+
+					   "<p>"+
+					   "<span class='old-addr'>"+trip_phoneno[idx]+"</span>"+
+					   "</p>"+
+					   "</div>"+
+					   "<button type='button' class='btn-close' aria-label='close' style='position: absolute; top: 10px; right: 10px; display: block; width: 15px; height: 15px;' onclick='infoWindow.setVisible(false);'></button>" +
+					   "</div>";
+					//팝업 열리는 이벤트
 		            openPopup(tripList[idx].latitude, tripList[idx].longitude, content);
-		            
+					
 		        	};
 		        	
 		        	//for문 end
@@ -139,6 +126,7 @@
 		        	function onClose(popup){
 		        		infoWindow.setVisible(false);
 		        	}
+		        	
 		        	
 		        	
 		        	//마우스 클릭 이벤트
@@ -225,9 +213,10 @@
 		        }
 			}
 			
-			function list_add(){
-				$(".map_list").append("sdfdsf");
-			} 
+			//addList를 삭제하는 버튼 함수
+			function deleteList(obj){
+				$(obj).parent().remove();
+			}
 			
 			
 		</script>
@@ -247,7 +236,7 @@
                     
                 </div>
                 <br>
-                <form>
+                <form action="customplan_insert.do" method="post">
                     <div class="main-place">
                         <div id="carouselExampleFade" class="carousel slide carousel-fade slider" data-bs-ride="carousel">
                             <div class="carousel-inner imgs">
@@ -274,11 +263,11 @@
                             <fieldset>
                                 <section>
                                     <label for="sug_title">제목 : </label>
-                                    <input type="text" class="form-control" name="sug_title">
+                                    <input type="text" class="form-control" name="plan_title">
                                 </section>
                                 <section>
                                     <label for="sug_content">내용 : </label>
-                                    <textarea rows="10" cols="40" class="form-control" name="sug_content"></textarea>
+                                    <textarea rows="10" cols="40" class="form-control" name="plan_content"></textarea>
                                 </section>
                                 <!-- <section>
                                     <label for="plan_term" style="margin-right: 90px;">시작일 : <input type="date" id="plan_term" class="form-control plan_term_start" name="plan_term_start"></label>
@@ -288,16 +277,16 @@
                                     <label for="tendency">성향 : </label>
                                     <div class="btn-group-toggle" data-toggle="buttons">
                                         <label class="btn btn-primary">
-                                            <input type="radio" class="btn-check" name="tendency" value="혼자"> 혼자
+                                            <input type="radio" class="btn-check" name="tend_content" value="혼자"> 혼자
                                         </label>
                                         <label class="btn btn-primary">
-                                            <input type="radio" class="btn-check" name="tendency" value="여자끼리"> 여자끼리
+                                            <input type="radio" class="btn-check" name="tend_content" value="여자끼리"> 여자끼리
                                         </label>
                                         <label class="btn btn-primary">
-                                            <input type="radio" class="btn-check" name="tendency" value="남자끼리"> 남자끼리
+                                            <input type="radio" class="btn-check" name="tend_content" value="남자끼리"> 남자끼리
                                         </label>
                                         <label class="btn btn-primary">
-                                            <input type="radio" class="btn-check" name="tendency" value="연인"> 연인
+                                            <input type="radio" class="btn-check" name="tend_content" value="연인"> 연인
                                         </label>
                                         <label class="btn btn-primary">
                                             <input type="radio" class="btn-check" name="tendency" value="가족"> 가족
@@ -322,11 +311,11 @@
                         </fieldset>
                     </div>
 
-                </form>
+                
 				
 				<!-- 지도 ============================================= 지도 -->
                     <br><br>
-                <form>
+                
                     <div class="suggest_text">
                         <div class="day-btn">
                             <h3>일정 등록</h3>
@@ -340,7 +329,7 @@
                     </div>
                     <br><br>
                     <div class="bottom-btn-group2">
-                        <input id="btn1" type="submit" class="btn btn-primary" value="등록" onclick="">
+                        <input id="btn1" type="submit" class="btn btn-primary" value="등록" onclick="location.href='customplan_insert.do'">
                         <input id="btn2" type="button" class="btn btn-secondary" value="취소" onclick="location.href='customplan_main.do'">
                     </div>
                 </form>
@@ -348,5 +337,29 @@
 			</div>
 			<jsp:include page="../include/footer.jsp"></jsp:include>
 		</div>
+		<script type="text/javascript">
+			//map list에 list 추가하는 메서드
+			function addList(obj){
+				var title = $(obj).parent().next().children('p')[0].innerText;
+	    		var addr = $(obj).parent().next().children('p')[1].innerText;
+	    		var phone =  $(obj).parent().next().children('p')[2].innerText;
+	    		
+				var dataInfo = $(
+	                    "<div class='list_inner'>"+
+	                        "<p class='list_title' ><b>1. 코스명</b></p>"+
+	                        "<p class='lst_title'><input type='text' value='"+title+"' name='lst_title' style='width:200px;' readonly='readonly'></p>"+
+	                        "<p class='list_addr'><b>2. 주소</b></p>"+
+	                        "<p class='lst_addr'><input type='text' value='"+addr+"' name='lst_addr' style='width:200px;' readonly='readonly'></p>"+
+	                        "<p class='list_phone'><b>3. 전화번호</b></p>"+
+	                        "<p class='lst_phone'><input type='text' value='"+phone+"' name='lst_phone' style='width:200px;' readonly='readonly'></p>"+
+	                        "<input type='button' value='삭제' onclick='deleteList(this);'>"+
+	                    "</div>"
+	                    );
+				
+				$(".map_list").append(dataInfo);
+			} 
+			
+
+		</script>
 	</body>
 </html>

@@ -37,8 +37,9 @@ public class CustomplanController {
 		return "page_customplan/customplan_detail";
 	}
 	
+	//지도 관련 제이슨으로 받아서 처리하는 메서드
 	@RequestMapping(value = "customplan_insert.do", method = RequestMethod.GET)
-	public String customplan_insert(Model model) throws ParseException {
+	public String customplan_Tmap(Model model) throws ParseException {
 		
 		JSONParser trip_parser = new JSONParser();
 		JSONArray trip = new JSONArray();
@@ -91,5 +92,15 @@ public class CustomplanController {
 		
 		return "page_customplan/customplan_insert";
 	}
+	
+	@RequestMapping(value = "customplan_insert.do", method = RequestMethod.POST)
+	public String customplan_insert() {
+		
+		
+		
+		return "page_customplan/customplan";
+		
+	}
+	
 	
 }
