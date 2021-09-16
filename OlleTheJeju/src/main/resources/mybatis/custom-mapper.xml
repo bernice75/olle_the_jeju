@@ -19,12 +19,24 @@
 		<result property="plan_hide" column="PLAN_HIDE"/>
 	</resultMap>
 	
+	<!-- 마이페이지 내가 작성한 게시글 조회  -->
+  	<select id="mywritelist" resultMap="customMap">
+  		SELECT *
+		FROM OLLE_PLAN
+		WHERE PLAN_WRITER = #{plan_writer}
+  	</select>
+  	
 	<select id="selectList" resultMap="customMap">
 
 	</select>
 	
 	<select id="selectOne" resultType="customDto">
 
+	</select>
+	
+	<select id="maxNum" resultType="int">
+		SELECT MAX(PLAN_NUM)
+		FROM OLLE_PLAN
 	</select>
 	
 	<insert id="insert" parameterType="customDto">

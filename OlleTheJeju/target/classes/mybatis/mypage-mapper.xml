@@ -63,18 +63,17 @@
   		WHERE USER_ID=#{user_id} AND USER_PW=#{user_pw}
   	</delete>
   	
-  	<!-- 내가쓴 게시글 조회 -->
-  	<select id="mywritelist" resultMap="memberMap">
-  		<!-- SELECT USER_ID, , MYTITLE, MYCONTENT, MYDATE
-  		FROM OLLE_USER -->
-  	</select>
+  	<!-- 내가 작성한 게시글 rowcount  -->
+  	<!--  <select id="" resultMap="">
+  		SELECT COUNT(*) 
+  		FROM MOVIE_BOARD WHERE MOVIE_TYPE=?";
+  	</select>-->
   	
   	<!-- 내가 찜한 게시글 조회 -->
   	<select id="mydiblist" resultMap="memberMap">
   		<!-- SELECT USER_ID, , MYTITLE, MYCONTENT, MYDATE
   		FROM OLLE_USER -->
   	</select>
-  	
   	
   	<!-- 문의내역 채팅 -->
   	

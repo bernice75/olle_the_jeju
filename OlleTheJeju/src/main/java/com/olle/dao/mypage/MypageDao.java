@@ -3,6 +3,9 @@ package com.olle.dao.mypage;
 
 import java.util.List;
 
+import com.olle.dto.customplan.CustomDto;
+import com.olle.dto.etc.DibDto;
+import com.olle.dto.etc.HashtagDto;
 import com.olle.dto.member.MemberDto;
 
 public interface MypageDao {
@@ -27,10 +30,14 @@ public interface MypageDao {
 	public int deleteUser(String user_id, String user_pw);
 	
 	//내가 작성한 게시글 조회
-	public List<MemberDto> myWriteList(String user_id, int pageNum);
+	public List<CustomDto> myWriteList(String plan_writer);
+	public List<HashtagDto> hashList(int table_num);
+	
+	//내가 작성한 게시글 rowcount
+	//public int myWriteRowCount(String user_id);
 	
 	//내가 찜한 게시글 조회 
-	public List<MemberDto> myDibList(String user_id, int pageNum);
+	public List<DibDto> myDibList(int table_num);
 	
 	//문의사항 (실시간 채팅)
 	

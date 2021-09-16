@@ -12,8 +12,11 @@
 		<result property="hash_content" column="HASH_CONTENT"/>
 	</resultMap>
 	
-	<select id="selectList" resultMap="hashtagMap">
-
+	<!-- 마이페이지 내가 작성한 게시글 조회  -->
+	<select id="selectList" parameterType="int" resultMap="hashtagMap">
+		SELECT * 
+		FROM OLLE_HASHTAG
+		WHERE TABLE_NUM = #{table_num}
 	</select>
 	
 	<select id="selectOne" resultType="hashtagDto">

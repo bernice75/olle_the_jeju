@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.olle.dao.member.MemberDao;
 import com.olle.dao.mypage.MypageDao;
+import com.olle.dto.customplan.CustomDto;
+import com.olle.dto.etc.DibDto;
+import com.olle.dto.etc.HashtagDto;
 import com.olle.dto.member.MemberDto;
 
 @Service
@@ -49,15 +52,21 @@ public class MypageBizImple implements MypageBiz{
 	}
 
 	//내가 작성한 게시글 조회
+	//썸네일 부분 전체
 	@Override
-	public List<MemberDto> myWriteList(String user_id, int pageNum) {
-		return dao.myWriteList(user_id, pageNum);
+	public List<CustomDto> myWriteList(String plan_writer) {
+		return dao.myWriteList(plan_writer);
+	}
+	//해시태그는 따로 추가
+	@Override
+	public List<HashtagDto> hashList(int table_num) {
+		return dao.hashList(table_num);
 	}
 
 	//내가 찜한 게시글 조회 
 	@Override
-	public List<MemberDto> myDibList(String user_id, int pageNum) {
-		return dao.myDibList(user_id, pageNum);
+	public List<DibDto> myDibList(int table_num) {
+		return dao.myDibList(table_num);
 	}
 
 	//문의사항 (실시간 채팅)
@@ -67,5 +76,7 @@ public class MypageBizImple implements MypageBiz{
 	public MemberDto mypageWarn(String user_id) {
 		return dao.mypageWarn(user_id);
 	}
+
+	
 	
 }

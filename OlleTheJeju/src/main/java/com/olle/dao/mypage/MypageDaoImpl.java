@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.olle.dao.member.MemberDao;
+import com.olle.dto.customplan.CustomDto;
+import com.olle.dto.etc.DibDto;
+import com.olle.dto.etc.HashtagDto;
 import com.olle.dto.member.MemberDto;
 
 @Repository
@@ -97,31 +100,45 @@ public class MypageDaoImpl implements MypageDao {
 	}
 
 	//내가 작성한 게시글 조회
+	//썸네일 부분 전체
 	@Override
-	public List<MemberDto> myWriteList(String user_id, int pageNum) {
-		List<MemberDto> list = new ArrayList<MemberDto>();
+	public List<CustomDto> myWriteList(String plan_writer) {
+		List<CustomDto> list = new ArrayList<CustomDto>();
 		
 		try {
-			list = sqlSession.selectList(NAMESPACE+"mywritelist");
+			list = sqlSession.selectList("customplan.mywritelist", plan_writer);
 		} catch (Exception e) {
 			System.out.println("[error] : myWriteList");
 			e.printStackTrace();
 		}
 		return list;
 	}
-
-	//내가 찜한 게시글 조회 
+	//해시태그는 따로 추가
 	@Override
-	public List<MemberDto> myDibList(String user_id, int pageNum) {
-		List<MemberDto> diblist = new ArrayList<MemberDto>();
+	public List<HashtagDto> hashList(int table_num) {
 		
-		try {
-			diblist = sqlSession.selectList(NAMESPACE+"mydiblist");
-		} catch (Exception e) {
-			System.out.println("[error] : myDiblist");
-			e.printStackTrace();
-		}
-		return diblist;
+		List<HashtagDto> dto = sqlSession.selectList("hashtag.selectList",table_num);
+		
+		return dto;
+	}
+	
+	//내가 작성한 게시글 rowcount
+	/*@Override
+	public int myWriteRowCount(String user_id) {
+		
+		int count = 0;
+		
+		return 0;
+	}*/
+
+	//내가 찜한 게시글 조회에서는 찜 목록만 추가
+
+	@Override
+	public List<DibDto> myDibList(int table_num) {
+		
+		List<DibDto> dibDto = sqlSession.selectList("dib.selectdDibList", table_num);
+		
+		return dibDto;
 	}
 
 	//문의사항 (실시간 채팅)
@@ -140,4 +157,8 @@ public class MypageDaoImpl implements MypageDao {
 		}
 		return dto;
 	}
+
+	
+
+	
 }

@@ -28,10 +28,10 @@
 	                <p style="font-size: 22px;padding-left: 30px;">마이페이지</p>
 	                <br>
 	                <ul style="list-style: none;">
-	                    <li><a href="mypage_plan.do">나의 일정</a></li><br>
-	                    <li><a href="mypage_inquire.do">문의 내역</a></li><br>
-	                    <li><a href="mypage_main.do">회원 정보 수정</a></li><br>
-	                    <li><a href="mypage_warn.do">신고 확인</a></li><br>
+	                    <li><a href="mypage_plan.do?plan_writer=${sessionScope.user_id}">나의 일정</a></li><br>
+	                    <li><a href="mypage_inquire.do?user_id=${sessionScope.user_id}">문의 내역</a></li><br>
+	                    <li><a href="mypage_main.do?user_id=${sessionScope.user_id}">회원 정보 수정</a></li><br>
+	                    <li><a href="mypage_warn.do?user_id=${sessionScope.user_id}">신고 확인</a></li><br>
 	              </ul>
 	            </div>
 	        </div>
