@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.olle.dao.trip.TripDao;
+import com.olle.dto.suggest.SuggestDto;
 import com.olle.dto.trip.TripDto;
 
 @Service
@@ -67,5 +68,15 @@ public class TripBizImpl implements TripBiz{
 	@Override
 	public void likeUpdate(int trip_num) {
 		td.likeUpdate(trip_num);
+	}
+	
+	@Override
+	public int insertDibs(int trip_num, String user_id) {
+		return td.insertDibs(trip_num, user_id);
+	}
+	
+	@Override
+	public List<TripDto> DibList(List<TripDto> list, String user_id) {
+		return td.DibList(list, user_id);
 	}
 }

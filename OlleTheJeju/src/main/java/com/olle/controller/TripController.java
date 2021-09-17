@@ -26,7 +26,7 @@ public class TripController {
 	private TripBiz tb;
 	
 	@RequestMapping(value = "/trip_main.do", method = RequestMethod.GET)
-	public String trip_main(Model model, String kategorie, int page) {
+	public String trip_main(Model model, String kategorie, int page, String user_id) {
 		logger.info("TRIP_MAIN");
 		System.out.println("page: "+page);
 		
@@ -39,8 +39,16 @@ public class TripController {
 		pg.setBeginPage(page);
 		pg.setTotalCount(tb.getAllCount(kategorie));
 		
-		List<TripDto> result = tb.selectList(kategorie,page);
-		System.out.println("사이즈: "+result.size());
+		List<TripDto> result = null;
+		
+		if(user_id==null||user_id=="") {
+			System.out.println("USER_ID 없음");
+			result = tb.selectList(kategorie, page);
+		}else{
+			System.out.println("USER_ID: "+user_id);
+			result = tb.DibList(tb.selectList(kategorie,page), user_id);
+		}
+		
 		model.addAttribute("paging",pg);
 		model.addAttribute("dto", result);
 		
@@ -169,5 +177,16 @@ public class TripController {
 		
 		return "page_trip/trip_jeju";
 	}
+	
+	@RequestMapping(value="trip_dibs.do", method=RequestMethod.POST)
+	@ResponseBody
+	public int suggest_dibs(String trip_num, String user_id){
+		logger.info("TRIP_DIBS");
+		int num = Integer.parseInt(trip_num);
+		int res = tb.insertDibs(num, user_id);
+		System.out.println(res);
+		return res;
+	}
+	
 	
 }

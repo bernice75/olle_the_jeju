@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="com.olle.dto.suggest.SuggestDto" %>
+<%@page import="java.util.List" %>
+<%@ page import="com.olle.dto.trip.Paging" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -15,7 +18,8 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        <script src="./resources/js/suggest/suggest_main.js" type="text/javascript"></script>
+        <script src="./resources/js/suggest/suggest_main.js?var=1" type="text/javascript"></script>
+
 	</head>
 	<body>
 		<div class="wrapper">
@@ -48,76 +52,82 @@
                 </div>
                 <br><br>
                 <div class="nail">
-                    <div class="nail1">
-                        <a href="suggest_detail.do">
-                            <div class="nail_img">
-                                <div class="sleep">2박3일</div>
-                            </div>
-                        </a>
-                        <div class="nail_inner">
-                            <p class="nail_title">제목입니다</p>
-                            <p class="nail_con_hash">컨셉명 | 해쉬태그명</p>
-                            <span class="nail_view">조회수 | 10</span>
-                            <span class="nail_like">추천수 | 2</span>
-                            <hr style="margin-bottom: 0;">
-                            <div class="nail_hrt"><i class="fa fa-heart-o fa-xs"></i> &nbsp; 찜하기</div>
-                        </div>
+            
+					<% 
+						List<SuggestDto> dto = (List)request.getAttribute("dto");
+						int size = dto.size()-1;
+						Paging pg = (Paging)request.getAttribute("paging");
+						int s = pg.getPage()*6;
+						
+						Math.floor(s);
+						
+						int nail=1;
+						int i=0;
+						
+						for(; i<=size; i++){
+						String cName = "nail"+nail;
+					%>
+						<div class="<%=cName%>">
+						<% SuggestDto sd = dto.get(i); %>
+							<a href="suggest_detail.do?sug_num=<%=sd.getSug_num()%>">
+           			   			<div class="nail_img"></div>
+        					</a>
+        				<div class="nail_inner">
+            					<p class="nail_title"><%=sd.getSug_title() %></p>
+            					<span class="nail_view">조회수 | <%=sd.getSug_views() %></span>
+            					<span class="nail_push">좋아요 | <%=sd.getSug_push() %></span>
+            					<hr style="margin-bottom: 0;">
+            					<div class="nail_hrt">
+            						<% if(sd.getDib()==1){
+            						%>
+            							<i class="fa fa-heart fa-xs" onclick="dibs('<%=sd.getSug_num()%>')"></i>
+            						<%
+            							}else{
+            						%>
+            							<i class="fa fa-heart-o fa-xs" onclick="dibs('<%=sd.getSug_num()%>')"></i>
+            						<%
+            							}
+            						%>
+            						 &nbsp; 찜하기</div>
+            					
+        					</div>
+        				</div>
+					<%		
+							nail++;
+						}
+					
+					%>
                     </div>
-                    <div class="nail2">
-                        <a>
-                            <div class="nail_img">
-                                <div class="sleep">2박3일</div>
-                            </div>
-                        </a>
-                        <div class="nail_inner">
-                            <p class="nail_title">제목입니다</p>
-                            <p class="nail_con_hash">컨셉명 | 해쉬태그명</p>
-                            <span class="nail_view">조회수 | 10</span>
-                            <span class="nail_like">추천수 | 2</span>
-                            <hr style="margin-bottom: 0;">
-                            <div class="nail_hrt"><i class="fa fa-heart-o fa-xs"></i> &nbsp; 찜하기</div>
-                        </div>
-                    </div>
-                    <div class="nail3">
-                        <a>
-                            <div class="nail_img">
-                                <div class="sleep">2박3일</div>
-                            </div>
-                        </a>
-                        <div class="nail_inner">
-                            <p class="nail_title">제목입니다</p>
-                            <p class="nail_con_hash">컨셉명 | 해쉬태그명</p>
-                            <span class="nail_view">조회수 | 10</span>
-                            <span class="nail_like">추천수 | 2</span>
-                            <hr style="margin-bottom: 0;">
-                            <div class="nail_hrt"><i class="fa fa-heart-o fa-xs"></i> &nbsp; 찜하기</div>
-                        </div>
-                    </div>
-                    <div class="nail4">
-                        
-                    </div>
-                    <div class="nail5">
-                        
-                    </div>
-                    <div class="nail6">
-                        
-                    </div>
-                </div>
                 <br>
-                <c:choose>
-                	<c:when test="${sessionScope.user_id eq 'admin' }">
+               <%-- <c:choose>
+                	 <c:when test="${sessionScope.user_id eq 'admin' }"> --%>
                 		<div class="write">
 		                    <button class="btn btn-outline-secondary" onclick="location.href='suggest_insert.do'">글등록</button>
 		                </div>
 		                <br><br>
-                	</c:when>
-                </c:choose>
+                	<%-- </c:when> 
+                </c:choose>--%>
                 <div class="paging">
-                    페이징 처리
+                  			<c:if test="${paging.prev}">
+	    			<a href="trip_main.do?kategorie=<%=dto.get(0).getSug_kategorie() %>&page=${paging.beginPage-1}" style="font-size:20px; margin-right: 5px;">prev</a>
+				</c:if>
+				<c:forEach begin="${paging.beginPage}" end="${paging.endPage }" step="1" var="index">
+	    			<c:choose>
+	        			<c:when test="${paging.page==index}">
+	          			  	<span style="font-size: 20px; color: gray; margin: 5px;">${index}</span>
+	        			</c:when>
+	        			<c:otherwise>
+	           			 	<a href="suggest_main.do?kategorie=<%=dto.get(0).getSug_kategorie() %>&page=${index}" style="font-size:20px; margin:5px;">${index}</a>
+	        			</c:otherwise>
+	    			</c:choose>
+				</c:forEach>
+				<c:if test="${paging.next}">
+	   				<a href="suggest_main.do?kategorie=<%=dto.get(0).getSug_kategorie() %>&page=${paging.endPage+1}" style="font-size:20px; margin-left: 5px;">next</a>
+				</c:if>
                 </div>
                 <br><br>
 			</div>
 			<jsp:include page="../include/footer.jsp"></jsp:include>
-		</div>
+			</div>
 	</body>
 </html>

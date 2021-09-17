@@ -53,6 +53,7 @@
     box-shadow: 1px 1px 4px 2px #e0e0e0;
     padding: 4%;
     border-radius: 20px;
+    height: 640px;
 }
 .place-info label {
     font-weight: bold;

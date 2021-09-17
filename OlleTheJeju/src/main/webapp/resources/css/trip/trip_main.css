@@ -32,7 +32,11 @@
 }
 .menu div:hover {
     background: lightgray;
-    cursor: pointer;
+    
+}
+
+.menu4:hover{
+	cursor: pointer;
 }
 
 .nail {

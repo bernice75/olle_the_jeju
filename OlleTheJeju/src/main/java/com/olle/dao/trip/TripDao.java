@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
+import com.olle.dto.etc.DibDto;
+import com.olle.dto.suggest.SuggestDto;
 import com.olle.dto.trip.TripDto;
 
 public interface TripDao {
@@ -21,4 +23,7 @@ public interface TripDao {
 	public int update(TripDto dto);
 	public int delete(int trip_num);
 	public void likeUpdate(int trip_num);
+	public int insertDibs(int sug_num, String user_id);
+	DibDto chkDibs(/* String id, */ int tNum);
+	public List<TripDto> DibList(List<TripDto> list, String user_id);
 }

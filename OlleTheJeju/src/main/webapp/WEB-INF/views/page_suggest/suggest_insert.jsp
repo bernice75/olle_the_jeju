@@ -26,7 +26,7 @@
                     </p>
                 </div>
                 <br><br>
-                <form>
+                <form action="suggest_insert_db.do" method="get">
                     <div class="main-place">
                         <div id="carouselExampleFade" class="carousel slide carousel-fade slider" data-bs-ride="carousel">
                             <div class="carousel-inner imgs">
@@ -53,35 +53,47 @@
                             <fieldset>
                                 <section>
                                     <label for="sug_title">제목 : </label>
-                                    <input type="text" class="form-control" name="sug_title">
+                                    <input type="text" class="form-control" name="sug_title" maxlength='21'>
                                 </section>
                                 <section>
                                     <label for="sug_content">내용 : </label>
                                     <textarea rows="10" cols="40" class="form-control" name="sug_content"></textarea>
                                 </section>
                                 <section>
-                                    <label for="sug_term" style="margin-right: 90px;">시작일 : <input type="date" id="sug_term" class="form-control sug_term_start" name="sug_term_start"></label>
-                                    <label for="sug_term">마감일 : <input type="date" class="form-control sug_term_end" name="sug_term_end" onchange="date();"></label>
+									<select name="sug_term" id="sug_term" onchange="date();">
+										<option value="2">1박2일</option>
+										<option value="3">2박3일</option>
+										<option value="4">3박4일</option>
+										<option value="5">4박5일</option>
+										<option value="6">5박6일</option>
+										<option value="7">6박7일</option>
+									</select>                                
                                 </section>
                                 <section>
                                     <label for="tendency">성향 : </label>
                                     <div class="btn-group-toggle" data-toggle="buttons">
-                                        <label class="btn btn-primary">
-                                            <input type="radio" class="btn-check" name="tendency" value="혼자"> 혼자
+                                        <label class="btn">
+                                            <input type="radio" name="sug_tendency" value="혼자"> 혼자
                                         </label>
-                                        <label class="btn btn-primary">
-                                            <input type="radio" class="btn-check" name="tendency" value="여자끼리"> 여자끼리
+                                        <label class="btn">
+                                            <input type="radio" name="sug_tendency" value="여자끼리"> 여자끼리
                                         </label>
-                                        <label class="btn btn-primary">
-                                            <input type="radio" class="btn-check" name="tendency" value="남자끼리"> 남자끼리
+                                        <label class="btn">
+                                            <input type="radio" name="sug_tendency" value="남자끼리"> 남자끼리
                                         </label>
-                                        <label class="btn btn-primary">
-                                            <input type="radio" class="btn-check" name="tendency" value="연인"> 연인
+                                        <label class="btn">
+                                            <input type="radio" name="sug_tendency" value="연인"> 연인
                                         </label>
-                                        <label class="btn btn-primary">
-                                            <input type="radio" class="btn-check" name="tendency" value="가족"> 가족
+                                        <label class="btn">
+                                            <input type="radio" name="sug_tendency" value="가족"> 가족
                                         </label>  
                                     </div>
+                                </section>
+                                <section>
+                                	<label for="kategorie">카테고리 : </label>
+                                	<label>
+                                		<input type="radio" name="sug_kategorie">
+                                	</label>
                                 </section>
                                 <section>
                                     <label for="hash_content">해시태그 : </label>

@@ -47,23 +47,15 @@ function imgChk() {
 }
 
 function date() {
-    var start = $('.sug_term_start').val() instanceof Date ? $('.sug_term_start').val() : new Date($('.sug_term_start').val());
-    var end = $('.sug_term_end').val() instanceof Date ? $('.sug_term_end').val() : new Date($('.sug_term_end').val());
-
-    start = new Date(start.getFullYear(), start.getMonth() + 1, start.getDate());
-    end = new Date(end.getFullYear(), end.getMonth() + 1, end.getDate());
-
-    var diff = Math.abs(end.getTime() - start.getTime());
-    diff = Math.ceil(diff / (1000 * 3600 * 24));
-
-    console.log(diff + "일차");
-
-    for(var i = 0; i < (diff + 1); i++) {
+	$('.day-btn').empty();
+	
+	var date = $("#sug_term").val();
+    for(var i = 0; i < date; i++) {
         var button = document.createElement('button');
-        button.setAttribute('class', 'btn btn-outline-dark ' + (start.getDate() + i) + " " + (i+1));
+        button.setAttribute('class', 'btn btn-outline-dark ' +(i+1));
         button.setAttribute('type', 'button');
         button.setAttribute('onclick', 'createList(this);');
-        var btnText = document.createTextNode((i + 1) + "일차");
+        var btnText = document.createTextNode((i+1) + "일차");
         button.appendChild(btnText);
         $('.day-btn').append(button);
     }

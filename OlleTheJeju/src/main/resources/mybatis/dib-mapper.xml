@@ -12,16 +12,20 @@
 	</resultMap>
 	
 	<select id="selectList" resultMap="dibMap">
-
+		SELECT *
+		FROM OLLE_DIB
+		WHERE BOARD_NUM=#{board_num} AND USER_ID=#{user_id}
 	</select>
 	
-	<select id="selectOne" resultType="dibDto">
-
+	<select id="selectOne" resultType="dibDto" parameterType="dibDto">
+		SELECT *
+		FROM OLLE_DIB
+		WHERE TABLE_NUM=#{table_num} AND BOARD_NUM=#{board_num}
 	</select>
 	
 	<insert id="insert" parameterType="dibDto">
 		INSERT INTO OLLE_DIB
-		VALUES()
+		VALUES(DIBSEQ.NEXTVAL, #{board_num},#{table_num},#{user_id})
 	</insert>
 	
 	<update id="update" parameterType="dibDto">

@@ -3,6 +3,7 @@ package com.olle.biz.trip;
 import java.util.List;
 import java.util.Map;
 
+import com.olle.dto.suggest.SuggestDto;
 import com.olle.dto.trip.TripDto;
 
 public interface TripBiz {
@@ -15,4 +16,6 @@ public interface TripBiz {
 	public int update(TripDto dto);
 	public int delete(int trip_num);
 	public void likeUpdate(int trip_num);
+	public int insertDibs(int sug_num,String user_id);
+	public List<TripDto> DibList(List<TripDto> list,String user_id);
 }

@@ -15,6 +15,7 @@ public class TripDto {
 	private String trip_detail;
 	private int trip_views;
 	private int trip_push;
+	private int dib;
 	public TripDto() {
 		super();
 	}
@@ -34,6 +35,32 @@ public class TripDto {
 		this.trip_detail = trip_detail;
 		this.trip_views = trip_views;
 		this.trip_push = trip_push;
+	}
+	
+	public TripDto(int trip_num, String trip_kategorie, String trip_title, String trip_content, String trip_writer,
+			Date trip_regdate, String trip_nail, String trip_addr, String trip_phone, String trip_detail,
+			int trip_views, int trip_push, int dib) {
+		super();
+		this.trip_num = trip_num;
+		this.trip_kategorie = trip_kategorie;
+		this.trip_title = trip_title;
+		this.trip_content = trip_content;
+		this.trip_writer = trip_writer;
+		this.trip_regdate = trip_regdate;
+		this.trip_nail = trip_nail;
+		this.trip_addr = trip_addr;
+		this.trip_phone = trip_phone;
+		this.trip_detail = trip_detail;
+		this.trip_views = trip_views;
+		this.trip_push = trip_push;
+		this.dib = dib;
+	}
+	
+	public int getDib() {
+		return dib;
+	}
+	public void setDib(int dib) {
+		this.dib = dib;
 	}
 	public int getTrip_num() {
 		return trip_num;

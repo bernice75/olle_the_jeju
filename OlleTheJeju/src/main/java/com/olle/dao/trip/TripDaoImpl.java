@@ -18,6 +18,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.olle.dto.etc.DibDto;
+import com.olle.dto.suggest.SuggestDto;
 import com.olle.dto.trip.TripDto;
 
 @Repository
@@ -237,4 +239,95 @@ public class TripDaoImpl implements TripDao {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public int insertDibs(int trip_num, String user_id) {
+		int res=0;
+		int result = 0;
+		DibDto chk = chkDibs(trip_num);
+		if(chk==null) {
+			try {
+				DibDto in = new DibDto();
+				in.setBoard_num(1);
+				in.setTable_num(trip_num);
+				in.setUser_id(user_id);
+				res = sqlSession.insert("dib.insert",in);
+				if(res>0) {
+					result=1; //추가 성공
+				}else {
+					result=2; //추가 실패
+				}
+			} catch (Exception e) {
+				System.out.println("[ERROR : DIB_INSERT]");
+				e.printStackTrace();
+			}
+		}else {
+			try {
+				res = sqlSession.delete("dib.delete",chk.getDib_num());
+				if(res>0) {
+					result=3;//삭제 성공
+				}else {
+					result=4;//삭제 실패
+				}
+				
+			} catch (Exception e) {
+				System.out.println("[ERROR : DIB_DELETE");
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public DibDto chkDibs(/* String id, */ int tNum) {
+		
+		DibDto dd = new DibDto();
+		//dd.setUser_id(id);
+		dd.setTable_num(tNum);
+		dd.setBoard_num(1);
+		
+		DibDto result=null;
+		try {
+			result = sqlSession.selectOne("dib.selectOne", dd);
+		} catch (Exception e) {
+			System.out.println("[ERROR : DIB_SELECTONE]");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<TripDto> DibList(List<TripDto> list, String user_id) {
+		
+		List<DibDto> dlist = new ArrayList<DibDto>();
+		
+		DibDto dd = new DibDto();
+		dd.setUser_id(user_id); //세션에서 받아온 유저아이디
+		dd.setBoard_num(1);
+		
+		try {
+			dlist = sqlSession.selectList("dib.selectList", dd);
+			for(int i=0; i<list.size(); i++) {
+				int tNum = list.get(i).getTrip_num();
+				
+				for(int j=0; j<dlist.size(); j++) {
+					if(dlist.get(j).getTable_num()==tNum) { //찜리스트에 해당 게시글의 번호가 있을경우
+						
+						list.get(i).setDib(1);
+						break;
+					}else {
+						list.get(i).setDib(0);
+					}
+				}
+				
+			}
+		} catch (Exception e) {
+			System.out.println("[ERROR : DIB_SELECTLIST");
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
 }

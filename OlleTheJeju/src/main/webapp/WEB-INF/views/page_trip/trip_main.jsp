@@ -19,11 +19,12 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-
+        <script src="./resources/js/trip/trip_main.js?var=1"></script>
 	<body>
 		<div class="wrapper">
 			<jsp:include page="../include/header.jsp"></jsp:include>
 			<div class="main">
+			<input type="hidden" name="user_id" value="qww"><!-- 세션에서 user_id 받아오기 -->
 				<br><br>
                 <div class="main-text">
                     <h2>제주도 모든 여행지를 한번에!</h2>
@@ -42,7 +43,6 @@
                 </div>
                 <br><br>
                 <div class="nail">
-                
 					<% 
 						List<TripDto> dto = (List)request.getAttribute("dto");
 						int size = dto.size()-1;
@@ -66,7 +66,20 @@
             					<p class="nail_title"><%=trip.getTrip_title() %></p>
             					<span class="nail_view">조회수 | <%=trip.getTrip_views() %></span>
             					<span class="nail_push">좋아요 | <%=trip.getTrip_push() %></span>
-        					</div>
+            					<hr style="margin-bottom: 0;">
+            					<div class="nail_hrt">
+            						<% if(trip.getDib()==1){
+            						%>
+            							<i class="fa fa-heart fa-xs" onclick="dibs('<%=trip.getTrip_num()%>')"></i>
+            						<%
+            							}else{
+            						%>
+            							<i class="fa fa-heart-o fa-xs" onclick="dibs('<%=trip.getTrip_num()%>')"></i>
+            						<%
+            							}
+            						%>
+        						&nbsp; 찜하기</div>
+        				</div>
         				</div>
 					<%		
 							nail++;
@@ -95,7 +108,7 @@
 				</c:forEach>
 				<c:if test="${paging.next}">
 	   				<a href="trip_main.do?kategorie=<%=dto.get(0).getTrip_kategorie() %>&page=${paging.endPage+1}" style="font-size:20px; margin-left: 5px;">next</a>
-				</c:if>
+				</c:if> 
 			</div>
 			<br><br>
 			</div>

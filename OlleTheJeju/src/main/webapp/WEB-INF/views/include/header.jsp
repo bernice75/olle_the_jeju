@@ -40,7 +40,7 @@
                    <a href="trip_main.do?kategorie=명소&page=1">관광일정</a>
                </li>
                <li>
-                   <a href="suggest_main.do">추천일정</a>
+                   <a href="suggest_main.do?kategorie=전체&page=1">추천일정</a>
                </li>
                <li><a href="customplan_main.do">나만의일정</a></li>
                <li>

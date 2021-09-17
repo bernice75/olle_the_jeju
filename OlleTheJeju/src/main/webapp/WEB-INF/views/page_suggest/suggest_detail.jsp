@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,7 +15,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        <script src="./resources/js/suggest/suggest_detail.js" type="text/javascript"></script>
+        <script src="./resources/js/suggest/suggest_detail.js?var=1" type="text/javascript"></script>
 	</head>
 	<body>
 		<div class="wrapper">
@@ -55,25 +56,21 @@
                     </div>
                     <div class="content_info">
                         <br>
-                        <h4>제주 우도 비밀의 여행지 숲속 힐링코스</h4>
+                        <h4>${dto.sug_title }</h4>
                         <div class="name">
-                            <h6><strong>작성자</strong> | 김미림</h6>
-                            <h6 class="like"><i class="fa fa-heart-o" aria-hidden="true"></i> | 100</h6>
-                            <h6><i class="fa fa-thumb-tack" aria-hidden="true"></i> | 100</h6>
-                            <h6><i class="fa fa-bullhorn" aria-hidden="true"></i> | 신고</h6>
+                            <h6><strong>작성자</strong> | ${dto.sug_writer }</h6>
+                            <h6 class="like" id="pText" onclick="like();" ><i id="push"class="fa fa-heart-o" aria-hidden="true" style="font-weight:normal;"> | <span id="text">${dto.sug_push }</span></i> </h6>
+                            <h6>조회수 | ${dto.sug_views }</h6>
+                            <h6 onclick="report('${dto.sug_num}');"><i class="fa fa-bullhorn" aria-hidden="true"></i> | 신고</h6>
                         </div>
                         <div class="content">
-                            제목은 21자 제한 필수일듯<br>
-                            여기에는 내용이 들어간다.<br>
-                            그냥 내용만 담을 것인가....
-                            호로로롤ㄹ로롤롤오오오오오오옹<br>
-                            미림 대장 화이팅
+							${dto.sug_content }
                         </div>
                         <div class="tag">
-                            <h6 class="day"><strong>기간</strong> | 1박2일</h6>
-                            <h6 class="regdate"><strong>작성일</strong> | 2021년 08월 31일</h6>
-                            <h6 class="den"><strong>성향</strong> | 여자끼리</h6>
-                            <h6 class="hash"><strong>태그</strong> | 힐링, 숲속</h6>
+                            <h6 class="day"><strong>기간</strong> | ${dto.sug_term }</h6>
+                            <h6 class="regdate"><strong>작성일</strong> | ${regdate }</h6>
+                            <h6 class="den"><strong>성향</strong> | ${dto.sug_tendency }</h6>
+                            <h6 class="hash"><strong>태그</strong> | ${dto.sug_kategorie }</h6>
                         </div>
                     </div>
                 </div>
@@ -88,9 +85,9 @@
                     </div>
                 </div>
                 <div class="bottom-btn-group2">
-                    <input id="btn1" class="btn btn-secondary" type="button" value="목록" onclick="location.href='suggest_main.do'">
-                    <input id="btn2" class="btn btn-primary" type="button" value="수정" onclick="">
-                    <input id="btn3" class="btn btn-danger" type="button" value="삭제" onclick="">
+                    <input id="btn1" class="btn btn-secondary" type="button" value="목록" onclick="location.href='suggest_main.do?kategorie=전체&page=1'">
+                    <input id="btn2" class="btn btn-primary" type="button" value="수정" onclick="location.href='suggest_update.do?sug_num=${dto.sug_num}'">
+                    <input id="btn3" class="btn btn-danger" type="button" value="삭제" onclick="location.href='suggest_delete.do?sug_num=${dto.sug_num}'">
                 </div>
                 <br><br>
 			</div>
