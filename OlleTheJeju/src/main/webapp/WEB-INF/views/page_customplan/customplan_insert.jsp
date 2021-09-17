@@ -101,6 +101,12 @@
 					   "<p>"+
 					   "<span class='old-addr'>"+trip_phoneno[idx]+"</span>"+
 					   "</p>"+
+					   "<p style='display:none'>"+
+					   "<span class='old-addr'>"+tripList[idx].latitude+"</span>"+
+					   "</p>"+
+					   "<p style='display:none'>"+
+					   "<span class='old-addr'>"+tripList[idx].longitude+"</span>"+
+					   "</p>"+ 
 					   "</div>"+
 					   "<button type='button' class='btn-close' aria-label='close' style='position: absolute; top: 10px; right: 10px; display: block; width: 15px; height: 15px;' onclick='infoWindow.setVisible(false);'></button>" +
 					   "</div>";
@@ -236,7 +242,8 @@
                     
                 </div>
                 <br>
-                <form action="customplan_insert.do" method="post">
+                <form action="customplan_insert.do" method="post" enctype="multipart/form-data">
+                	<input type="hidden" name="plan_writer" value="${sessionScope.user_id }">
                     <div class="main-place">
                         <div id="carouselExampleFade" class="carousel slide carousel-fade slider" data-bs-ride="carousel">
                             <div class="carousel-inner imgs">
@@ -289,7 +296,7 @@
                                             <input type="radio" class="btn-check" name="tend_content" value="연인"> 연인
                                         </label>
                                         <label class="btn btn-primary">
-                                            <input type="radio" class="btn-check" name="tendency" value="가족"> 가족
+                                            <input type="radio" class="btn-check" name="tend_content" value="가족"> 가족
                                         </label>  
                                     </div>
                                 </section>
@@ -343,6 +350,8 @@
 				var title = $(obj).parent().next().children('p')[0].innerText;
 	    		var addr = $(obj).parent().next().children('p')[1].innerText;
 	    		var phone =  $(obj).parent().next().children('p')[2].innerText;
+	    		var lat = $(obj).parent().next().children('p')[3].innerText;
+	    		var lon =  $(obj).parent().next().children('p')[4].innerText;
 	    		
 				var dataInfo = $(
 	                    "<div class='list_inner'>"+
@@ -352,6 +361,8 @@
 	                        "<p class='lst_addr'><input type='text' value='"+addr+"' name='lst_addr' style='width:200px;' readonly='readonly'></p>"+
 	                        "<p class='list_phone'><b>3. 전화번호</b></p>"+
 	                        "<p class='lst_phone'><input type='text' value='"+phone+"' name='lst_phone' style='width:200px;' readonly='readonly'></p>"+
+	                        "<input type='hidden' name='lst_lat' value='" + lat + "'>" + 
+	                        "<input type='hidden' name='lst_lon' value='" + lon + "'>" + 
 	                        "<input type='button' value='삭제' onclick='deleteList(this);'>"+
 	                    "</div>"
 	                    );

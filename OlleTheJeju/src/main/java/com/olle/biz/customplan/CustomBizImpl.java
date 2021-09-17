@@ -38,5 +38,10 @@ public class CustomBizImpl implements CustomBiz{
 	public int delete(int plan_num) {
 		return dao.delete(plan_num);
 	}
+
+	@Override
+	public int maxNum() {
+		return dao.maxNum();
+	}
 	
 }

@@ -54,5 +54,11 @@ public class CustomDaoImpl implements CustomDao{
 		return 0;
 	}
 
+	@Override
+	public int maxNum() {
+		int res = sqlSession.selectOne(NAMESPACE + "maxNum");
+		return res;
+	}
+
 	
 }

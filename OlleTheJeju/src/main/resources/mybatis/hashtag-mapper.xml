@@ -8,7 +8,6 @@
 		<result property="hash_num" column="HASH_NUM"/>
 		<result property="board_num" column="BOARD_NUM"/>
 		<result property="table_num" column="TABLE_NUM"/>
-		<result property="group_num" column="GROUP_NUM"/>
 		<result property="hash_content" column="HASH_CONTENT"/>
 	</resultMap>
 	
@@ -22,7 +21,10 @@
 	
 	<insert id="insert" parameterType="hashtagDto">
 		INSERT INTO OLLE_HASHTAG
-		VALUES()
+		VALUES(
+			(SELECT NVL(MAX(HASH_NUM)) FROM OLLE_HASHTAG) + 1,
+			#{board_num}, #{table_num}, #{hash_contnet}
+		)
 	</insert>
 	
 	<update id="update" parameterType="hashtagDto">
