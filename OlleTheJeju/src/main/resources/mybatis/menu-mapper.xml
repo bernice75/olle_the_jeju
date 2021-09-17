@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "menu">
+
+	<resultMap type="menuDto" id="menuUnit">
+		<result column="MENU_ID" property="menu_id"/>
+		<result column="STORE_ID" property="store_id"/>
+		<result column="MENU" property="menu"/>
+	</resultMap>
+	
+	<select id="pkMax" resultType="long" parameterType="long">
+		SELECT MAX(MENU_ID) FROM OLLE_SITU_MENU
+		WHERE STORE_ID=#{storeId}
+	</select>
+	
+		
+	<insert id="insertMenu" parameterType="menuDto">
+		INSERT INTO OLLE_SITU_MENU
+		VALUES
+			<foreach collection="list" item="item" separator=",">
+			(#{item.menuId},#{item.storeId},#{item.menu})
+			</foreach>
+		
+	</insert>
+
+</mapper>

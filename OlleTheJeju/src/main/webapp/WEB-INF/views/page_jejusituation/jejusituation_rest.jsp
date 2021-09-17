@@ -107,7 +107,8 @@
                 </div>
                 <br>
                 <div class="write">
-                    <button class="btn btn-outline-secondary" name="createrest" onclick="openModal2();">맛집등록</button>
+                    <!-- <button class="btn btn-outline-secondary" name="createrest" onclick="openModal2();">맛집등록</button> -->
+                    <button class="btn btn-outline-secondary" name="createrest" onclick="registerStoreForm();">맛집등록</button>
                 </div>
                 <br><br>
                 <!-- 페이징 처리 -->
@@ -117,5 +118,27 @@
 			<jsp:include page="../include/footer.jsp"></jsp:include>
         </div>
         <script type="text/javascript" src="./resources/js/jejusituation/jejusituation_rest.js"></script>
+        <script>
+        	function registerStoreForm(){
+        		$.ajax({
+        			method:"POST",
+        			data:`<%=session.getAttribute("user_id")%>`,
+        			contentType:false,
+        			url:"jejuSituationValidUser.do",
+        			success:function(json){
+        				console.log(`msg:${json}`);
+					   if(json.msg===true){
+        					alert("맛집 등록 페이지로 이동합니다");
+            				openModal2();
+        				}else{
+        					alert("권한이 부여되지 않았습니다");
+        				}
+        			},
+        			error:function(msg){
+        				alert("죄송합니다. 접근하실 수 없습니다.");
+        			}
+        		});
+        	}
+        </script>
     </body>
 </html>

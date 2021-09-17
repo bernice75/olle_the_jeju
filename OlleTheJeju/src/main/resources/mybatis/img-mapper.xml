@@ -20,9 +20,19 @@
 
 	</select>
 	
+	<!-- image PK 최대 값 가져오기 -->
+	<select id="selectMaxPK" resultType="int">
+	 SELECT MAX(IMG_NUM) FROM OLLE_IMG
+	</select>
+	
+	<select id="selectMaxGroupId" parameterType="int" resultType="int">
+		SELECT MAX(GROUP_NUM) FROM OLLE_IMG
+		WHERE BOARD_NUM=#{boardNum} 
+	</select>
+	
 	<insert id="insert" parameterType="imgDto">
 		INSERT INTO OLLE_IMG
-		VALUES()
+		VALUES(#{img_num},#{board_num},#{table_num},#{img_title},#{group_num})
 	</insert>
 	
 	<update id="update" parameterType="imgDto">
