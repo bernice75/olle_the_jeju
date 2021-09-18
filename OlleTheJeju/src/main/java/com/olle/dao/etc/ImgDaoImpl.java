@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.olle.dto.etc.ImgDto;
+import com.olle.dto.pagination.jejusitu.PaginationIdxes;
 
 @Repository
 public class ImgDaoImpl implements ImgDao {
@@ -47,13 +48,7 @@ public class ImgDaoImpl implements ImgDao {
 	public int selectMaxPK() {
 		// TODO Auto-generated method stub
 		int max=0;
-		try {
-			max=sqlSession.selectOne(NAMESPACE+"selectMaxPK");
-		}catch(Exception e) {
-			max=0;
-		}finally {
-			max++;
-		}
+		max=sqlSession.selectOne(NAMESPACE+"selectMaxPK");
 
 		return max;
 	}
@@ -62,14 +57,7 @@ public class ImgDaoImpl implements ImgDao {
 	public int selectMaxGroupId(int boardNum) {
 		// TODO Auto-generated method stub
 		int res=0;
-		
-		try {
-			res=sqlSession.selectOne(NAMESPACE+"selectMaxGroupId",boardNum);
-		}catch(Exception e) {
-			res=0;//null일 때
-		}finally {
-			res++;
-		}
+		res=sqlSession.selectOne(NAMESPACE+"selectMaxGroupId",boardNum);
 		return res;
 	}
 
@@ -78,5 +66,22 @@ public class ImgDaoImpl implements ImgDao {
 		// TODO Auto-generated method stub
 		return sqlSession.insert(NAMESPACE+"insert",dto);
 	}
+
+	@Override
+	public List<ImgDto> getStoreImg(int startIdx, int endIdx) {
+		// TODO Auto-generated method stub
+		PaginationIdxes pg=new PaginationIdxes();
+		pg.setStartIdx(startIdx);
+		pg.setEndIdx(endIdx);
+		List<ImgDto> list=sqlSession.selectList(NAMESPACE+"storeImg",pg);
+		return list;
+	}
+
+//	@Override
+//	public ImgDto getStoreImg(int table_num) {
+//		// TODO Auto-generated method stub
+//		ImgDto dto=sqlSession.selectOne(NAMESPACE+"storeImg",table_num);
+//		return dto;
+//	}
 
 }

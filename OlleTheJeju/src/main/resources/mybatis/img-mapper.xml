@@ -22,15 +22,34 @@
 	
 	<!-- image PK 최대 값 가져오기 -->
 	<select id="selectMaxPK" resultType="int">
-	 SELECT MAX(IMG_NUM) FROM OLLE_IMG
+		  SELECT (NVL2(MAX(IMG_NUM)+1,MAX(IMG_NUM)+1,1)) AS PRI  FROM OLLE_IMG
 	</select>
 	
 	<select id="selectMaxGroupId" parameterType="int" resultType="int">
-		SELECT MAX(GROUP_NUM) FROM OLLE_IMG
-		WHERE BOARD_NUM=#{boardNum} 
+		SELECT (NVL(MAX(GROUP_NUM),0)+1) FROM OLLE_IMG
+		WHERE BOARD_NUM=#{board_num} 
+	</select>
+	
+	<!--제주 상황 BOARD_NUM과 TABLE_NUM으로 찾기(맨 위 한행만)<-가게 정보에 등록한 이미지  -->
+<!-- 	<select id="storeImg" parameterType="int" resultType="imgDto">
+		SELECT B.*
+		FROM(
+		SELECT ROWNUM AS RN,A.* FROM (SELECT IMG_NUM, BOARD_NUM, TABLE_NUM,
+		IMG_TITLE,GROUP_NUM
+		FROM OLLE_IMG
+		WHERE BOARD_NUM=4 AND TABLE_NUM=#{table_num}
+		ORDER BY IMG_NUM DESC)A)B
+		WHERE B.RN=1
+	</select> -->
+	<select id="storeImg" parameterType="paginationIdxDto" resultType="imgDto">
+		SELECT IMG_NUM, BOARD_NUM, TABLE_NUM,IMG_TITLE, GROUP_NUM FROM OLLE_IMG
+		WHERE BOARD_NUM=4 AND (TABLE_NUM BETWEEN #{startIdx} AND #{endIdx})
 	</select>
 	
 	<insert id="insert" parameterType="imgDto">
+		<selectKey resultType="int" keyProperty="img_num" order="BEFORE">
+		  SELECT (NVL2(MAX(IMG_NUM)+1,MAX(IMG_NUM)+1,1)) AS PRI  FROM OLLE_IMG
+		</selectKey>
 		INSERT INTO OLLE_IMG
 		VALUES(#{img_num},#{board_num},#{table_num},#{img_title},#{group_num})
 	</insert>

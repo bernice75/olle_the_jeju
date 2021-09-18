@@ -35,7 +35,7 @@
                             <table class="table">
                                 <tr>
                                     <th>상호명 :</th>
-                                    <td><input type="text" name="name"></td>
+                                    <td><input type="text" name="company"></td>
                                 </tr>
                                 <tr>
                                     <th>전화번호 :</th>
@@ -50,8 +50,15 @@
                                     <td><input type="text" name="time"></td>
                                 </tr>
                                 <tr>
-                                    <th>홈페이지 :</th>
-                                    <td><input type="text" name="homepage"></td>
+                                    <th>한식/양식/일식/중식 :</th>
+                                    <td>
+                                        <select name="gubun">
+                                            <option value="한식">한식</option>
+                                            <option value="양식">양식</option>
+                                            <option value="일식">일식</option>
+                                            <option value="중식">중식</option>
+                                        </select>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -65,25 +72,40 @@
                 <div class="nail-second">   
                     <div class="nail3">
                         <div class="tablebox2">
-                            <table class="table">
-                                <tr>
-                                    <th>메뉴 :</th>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="menu"></td>
-                                    <td><input type="text" name="menu"></td>
-                                    <td><input type="text" name="menu"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="menu"></td>
-                                    <td><input type="text" name="menu"></td>
-                                    <td><input type="text" name="menu"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" name="menu"></td>
-                                    <td><input type="text" name="menu"></td>
-                                    <td><input type="text" name="menu"></td>
-                                </tr>
+                       <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>메뉴</th>
+                                        <th>가격(원)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" name="menu"></td>
+                                        <td><input type="number" name="price"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="menu"></td>
+                                        <td><input type="number" name="price"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="menu"></td>
+                                        <td><input type="number" name="price"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="menu"></td>
+                                        <td><input type="number" name="price"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="menu"></td>
+                                        <td><input type="number" name="price"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="menu"></td>
+                                        <td><input type="number" name="price"></td>
+                                    </tr>
+                                </tbody>
+                           
                             </table>
                         </div>
                     </div>
