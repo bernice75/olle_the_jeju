@@ -37,7 +37,7 @@ public class JejuPageDaoImpl implements JejuPageDao{
 	public int getTotalPages(int unit) {
 		// TODO Auto-generated method stub
 		int tot=getTotalElements();
-		tot=(int)Math.round((double)tot/unit);
+		tot=(int)Math.ceil((double)tot/unit);
 		return tot;
 	}
 

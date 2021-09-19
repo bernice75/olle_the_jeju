@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.olle.dto.jejusituation.menu.MenuDto;
+import com.olle.dto.pagination.jejusitu.PaginationIdxes;
 
 @Repository
 public class MenuDaoImpl implements MenuDao{
 
 	@Autowired
-	private static SqlSessionTemplate session;
+	private SqlSessionTemplate session;
 	
 
 	@Override
@@ -61,6 +62,19 @@ public class MenuDaoImpl implements MenuDao{
 		}catch(Exception e) {
 			list=null;
 		}
+		return list;
+	}
+
+	@Override
+	public List<MenuDto> getPageMenuList(int startIdx, int page) {
+		// TODO Auto-generated method stub
+		int endIdx=page*36;
+		PaginationIdxes pg=new PaginationIdxes();
+		pg.setStartIdx(startIdx);
+		pg.setEndIdx(endIdx);
+	//	System.out.println("pageIndex: "+pg);
+	//	System.out.println("pageIndex dto is null?: "+pg==null);
+		List<MenuDto> list=session.selectList(NAMESPACE+"getPageMenuList",pg);
 		return list;
 	}
 
