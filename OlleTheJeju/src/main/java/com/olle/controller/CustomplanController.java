@@ -117,6 +117,7 @@ public class CustomplanController {
 			String fileName_2 = img_2.getOriginalFilename();
 			String fileName_3 = img_3.getOriginalFilename();
 
+			//폴더에 이미지 파일 저장 -------------------------------------------------------
 			InputStream input = null;
 			OutputStream out = null;
 
@@ -184,9 +185,10 @@ public class CustomplanController {
 	            //파일 저장
 	            out.write(b, 0, read);
 	         }
+	         //폴더에 이미지 파일 저장 끝 -------------------------------------------------------
 
-	         //각 파일 실제 경로에 저장했으니 이제 테이블에 저장할 차례
-	         //이 부분부터는 다음 이시간에.....
+	         //이미지 파일명 테이블 저장
+	         
 
 		} else {
 			System.out.println("글 저장에 실패했습니다.");

@@ -19,6 +19,8 @@
 		<typeAlias type="com.olle.dto.etc.ReportDto" alias="reportDto"/>
 		<typeAlias type="com.olle.dto.etc.FoodDto" alias="foodDto"/>
 		<typeAlias type="com.olle.dto.etc.DateDto" alias="dateDto"/>
+		<typeAlias type="com.olle.dto.etc.jejusituation.CoronaDto" alias="coronaDto"/>
+		<typeAlias type="com.olle.dto.etc.jejusituation.MenuDto" alias="menuDto"/>
 		<typeAlias type="com.olle.dto.etc.ChatMessage" alias="chatMessage"/>
 		<typeAlias type="com.olle.dto.etc.ChatRoom" alias="chatRoom"/>
 	</typeAliases>
@@ -39,6 +41,8 @@
 		<mapper resource="/mybatis/report-mapper.xml"/>
 		<mapper resource="/mybatis/food-mapper.xml"/>
 		<mapper resource="/mybatis/date-mapper.xml"/>
+		<mapper resource="/mybatis/menu-batch.xml"/>
+		<mapper resource="/mybatis/menu-mapper.xml"/>
 	</mappers>
 
 

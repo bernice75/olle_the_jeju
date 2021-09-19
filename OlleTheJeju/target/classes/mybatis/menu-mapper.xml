@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "menu">
+	<resultMap type="menuDto" id="menuMap">
+		<result column="MENU_ID" property="menu_id"/>
+		<result column="STORE_ID" property="store_id"/>
+		<result column="MENU" property="menu"/>
+		<result column="PRICE" property="price"/>
+	</resultMap>
+	
+	<resultMap type="menuDto" id="maxPk">
+		<result column="PRI" property="menu_id"/>
+	</resultMap>	
+	<select id="pkMax" resultMap="maxPk">
+		<![CDATA[
+		SELECT (NVL2(MAX(MENU_ID)+1,MAX(MENU_ID)+1,1)) AS PRI FROM OLLE_SITU_MENU
+		]]>
+	</select>
+		<!-- 조건별 리스트 가져오기 -->
+	<select id="getMenuListByStoreId" parameterType="int" resultType="menuDto">
+		SELECT MENU_ID,STORE_ID,MENU
+		FROM OLLE_SITU_MENU
+		WHERE STORE_ID=#{store_id}
+	</select>	
+		
+</mapper>

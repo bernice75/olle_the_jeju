@@ -16,48 +16,52 @@
 		<result property="situ_home" column="SITU_HOME"/>
 	</resultMap>
 	
-	<sql id="criteria">
-		<trim prefix="and(" suffix=") " prefixOverrides="OR">
-			<foreach item='type' collection="typeArr">
-				<trim prefix="OR">
-					<choose>
-						<when test="type== 'T'.toString()">
-							post_title like '%' || #{keyword}||'%'
-						</when>
-						<when test="type== 'C'.toString()">
-							post_content like '%' || #{keyword}||'%'
-						</when>
-						<when test="type== 'W'.toString()">
-							post_writer like '%' || #{keyword}||'%'
-						</when>
-					</choose>
-				</trim>
-			</foreach>
-		</trim>
-	</sql>
-	
-	<select id="countTotal" resultType="int">
-		SELECT COUNT(*)
-		FROM OLLE_SITUATION
-	</select>
-	
 	<select id="selectList" parameterType="int" resultMap="jejuMap">
-		SELECT *
-		FROM (
-			SELECT ROWNUM RNO, j.*
-			FROM OLLE_SITUATION j
-			ORDER BY SITU_NUM DESC
-		)
-		WHERE RNO BETWEEN (#{pageNum} - 1) * #{amount} + 1 AND (#{pageNum}) * #{amount}
+	
 	</select>
 	
 	<select id="selectOne" resultType="jejuDto">
 
 	</select>
 	
-	<insert id="insert" parameterType="jejuDto">
-		INSERT INTO OLLE_SITUATION
-		VALUES()
+	<!-- 제주상황 맛집등록 게시판 최대 pk값 가져올 수 있도록 하기 -->
+	<select id="olleSituStoreMaxPk" resultType="int">
+		SELECT (NVL(MAX(SITU_NUM),0)+1)  FROM OLLE_SITUATION
+	</select>
+	
+	<!-- 제주상황 맛집 페이징처리를 위한 전체 게시글 갯수 카운트 -->
+	<select id="countTotalElements" resultType="int">
+		SELECT COUNT(SITU_NUM) FROM OLLE_SITUATION
+	</select>
+	
+	<!-- 조건이 없을 때 제주상황 가게 리스트 가져오기 -->
+	<!-- paginationIdxDto -->
+	<select id="totalStoreSelect" parameterType="paginationIdxDto" resultType="jejuDto">
+		SELECT B.*
+		FROM(
+    		SELECT ROWNUM AS RN,A.* FROM (
+				SELECT SITU_NUM,SITU_NAME,SITU_WRITER,SITU_REGDATE,SITU_PHONE,
+						SITU_ADDR,SITU_OPEN_TIME,SITU_CLOSE_TIME,SITU_GUBUN
+				FROM OLLE_SITUATION
+				WHERE SITU_NUM>0
+			) A
+			ORDER BY A.SITU_NUM ASC
+			)B
+			WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
+	</select>
+	
+	<!-- 작성자 조건 페이징 조회 -->
+	<!-- 주소    조건 페이징 조회 -->
+	<select id="storeAddrPagination">
+	
+	</select>
+	
+	<insert id="insertSit" parameterType="jejuDto">
+		<selectKey resultType="int" keyProperty="situ_num" order="BEFORE">
+		  SELECT (NVL2(MAX(SITU_NUM)+1,MAX(SITU_NUM)+1,1)) AS PRI  FROM OLLE_SITUATION
+		</selectKey>
+		INSERT INTO OLLE_SITUATION(SITU_NUM,SITU_NAME,SITU_WRITER,SITU_PHONE,SITU_ADDR,SITU_OPEN_TIME,SITU_CLOSE_TIME,SITU_GUBUN)
+		VALUES(#{situ_num},#{situ_name},#{situ_writer},#{situ_phone},#{situ_addr},#{situ_open_time},#{situ_close_time},#{situ_gubun})
 	</insert>
 	
 	<update id="update" parameterType="jejuDto">

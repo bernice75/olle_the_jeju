@@ -39,101 +39,102 @@
                     <button class="btn btn-outline-secondary search2"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
                 <br><br>
-            <!--모달창<-아이템-->
-            <div class="my-modal">
-                <div class="close-btn" onclick="closeModal();">❌</div>
-                <iframe src="jejusituation_rest_detail.do" title="모달창">
+	            <!--모달창<-아이템-->
+	            <div class="my-modal">
+	                <div class="close-btn" onclick="closeModal();">❌</div>
+	                <iframe src="jejusituation_rest_detail.do" title="모달창">
+	
+	                </iframe>
+	            </div>
+	            <!--추후 사용자 모드(사장님인지에 따라) 자바스크립트가 변경되어야 할 것-->
+	            <div class="my-modal2">
+	                <div class="close-btn2" onclick="closeModal2();">❌</div>
+	                <iframe src="jejusituation_rest_create.do" title="모달창">
+	
+	                </iframe>
+	            </div>
 
-                </iframe>
-            </div>
-            <!--추후 사용자 모드(사장님인지에 따라) 자바스크립트가 변경되어야 할 것-->
-            <div class="my-modal2">
-                <div class="close-btn2" onclick="closeModal2();">❌</div>
-                <iframe src="jejusituation_rest_create.do" title="모달창">
-
-                </iframe>
-            </div>
-
-                <!-- 썸네일 -->
-                <c:forEach var="list" items="${list }" varStatus="status">
-                	<div class="nail">
-	                    <div class="nail${status.index + 1 }" onclick="openModal();">
-	                        <div class="nail_img">
-	                        </div>
-	                        <div class="nail_inner">
-	                            <p class="nail_title">${list.situ_name }</p>
-	                            <hr style="margin: 0 0 10px 0;">
-	                            <span>구분 | 한식</span>
-	                            <br>
-	                            <span>주소 | ${list.situ_addr }</span>
-	                        </div>
-	                    </div>
-	                </div>
-                </c:forEach>
-                <!-- 
+            	<!-- 썸네일 -->
                 <div class="nail">
-                    <div class="nail1" onclick="openModal();">
-                        <div class="nail_img">
+                    <div class="nail1" onclick="openModal('${oneJeju.situ_num}');">
+                        <img class="store" src="./resources/img/jejusitu/${oneImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png';"/>
+                        <div class="nail1-text1 text">${oneJeju.situ_name }
+                            <span class="nail1-text2 text">${oneJeju.situ_gubun }</span>
                         </div>
-                        <div class="nail_inner">
-                            <p class="nail_title">맛집명</p>
-                            <hr style="margin: 0 0 10px 0;">
-                            <span>구분 | 한식</span>
-                            <br>
-                            <span>주소 | 서울 관악구 관악로 14길</span>
-                        </div>
+                        <div class="nail1-text3 text">${oneJeju.situ_addr }</div>
                     </div>
-                    <div class="nail2" onclick="openModal();">
-                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
-                        <div class="nail1-text1 text">맛집명
-                            <span class="nail1-text2 text">양식</span>
+                    <div class="nail2" onclick="openModal('${twoJeju.situ_num}');">
+                        <img class="store" src="./resources/img/jejusitu/${twoImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+                        <div class="nail1-text1 text">${twoJeju.situ_name }
+                            <span class="nail1-text2 text">${twoJeju.situ_gubun }</span>
                         </div>
-                        <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
+                        <div class="nail1-text3 text">${twoJeju.situ_addr }</div>
                     </div>
-                    <div class="nail3" onclick="openModal();">
-                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
-                        <div class="nail1-text1 text">맛집명
-                            <span class="nail1-text2 text">양식</span>
+                    <div class="nail3" onclick="openModal('${threeJeju.situ_num}');">
+                        <img class="store" src="./resources/img/jejusitu/${threeImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+                        <div class="nail1-text1 text">${threeJeju.situ_name}
+                            <span class="nail1-text2 text">${threeJeju.situ_gubun }</span>
                         </div>
-                        <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
+                        <div class="nail1-text3 text">${threeJeju.situ_addr }</div>
                     </div>
                 </div>
                 <br><br><br>
-                 -->
+                <div class="nail">
+                    <div class="nail4" onclick="openModal('${fourJeju.situ_num}');">
+                        <img class="store" src="./resources/img/jejusitu/${fourImg.img_title}" alt="ex"  onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+                        <div class="nail1-text1 text">${fourJeju.situ_name }
+                            <span class="nail1-text2 text">${fourJeju.situ_gubun }</span>
+                        </div>
+                        <div class="nail1-text3 text">${fourJeju.situ_addr}</div>
+                    </div>
+                    <div class="nail5" onclick="openModal('${fiveJeju.situ_num }');">
+                        <img class="store" src="./resources/img/jejusitu/${fiveImg.img_title }" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+                        <div class="nail1-text1 text">${fiveJeju.situ_name }
+                            <span class="nail1-text2 text">${fiveJeju.situ_gubun }</span>
+                        </div>
+                        <div class="nail1-text3 text">${fiveJeju.situ_addr }</div>
+                    </div>
+                    <div class="nail6" onclick="openModal('${sixJeju.situ_num}');">
+                        <img class="store" src="./resources/img/jejusitu/${sixImg.img_title }" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+                        <div class="nail1-text1 text">${sixJeju.situ_name }
+                            <span class="nail1-text2 text">${sixJeju.situ_gubun }</span>
+                        </div>
+                        <div class="nail1-text3 text">${sixJeju.situ_addr }</div>
+                    </div>
+                </div>
                 <br>
                 <div class="write">
-                    <button class="btn btn-outline-secondary" name="createrest" onclick="openModal2();">맛집등록</button>
+                    <button class="btn btn-outline-secondary" name="createrest" onclick="registerStoreForm();">맛집등록</button>
                 </div>
                 <br><br>
                 <!-- 페이징 처리 -->
-                <div class="paging">
-                	<ul class="pagination">
-                		<c:if test="${pageMaker.prev }">
-                			<li class="paginate_button previous">
-                				<a href="${pageMaker.startPage-1 }">이전</a>
-               				</li>
-           				</c:if>
-           				<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-           					<li class="paginate_button ${pageMaker.cri.pageNum == num? 'active' : '' }">
-           						<a href="${num }">${num}</a>
-       						</li>
-   						</c:forEach>
-  						<c:if test="${pageMaker.next }">
-  							<li class="paginate_button next">
-  								<a href="${pageMaker.endPage+1 }">다음</a>
-							</li>
-						</c:if>
-						<c:if test="${pageMaker.next }">
-							<li class="paginate_button next">
-								<a href="${pageMaker.lastPage }">맨끝</a>
-							</li>
-						</c:if>
-					</ul>
-                </div>
+                <div class="paging"> 페이징 처리 </div>
                 <br><br><br>
             </div>
 			<jsp:include page="../include/footer.jsp"></jsp:include>
         </div>
         <script type="text/javascript" src="./resources/js/jejusituation/jejusituation_rest.js"></script>
+        <script type="text/javascript">
+        	function registerStoreForm(){
+        		$.ajax({
+        			method:"POST",
+        			data:`<%=session.getAttribute("user_id")%>`,
+        			contentType:false,
+        			url:"jejuSituationValidUser.do",
+        			success:function(json){
+        				console.log(`msg:${json}`);
+					   if(json.msg===true){
+        					alert("맛집 등록 페이지로 이동합니다");
+            				openModal2();
+        				}else{
+        					alert("권한이 부여되지 않았습니다");
+        				}
+        			},
+        			error:function(msg){
+        				alert("죄송합니다. 접근하실 수 없습니다.");
+        			}
+        		});
+        	}
+        </script>
     </body>
 </html>
