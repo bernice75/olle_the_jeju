@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -58,21 +59,21 @@
                     <div class="nail1" onclick="openModal('${oneJeju.situ_num}');">
                         <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${oneImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png';"/>
                         <div class="nail1-text1 text">${oneJeju.situ_name }
-                            <span class="nail1-text2 text">${oneJeju.situ_gubun }</span>
+                            <br>구분 | <span class="nail1-text2 text">${oneJeju.situ_gubun }</span>
                         </div>
                         <div class="nail1-text3 text">${oneJeju.situ_addr }</div>
                     </div>
                     <div class="nail2" onclick="openModal('${twoJeju.situ_num}');">
                         <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${twoImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
                         <div class="nail1-text1 text">${twoJeju.situ_name }
-                            <span class="nail1-text2 text">${twoJeju.situ_gubun }</span>
+                            <br>구분 | <span class="nail1-text2 text">${twoJeju.situ_gubun }</span>
                         </div>
                         <div class="nail1-text3 text">${twoJeju.situ_addr }</div>
                     </div>
                     <div class="nail3" onclick="openModal('${threeJeju.situ_num}');">
                         <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${threeImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
                         <div class="nail1-text1 text">${threeJeju.situ_name}
-                            <span class="nail1-text2 text">${threeJeju.situ_gubun }</span>
+                            <br>구분 | <span class="nail1-text2 text">${threeJeju.situ_gubun }</span>
                         </div>
                         <div class="nail1-text3 text">${threeJeju.situ_addr }</div>
                     </div>
@@ -82,21 +83,21 @@
                     <div class="nail4" onclick="openModal('${fourJeju.situ_num}');">
                         <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${fourImg.img_title}" alt="ex"  onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
                         <div class="nail1-text1 text">${fourJeju.situ_name }
-                            <span class="nail1-text2 text">${fourJeju.situ_gubun }</span>
+                            <br>구분 | <span class="nail1-text2 text">${fourJeju.situ_gubun }</span>
                         </div>
                         <div class="nail1-text3 text">${fourJeju.situ_addr}</div>
                     </div>
                     <div class="nail5" onclick="openModal('${fiveJeju.situ_num }');">
                         <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${fiveImg.img_title }" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
                         <div class="nail1-text1 text">${fiveJeju.situ_name }
-                            <span class="nail1-text2 text">${fiveJeju.situ_gubun }</span>
+                            <br>구분 | <span class="nail1-text2 text">${fiveJeju.situ_gubun }</span>
                         </div>
                         <div class="nail1-text3 text">${fiveJeju.situ_addr }</div>
                     </div>
                     <div class="nail6" onclick="openModal('${sixJeju.situ_num}');">
                         <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${sixImg.img_title }" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
                         <div class="nail1-text1 text">${sixJeju.situ_name }
-                            <span class="nail1-text2 text">${sixJeju.situ_gubun }</span>
+                            <br>구분 | <span class="nail1-text2 text">${sixJeju.situ_gubun }</span>
                         </div>
                         <div class="nail1-text3 text">${sixJeju.situ_addr }</div>
                     </div>
@@ -108,7 +109,28 @@
                 </div>
                 <br><br>
                 <!-- 페이징 처리 -->
-                <div class="paging"> 페이징 처리 </div>
+                <div class="paging">
+                	<%-- 이전버튼을 보여줄 필요가 있음 --%> 
+                	<c:if test="${prevFlag == true}">
+						<a class="prev" href="jejusituation_rest.do?page=${paginationMetaInfo.listBtnStartIdx-5}">이전</a>
+					</c:if>
+					<%-- 리스트버튼을 보여줄 필요가 있음 --%>
+					<c:choose>
+
+						<c:when test="${not empty paginationMetaInfo.jeju }">
+							  <c:forEach begin="${paginationMetaInfo.listBtnStartIdx}" end="${paginationMetaInfo.listBtnStartIdx+4}" var="item">
+						  		<c:if test="${item le paginationMetaInfo.totalPages}">
+						  			<a href="jejusituation_rest.do?page=${item }">${item }</a>
+						  		</c:if>
+						  </c:forEach>
+							
+						</c:when>
+					</c:choose>
+							<%-- 이후버튼을 보여줄 필요가 있음 --%>
+					 	<c:if test="${nextFlag eq true}">
+						 	<a class="next" href="jejusituation_rest.do?page=${paginationMetaInfo.listBtnStartIdx+5}">이후</a>
+					 	</c:if>
+                </div>
                 <br><br><br>
             </div>
 			<jsp:include page="../include/footer.jsp"></jsp:include>

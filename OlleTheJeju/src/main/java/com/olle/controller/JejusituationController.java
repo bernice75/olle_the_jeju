@@ -89,39 +89,72 @@ public class JejusituationController {
 		
 		int unit=(int)Math.ceil((double)page/5);
 		int finUnit=(int)Math.ceil((double)totPage/5);
+
+		
+		logger.info("current page: {}, unit: {}",page,unit);
+		Boolean pFlag=false;
+		Boolean nFlag=false;
 		//1~5같이 1인 경우는 이전페이지는 없음
 		if(unit==1) {
-			pageList.setPrevUnit(false);
-			pageList.setNextUnit(true);
-		}else if(unit==finUnit) {
+			pFlag=false;
+			nFlag=true;
+		}else if(unit>=finUnit) {
 			//마지막 유닛은 다음페이지가 없음
-			pageList.setPrevUnit(true);
-			pageList.setNextUnit(false);
-		}else {
-			//그 외에는 이전, 이후 유닛페이지가 없음
-			pageList.setPrevUnit(true);
-			pageList.setNextUnit(true);
+			pFlag=true;
+			nFlag=false;
+		}else if(unit<finUnit){
+			//그 외에 앞으로 단위체가 더 많으면 이전, 이후 유닛페이지가 있음
+			pFlag=true;
+			nFlag=true;
 		}
+		pageList.setPrevUnit(pFlag);
+		pageList.setNextUnit(nFlag);
+		model.addAttribute("unit",unit);
+		model.addAttribute("finUnit",finUnit);
+		model.addAttribute("prevFlag", pFlag);
+		model.addAttribute("nextFlag",nFlag);
+		logger.info("finUnit:{}",finUnit);
 		
 		logger.info("start:{}",indexes[0]);
 		logger.info("end:{}",indexes[1]);
+		logger.info("prevFlag:{}",pFlag);
+		logger.info("nextFlag:{}",nFlag);
 		//가게정보
 		List<JejuDto> jeju=pBiz.getStoreElementsPerPage(indexes[0], indexes[1], page);
 		//가게들에 대한 메뉴정보
-		ArrayList<ArrayList<MenuDto>> menuList=pBiz.getMenuListElementsPerPage(indexes[0], indexes[1], page);
+		int mStartIdx=36*page-35;
+		logger.info("menuList startIdx: {}",mStartIdx);
+	//	List<MenuDto> menuList=menuBiz.getPageMenuList(mStartIdx, page);
 		//이미지에 대한 정보
 		List<ImgDto> imgList=pBiz.getImgElementsPerPage(indexes[0], indexes[1], page);
+		
+		pageList.setJeju(jeju);
+		pageList.setImg(imgList);
+		
+		//유닛값에 따른 시작버튼 값
+		int unitStartBtn=5*unit-4;//1,6,...
+		pageList.setListBtnStartIdx(unitStartBtn);
+		logger.info("pagination meta info: {}",pageList);
+		logger.info("list unit start idx(btn):"+unitStartBtn);
+		model.addAttribute("paginationMetaInfo",pageList );
+		
 		logger.info("defaultPage-jeju:{}",jeju);
 		logger.info("jejusize: {}",jeju.size());
+	//	logger.info("defaultPage-menuList:{}",menuList);
 		logger.info("defaultPage-img:{}",imgList);
 		//model에 6개를 뽑아서 전달하기
 		//그런데 그 전에 몇 개가 그 페이지에 들어가는지 확인해야 할 것
-		int size=jeju.size();
+		int size1=jeju.size();
+		int size2=imgList.size();
+		int size=Math.min(size1, size2);//이미지가 삽입되지 않은 경우의 수도 존재
+		
+		
 		String[] div= {"one","two","three","four","five","six"};
 		
 		for(int i=0;i<size;i++) {
 			model.addAttribute(div[i]+"Jeju",jeju.get(i));
-			//model.addAttribute(div[i]+"Menu",menuList.get(i));
+			//model.addAttribute(div[i]+"Menu",menuList.get(i));->전체조회에서는 메뉴를 뿌려줄 필요는 없을 것이지만
+			//나중에 상세조회에서는 페이지에 대해서 6등분해서 소분해줄 필요는 있을 것
 			model.addAttribute(div[i]+"Img", imgList.get(i));
 		}
 		//총 페이지 정보도 보낼 것
@@ -253,7 +286,7 @@ public class JejusituationController {
 			}else {
 				dto.setMenu_id(menuNo);
 				dto.setMenu("없음");
-				dto.setPrice(0);
+				dto.setPrice(1);//Wrapper->null로 0인식가능
 			}
 			menuNo++;
 			menuList.add(dto);

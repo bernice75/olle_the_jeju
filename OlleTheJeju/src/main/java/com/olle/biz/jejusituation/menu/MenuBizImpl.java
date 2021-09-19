@@ -1,6 +1,5 @@
 package com.olle.biz.jejusituation.menu;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,12 @@ public class MenuBizImpl implements MenuBiz{
 	public List<MenuDto> getMenuByStoreId(int storeId) {
 		// TODO Auto-generated method stub
 		return dao.getMenuByStoreId(storeId);
+	}
+
+	@Override
+	public List<MenuDto> getPageMenuList(int startIdx, int page) {
+		// TODO Auto-generated method stub
+		return dao.getPageMenuList(startIdx, page);
 	}
 
 
