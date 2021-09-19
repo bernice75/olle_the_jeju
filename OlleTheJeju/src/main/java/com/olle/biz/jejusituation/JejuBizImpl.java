@@ -3,6 +3,7 @@ package com.olle.biz.jejusituation;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -140,9 +141,23 @@ public class JejuBizImpl implements JejuBiz{
 
 
 	@Override
-	public int saveStore(JejuDto dto, ImgDto img, List<MenuDto> list) {
+	public void setMaxPkFromSelectKey(int primaryKey) {
 		// TODO Auto-generated method stub
-		return dao.saveStore(dto, img, list);
+		dao.setMaxPkFromSelectKey(primaryKey);
 	}
+
+
+	@Override
+	public int getMaxPkFromSelectKey() {
+		// TODO Auto-generated method stub
+		return dao.getMaxPkFromSelectKey();
+	}
+
+
+//	@Override
+//	public int saveStore(JejuDto dto, ImgDto img, HashMap<String,Object> map) {
+//		// TODO Auto-generated method stub
+//		return dao.saveStore(dto, img, map);
+//	}
 
 }

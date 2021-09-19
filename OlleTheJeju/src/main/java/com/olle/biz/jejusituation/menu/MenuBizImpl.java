@@ -1,5 +1,6 @@
 package com.olle.biz.jejusituation.menu;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,23 @@ public class MenuBizImpl implements MenuBiz{
 	private MenuDao dao;
 
 	@Override
-	public long maxMenuPerStore(int storeId) {
+	public int maxMenuPerStore(int storeId) {
 		// TODO Auto-generated method stub
 		return dao.maxMenuPerStore(storeId);
 	}
+//
+//	@Override
+//	public int saveMenu(HashMap<String,Object> map) {
+//		// TODO Auto-generated method stub
+//		return dao.saveMenu(map);
+//	}
 
 	@Override
-	public int saveMenu(List<MenuDto> list) {
+	public List<MenuDto> getMenuByStoreId(int storeId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.getMenuByStoreId(storeId);
 	}
+
+
 
 }

@@ -19,4 +19,7 @@ public interface ImgDao {
 	int selectMaxGroupId(int boardNum);
 	
 	int saveStoreImg(ImgDto dto);
+	
+	//ImgDto getStoreImg(int table_num);
+	List<ImgDto> getStoreImg(int startIdx, int endIdx);
 }

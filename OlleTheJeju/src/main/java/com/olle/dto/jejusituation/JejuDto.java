@@ -9,7 +9,7 @@ public class JejuDto {
 	private String situ_close_time;
 	private String situ_phone;
 	private String situ_addr;
-	private String situ_home;
+	private String situ_gubun;
 
 	
 	
@@ -20,7 +20,7 @@ public class JejuDto {
 
 
 	public JejuDto(int situ_num, String situ_name, String situ_writer, String situ_regDate, String situ_open_time,
-			String situ_close_time, String situ_phone, String situ_addr, String situ_home) {
+			String situ_close_time, String situ_phone, String situ_addr, String situ_gubun) {
 		super();
 		this.situ_num = situ_num;
 		this.situ_name = situ_name;
@@ -30,7 +30,7 @@ public class JejuDto {
 		this.situ_close_time = situ_close_time;
 		this.situ_phone = situ_phone;
 		this.situ_addr = situ_addr;
-		this.situ_home = situ_home;
+		this.situ_gubun = situ_gubun;
 	}
 
 
@@ -131,14 +131,14 @@ public class JejuDto {
 
 
 
-	public String getSitu_home() {
-		return situ_home;
+	public String getSitu_gubun() {
+		return situ_gubun;
 	}
 
 
 
-	public void setSitu_home(String situ_home) {
-		this.situ_home = situ_home;
+	public void setSitu_gubun(String situ_gubun) {
+		this.situ_gubun = situ_gubun;
 	}
 
 
@@ -147,8 +147,8 @@ public class JejuDto {
 	public String toString() {
 		return "JejuDto [situ_num=" + situ_num + ", situ_name=" + situ_name + ", situ_writer=" + situ_writer
 				+ ", situ_regDate=" + situ_regDate + ", situ_open_time=" + situ_open_time + ", situ_close_time="
-				+ situ_close_time + ", situ_phone=" + situ_phone + ", situ_addr=" + situ_addr + ", situ_home="
-				+ situ_home + "]";
+				+ situ_close_time + ", situ_phone=" + situ_phone + ", situ_addr=" + situ_addr + ", situ_gubun="
+				+ situ_gubun + "]";
 	}
 
 
