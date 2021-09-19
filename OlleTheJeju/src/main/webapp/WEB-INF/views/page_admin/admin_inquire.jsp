@@ -76,8 +76,8 @@
 		            </div>
 		            <form name="reportmodal">
 		            <input type="hidden" value="${dto.user_id }" id="to_user">
-		                <div class="modal-body chatMiddle" >
-		                    <ul>
+		                <div class="modal-body chatMiddle">
+		                    <ul style="display: flex; flex-direction: column; padding: 0;">
 		                    	<!-- 동적 생성 -->
 		                    </ul>
 		                    <br>
@@ -105,9 +105,15 @@
 		    		console.log("info: 연결 성공");
 		    	};
 		    	ws.onmessage = function(data) {
-					var msg = data.data;
+		    		var new_msg = data.data;
+		    		var from_user = new_msg.split(" : ")[1];
+		    		var msg = new_msg.split(" : ")[0];
 					if(msg != null && msg.trim() != ''){
-						$(".chatMiddle>ul").append("<p class='from_user'>" + msg + " : 관리자</p>");
+						if(from_user == 'admin') {
+							$(".chatMiddle>ul").append("<p class='from_user'>" + msg + " : 관리자</p>");
+						} else {
+							$(".chatMiddle>ul").append("<p class='to_user'>" + from_user + " : " + msg + "</p>");
+						}
 					}
 				};
 				
@@ -134,7 +140,7 @@
 	    	
 	    	function sendBtn() {
 	    		var msg = $("#msg").val();
-    			ws.send(msg + " : 관리자");
+    			ws.send(msg + " : admin");
     			$("#msg").val("");
 	    	}
 	    	

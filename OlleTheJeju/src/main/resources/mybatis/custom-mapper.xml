@@ -16,11 +16,6 @@
 		<result property="plan_hide" column="PLAN_HIDE"/>
 	</resultMap>
 	
-	<select id="maxNum" resultType="int">
-		SELECT NVL(MAX(PLAN_NUM), 0)
-		FROM OLLE_PLAN
-	</select>
-	
 	<!-- 마이페이지 내가 작성한 게시글 조회  -->
   	<select id="mywritelist" resultMap="customMap">
   		SELECT *

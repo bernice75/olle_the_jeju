@@ -46,10 +46,13 @@
 	            <!-- 채팅 -->
 	            <div class="inq_chat">    
 	                <div class="chat">채팅내역</div>
-	                <div class="chat_area"></div>
+	                <div class="chat_area" style="overflow: scroll;">
+	                	<ul style="display: flex; flex-direction: column; padding: 0; margin: 20px;">
+	                	</ul>
+	                </div>
 	                <div class="chat_write">
 	                    <input type="text" class="chat_content">
-	                    <button type="submit">보내기</button>
+	                    <button type="button" onclick="sendBtn();">보내기</button>
 	                </div>
 	            </div>
 	        </main>
@@ -57,49 +60,58 @@
 			<jsp:include page="../include/footer.jsp"></jsp:include>
 		</div>
 		<script type="text/javascript">
-			// 서버의 broadsocket의 서블릿으로 웹 소켓을 한다.
-			var webSocket = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/userChat");
-			// 콘솔 텍스트 영역
-			var messageTextArea = document.getElementById("messageTextArea");
-			// 접속이 완료되면
-			webSocket.onopen = function(message) {
-				// 콘솔에 메시지를 남긴다.
-				messageTextArea.value += "Server connect...\n";
-			};
-			// 접속이 끝기는 경우는 브라우저를 닫는 경우이기 떄문에 이 이벤트는 의미가 없음.
-			webSocket.onclose = function(message) { };
-			// 에러가 발생하면
-			webSocket.onerror = function(message) {
-				// 콘솔에 메시지를 남긴다.
-				messageTextArea.value += "error...\n";
-			};
-			// 서버로부터 메시지가 도착하면 콘솔 화면에 메시지를 남긴다.
-			webSocket.onmessage = function(message) {
-				messageTextArea.value += "(operator) => " + message.data + "\n";
-			};
-			// 서버로 메시지를 발송하는 함수
-			// Send 버튼을 누르거나 텍스트 박스에서 엔터를 치면 실행
-			function sendMessage() {
-				// 텍스트 박스의 객체를 가져옴
-				let message = document.getElementById("textMessage");
-				// 콘솔에 메세지를 남긴다.
-				messageTextArea.value += "(me) => " + message.value + "\n";
-				// 소켓으로 보낸다.
-				webSocket.send(message.value);
-				// 텍스트 박스 추기화
-				message.value = "";
-			}
-			// 텍스트 박스에서 엔터를 누르면
-			function enter() {
-				// keyCode 13은 엔터이다.
-				if(event.keyCode === 13) {
-					// 서버로 메시지 전송
-					sendMessage();
-					// form에 의해 자동 submit을 막는다.
-					return false;
+	    	<!-- 채팅 방 관련 -->
+	    	let roomId;
+	    	var ws;
+	    	
+	    	$(document).ready(function() {
+	    		var to_user = $("input#to_user").val();
+	    		ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo.do?room_id=" + roomId + "&from_user=user1&to_user=admin");
+		    	
+		    	ws.onopen = function(data) {
+		    		//소켓 연결 시 초기화 세팅
+		    		console.log("info: 연결 성공");
+		    	};
+		    	ws.onmessage = function(data) {
+		    		var new_msg = data.data;
+		    		var from_user = new_msg.split(" : ")[1];
+		    		var msg = new_msg.split(" : ")[0];
+					if(msg != null && msg.trim() != ''){
+						if(from_user == 'admin') {
+							$(".chat_area>ul").append("<p class='to_user'>관리자 : " + msg + "</p>");
+						} else if(from_user == `${sessionScope.user_id}`) {
+							$(".chat_area>ul").append("<p class='from_user'>" + msg + " : 나</p>");
+						}
+					}
+				};
+				
+		    	ws.onerror = function(error) {
+		    		console.log("error: " + error);
+	    		};
+		    	ws.onclose = function(event) {
+		    		console.log("info: 연결 끊김");
+		    		//끊김이 발생했을 경우 1초에 한번씩 연결 시도
+		    		//setTimeout(function() { connect(); }, 1000);
+	    		};
+	    		
+	    		$(".btn-close").on('click', function() {
+					ws.close();
+	    		});
+	    	});
+	    	
+	    	//엔터 누르면 메세지 전송되도록 설정
+			document.addEventListener("keypress", function(e){
+				if(e.keyCode == 13){ //enter press
+					sendBtn();
 				}
-				return true;
-			}
-		</script>
+			});
+	    	
+	    	function sendBtn() {
+	    		var msg = $(".chat_content").val();
+    			ws.send(msg + " : user1");
+    			$(".chat_content").val("");
+	    	}
+	    	
+	    </script>
 	</body>
 </html>

@@ -40,8 +40,10 @@
 	height: 500px !important;
 }
 .from_user {
-	float: right !important;
+	width: 100% !important;
+	text-align: end;
 }
 .to_user {
-	float: left !important;
+	width: 100% !important;
+	text-align: start;
 }

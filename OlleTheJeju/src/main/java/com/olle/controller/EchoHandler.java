@@ -38,15 +38,20 @@ public class EchoHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
     	//메시지 발송(형식 : (보낸사람이 관리자라면 -> 내용 : 관리자)
-		String msg = message.getPayload();
+		String new_msg = message.getPayload();
 		//띄어쓰기를 기준으로 잘라 0번째 값을 msg에 저장한다.
-		msg = msg.split(" : ")[0];
-		System.out.println("메세지 : " + msg);
+		String from_user = new_msg.split(" : ")[1];
+		String msg = new_msg.split(" : ")[0];
+		System.out.println(from_user + " : " + msg);
+		
+		if(from_user == "관리자") {
+			
+		}
 		
 		for(String key : sessionList.keySet()) {
 			WebSocketSession wss = sessionList.get(key);
 			try {
-				wss.sendMessage(new TextMessage(msg));
+				wss.sendMessage(new TextMessage(new_msg));
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
