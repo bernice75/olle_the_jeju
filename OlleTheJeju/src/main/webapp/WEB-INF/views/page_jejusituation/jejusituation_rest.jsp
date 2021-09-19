@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -54,6 +55,22 @@
             </div>
 
                 <!-- 썸네일 -->
+                <c:forEach var="list" items="${list }" varStatus="status">
+                	<div class="nail">
+	                    <div class="nail${status.index + 1 }" onclick="openModal();">
+	                        <div class="nail_img">
+	                        </div>
+	                        <div class="nail_inner">
+	                            <p class="nail_title">${list.situ_name }</p>
+	                            <hr style="margin: 0 0 10px 0;">
+	                            <span>구분 | 한식</span>
+	                            <br>
+	                            <span>주소 | ${list.situ_addr }</span>
+	                        </div>
+	                    </div>
+	                </div>
+                </c:forEach>
+                <!-- 
                 <div class="nail">
                     <div class="nail1" onclick="openModal();">
                         <div class="nail_img">
@@ -82,36 +99,37 @@
                     </div>
                 </div>
                 <br><br><br>
-                <div class="nail">
-                    <div class="nail4" onclick="openModal();">
-                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
-                        <div class="nail1-text1 text">맛집명
-                            <span class="nail1-text2 text">양식</span>
-                        </div>
-                        <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
-                    </div>
-                    <div class="nail5" onclick="openModal();">
-                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
-                        <div class="nail1-text1 text">맛집명
-                            <span class="nail1-text2 text">양식</span>
-                        </div>
-                        <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
-                    </div>
-                    <div class="nail6" onclick="openModal();">
-                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
-                        <div class="nail1-text1 text">맛집명
-                            <span class="nail1-text2 text">양식</span>
-                        </div>
-                        <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
-                    </div>
-                </div>
+                 -->
                 <br>
                 <div class="write">
                     <button class="btn btn-outline-secondary" name="createrest" onclick="openModal2();">맛집등록</button>
                 </div>
                 <br><br>
                 <!-- 페이징 처리 -->
-                <div class="paging"> 페이징 처리 </div>
+                <div class="paging">
+                	<ul class="pagination">
+                		<c:if test="${pageMaker.prev }">
+                			<li class="paginate_button previous">
+                				<a href="${pageMaker.startPage-1 }">이전</a>
+               				</li>
+           				</c:if>
+           				<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+           					<li class="paginate_button ${pageMaker.cri.pageNum == num? 'active' : '' }">
+           						<a href="${num }">${num}</a>
+       						</li>
+   						</c:forEach>
+  						<c:if test="${pageMaker.next }">
+  							<li class="paginate_button next">
+  								<a href="${pageMaker.endPage+1 }">다음</a>
+							</li>
+						</c:if>
+						<c:if test="${pageMaker.next }">
+							<li class="paginate_button next">
+								<a href="${pageMaker.lastPage }">맨끝</a>
+							</li>
+						</c:if>
+					</ul>
+                </div>
                 <br><br><br>
             </div>
 			<jsp:include page="../include/footer.jsp"></jsp:include>

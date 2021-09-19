@@ -95,5 +95,11 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return res;
 	}
-
+	
+	@Override
+	public MemberDto selectUser(String user_id) {
+		MemberDto dto = sqlSession.selectOne(NAMESPACE + "selectUser", user_id);
+		
+		return dto;
+	}
 }

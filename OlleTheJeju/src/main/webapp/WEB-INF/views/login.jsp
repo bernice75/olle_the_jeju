@@ -25,7 +25,7 @@
                     <hr>
                     <fieldset>                  
                         <section>
-                        <a href=""><img src="./resources/img/naver_login.png"></a>
+                        <a href="${url }"><img src="./resources/img/naver_login.png"></a>
                         </section>
                     </fieldset>
                     <hr>

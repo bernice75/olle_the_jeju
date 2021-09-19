@@ -4,35 +4,68 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace = "support">
-	<resultMap type="supportDto" id="supportMap">
-		<result property="sup_num" column="SUP_NUM"/>
-		<result property="chat_group" column="CHAT_GROUP"/>
-		<result property="from_user" column="FROM_USER"/>
-		<result property="to_user" column="TO_USER"/>
-		<result property="sup_content" column="SUP_CONTENT"/>
-		<result property="sup_regdate" column="SUP_REGDATE"/>
-	</resultMap>
 	
-	<select id="selectList" resultMap="supportMap">
-
-	</select>
+	<resultMap type="ChatRoom" id="chatRoomResultSet">
+        <id property="roomId" column="ROOM_ID" />
+        <result property="user_id" column="USER_ID" />        
+        <result property="userPic" column="USER_PIC" />
+        <result property="master_id" column="MASTER_ID" />
+        <result property="masterPic" column="MASTER_PIC" />
+    </resultMap>
+ 
+    <resultMap type="ChatMessage" id="chatMessageResultSet">
+        <id property="messageId" column="MESSAGE_ID" />
+        <result property="roomId" column="ROOM_ID" />
+        <result property="message" column="MESSAGE_CONTENT" />
+        <result property="name" column="USER_ID" />
+        <result property="unReadCount" column="UNREAD_COUNT" />
+    </resultMap>
 	
-	<select id="selectOne" resultType="supportDto">
-
-	</select>
-	
-	<insert id="insert" parameterType="supportDto">
-		INSERT INTO OLLE_SUPPORT
-		VALUES()
-	</insert>
-	
-	<update id="update" parameterType="supportDto">
-		UPDATE OLLE_SUPPORT
-		SET 
-	</update>
-	
-	<delete id="delete" parameterType="int">
-		DELETE FROM OLLE_SUPPORT
-		WHERE SUP_NUM = #{sup_num}
-	</delete>
+	<!-- 신규 채팅방일 때 채팅 방 생성 -->
+    <insert id="createChat" parameterType="ChatRoom">
+        INSERT INTO CHATROOM
+        VALUES(SEQ_CHATROOM_ID.NEXTVAL, #{user_id}, #{userPic}, #{master_id}, #{masterPic})
+    </insert>
+ 
+    <select id="selectChatRoom" parameterType="string" resultMap="chatRoomResultSet">
+        SELECT * FROM CHATROOM 
+        WHERE ROOM_ID = #{roomId}
+    </select>
+    
+    <insert id="insertMessage" parameterType="ChatMessage">
+        <if test="sessionCount == 1">
+        	INSERT INTO CHATMESSAGE
+        	VALUES(#{roomId}, SEQ_CHATMESSAGE_ID.NEXTVAL, #{message}, #{name}, 1)
+        </if>
+        <if test="sessionCount == 2">
+	        INSERT INTO CHATMESSAGE
+	        VALUES(#{roomId}, SEQ_CHATMESSAGE_ID.NEXTVAL, #{message}, #{name}, 0)
+        </if>
+    </insert>
+    
+    <select id="messageList" parameterType="string" resultMap="chatMessageResultSet">
+        SELECT * FROM CHATMESSAGE
+        WHERE ROOM_ID = #{rooomId}
+    </select>
+    
+    <select id="searchChatRoom" parameterType="ChatRoom" resultMap="chatRoomResultSet">
+        SELECT * FROM CHATROOM
+        WHERE USER_ID = #{user_id} AND MASTER_ID = #{master_id}
+    </select>
+    
+    <select id="chatRoomList" parameterType="string" resultMap="chatRoomResultSet">
+        SELECT * FROM CHATROOM
+        WHERE USER_ID = #{user_id} OR MASTER_ID = #{master_id}
+    </select>
+    
+    <select id="selectUnReadCount" parameterType="ChatMessage" resultType="int">
+        SELECT COUNT(*) FROM CHATMESSAGE
+        WHERE ROOM_ID = #{roomId} AND USER_ID != #{name} AND UNREAD_COUNT = 1
+    </select>
+    
+    <update id="updateCount" parameterType="ChatMessage">
+        UPDATE CHATMESSAGE
+        SET UNREAD_COUNT = 0
+        WHERE ROOM_ID = #{roomId} AND USER_ID != #{name} AND UNREAD_COUNT = 1
+    </update>
 </mapper>

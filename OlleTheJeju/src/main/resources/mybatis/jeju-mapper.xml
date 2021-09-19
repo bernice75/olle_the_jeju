@@ -11,12 +11,44 @@
 		<result property="situ_regdate" column="SITU_REGDATE"/>
 		<result property="situ_phone" column="SITU_PHONE"/>
 		<result property="situ_addr" column="SITU_ADDR"/>
-		<result property="situ_time" column="SITU_TIME"/>
+		<result property="situ_open_time" column="SITU_OPEN_TIME"/>
+		<result property="situ_close_time" column="SITU_CLOSE_TIME"/>
 		<result property="situ_home" column="SITU_HOME"/>
 	</resultMap>
 	
-	<select id="selectList" resultMap="jejuMap">
-
+	<sql id="criteria">
+		<trim prefix="and(" suffix=") " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type== 'T'.toString()">
+							post_title like '%' || #{keyword}||'%'
+						</when>
+						<when test="type== 'C'.toString()">
+							post_content like '%' || #{keyword}||'%'
+						</when>
+						<when test="type== 'W'.toString()">
+							post_writer like '%' || #{keyword}||'%'
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<select id="countTotal" resultType="int">
+		SELECT COUNT(*)
+		FROM OLLE_SITUATION
+	</select>
+	
+	<select id="selectList" parameterType="int" resultMap="jejuMap">
+		SELECT *
+		FROM (
+			SELECT ROWNUM RNO, j.*
+			FROM OLLE_SITUATION j
+			ORDER BY SITU_NUM DESC
+		)
+		WHERE RNO BETWEEN (#{pageNum} - 1) * #{amount} + 1 AND (#{pageNum}) * #{amount}
 	</select>
 	
 	<select id="selectOne" resultType="jejuDto">

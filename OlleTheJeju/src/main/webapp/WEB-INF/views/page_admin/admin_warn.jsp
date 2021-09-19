@@ -23,7 +23,7 @@
 	                <p style="font-size: 22px;padding-left: 30px;">관리자페이지</p>
 	                <br>
 	                <ul style="list-style: none;">
-	                    <li><a href="admin.do">회원관리</a></li><br>
+	                    <li><a href="admin_main.do">회원관리</a></li><br>
 	                    <li><a href="admin_warn.do">신고 내역</a></li><br>
 	                    <li><a href="admin_plan.do">게시물 관리</a></li><br>
 	                    <li><a href="admin_inquire.do">문의 내역</a></li><br>

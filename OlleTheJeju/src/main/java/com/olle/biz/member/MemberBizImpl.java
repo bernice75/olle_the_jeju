@@ -34,11 +34,16 @@ public class MemberBizImpl implements MemberBiz{
 
 	@Override
 	public List<MemberDto> userList() {
-		return null;
+		return memberDao.userList();
 	}
 
 	@Override
 	public String login(String user_id, String user_pw) {
 		return memberDao.login(user_id, user_pw);
+	}
+	
+	@Override
+	public MemberDto selectUser(String user_id) {
+		return memberDao.selectUser(user_id);
 	}
 }

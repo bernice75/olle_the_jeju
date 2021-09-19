@@ -1,5 +1,6 @@
 package com.olle.controller;
 
+import java.io.IOException;
 import java.util.Properties;
 import java.util.Random;
 
@@ -13,14 +14,29 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.olle.biz.member.NaverLoginBO;
+
 @Controller
 public class HomeController {
+	
+	// NaverLoginBO
+	private NaverLoginBO naverLoginBO;
+	private String apiResult = null;
+	
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO){
+		this.naverLoginBO = naverLoginBO;
+	}
 	
 	@RequestMapping(value = "home.do", method = RequestMethod.GET)
 	public String home(HttpServletRequest req, HttpSession session) {
@@ -36,8 +52,31 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "loginForm.do", method = RequestMethod.GET)
-	public String loginForm() {
+	public String loginForm(HttpSession session, Model model) {
+		// 네이버 로그인
+		// Naver ID로 인증 URL을 생성하기 위하여 naverLoginBO class의 getAuthorizationUrl method 호출 
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		
+		//결론 넘어가는 파라미터 종류 : response_type, client_id, redirect_uri, state
+		System.out.println("네이버:" + naverAuthUrl);
+		
+		// Naver 
+		model.addAttribute("url", naverAuthUrl);
 		return "login";
+	}
+	
+	// Naver Login 성공시 callback호출 method
+	@RequestMapping(value = "callback.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException {
+		System.out.println("여기는 callback");
+		OAuth2AccessToken oauthToken;
+        oauthToken = naverLoginBO.getAccessToken(session, code, state);
+        // Login 사용자 정보를 읽어온다.
+        apiResult = naverLoginBO.getUserProfile(oauthToken);
+        model.addAttribute("result", apiResult);
+        session.setAttribute("naver", "naver");
+        // Naver Login 성공 페이지 View 호출
+        return "redirect:home.do";
 	}
 	
 	@RequestMapping(value = "joinForm.do", method = RequestMethod.GET)

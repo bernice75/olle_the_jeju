@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<typeAlias type="com.olle.dto.jejusituation.Criteria" alias="criteria"/>
 		<typeAlias type="com.olle.dto.member.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.olle.dto.customplan.CustomDto" alias="customDto"/>
 		<typeAlias type="com.olle.dto.jejusituation.JejuDto" alias="jejuDto"/>
@@ -18,6 +19,8 @@
 		<typeAlias type="com.olle.dto.etc.ReportDto" alias="reportDto"/>
 		<typeAlias type="com.olle.dto.etc.FoodDto" alias="foodDto"/>
 		<typeAlias type="com.olle.dto.etc.DateDto" alias="dateDto"/>
+		<typeAlias type="com.olle.dto.etc.ChatMessage" alias="chatMessage"/>
+		<typeAlias type="com.olle.dto.etc.ChatRoom" alias="chatRoom"/>
 	</typeAliases>
 	
 	<mappers>

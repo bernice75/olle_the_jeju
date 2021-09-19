@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -27,10 +28,10 @@
 	                <p style="font-size: 22px;padding-left: 30px;">마이페이지</p>
 	                <br>
 	                <ul style="list-style: none;">
-	                    <li><a href="mypage_plan.do">나의 일정</a></li><br>
-	                    <li><a href="mypage_inquire.do">문의 내역</a></li><br>
-	                    <li><a href="mypage_main.do">회원 정보 수정</a></li><br>
-	                    <li><a href="mypage_warn.do">신고 확인</a></li><br>
+	                    <li><a href="mypage_plan.do?plan_writer=${sessionScope.user_id}">나의 일정</a></li><br>
+	                    <li><a href="mypage_inquire.do?user_id=${sessionScope.user_id}">문의 내역</a></li><br>
+	                    <li><a href="mypage_main.do?user_id=${sessionScope.user_id}">회원 정보 수정</a></li><br>
+	                    <li><a href="mypage_warn.do?user_id=${sessionScope.user_id}">신고 확인</a></li><br>
 	              </ul>
 	            </div>
 	        </div>
@@ -40,90 +41,65 @@
 	        <main class="main item">
 	            <div class="user_plan">
 	                <div class="plan_title">
-	                    내가 작성한 일정
+	                    <%--${sessionScope.user_id }님께서--%> 내가 작성한 일정
 	                </div>
 	            </div>
 	            <!-- 나의 일정 -->
 	            <div class="plan_thum">
 	                <!-- jstl core foreach로 썸네일 목록 반복 -->
-	                <div class="thum_item" onclick="location.href='#'">
-	                    <div class="img_thum">
-	                        <a>
-	                            <div class="nail_img">
-	                                <!-- 기간 정보 데이터 받아와서 삽입 -->
-	                                <div class="sleep">2박3일</div>
-	                            </div>
-	                        </a>
-	                        <img class="">
-	                    </div>
-	                    <div class="thum_text">
-	                        <div style="font-size: 20px;">제목입니다</div>
-	                        <!-- 내가 작성한 게시글의 제목 데이터를 받아와서 삽입-->
-	                        <span class="thum_text_span1" style="font-size: 12px;">성향</span>
-	                        <!-- 내가 작성한 게시글의 성향ㄴ 데이터를 받아와서 삽입-->
-	                        <span class="thum_text_span1" style="font-size: 12px;">|</span>
-	                        <span class="thum_text_span1"style="font-size: 12px;">해시태그명</span>
-	                        <!-- 내가 작성한 게시글의 해시태그 데이터를 받아와서 삽입-->
-	                        <br>
-	                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;29 </span>
-	                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
-	                        <span class="thum_text_span2"style="font-size: 12px;">신고수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
-	                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
-	                    </div>
-	                </div>
-	                <div class="thum_item" onclick="location.href='#'">
-	                    <div class="img_thum">
-	                        <a>
-	                            <div class="nail_img">
-	                                <!-- 기간 정보 데이터 받아와서 삽입 -->
-	                                <div class="sleep">2박3일</div>
-	                            </div>
-	                        </a>
-	                        <img class="">
-	                    </div>
-	                    <div class="thum_text">
-	                        <div style="font-size: 20px;">제목입니다</div>
-	                        <!-- 내가 작성한 게시글의 제목 데이터를 받아와서 삽입-->
-	                        <span class="thum_text_span1" style="font-size: 12px;">성향</span>
-	                        <!-- 내가 작성한 게시글의 성향ㄴ 데이터를 받아와서 삽입-->
-	                        <span class="thum_text_span1" style="font-size: 12px;">|</span>
-	                        <span class="thum_text_span1"style="font-size: 12px;">해시태그명</span>
-	                        <!-- 내가 작성한 게시글의 해시태그 데이터를 받아와서 삽입-->
-	                        <br>
-	                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;29 </span>
-	                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
-	                        <span class="thum_text_span2"style="font-size: 12px;">신고수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
-	                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
-	                    </div>
-	                </div>
-	                <div class="thum_item" onclick="location.href='#'">
-	                    <div class="img_thum">
-	                        <a>
-	                            <div class="nail_img">
-	                                <!-- 기간 정보 데이터 받아와서 삽입 -->
-	                                <div class="sleep">2박3일</div>
-	                            </div>
-	                        </a>
-	                        <img class="">
-	                    </div>
-	                    <div class="thum_text">
-	                        <div style="font-size: 20px;">제목입니다</div>
-	                        <!-- 내가 작성한 게시글의 제목 데이터를 받아와서 삽입-->
-	                        <span class="thum_text_span1" style="font-size: 12px;">성향</span>
-	                        <!-- 내가 작성한 게시글의 성향ㄴ 데이터를 받아와서 삽입-->
-	                        <span class="thum_text_span1" style="font-size: 12px;">|</span>
-	                        <span class="thum_text_span1"style="font-size: 12px;">해시태그명</span>
-	                        <!-- 내가 작성한 게시글의 해시태그 데이터를 받아와서 삽입-->
-	                        <br>
-	                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;29 </span>
-	                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
-	                        <span class="thum_text_span2"style="font-size: 12px;">신고수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
-	                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
-	                    </div>
-	                </div>
+	                <c:choose>
+	                	<c:when test="${empty list }">
+	                		<tr>
+								<td colspan ="4">----내가 작성한 글이 존재하지 않습니다----</td>
+							</tr>
+	                	</c:when>
+	                	<c:otherwise>
+	                		<c:forEach var="plan" items="${list }">
+	                			<div class="thum_item" onclick="location.href='#'">
+				                    <div class="img_thum">
+			                            <div class="nail_img">
+			                            	<!-- 기간 정보 데이터 받아와서 삽입 -->
+			                                <div class="sleep">${plan.plan_term }</div>
+			                                 <!-- 이미지 데이터 작성 / 추후에 이미지태그는 삭제하고 데이터값만 적어야함-->
+                                			<img src="./resources/img/제주도샘플사진1.jpg">
+			                            </div>
+				                    </div>
+				                    <div class="thum_text">
+				                        <div style="font-size: 20px;">${plan.plan_title }</div>
+				                        <!-- 내가 작성한 게시글의 제목 데이터를 받아와서 삽입-->
+				                        <span class="thum_text_span1" style="font-size: 12px;">${plan.plan_tendency }</span>
+				                        <!-- 내가 작성한 게시글의 성향ㄴ 데이터를 받아와서 삽입-->
+				                        <span class="thum_text_span1" style="font-size: 12px;">|</span>
+				                        <c:choose>
+				                        	<c:when test="${empty tag }">
+				                        		<span class="thum_text_span1"style="font-size: 12px;">해시태그 정보없음</span>
+				                        	</c:when>
+				                        	<c:otherwise>
+				                        			<c:forEach var="hash" begin="0" items="${tag }">
+				                        				<c:forEach var="code" begin="0" items="${hash }">
+				                        					<c:if test="${plan.plan_num eq code.table_num }">
+				                        						<span class="thum_text_span1"style="font-size: 12px;">${code.hash_content }</span>
+				                        					</c:if>
+				                        				</c:forEach>
+				                        			</c:forEach>
+				                        	</c:otherwise>
+				                        </c:choose>
+				                        <!-- 내가 작성한 게시글의 해시태그 데이터를 받아와서 삽입-->
+				                        <br>
+				                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;${plan.plan_push } </span>
+				                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
+				                        <span class="thum_text_span2"style="font-size: 12px;">조회수&nbsp;&nbsp;|&nbsp;&nbsp;${plan.plan_views }</span>
+				                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
+				                    </div>
+				                </div>
+	                		</c:forEach>
+	                	</c:otherwise>
+	                </c:choose>
+	                
 	            </div>
 	            <br>
 	            <!-- 기능구현시 수정해야함 (연결하기)(아이콘 안보임)-->
+	            <div>
 	            <nav class="paging" aria-label="Page navigation example">
 	                <ul class="pagination">
 	                  <li class="page-item">
@@ -141,6 +117,7 @@
 	                  </li>
 	                </ul>
 	              </nav>
+	              </div>
 	            <br><br>
 	
 	            <!-- 내가 찜한 일정 -->
@@ -153,81 +130,70 @@
 	            <!-- 내가 찜한 일정 -->
 	            <div class="plan_thum">
 	                <!-- jstl core foreach로 썸네일 목록 반복 -->
-	                <div class="thum_item" onclick="location.href='#'">
-	                    <div class="img_thum">
-	                        <a>
-	                            <div class="nail_img">
-	                                <!-- 기간 정보 데이터 받아와서 삽입 -->
-	                                <div class="sleep">2박3일</div>
-	                            </div>
-	                        </a>
-	                        <img class="">
-	                    </div>
-	                    <div class="thum_text">
-	                        <div style="font-size: 20px;">제목입니다</div>
-	                        <!-- 내가 작성한 게시글의 제목 데이터를 받아와서 삽입-->
-	                        <span class="thum_text_span1" style="font-size: 12px;">성향</span>
-	                        <!-- 내가 작성한 게시글의 성향ㄴ 데이터를 받아와서 삽입-->
-	                        <span class="thum_text_span1" style="font-size: 12px;">|</span>
-	                        <span class="thum_text_span1"style="font-size: 12px;">해시태그명</span>
-	                        <!-- 내가 작성한 게시글의 해시태그 데이터를 받아와서 삽입-->
-	                        <br>
-	                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;29 </span>
-	                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
-	                        <span class="thum_text_span2"style="font-size: 12px;">신고수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
-	                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
-	                    </div>
-	                </div>
-	                <div class="thum_item" onclick="location.href='#'">
-	                    <div class="img_thum">
-	                        <a>
-	                            <div class="nail_img">
-	                                <!-- 기간 정보 데이터 받아와서 삽입 -->
-	                                <div class="sleep">2박3일</div>
-	                            </div>
-	                        </a>
-	                        <img class="">
-	                    </div>
-	                    <div class="thum_text">
-	                        <div style="font-size: 20px;">제목입니다</div>
-	                        <!-- 내가 작성한 게시글의 제목 데이터를 받아와서 삽입-->
-	                        <span class="thum_text_span1" style="font-size: 12px;">성향</span>
-	                        <!-- 내가 작성한 게시글의 성향ㄴ 데이터를 받아와서 삽입-->
-	                        <span class="thum_text_span1" style="font-size: 12px;">|</span>
-	                        <span class="thum_text_span1"style="font-size: 12px;">해시태그명</span>
-	                        <!-- 내가 작성한 게시글의 해시태그 데이터를 받아와서 삽입-->
-	                        <br>
-	                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;29 </span>
-	                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
-	                        <span class="thum_text_span2"style="font-size: 12px;">신고수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
-	                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
-	                    </div>
-	                </div>
-	                <div class="thum_item" onclick="location.href='#'">
-	                    <div class="img_thum">
-	                        <a>
-	                            <div class="nail_img">
-	                                <!-- 기간 정보 데이터 받아와서 삽입 -->
-	                                <div class="sleep">2박3일</div>
-	                            </div>
-	                        </a>
-	                        <img class="">
-	                    </div>
-	                    <div class="thum_text">
-	                        <div style="font-size: 20px;">제목입니다</div>
-	                        <!-- 내가 작성한 게시글의 제목 데이터를 받아와서 삽입-->
-	                        <span class="thum_text_span1" style="font-size: 12px;">성향</span>
-	                        <!-- 내가 작성한 게시글의 성향ㄴ 데이터를 받아와서 삽입-->
-	                        <span class="thum_text_span1" style="font-size: 12px;">|</span>
-	                        <span class="thum_text_span1"style="font-size: 12px;">해시태그명</span>
-	                        <!-- 내가 작성한 게시글의 해시태그 데이터를 받아와서 삽입-->
-	                        <br>
-	                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;29 </span>
-	                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
-	                        <span class="thum_text_span2"style="font-size: 12px;">신고수&nbsp;&nbsp;|&nbsp;&nbsp;3</span>
-	                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
-	                    </div>
-	                </div>
+	                <c:choose>
+	                	<c:when test="${empty list }">
+	                		<tr>
+								<td colspan ="4">----내가 찜한 일정이 존재하지 않습니다----</td>
+							</tr>
+	                	</c:when>
+	                	<c:otherwise>
+	                		<c:forEach var="plan" items="${list }">
+	                			<div class="thum_item" onclick="location.href='#'">
+				                    <div class="img_thum">
+			                            <div class="nail_img">
+			                                <!-- 기간 정보 데이터 받아와서 삽입 -->
+			                                <div class="sleep">${plan.plan_term }</div>
+			                                <!-- 이미지 데이터 작성 / 추후에 이미지태그는 삭제하고 데이터값만 적어야함-->
+                                			<img src="./resources/img/제주도샘플사진1.jpg">
+			                            </div>
+				                    </div>
+				                    <div class="thum_text">
+				                        <div style="font-size: 20px;">${plan.plan_title }</div>
+				                        <!-- 내가 작성한 게시글의 제목 데이터를 받아와서 삽입-->
+				                        <span class="thum_text_span1" style="font-size: 12px;">${plan.plan_tendency }</span>
+				                        <!-- 내가 작성한 게시글의 성향ㄴ 데이터를 받아와서 삽입-->
+				                        <span class="thum_text_span1" style="font-size: 12px;">|</span>
+				                        <c:choose>
+				                        	<c:when test="${empty tag }">
+				                        		<span class="thum_text_span1"style="font-size: 12px;">해시태그 정보없음</span>
+				                        	</c:when>
+				                        	<c:otherwise>
+				                        			<c:forEach var="hash" begin="0" items="${tag }">
+				                        				<c:forEach var="code" begin="0" items="${hash }">
+				                        					<c:if test="${plan.plan_num eq code.table_num }">
+				                        						<span class="thum_text_span1"style="font-size: 12px;">${code.hash_content }</span>
+				                        					</c:if>
+				                        				</c:forEach>
+				                        			</c:forEach>
+				                        	</c:otherwise>
+				                        </c:choose>
+				                        <!-- 내가 작성한 게시글의 해시태그 데이터를 받아와서 삽입-->
+				                        <br>
+				                        <span class="thum_text_span2"style="font-size: 12px;">추천수&nbsp;&nbsp;|&nbsp;&nbsp;${plan.plan_push } </span>
+				                        <!-- 내가 작성한 게시글의 추천수 데이터를 받아와서 숫자 지우고 삽입-->
+				                        <span class="thum_text_span2"style="font-size: 12px;">조회수&nbsp;&nbsp;|&nbsp;&nbsp;${plan.plan_views }</span>
+				                        <!-- 내가 작성한 게시글의 신고수 데이터를 받아와서 숫자 지우고 삽입-->
+				                        <hr style="margin-bottom: 0;">
+                        				<c:choose>
+                        					<c:when test="${empty zzim }">
+                        						<div class="nail_hrt"><a href=""><i class="fa fa-heart-o fa-xs"></i></a> &nbsp; 찜정보없음</div>
+                        					</c:when>
+                        					<c:otherwise>
+                        						<c:forEach var="dib" begin="0" items="${zzim }">
+                        							<c:forEach var="dib2" begin="0" items="${dib }">
+                        								<c:if test="${plan.plan_num eq dib2.table_num}">
+                        									<div class="nail_hrt"><a href=""><i class="fa fa-heart-o fa-xs"></i></a> &nbsp; ${dib2.dib_num }(찜번호)</div>
+                        								</c:if>
+                        							</c:forEach>
+                        						</c:forEach>
+                        					</c:otherwise>
+                        				</c:choose>
+                        				
+				                    </div>
+				                </div>
+	                		</c:forEach>
+	                	</c:otherwise>
+	                </c:choose>
 	            </div>
 	            <br>
 	            <!-- 기능구현시 수정해야함 (연결하기)(아이콘 안보임)-->
