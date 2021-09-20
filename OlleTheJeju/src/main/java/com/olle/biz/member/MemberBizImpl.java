@@ -46,4 +46,9 @@ public class MemberBizImpl implements MemberBiz{
 	public MemberDto selectUser(String user_id) {
 		return memberDao.selectUser(user_id);
 	}
+
+	@Override
+	public int warn_update(String user_id) {
+		return memberDao.warn_update(user_id);
+	}
 }

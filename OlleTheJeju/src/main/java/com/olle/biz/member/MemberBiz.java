@@ -11,4 +11,5 @@ public interface MemberBiz {
 	public int nickChk(String user_nick);  //닉네임 중복체크
 	public String login(String user_id, String user_pw); //로그인
 	public MemberDto selectUser(String user_id); //유저 정보 출력
+	public int warn_update(String user_id); //경고 +1
 }

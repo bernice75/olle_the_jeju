@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,7 +15,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-
+		<script src="./resources/js/customplan/customplan.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div class="wrapper">
@@ -43,68 +44,63 @@
                     <h4 style="font-family: 'cafe24_ddh'; font-size: 35px;">여행자들의 Plan</h4>
                     <div class="search">
                         <input class="form-control search1" type="search" placeholder="검색어 입력">
-                        <button class="btn btn-outline-secondary search2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button class="btn btn-outline-secondary search2" onclick="search();"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <br><br>
 
                 <!-- 썸네일 -->
-                <div class="nail">
-                    <div class="nail1">
-                        <a href="customplan_detail.do">
-                            <div class="nail_img">
-                                <div class="sleep">2박3일</div>
-                            </div>
-                        </a>
-
-                    <div class="nail_inner">
-                        <p class="nail_title">제목입니다</p>
-                        <p class="nail_con_hash">컨셉명 | 해쉬태그명</p>
-                        <span class="nail_like">추천수 | 10</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span class="nail_warn">신고수 | 2</span>
-                        <hr style="margin-bottom: 0;">
-                        <div class="nail_hrt"><a href=""><i class="fa fa-heart-o fa-xs"></i></a> &nbsp; 찜하기</div>
-                    </div>
-
-                    </div>
-                    <div class="nail2"></div>
-                    <div class="nail3"></div>
-                </div>
-                <br><br><br>
-                <div class="nail">
-                    <div class="nail1">
-                        <a>
-                            <div class="nail_img">
-                                <div class="sleep">2박3일</div>
-                            </div>
-                        </a>
-
-                    <div class="nail_inner">
-                        <p class="nail_title">제목입니다</p>
-                        <p class="nail_con_hash">컨셉명 | 해쉬태그명</p>
-                        <span class="nail_like">추천수 | 10</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span class="nail_warn">신고수 | 2</span>
-                        <hr style="margin-bottom: 0;">
-                        <div class="nail_hrt"><a href=""><i class="fa fa-heart-o fa-xs"></i></a> &nbsp; 찜하기</div>
-                    </div>
-                    </div>
-                    <div class="nail2"></div>
-                    <div class="nail3"></div>
-                </div>
+                <c:choose>
+                	<c:when test="${empty planList }">
+                		
+                	</c:when>
+                	<c:otherwise>
+                		<div class="nail">
+	                		<c:forEach var="plan" items="${planList }" varStatus="status">
+	                				<div class="nail${status.count }">
+				                        <a href="customplan_detail.do">
+				                            <div class="nail_img">
+				                                <div class="sleep">${plan.plan_term }</div>
+				                            </div>
+				                        </a>
+				
+					                    <div class="nail_inner">
+					                        <p class="nail_title">${plan.plan_title }</p>
+					                        <p class="nail_con_hash">${plan.plan_tendency } | 해쉬태그명</p>
+					                        <span class="nail_like">추천수 | ${plan.plan_push }</span>
+					                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					                        <span class="nail_view">조회수 | ${plan.plan_views }</span>
+					                        <hr style="margin-bottom: 0;">
+					                        <div class="nail_hrt"><a href=""><i class="fa fa-heart-o fa-xs"></i></a> &nbsp; 찜하기</div>
+					                    </div>
+				                    </div>
+	                		</c:forEach>
+                		</div>
+                	</c:otherwise>
+                </c:choose>
+                
                 <br><br><br>
                 
                 <!-- 페이징 처리 -->
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                  </ul>
+                <div class="paging">
+					<c:if test="${paging.prev}">
+		    			<a href="customplan_main.do?search=&page=${paging.beginPage-1}" class="prev" style="font-size:20px; margin-right: 5px;">prev</a>
+					</c:if>
+					<c:forEach begin="${paging.beginPage}" end="${paging.endPage }" step="1" var="index">
+		    			<c:choose>
+		        			<c:when test="${paging.page==index}">
+		          			  	<span style="font-size: 20px; color: gray; margin: 5px;">${index}</span>
+		        			</c:when>
+		        			<c:otherwise>
+		           			 	<a href="customplan_main.do?search=&page=${index}" class="index" style="font-size:20px; margin:5px;">${index}</a>
+		        			</c:otherwise>
+		    			</c:choose>
+					</c:forEach>
+					<c:if test="${paging.next}">
+		   				<a href="customplan_main.do?search=&page=${paging.beginPage+1}" class="next" style="font-size:20px; margin-left: 5px;">next</a>
+					</c:if>
+				</div>
                 <br><br><br><br><br>
 			</div>
 			<jsp:include page="../include/footer.jsp"></jsp:include>

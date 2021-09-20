@@ -75,8 +75,8 @@
 		            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		            </div>
 		            <form name="reportmodal">
-		            <input type="hidden" value="${dto.user_id }" id="to_user">
-		                <div class="modal-body chatMiddle">
+			            <input type="hidden" id="sessionId" value="">
+		                <div class="modal-body chatMiddle" style="overflow: scroll;">
 		                    <ul style="display: flex; flex-direction: column; padding: 0;">
 		                    	<!-- 동적 생성 -->
 		                    </ul>
@@ -98,7 +98,7 @@
 	    	
 	    	function connect() {
 	    		var to_user = $("input#to_user").val();
-	    		ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo.do?room_id=" + roomId + "&from_user=admin&to_user=user1");
+	    		ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo.do?room_id=${sessionScope.user_id}");
 		    	
 		    	ws.onopen = function(data) {
 		    		//소켓 연결 시 초기화 세팅
@@ -106,13 +106,21 @@
 		    	};
 		    	ws.onmessage = function(data) {
 		    		var new_msg = data.data;
-		    		var from_user = new_msg.split(" : ")[1];
-		    		var msg = new_msg.split(" : ")[0];
-					if(msg != null && msg.trim() != ''){
-						if(from_user == 'admin') {
-							$(".chatMiddle>ul").append("<p class='from_user'>" + msg + " : 관리자</p>");
+					if(new_msg != null && new_msg.trim() != ''){
+						var d = JSON.parse(new_msg);
+						if(d.type == "getId"){
+							var si = d.sessionId != null ? d.sessionId : "";
+							if(si != ''){
+								$("#sessionId").val(si); 
+							}
+						} else if(d.type == "message") {
+							if(d.sessionId == $("#sessionId").val()){
+								$(".chatMiddle>ul").append("<p class='from_user'>" + d.msg + " : " + `${sessionScope.user_id}` + "</p>");
+							} else {
+								$(".chatMiddle>ul").append("<p class='others'>" + d.from_user + " :" + d.msg + "</p>");
+							}
 						} else {
-							$(".chatMiddle>ul").append("<p class='to_user'>" + from_user + " : " + msg + "</p>");
+							console.warn("unknown type!");
 						}
 					}
 				};
@@ -139,8 +147,14 @@
 			});
 	    	
 	    	function sendBtn() {
-	    		var msg = $("#msg").val();
-    			ws.send(msg + " : admin");
+	    		var option ={
+    				type: "message",
+    				sessionId : $("#sessionId").val(),
+    				from_user : `${sessionScope.user_id}`,
+    				to_user : "user1",
+    				msg : $("#msg").val()
+    			}
+	    		ws.send(JSON.stringify(option));
     			$("#msg").val("");
 	    	}
 	    	

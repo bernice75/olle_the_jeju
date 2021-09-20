@@ -1,5 +1,7 @@
 package com.olle.dao.etc;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,5 +23,15 @@ public class HashDaoImpl implements HashDao {
 			System.out.println("hash insert error");
 		}
 		return res;
+	}
+
+	@Override
+	public int maxNum() {
+		return (Integer) (sqlSession.selectOne(NAMESPACE + "maxNum") == null ? 0:sqlSession.selectOne(NAMESPACE + "maxNum"));
+	}
+
+	@Override
+	public List<HashtagDto> selectList(int board_num) {
+		return sqlSession.selectList(NAMESPACE + "selectList", board_num);
 	}
 }

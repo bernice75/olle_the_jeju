@@ -30,4 +30,12 @@ public class ImgBizImpl implements ImgBiz {
 	public List<ImgDto> getStoreImg(int startIdx, int endIdx) {
 		return dao.getStoreImg(startIdx, endIdx);
 	}
+	@Override
+	public int cusInsert(ImgDto dto) {
+		return dao.cusInsert(dto);
+	}
+	@Override
+	public List<ImgDto> selectList(int board_num) {
+		return dao.selectList(board_num);
+	}
 }

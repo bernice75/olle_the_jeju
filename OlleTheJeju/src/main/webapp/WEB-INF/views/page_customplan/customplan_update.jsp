@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>나만의 일정 insert</title>
+		<title>나만의 일정 update</title>
 		<link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/customplan/customplan_insert.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/footer.css" rel="stylesheet" type="text/css" />

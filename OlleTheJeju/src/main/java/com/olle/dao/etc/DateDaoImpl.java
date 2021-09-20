@@ -22,4 +22,9 @@ public class DateDaoImpl implements DateDao {
 
 		return res;
 	}
+
+	@Override
+	public int maxNum() {
+		return (Integer) (sqlSession.selectOne(NAMESPACE + "maxNum") == null ? 0:sqlSession.selectOne(NAMESPACE + "maxNum"));
+	}
 }

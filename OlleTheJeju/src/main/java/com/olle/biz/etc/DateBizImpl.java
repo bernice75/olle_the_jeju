@@ -15,4 +15,9 @@ public class DateBizImpl implements DateBiz {
 	public int insert(DateDto dto) {
 		return dao.insert(dto);
 	}
+
+	@Override
+	public int maxNum() {
+		return dao.maxNum();
+	}
 }

@@ -12,8 +12,10 @@
 		<result property="group_num" column="GROUP_NUM"/>
 	</resultMap>
 	
-	<select id="selectList" resultMap="imgMap">
-
+	<select id="selectList"  parameterType="int" resultMap="imgMap">
+		SELECT *
+		FROM OLLE_IMG
+		WHERE BOARD_NUM = #{board_num}
 	</select>
 	
 	<select id="selectOne" resultType="imgDto">
@@ -37,10 +39,18 @@
 	
 	<insert id="insert" parameterType="imgDto">
 		<selectKey resultType="int" keyProperty="img_num" order="BEFORE">
-		  SELECT (NVL2(MAX(IMG_NUM)+1,MAX(IMG_NUM)+1,1)) AS PRI  FROM OLLE_IMG
+			SELECT (NVL2(MAX(IMG_NUM)+1,MAX(IMG_NUM)+1,1)) AS PRI  FROM OLLE_IMG
 		</selectKey>
 		INSERT INTO OLLE_IMG
 		VALUES(#{img_num},#{board_num},#{table_num},#{img_title},#{group_num})
+	</insert>
+	
+	<insert id="customInsert" parameterType="imgDto">
+		<selectKey resultType="int" keyProperty="img_num" order="BEFORE">
+			SELECT (NVL2(MAX(IMG_NUM)+1,MAX(IMG_NUM)+1,1)) AS PRI  FROM OLLE_IMG
+		</selectKey>
+		INSERT INTO OLLE_IMG
+		VALUES(#{img_num}, 3, #{table_num}, #{img_title}, #{group_num})
 	</insert>
 	
 	<update id="update" parameterType="imgDto">
