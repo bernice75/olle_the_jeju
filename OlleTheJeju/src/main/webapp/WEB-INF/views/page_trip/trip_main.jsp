@@ -4,7 +4,7 @@
 <%@ page import="com.olle.dto.trip.TripDto" %>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ page import="com.olle.dto.trip.Paging" %>
+<%@ page import="com.olle.dto.etc.Paging" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -24,7 +24,7 @@
 		<div class="wrapper">
 			<jsp:include page="../include/header.jsp"></jsp:include>
 			<div class="main">
-			<input type="hidden" name="user_id" value="qww"><!-- 세션에서 user_id 받아오기 -->
+			<input type="hidden" name="user_id" value="${sessionScope.user_id}">
 				<br><br>
                 <div class="main-text">
                     <h2>제주도 모든 여행지를 한번에!</h2>
@@ -36,9 +36,9 @@
                 </div>
                 <br><br>
                 <div class="menu">
-                    <div class="menu1"><a href="trip_main.do?kategorie=명소&page=1" style="color:black;">관광명소</a></div>
-                    <div class="menu2"><a href="trip_main.do?kategorie=가격&page=1" style="color:black;"> 착한가격 업소</a></div>
-                    <div class="menu3"><a href="trip_main.do?kategorie=맛집&page=1" style="color:black;">맛집 15선</a></div>
+                    <div class="menu1"><a href="trip_main.do?kategorie=명소&page=1&user_id=${sessionScope.user_id}" style="color:black;">관광명소</a></div>
+                    <div class="menu2"><a href="trip_main.do?kategorie=가격&page=1&user_id=${sessionScope.user_id}" style="color:black;"> 착한가격 업소</a></div>
+                    <div class="menu3"><a href="trip_main.do?kategorie=맛집&page=1&user_id=${sessionScope.user_id}" style="color:black;">맛집 15선</a></div>
                     <div class="menu4" onclick='location.href="trip_jeju.do"'>방언 사전</div>
                 </div>
                 <br><br>
@@ -88,13 +88,15 @@
 					%>
                 </div>
                 <br>
-                <div class="write">
-                    <button class="btn btn-outline-secondary" onclick="location.href='trip_insert.do'">글등록</button>
-                </div>
+                <c:if test="${sessionScope.user_id eq 'admin'}">
+               	 	<div class="write">
+                   	 	<button class="btn btn-outline-secondary" onclick="location.href='trip_insert.do'">글등록</button>
+               	 	</div>
+                </c:if>
                 <br>
 			<div class="paging">
 				<c:if test="${paging.prev}">
-	    			<a href="trip_main.do?kategorie=<%=dto.get(0).getTrip_kategorie() %>&page=${paging.beginPage-1}" style="font-size:20px; margin-right: 5px;">prev</a>
+	    			<a href="trip_main.do?kategorie=<%=dto.get(0).getTrip_kategorie() %>&page=${paging.beginPage-1}&user_id=${sessionScope.user_id}" style="font-size:20px; margin-right: 5px;">prev</a>
 				</c:if>
 				<c:forEach begin="${paging.beginPage}" end="${paging.endPage }" step="1" var="index">
 	    			<c:choose>
@@ -102,12 +104,12 @@
 	          			  	<span style="font-size: 20px; color: gray; margin: 5px;">${index}</span>
 	        			</c:when>
 	        			<c:otherwise>
-	           			 	<a href="trip_main.do?kategorie=<%=dto.get(0).getTrip_kategorie() %>&page=${index}" style="font-size:20px; margin:5px;">${index}</a>
+	           			 	<a href="trip_main.do?kategorie=<%=dto.get(0).getTrip_kategorie() %>&page=${index}&user_id=${sessionScope.user_id}" style="font-size:20px; margin:5px;">${index}</a>
 	        			</c:otherwise>
 	    			</c:choose>
 				</c:forEach>
 				<c:if test="${paging.next}">
-	   				<a href="trip_main.do?kategorie=<%=dto.get(0).getTrip_kategorie() %>&page=${paging.endPage+1}" style="font-size:20px; margin-left: 5px;">next</a>
+	   				<a href="trip_main.do?kategorie=<%=dto.get(0).getTrip_kategorie() %>&page=${paging.endPage+1}&user_id=${sessionScope.user_id}" style="font-size:20px; margin-left: 5px;">next</a>
 				</c:if> 
 			</div>
 			<br><br>

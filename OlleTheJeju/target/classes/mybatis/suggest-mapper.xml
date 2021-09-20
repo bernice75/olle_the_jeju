@@ -48,7 +48,7 @@
 	
 	<insert id="insert" parameterType="suggestDto">
 		INSERT INTO OLLE_SUGGEST
-		VALUES(SUGSEQ.NEXTVAL, #{sug_kategorie}, #{sug_title}, #{sug_content}, #{sug_writer}, 'SYSDATE','nail',#{sug_tendency},#{sug_addr},#{sug_term},#{sug_views},#{sug_push})
+		VALUES(SUGSEQ.NEXTVAL, #{sug_kategorie}, #{sug_title}, #{sug_content}, 'admin',SYSDATE,'nail',#{sug_tendency},'주소',#{sug_term},#{sug_views},#{sug_push})
 	</insert>
 	
 	<update id="update" parameterType="suggestDto">

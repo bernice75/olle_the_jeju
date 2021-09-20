@@ -1,9 +1,18 @@
 package com.olle.controller;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.olle.biz.suggest.SuggestBiz;
+import com.olle.dto.etc.HashtagDto;
+import com.olle.dto.etc.Paging;
 import com.olle.dto.suggest.SuggestDto;
-import com.olle.dto.trip.Paging;
 
 @Controller
 public class SuggestController {
@@ -65,20 +75,37 @@ public class SuggestController {
 	}
 	
 	@RequestMapping(value = "suggest_insert.do", method = RequestMethod.GET)
-	public String suggest_insert() {
+	public String suggest_insert(Model model, HttpServletRequest req) throws org.json.simple.parser.ParseException {
 		logger.info("SUGGEST_INSERT");
+		
+	      JSONParser trip_parser = new JSONParser();
+	      JSONArray trip = new JSONArray();
+	      
+	      try {
+	         Reader trip_reader = new FileReader(req.getSession().getServletContext().getRealPath("/") + "/resources/json/trip.json");
+	         JSONObject trip_obj = (JSONObject)trip_parser.parse(trip_reader);
+	         
+	         trip = (JSONArray)trip_obj.get("trip");
+	         
+	         model.addAttribute("trip", trip);
+	      } catch(IOException e) {
+	         e.printStackTrace();
+	      }
 		
 		return "page_suggest/suggest_insert";
 	}
 	
 	@RequestMapping(value="suggest_insert_db.do", method=RequestMethod.GET)
-	public String suggest_insert_db(SuggestDto dto) {
+	public String suggest_insert_db(SuggestDto dto, String json) {
 		logger.info("SUGGEST_INSERT_DB");
+		System.out.println(json);
+		System.out.println(dto);
 		
 		int res = sb.insert(dto);
+		//int href = sb.insert_ht(hdt);
 		
 		if(res>0){
-			return "redirect:suggest_main.do?kategorie="+dto.getSug_kategorie()+"&page=1";
+			return "redirect:suggest_main.do?kategorie=전체&page=1";
 		}else {
 			return "redirect:suggest_insert.do";
 		}
@@ -111,8 +138,8 @@ public class SuggestController {
 	
 	@RequestMapping(value="/suggest_update_like.do", method=RequestMethod.GET)
 	@ResponseBody
-	public Map trip_update_like(int trip_num) {
-		sb.likeUpdate(trip_num);
+	public Map suggest_update_like(int sug_num) {
+		sb.likeUpdate(sug_num);
 		Map map = new HashMap();
 		map.put("에러나서","넣는값");
 		return map;
@@ -141,13 +168,6 @@ public class SuggestController {
 		System.out.println(res);
 		return res;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 }
 

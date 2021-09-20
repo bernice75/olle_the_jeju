@@ -139,4 +139,14 @@ public class SuggestDto {
 	public void setSug_push(int sug_push) {
 		this.sug_push = sug_push;
 	}
+	@Override
+	public String toString() {
+		return "SuggestDto [sug_num=" + sug_num + ", sug_kategorie=" + sug_kategorie + ", sug_title=" + sug_title
+				+ ", sug_content=" + sug_content + ", sug_writer=" + sug_writer + ", sug_regdate=" + sug_regdate
+				+ ", sug_nail=" + sug_nail + ", sug_tendency=" + sug_tendency + ", sug_addr=" + sug_addr + ", sug_term="
+				+ sug_term + ", sug_views=" + sug_views + ", sug_push=" + sug_push + ", dib=" + dib + "]";
+	}
+	
+	
+	
 }

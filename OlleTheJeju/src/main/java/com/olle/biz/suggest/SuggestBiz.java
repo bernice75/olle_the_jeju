@@ -3,13 +3,14 @@ package com.olle.biz.suggest;
 import java.util.Date;
 import java.util.List;
 
-import com.olle.dto.etc.DibDto;
+import com.olle.dto.etc.HashtagDto;
 import com.olle.dto.suggest.SuggestDto;
 
 public interface SuggestBiz {
 	public List<SuggestDto> selectList(String kate, int page);
 	public SuggestDto selectOne(int sug_num);
 	public int insert(SuggestDto dt);
+	//public int insert_ht(HashtagDto hdt);
 	public int update(SuggestDto dt);
 	public int delete(int sug_num);
 	public int getAllCount(String kate);

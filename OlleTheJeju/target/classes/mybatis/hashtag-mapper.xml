@@ -12,22 +12,27 @@
 		<result property="hash_content" column="HASH_CONTENT"/>
 	</resultMap>
 	
-	<select id="selectList" resultMap="hashtagMap">
-
+	<select id="selectList" resultMap="hashtagMap" parameterType="int">
+		SELECT *
+		FROM OLLE_HASHTAG
+		WHERE BOARD_NUM=#{board_num}
 	</select>
 	
-	<select id="selectOne" resultType="hashtagDto">
-
+	<select id="selectOne" resultType="hashtagDto" parameterType="hashtagDto">
+		SELECT *
+		FROM OLLE_HASHTAG
+		WHERE BOARD_NUM=#{board_num} AND TABLE_NUM=#{table_num}		
 	</select>
 	
 	<insert id="insert" parameterType="hashtagDto">
 		INSERT INTO OLLE_HASHTAG
-		VALUES()
+		VALUES(HASHSEQ.NEXTVAL, #{board_num},#{table_num},'0',#{hash_content})
 	</insert>
 	
 	<update id="update" parameterType="hashtagDto">
 		UPDATE OLLE_HASHTAG
-		SET 
+		SET HASH_CONTENT=#{hash_content}
+		WHERE BOARD_NUM=#{board_num} AND TABLE_NUM=#{table_num}
 	</update>
 	
 	<delete id="delete" parameterType="int">

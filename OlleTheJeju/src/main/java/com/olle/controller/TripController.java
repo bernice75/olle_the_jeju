@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.olle.biz.trip.TripBiz;
-import com.olle.dto.trip.Paging;
+import com.olle.dto.etc.Paging;
 import com.olle.dto.trip.TripDto;
 
 @Controller

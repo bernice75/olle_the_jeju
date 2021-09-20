@@ -12,11 +12,11 @@ function good(){
          	var push=1;
         	function like(){
         		if(push==0){
-        			alert("이미 추천하셨습니다.")
+        			alert("이미 추천하셨습니다.");
         		}else{
         			var sug_num = $("#sug_num").val();
         			$.ajax({
-        				url:"sug_update_like.do?sug_num="+sug_num,
+        				url:"suggest_update_like.do?sug_num="+sug_num,
         				type:"GET",
         				success: function(){
         					push=0;
@@ -32,3 +32,4 @@ function good(){
         			})
         		}
         	}
+        	

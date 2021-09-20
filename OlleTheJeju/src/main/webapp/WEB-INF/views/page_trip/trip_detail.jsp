@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -84,9 +85,11 @@
                     </div>
                 </div>
                 <div class="bottom-btn-group2">
-                    <input id="btn1" class="btn btn-secondary" type="button" value="목록" onclick="location.href='trip_main.do?kategorie=${dto.trip_kategorie}&page=1'">
-                    <input id="btn2" class="btn btn-primary" type="button" value="수정" onclick="location.href='trip_update.do?trip_num=${dto.trip_num}'">
-                    <input id="btn3" class="btn btn-danger" type="button" value="삭제" onclick="location.href='trip_delete.do?trip_num=${dto.trip_num}&trip_kategorie=${dto.trip_kategorie }'">
+                    <input id="btn1" class="btn btn-secondary" type="button" value="목록" onclick="location.href='trip_main.do?kategorie=${dto.trip_kategorie}&page=1&user_id=${sessionScope.user_id}'">
+                    <c:if test="${sessionScope.user_id eq 'admin'}">
+                    	<input id="btn2" class="btn btn-primary" type="button" value="수정" onclick="location.href='trip_update.do?trip_num=${dto.trip_num}'">
+                    	<input id="btn3" class="btn btn-danger" type="button" value="삭제" onclick="location.href='trip_delete.do?trip_num=${dto.trip_num}&trip_kategorie=${dto.trip_kategorie }'">
+                    </c:if>	
                 </div>
                 <br><br>
 			</div>

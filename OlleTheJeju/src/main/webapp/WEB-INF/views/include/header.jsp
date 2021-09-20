@@ -37,10 +37,10 @@
            <ul class="navi">
                <li><a href="home.do">Home</a></li>
                <li>
-                   <a href="trip_main.do?kategorie=명소&page=1">관광일정</a>
+                   <a href="trip_main.do?kategorie=명소&page=1&user_id=${sessionScope.user_id}">관광일정</a>
                </li>
                <li>
-                   <a href="suggest_main.do?kategorie=전체&page=1">추천일정</a>
+                   <a href="suggest_main.do?kategorie=전체&page=1&user_id=${sessionScope.user_id}">추천일정</a>
                </li>
                <li><a href="customplan_main.do">나만의일정</a></li>
                <li>

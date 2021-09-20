@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<title>추천일정 detail</title>
 		<link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
-        <link href="./resources/css/suggest/suggest_detail.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/suggest/suggest_detail.css?var=1" rel="stylesheet" type="text/css" />
         <link href="./resources/css/footer.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -33,7 +34,7 @@
                 </div>
                 <br><br>
                 <div class="nail">
-                    <div id="carouselExampleFade" class="carousel slide carousel-fade slider" data-bs-ride="carousel">
+				<div id="carouselExampleFade" class="carousel slide carousel-fade slider" data-bs-ride="carousel">
                         <div class="carousel-inner imgs">
                             <div class="carousel-item active">
                                 <img src="./resources/img/1.png" class="d-block w-100" alt="...">
@@ -60,9 +61,9 @@
                         <div class="name">
                             <h6><strong>작성자</strong> | ${dto.sug_writer }</h6>
                             <h6 class="like" id="pText" onclick="like();" ><i id="push"class="fa fa-heart-o" aria-hidden="true" style="font-weight:normal;"> | <span id="text">${dto.sug_push }</span></i> </h6>
+                            <input type="hidden" id="sug_num" value="${dto.sug_num }">
                             <h6>조회수 | ${dto.sug_views }</h6>
-                            <h6 onclick="report('${dto.sug_num}');"><i class="fa fa-bullhorn" aria-hidden="true"></i> | 신고</h6>
-                        </div>
+					</div>
                         <div class="content">
 							${dto.sug_content }
                         </div>
@@ -74,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                <br><br>
+			<br><br>
                 <div class="suggest_text">
                     <h3>일정등록</h3>
                     <hr class="line">
@@ -86,10 +87,12 @@
                 </div>
                 <div class="bottom-btn-group2">
                     <input id="btn1" class="btn btn-secondary" type="button" value="목록" onclick="location.href='suggest_main.do?kategorie=전체&page=1'">
-                    <input id="btn2" class="btn btn-primary" type="button" value="수정" onclick="location.href='suggest_update.do?sug_num=${dto.sug_num}'">
-                    <input id="btn3" class="btn btn-danger" type="button" value="삭제" onclick="location.href='suggest_delete.do?sug_num=${dto.sug_num}'">
+                    <c:if test="${sessionScope.user_id eq 'admin' }">
+                    	<input id="btn2" class="btn btn-primary" type="button" value="수정" onclick="location.href='suggest_update.do?sug_num=${dto.sug_num}'">
+                    	<input id="btn3" class="btn btn-danger" type="button" value="삭제" onclick="location.href='suggest_delete.do?sug_num=${dto.sug_num}'">
+                    </c:if>
                 </div>
-                <br><br>
+			<br><br>
 			</div>
 			<jsp:include page="../include/footer.jsp"></jsp:include>
 		</div>
