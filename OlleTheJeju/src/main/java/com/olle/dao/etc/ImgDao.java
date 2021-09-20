@@ -22,7 +22,7 @@ public interface ImgDao {
 	
 	//ImgDto getStoreImg(int table_num);
 	List<ImgDto> getStoreImg(int startIdx, int endIdx);
-	
+
 	//나만의 일정 이미지 저장
 	public int cusInsert(ImgDto dto);
 	public List<ImgDto> selectList(int board_num);

@@ -38,7 +38,6 @@ public class JejuPageBizImpl implements JejuPageBiz {
 
 	@Override
 	public List<ImgDto> getImgElementsPerPage(int startIdx, int endIdx, int page) {
-		// TODO Auto-generated method stub
 		return dao.getImgElementsPerPage(startIdx, endIdx, page);
 	}
 

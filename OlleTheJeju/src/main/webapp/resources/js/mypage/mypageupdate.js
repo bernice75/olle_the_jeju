@@ -1,5 +1,4 @@
-
- // 맨 상단 프로플 사진 첨부 미리보기 기능 시작
+// 맨 상단 프로플 사진 첨부 미리보기 기능 시작
  function previewImage(targetObj, previewId) {
 	 var preview = document.getElementById(previewId);  //div id   
 	 var ua = window.navigator.userAgent; 
@@ -160,4 +159,3 @@ function userDelete() {
 		});
 	}
 }
-
