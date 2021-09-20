@@ -87,6 +87,15 @@ public class ImgDaoImpl implements ImgDao {
 		List<ImgDto> list=sqlSession.selectList(NAMESPACE+"storeImgByGubun",pg);
 		return list;
 	}
+	@Override
+	public int cusInsert(ImgDto dto) {
+		return sqlSession.insert(NAMESPACE + "customInsert", dto);
+	}
+
+	@Override
+	public List<ImgDto> selectList(int board_num) {
+		return sqlSession.selectList(NAMESPACE + "selectList", board_num);
+	}
 
 //	@Override
 //	public ImgDto getStoreImg(int table_num) {

@@ -45,6 +45,14 @@ public class ImageBizImpl implements ImageBiz{
 		// TODO Auto-generated method stub
 		return dao.getStoreImgByGubun(gubun, startIdx, endIdx);
 	}
+	@Override
+	public int cusInsert(ImgDto dto) {
+		return dao.cusInsert(dto);
+	}
+	@Override
+	public List<ImgDto> selectList(int board_num) {
+		return dao.selectList(board_num);
+	}
 
 //	@Override
 //	public ImgDto getStoreImg(int table_num) {
