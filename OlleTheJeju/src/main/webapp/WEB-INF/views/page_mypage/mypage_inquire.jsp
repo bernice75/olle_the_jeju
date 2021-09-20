@@ -66,7 +66,7 @@
 	    	
 	    	$(document).ready(function() {
 	    		var to_user = $("input#to_user").val();
-	    		ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo.do?room_id=" + roomId + "&from_user=user1&to_user=admin");
+	    		ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo.do");
 		    	
 		    	ws.onopen = function(data) {
 		    		//소켓 연결 시 초기화 세팅
@@ -74,13 +74,21 @@
 		    	};
 		    	ws.onmessage = function(data) {
 		    		var new_msg = data.data;
-		    		var from_user = new_msg.split(" : ")[1];
-		    		var msg = new_msg.split(" : ")[0];
-					if(msg != null && msg.trim() != ''){
-						if(from_user == 'admin') {
-							$(".chat_area>ul").append("<p class='to_user'>관리자 : " + msg + "</p>");
-						} else if(from_user == `${sessionScope.user_id}`) {
-							$(".chat_area>ul").append("<p class='from_user'>" + msg + " : 나</p>");
+					if(new_msg != null && new_msg.trim() != ''){
+						var d = JSON.parse(new_msg);
+						if(d.type == "getId"){
+							var si = d.sessionId != null ? d.sessionId : "";
+							if(si != ''){
+								$("#sessionId").val(si); 
+							}
+						} else if(d.type == "message") {
+							if(d.sessionId == $("#sessionId").val()){
+								$(".chat_area>ul").append("<p class='from_user'>" + d.msg + " : " + `${sessionScope.user_id}` + "</p>");
+							}else{
+								$(".chat_area>ul").append("<p class='others'>" + d.from_user + " :" + d.msg + "</p>");
+							}
+						} else {
+							console.warn("unknown type!")
 						}
 					}
 				};
@@ -93,10 +101,6 @@
 		    		//끊김이 발생했을 경우 1초에 한번씩 연결 시도
 		    		//setTimeout(function() { connect(); }, 1000);
 	    		};
-	    		
-	    		$(".btn-close").on('click', function() {
-					ws.close();
-	    		});
 	    	});
 	    	
 	    	//엔터 누르면 메세지 전송되도록 설정
@@ -107,8 +111,14 @@
 			});
 	    	
 	    	function sendBtn() {
-	    		var msg = $(".chat_content").val();
-    			ws.send(msg + " : user1");
+	    		var option ={
+    				type: "message",
+    				sessionId : $("#sessionId").val(),
+    				from_user : `${sessionScope.user_id}`,
+    				to_user : "admin",
+    				msg : $(".chat_content").val()
+    			}
+	    		ws.send(JSON.stringify(option));
     			$(".chat_content").val("");
 	    	}
 	    	

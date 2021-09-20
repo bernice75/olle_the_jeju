@@ -6,4 +6,5 @@ public interface DateDao {
 	String NAMESPACE = "date.";
 
 	public int insert(DateDto dto);
+	public int maxNum();
 }

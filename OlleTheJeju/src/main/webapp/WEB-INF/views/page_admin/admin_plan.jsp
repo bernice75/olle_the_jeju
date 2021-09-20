@@ -49,9 +49,7 @@
 	            <div class="tour_info_title">
 	                <p>관광정보</p>
 	            </div>
-	
-	            <button class="btn btn-primary btn-block" onclick="">글쓰기</button>
-	            <br><br>
+	            <br>
 	            <table class="table" border="1">
 	                <tr>
 	                    <th style="text-align: center;">번호</th>
@@ -96,11 +94,10 @@
 	        <br><br><br><br>
 	        <!-- 추천 일정 -->
 	        <div class="pick_plan">
-	                <div class="pick_plan_title">
-	                    <p>추천일정</p>
-	                </div>
-	            <button class="btn btn-primary btn-block" onclick="">글쓰기</button>
-	            <br><br>
+                <div class="pick_plan_title">
+                    <p>추천일정</p>
+                </div>
+	            <br>
 	            <table class="table" border="1">
 	                <tr>
 	                    <th style="text-align: center;">번호</th>
@@ -139,57 +136,12 @@
 	        </nav>
 	        <hr>
 	        <br><br><br><br>
-	        <!-- 고객지원 -->
-	        <div class="user_help">
-	                <div class="user_help_title">
-	                    <p>고객 지원</p>
-	                </div>    
-	            <table class="table" border="1">
-	                <tr>
-	                    <th style="text-align: center;">번호</th>
-	                    <th style="text-align: center;">제목</th>
-	                    <th style="text-align: center;">내용</th>
-	                    <th style="text-align: center;">글쓴이</th>
-	                    <th style="text-align: center;">작성일</th>
-	                </tr>
-	                <tr>
-	                    <td>1</td>
-	                    <td>문의 드립니다.</td>
-	                    <td><a href="" onclick="showPopup();">문의 드립니다.</a></td>
-	                    <td>user</td>
-	                    <td>20.05.12</td>
-	                </tr>
-	            </table>
-	        </div>
-	        <br>
-	        <!-- 기능구현시 수정해야함 (연결하기)(아이콘 안보임)-->
-	        <nav class="paging" aria-label="Page navigation example">
-	            <ul class="pagination">
-	                <li class="page-item">
-	                <a class="page-link" href="#" aria-label="Previous">
-	                    <span aria-hidden="true">&laquo;</span>
-	                </a>
-	                </li>
-	                <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                <li class="page-item">
-	                <a class="page-link" href="#" aria-label="Next">
-	                    <span aria-hidden="true">&raquo;</span>
-	                </a>
-	                </li>
-	            </ul>
-	        </nav>
-	        <hr>
-	        <br><br><br><br>
 	        <!-- 제주 상황 -->
 	        <div class="jeju_wrong">
-	                <div class="jeju_wrong_title">
-	                    <p>제주 상황</p>
-	                </div>  
-	                <button class="btn btn-primary btn-block" onclick="">전체 선택</button>
-	                <button class="btn btn-primary btn-block" onclick="">삭제</button>
-	                <br><br>
+                <div class="jeju_wrong_title">
+                    <p>제주 상황</p>
+                </div>
+                <br>
 	            <table class="table" border="1">
 	                <tr>
 	                    <td><input type="checkbox"></td>

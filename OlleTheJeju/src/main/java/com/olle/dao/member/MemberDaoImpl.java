@@ -102,4 +102,9 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return dto;
 	}
+
+	@Override
+	public int warn_update(String user_id) {
+		return sqlSession.update(NAMESPACE + "warn_update", user_id);
+	}
 }

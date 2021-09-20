@@ -12,7 +12,7 @@ import com.olle.dto.jejusituation.MenuDto;
 @Repository
 public class MenuDaoImpl implements MenuDao {
 	@Autowired
-	private static SqlSessionTemplate sqlSession;
+	private SqlSessionTemplate sqlSession;
 	
 	@Override
 	public int maxMenuPerStore(int storeId) {

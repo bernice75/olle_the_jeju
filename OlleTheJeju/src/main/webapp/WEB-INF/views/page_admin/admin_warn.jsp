@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -47,29 +49,33 @@
 	                        <th>신고사유</th>
 	                        <th>글번호</th>
 	                        <th>신고 일자</th>
-	                        <th>공개 여부</th>
-	                        <th>삭제</th>
+	                        <th>삭제여부</th>
+	                        <th>경고처리</th>
 	                    </tr>
-	                    <tr>
-	                        <td><input type="checkbox"></td>
-	                        <td>21</td>
-	                        <td>user</td>
-	                        <td>user2</td>
-	                        <td>욕설, 비속어</td>
-	                        <td>116</td>
-	                        <td>2021/05/26</td>
-	                        <td>공개</td>
-	                        <td><button class="btn btn-primary btn-block" onclick="">삭제</button></td>
-	                    </tr>
+	                    <c:choose>
+	                    	<c:when test="${empty report }">
+	                    		<tr>
+	                    			<td colspan="9">=========신고된 게시물이 없습니다.=========</td>
+	                    		</tr>
+	                    	</c:when>
+	                    	<c:otherwise>
+	                    		<c:forEach var="rep" items="${report }">
+	                    			<tr>
+		                    			<td><input type="checkbox"></td>
+		                    			<td>${rep.rep_num }</td>
+		                    			<td>${rep.user_id }</td>
+		                    			<td>${rep.rep_user }</td>
+		                    			<td>${rep.rep_reson }</td>
+		                    			<td>${rep.plan_num }</td>
+		                    			<fmt:formatDate var="rep_regdate" value="${rep.rep_regdate }" pattern="yyyy.MM.dd"/>
+		                    			<td>${rep_regdate }</td>
+		                    			<td><button class="btn btn-primary btn-block" onclick="location.href='rep_delete.do?rep_num=${rep.rep_num }&plan_num=${rep.plan_num }'">삭제</button></td>
+		                    			<td><button class="btn btn-primary btn-block" onclick="location.href='rep_warn.do?user_id=${rep.rep_user }'">경고</button></td>
+		                    		</tr>
+	                    		</c:forEach>
+	                    	</c:otherwise>
+	                    </c:choose>
 	                </table>
-	
-	                <br>
-	
-	                <div class="admin_warn_btn">
-	                    <button class="btn btn-primary btn-block" onclick="">삭제</button>
-	                    <button class="btn btn-primary btn-block" onclick="">공개</button>
-	                    <button class="btn btn-primary btn-block" onclick="">경고</button>
-	                </div>
 	            </div> 
 	        </main>
 			<jsp:include page="../include/footer.jsp"></jsp:include>

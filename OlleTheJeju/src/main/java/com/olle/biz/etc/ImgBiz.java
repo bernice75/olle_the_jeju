@@ -12,4 +12,8 @@ public interface ImgBiz {
 	//제주상황-이미지 한개만 딱 pick
 	//ImgDto getStoreImg(int table_num);
 	List<ImgDto> getStoreImg(int startIdx, int endIdx);
+	
+	//나만의 일정
+	public int cusInsert(ImgDto dto); // 이미지 저장
+	public List<ImgDto> selectList(int board_num);
 }

@@ -16,8 +16,13 @@
 		<result property="date_phone" column="DATE_PHONE"/>
 	</resultMap>
 	
+	<select id="maxNum" resultType="int">
+		SELECT MAX(DATE_NUM)
+		FROM OLLE_DATE
+	</select>
+	
 	<select id="selectList" resultMap="dateMap">
-
+		SELECT * FROM OLLE_DATE
 	</select>
 	
 	<select id="selectOne" resultType="dateDto">
@@ -27,8 +32,7 @@
 	<insert id="insert" parameterType="dateDto">
 		INSERT INTO OLLE_DATE
 		VALUES(
-			(SELECT NVL(MAX(DATE_NUM)) FROM OLLE_DATE) + 1,
-			#{board_num}, #{table_num}, #{group_num}, #{date_lat}, #{date_lon}, #{date_name}, #{date_addr}, #{date_phone}
+			#{date_num}, #{board_num}, #{table_num}, #{group_num}, #{date_lat}, #{date_lon}, #{date_name}, #{date_addr}, #{date_phone}
 		)
 	</insert>
 	

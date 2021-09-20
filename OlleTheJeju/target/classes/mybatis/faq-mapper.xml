@@ -6,14 +6,14 @@
 <mapper namespace = "faq">
 	<resultMap type="faqDto" id="faqMap">
 		<result property="faq_num" column="FAQ_NUM"/>
+		<result property="faq_kat" column="FAQ_KAT"/>
 		<result property="faq_title" column="FAQ_TITLE"/>
 		<result property="faq_content" column="FAQ_CONTENT"/>
-		<result property="faq_writer" column="FAQ_WRITER"/>
 		<result property="faq_regdate" column="FAQ_REGDATE"/>
 	</resultMap>
 	
-	<select id="selectList" resultMap="faqMap">
-
+	<select id="faqList" resultMap="faqMap">
+		SELECT * FROM OLLE_FAQ
 	</select>
 	
 	<select id="selectOne" resultType="faqDto">
@@ -22,7 +22,9 @@
 	
 	<insert id="insert" parameterType="faqDto">
 		INSERT INTO OLLE_FAQ
-		VALUES()
+		VALUES(
+			(SELECT COUNT(FAQ_NUM) FROM OLLE_FAQ) + 1, #{faq_kat}, #{faq_title}, #{faq_content}, SYSDATE
+		)
 	</insert>
 	
 	<update id="update" parameterType="faqDto">
