@@ -74,6 +74,42 @@ public class JejuPageDaoImpl implements JejuPageDao{
 		return list;
 	}
 
+	@Override
+	public List<JejuDto> getStoreElementsByGubun(String gubun, int startIdx, int endIdx, int page) {
+		// TODO Auto-generated method stub
+		PaginationIdxes pg=new PaginationIdxes();
+		pg.setSitu_gubun(gubun);
+		pg.setStartIdx(startIdx);
+		pg.setEndIdx(endIdx);
+		List<JejuDto> jeju=session.selectList(NAMESPACE+"storeGubunPagination",pg);
+		return jeju;
+	}
+
+	@Override
+	public List<ImgDto> getImgElementsByGubun(String gubun, int startIdx, int endIdx, int page) {
+		// TODO Auto-generated method stub
+		return iBiz.getStoreImgByGubun(gubun, startIdx, endIdx);
+	}
+
+	@Override
+	public int getTotalElementsByGubun(String gubun) {
+		// TODO Auto-generated method stub
+		int tot=session.selectOne(NAMESPACE+"countTotalElementsByGubun",gubun);
+		return tot;
+	}
+
+	@Override
+	public int getTotalPagesByGubun(String gubun,int unit) {
+		// TODO Auto-generated method stub
+		int tot=getTotalElementsByGubun(gubun);
+		System.out.println(" bef tot: "+tot);
+		System.out.println(" unit : "+unit);
+		double temp=(double)tot/(double)unit;
+		tot=(int)Math.ceil(temp);
+		System.out.println("temp: "+temp);
+		return tot;
+	}
+
 
 
 }

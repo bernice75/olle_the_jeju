@@ -40,6 +40,12 @@ public class ImageBizImpl implements ImageBiz{
 		return dao.getStoreImg(startIdx, endIdx);
 	}
 
+	@Override
+	public List<ImgDto> getStoreImgByGubun(String gubun, int startIdx, int endIdx) {
+		// TODO Auto-generated method stub
+		return dao.getStoreImgByGubun(gubun, startIdx, endIdx);
+	}
+
 //	@Override
 //	public ImgDto getStoreImg(int table_num) {
 //		// TODO Auto-generated method stub

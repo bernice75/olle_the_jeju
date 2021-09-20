@@ -26,7 +26,7 @@
 		FROM OLLE_SITU_MENU
 		WHERE STORE_ID=#{store_id}
 	</select>	
-	<!-- 페이지별로 메뉴리스트 가져오기 -->
+	<!-- 페이지별로 메뉴리스트 가져오기(구분별로) -->
 	<select id="getPageMenuList" parameterType="paginationIdxDto" resultMap="menuMap">
 		SELECT B.*
 		FROM (SELECT A.*, ROWNUM AS RN

@@ -34,6 +34,8 @@ public class JejuPage {
 	List<MenuDto> menuList=new ArrayList<MenuDto>();
 	//버튼리스트 시작버튼값
 	int listBtnStartIdx;
+	//구분값
+	String gubun;
 	
 	public JejuPage() {
 		super();
@@ -42,7 +44,7 @@ public class JejuPage {
 
 	public JejuPage(int totalElements, int totalPages, int elementsPerPage, int startIdx, int endIdx, int curPage,
 			int listBtnUnit, boolean prevUnit, boolean nextUnit, List<JejuDto> jeju, List<ImgDto> img,
-			List<MenuDto> menuList, int listBtnStartIdx) {
+			List<MenuDto> menuList, int listBtnStartIdx, String gubun) {
 		super();
 		this.totalElements = totalElements;
 		this.totalPages = totalPages;
@@ -57,6 +59,7 @@ public class JejuPage {
 		this.img = img;
 		this.menuList = menuList;
 		this.listBtnStartIdx = listBtnStartIdx;
+		this.gubun = gubun;
 	}
 
 	public int getTotalElements() {
@@ -163,13 +166,23 @@ public class JejuPage {
 		this.listBtnStartIdx = listBtnStartIdx;
 	}
 
+	public String getGubun() {
+		return gubun;
+	}
+
+	public void setGubun(String gubun) {
+		this.gubun = gubun;
+	}
+
 	@Override
 	public String toString() {
 		return "JejuPage [totalElements=" + totalElements + ", totalPages=" + totalPages + ", elementsPerPage="
 				+ elementsPerPage + ", startIdx=" + startIdx + ", endIdx=" + endIdx + ", curPage=" + curPage
 				+ ", listBtnUnit=" + listBtnUnit + ", prevUnit=" + prevUnit + ", nextUnit=" + nextUnit + ", jeju="
-				+ jeju + ", img=" + img + ", menuList=" + menuList + ", listBtnStartIdx=" + listBtnStartIdx + "]";
+				+ jeju + ", img=" + img + ", menuList=" + menuList + ", listBtnStartIdx=" + listBtnStartIdx + ", gubun="
+				+ gubun + "]";
 	}
 
+	
 	
 }

@@ -7,8 +7,12 @@
 		<typeAlias type="com.olle.dto.member.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.olle.dto.customplan.CustomDto" alias="customDto"/>
 		<typeAlias type="com.olle.dto.jejusituation.JejuDto" alias="jejuDto"/>
+		<typeAlias type="com.olle.dto.jejusituation.menu.MenuDto" alias="menuDto"/>
 		<typeAlias type="com.olle.dto.trip.TripDto" alias="tripDto"/>
 		<typeAlias type="com.olle.dto.etc.ImgDto" alias="imgDto"/>
+		<typeAlias type="com.olle.mapper.MenuMapper" alias="menuMapper"/>
+		<typeAlias type="com.olle.dto.pagination.jejusitu.JejuPage" alias="jejuPageDto"/>
+		<typeAlias type="com.olle.dto.pagination.jejusitu.PaginationIdxes" alias="paginationIdxDto"/>
 		<typeAlias type="com.olle.dto.suggest.SuggestDto" alias="suggestDto"/>
 		<typeAlias type="com.olle.dto.etc.HashtagDto" alias="hashtagDto"/>
 		<typeAlias type="com.olle.dto.etc.DibDto" alias="dibDto"/>
@@ -25,6 +29,7 @@
 		<mapper resource="/mybatis/mypage-mapper.xml"/>
 		<mapper resource="/mybatis/custom-mapper.xml"/>
 		<mapper resource="/mybatis/jeju-mapper.xml"/>
+		<mapper resource="/mybatis/menu-mapper.xml"/>
 		<mapper resource="/mybatis/trip-mapper.xml"/>
 		<mapper resource="/mybatis/img-mapper.xml"/>
 		<mapper resource="/mybatis/suggest-mapper.xml"/>
@@ -36,6 +41,7 @@
 		<mapper resource="/mybatis/report-mapper.xml"/>
 		<mapper resource="/mybatis/food-mapper.xml"/>
 		<mapper resource="/mybatis/date-mapper.xml"/>
+		<mapper resource="/mybatis/menu-batch.xml"/>
 	</mappers>
 
 

@@ -12,4 +12,6 @@ public interface ImageBiz {
 	//제주상황-이미지 한개만 딱 pick
 	//ImgDto getStoreImg(int table_num);
 	List<ImgDto> getStoreImg(int startIdx, int endIdx);
+	//구분에 따른 이미지 리스트 가져오기
+	List<ImgDto> getStoreImgByGubun(String gubun,int startIdx,int endIdx);
 }

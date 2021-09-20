@@ -28,10 +28,10 @@
                 <br>
                 <br><br>
                 <div class="menu">
-                    <div class="menu1">한식</div>
-                    <div class="menu2">중식</div>
-                    <div class="menu3">일식</div>
-                    <div class="menu4">양식</div>
+                    <div class="menu1"><span onclick="location.href=`jejusituation_search_gubun.do?gubun=한식&page=1`;">한식</span></div>
+                    <div class="menu2"><span onclick="location.href=`jejusituation_search_gubun.do?gubun=중식&page=1`;">중식</span></div>
+                    <div class="menu3"><span onclick="location.href=`jejusituation_search_gubun.do?gubun=일식&page=1`;">일식</span></div>
+                    <div class="menu4"><span onclick="location.href=`jejusituation_search_gubun.do?gubun=양식&page=1`;">양식</span></div>
                 </div>
                 <br>
                 <div class="search">
@@ -157,6 +157,8 @@
         			}
         		});
         	}
+        	
+
         </script>
     </body>
 </html>

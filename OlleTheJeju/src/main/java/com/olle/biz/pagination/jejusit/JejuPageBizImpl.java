@@ -53,6 +53,30 @@ public class JejuPageBizImpl implements JejuPageBiz{
 		return null;
 	}
 
+	@Override
+	public List<JejuDto> getStoreElementsByGubun(String gubun, int startIdx, int endIdx, int page) {
+		// TODO Auto-generated method stub
+		return dao.getStoreElementsByGubun(gubun, startIdx, endIdx, page);
+	}
+
+	@Override
+	public List<ImgDto> getImgElementsByGubun(String gubun, int startIdx, int endIdx, int page) {
+		// TODO Auto-generated method stub
+		return dao.getImgElementsByGubun(gubun, startIdx, endIdx, page);
+	}
+
+	@Override
+	public int getTotalElementsByGubun(String gubun) {
+		// TODO Auto-generated method stub
+		return dao.getTotalElementsByGubun(gubun);
+	}
+
+	@Override
+	public int getTotalPagesByGubun(String gubun,int unit) {
+		// TODO Auto-generated method stub
+		return dao.getTotalPagesByGubun(gubun,unit);
+	}
+
 
 
 }
