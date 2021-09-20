@@ -11,6 +11,12 @@
 		<result property="user_id" column="USER_ID"/>
 	</resultMap>
 	
+	<!-- 마이페이지 내가 찜한 게시글 조회  -->
+	<select id="selectdDibList" parameterType="int" resultMap="dibMap">
+		SELECT * FROM OLLE_DIB
+		WHERE TABLE_NUM = #{table_num}
+	</select>
+	
 	<select id="selectList" resultMap="dibMap">
 
 	</select>

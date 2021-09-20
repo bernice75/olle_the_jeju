@@ -3,45 +3,66 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace = "menu">
-
-	<resultMap type="menuDto" id="menuMap">
-		<result column="MENU_ID" property="menu_id"/>
-		<result column="STORE_ID" property="store_id"/>
-		<result column="MENU" property="menu"/>
-		<result column="PRICE" property="price"/>
+<mapper namespace = "member">
+	<resultMap id="memberMap" type="memberDto">
+		<result property="user_id" column="USER_ID"/>
+		<result property="user_pw" column="USER_PW"/>
+		<result property="user_name" column="USER_NAME"/>
+		<result property="user_age" column="USER_AGE"/>
+		<result property="user_addr" column="USER_ADDR"/>
+		<result property="user_addrdetail" column="USER_ADDRDETAIL"/>
+		<result property="user_phone" column="USER_PHONE"/>
+		<result property="user_email" column="USER_EMAIL"/>
+		<result property="user_member" column="USER_MEMBER"/>
+		<result property="user_status" column="USER_STATUS"/>
+		<result property="user_warning" column="USER_WARNING"/>
+		<result property="user_regdate" column="USER_REGDATE"/>
+		<result property="user_secdate" column="USER_SECDATE"/>
+		<result property="user_img" column="USER_IMG"/>
+		<result property="user_nick" column="USER_NICK"/>
 	</resultMap>
 	
-	<resultMap type="menuDto" id="maxPk">
-		<result column="PRI" property="menu_id"/>
-	</resultMap>	
-	<select id="pkMax" resultMap="maxPk">
-		<![CDATA[
-		SELECT (NVL2(MAX(MENU_ID)+1,MAX(MENU_ID)+1,1)) AS PRI FROM OLLE_SITU_MENU
-		]]>
+	<select id="idChk" parameterType="string" resultType="int">
+		SELECT COUNT(USER_ID)
+		FROM OLLE_USER
+		WHERE USER_NICK = #{user_id}
 	</select>
-		<!-- 조건별 리스트 가져오기 -->
-	<select id="getMenuListByStoreId" parameterType="int" resultType="menuDto">
-		SELECT MENU_ID,STORE_ID,MENU
-		FROM OLLE_SITU_MENU
-		WHERE STORE_ID=#{store_id}
-	</select>	
-		
-<!-- 		INSERT ALL open="INSERT ALL" close="SELECT * FROM DUAL"-->
-<!-- 	<insert id="batchInsert" parameterType="java.util.List">
-		INSERT INTO OLLE_SITU_MENU(
-			MENU_ID,
-			STORE_ID,
-			MENU
-		)VALUES
-		<foreach collection="list" item="item" index="index">
-		<if test="index>0">,</if>
-		(
-				#{item.menu_id},
-				#{item.store_id},
-				#{item.menu}
-			)
-		</foreach>
-	</insert> -->
-
+	
+	<select id="nickChk" parameterType="string" resultType="int">
+		SELECT COUNT(USER_NICK)
+		FROM OLLE_USER
+		WHERE USER_NICK = #{user_nick}
+	</select>
+	
+	<select id="login" parameterType="memberDto" resultType="String">
+		SELECT USER_ID
+		FROM OLLE_USER
+		WHERE USER_ID = #{user_id} AND USER_PW = #{user_pw}
+	</select>
+	
+	<select id="selectList" resultMap="memberMap">
+		SELECT *
+		FROM OLLE_USER
+	</select>
+	
+	<select id="selectUser" parameterType="string" resultType="memberDto">
+        SELECT *
+        FROM OLLE_USER
+        WHERE USER_ID = #{user_id}
+     </select>
+	
+	<insert id="userInsert" parameterType="memberDto">
+		INSERT INTO OLLE_USER
+		VALUES(#{user_id}, #{user_pw}, #{user_name}, #{user_age}, #{user_addr}, #{user_addrdetail}, #{user_phone}, #{user_email}, #{user_member}, 'N', 0, SYSDATE, null, 'test.jpg', #{user_nick})
+	</insert>
+	
+	<update id="update" parameterType="memberDto">
+		UPDATE OLLE_USER
+		SET 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM OLLE_USER
+		WHERE USER_ID = #{user_id}
+	</delete>
 </mapper>

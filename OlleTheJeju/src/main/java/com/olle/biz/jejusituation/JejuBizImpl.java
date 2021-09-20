@@ -3,7 +3,6 @@ package com.olle.biz.jejusituation;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,14 +17,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.olle.dao.jejusituation.JejuDao;
-import com.olle.dto.etc.ImgDto;
 import com.olle.dto.jejusituation.CoronaDto;
 import com.olle.dto.jejusituation.JejuDto;
-import com.olle.dto.jejusituation.menu.MenuDto;
 
 @Service
-public class JejuBizImpl implements JejuBiz{
-	
+public class JejuBizImpl implements JejuBiz {
 	@Autowired
 	private JejuDao dao;
 	
@@ -55,21 +51,13 @@ public class JejuBizImpl implements JejuBiz{
 					.newDocumentBuilder()
 					.parse(uri);
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        //root tag
         document.getDocumentElement().normalize();
-     //   System.out.println("root tag: "+document.getDocumentElement().getNodeName());
-        //파싱할 태그
-      //  Element root=document.getDocumentElement();
-      //  System.out.println("Element root : "+root);
         
         NodeList list=document.getElementsByTagName("item");
 
@@ -106,58 +94,44 @@ public class JejuBizImpl implements JejuBiz{
 		return corona;
 	}
 	
-
-	  //태그값 가져오기
-	  public String getTagValue(String tagName, Element element) {
-		  NodeList list=null;
-		  Node val=null;
-		  
-		  try {
-			  list=element.getElementsByTagName(tagName).item(0).getChildNodes();
-			  val=(Node)list.item(0);
-		  }catch(Exception e) {
-			  e.printStackTrace();
-		  }
-		  
-		  if(val==null) {
-			  return null;
-		  }
-		  return val.getNodeValue();
-	  }
-
-
+	//태그값 가져오기
+	public String getTagValue(String tagName, Element element) {
+		NodeList list=null;
+		Node val=null;
+			  
+		try {
+			list=element.getElementsByTagName(tagName).item(0).getChildNodes();
+			val=(Node)list.item(0);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+			  
+		if(val==null) {
+			return null;
+		}
+		return val.getNodeValue();
+	}
+	
 	@Override
 	public int getMaxJejuDtoNum() {
-		// TODO Auto-generated method stub
 		return dao.getMaxJejuDtoNum();
 	}
 
 
 	@Override
 	public int saveStore(JejuDto dto) {
-		// TODO Auto-generated method stub
 		return dao.saveStore(dto);
 	}
 
 
 	@Override
 	public void setMaxPkFromSelectKey(int primaryKey) {
-		// TODO Auto-generated method stub
 		dao.setMaxPkFromSelectKey(primaryKey);
 	}
 
 
 	@Override
 	public int getMaxPkFromSelectKey() {
-		// TODO Auto-generated method stub
 		return dao.getMaxPkFromSelectKey();
 	}
-
-
-//	@Override
-//	public int saveStore(JejuDto dto, ImgDto img, HashMap<String,Object> map) {
-//		// TODO Auto-generated method stub
-//		return dao.saveStore(dto, img, map);
-//	}
-
 }

@@ -10,14 +10,23 @@
 		<result property="plan_content" column="PLAN_CONTENT"/>
 		<result property="plan_writer" column="PLAN_WRITER"/>
 		<result property="plan_regdate" column="PLAN_REGDATE"/>
-		<result property="plan_nail" column="PLAN_NAIL"/>
 		<result property="plan_tendency" column="PLAN_TENDENCY"/>
-		<result property="plan_addr" column="PLAN_ADDR"/>
-		<result property="plan_term" column="PLAN_TERM"/>
 		<result property="plan_views" column="PLAN_VIEWS"/>
 		<result property="plan_push" column="PLAN_PUSH"/>
 		<result property="plan_hide" column="PLAN_HIDE"/>
 	</resultMap>
+	
+	<!-- 마이페이지 내가 작성한 게시글 조회  -->
+  	<select id="mywritelist" resultMap="customMap">
+  		SELECT *
+		FROM OLLE_PLAN
+		WHERE PLAN_WRITER = #{plan_writer}
+  	</select>
+  	
+  	<select id="maxNum" resultType="int">
+		SELECT MAX(PLAN_NUM)
+		FROM OLLE_PLAN
+	</select>
 	
 	<select id="selectList" resultMap="customMap">
 
@@ -29,7 +38,7 @@
 	
 	<insert id="insert" parameterType="customDto">
 		INSERT INTO OLLE_PLAN
-		VALUES()
+		VALUES(#{plan_num}, #{plan_title}, #{plan_content}, #{plan_writer}, SYSDATE, #{plan_tendency}, 0, 0, 0)
 	</insert>
 	
 	<update id="update" parameterType="customDto">

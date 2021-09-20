@@ -29,6 +29,7 @@
     display: table-cell;
     vertical-align: middle;
     transition: all .2s;
+    cursor: pointer;
 }
 .menu div:hover {
     background: lightgray;

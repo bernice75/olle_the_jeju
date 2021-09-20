@@ -43,7 +43,7 @@ public class TripDaoImpl implements TripDao {
 				
 				Node nNode = jeju.item(i);
 				
-				if(nNode.getNodeType() == Node.ELEMENT_NODE) {//nNode의 타입이 element인지 확인
+				if(nNode.getNodeType() == Node.ELEMENT_NODE) { //nNode의 타입이 element인지 확인
 					Element eElement = (Element) nNode; 
 					
 					String k=getTagValue("contents", eElement);

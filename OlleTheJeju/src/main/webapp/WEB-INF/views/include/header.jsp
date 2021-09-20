@@ -60,7 +60,7 @@
 			if(confirm("정말 로그아웃 하시겠습니까?")) {
 				//예 눌렀을 경우
 				alert("정상적으로 로그아웃 되었습니다.");
-				location.href="home.do";
+				location.href="logout.do";
 			}
 		}
 	</script>

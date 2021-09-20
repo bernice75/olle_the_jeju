@@ -8,17 +8,16 @@
 		<result property="situ_num" column="SITU_NUM"/>
 		<result property="situ_name" column="SITU_NAME"/>
 		<result property="situ_writer" column="SITU_WRITER"/>
-		<result property="situ_regDate" column="SITU_REGDATE"/>
+		<result property="situ_regdate" column="SITU_REGDATE"/>
 		<result property="situ_phone" column="SITU_PHONE"/>
 		<result property="situ_addr" column="SITU_ADDR"/>
 		<result property="situ_open_time" column="SITU_OPEN_TIME"/>
 		<result property="situ_close_time" column="SITU_CLOSE_TIME"/>
-		<result property="situ_gubun" column="SITU_GUBUN"/>
-<!-- 		<collection property="menuList" resultMap="menu.menuUnit"></collection> -->
+		<result property="situ_home" column="SITU_HOME"/>
 	</resultMap>
 	
-	<select id="selectList" resultMap="jejuMap">
-
+	<select id="selectList" parameterType="int" resultMap="jejuMap">
+	
 	</select>
 	
 	<select id="selectOne" resultType="jejuDto">
@@ -50,11 +49,13 @@
 			)B
 			WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
 	</select>
+	
 	<!-- 작성자 조건 페이징 조회 -->
 	<!-- 주소    조건 페이징 조회 -->
 	<select id="storeAddrPagination">
 	
 	</select>
+	
 	<insert id="insertSit" parameterType="jejuDto">
 		<selectKey resultType="int" keyProperty="situ_num" order="BEFORE">
 		  SELECT (NVL2(MAX(SITU_NUM)+1,MAX(SITU_NUM)+1,1)) AS PRI  FROM OLLE_SITUATION
@@ -62,7 +63,6 @@
 		INSERT INTO OLLE_SITUATION(SITU_NUM,SITU_NAME,SITU_WRITER,SITU_PHONE,SITU_ADDR,SITU_OPEN_TIME,SITU_CLOSE_TIME,SITU_GUBUN)
 		VALUES(#{situ_num},#{situ_name},#{situ_writer},#{situ_phone},#{situ_addr},#{situ_open_time},#{situ_close_time},#{situ_gubun})
 	</insert>
-
 	
 	<update id="update" parameterType="jejuDto">
 		UPDATE OLLE_SITUATION

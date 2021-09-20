@@ -22,15 +22,23 @@
 	
 	<!-- image PK 최대 값 가져오기 -->
 	<select id="selectMaxPK" resultType="int">
-	 SELECT MAX(IMG_NUM) FROM OLLE_IMG
+		  SELECT (NVL2(MAX(IMG_NUM)+1,MAX(IMG_NUM)+1,1)) AS PRI  FROM OLLE_IMG
 	</select>
 	
 	<select id="selectMaxGroupId" parameterType="int" resultType="int">
-		SELECT MAX(GROUP_NUM) FROM OLLE_IMG
-		WHERE BOARD_NUM=#{boardNum} 
+		SELECT (NVL(MAX(GROUP_NUM),0)+1) FROM OLLE_IMG
+		WHERE BOARD_NUM=#{board_num} 
+	</select>
+	
+	<select id="storeImg" parameterType="paginationIdxDto" resultType="imgDto">
+		SELECT IMG_NUM, BOARD_NUM, TABLE_NUM,IMG_TITLE, GROUP_NUM FROM OLLE_IMG
+		WHERE BOARD_NUM=4 AND (TABLE_NUM BETWEEN #{startIdx} AND #{endIdx})
 	</select>
 	
 	<insert id="insert" parameterType="imgDto">
+		<selectKey resultType="int" keyProperty="img_num" order="BEFORE">
+		  SELECT (NVL2(MAX(IMG_NUM)+1,MAX(IMG_NUM)+1,1)) AS PRI  FROM OLLE_IMG
+		</selectKey>
 		INSERT INTO OLLE_IMG
 		VALUES(#{img_num},#{board_num},#{table_num},#{img_title},#{group_num})
 	</insert>

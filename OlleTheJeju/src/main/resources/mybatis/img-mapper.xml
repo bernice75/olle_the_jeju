@@ -30,17 +30,6 @@
 		WHERE BOARD_NUM=#{board_num} 
 	</select>
 	
-	<!--제주 상황 BOARD_NUM과 TABLE_NUM으로 찾기(맨 위 한행만)<-가게 정보에 등록한 이미지  -->
-<!-- 	<select id="storeImg" parameterType="int" resultType="imgDto">
-		SELECT B.*
-		FROM(
-		SELECT ROWNUM AS RN,A.* FROM (SELECT IMG_NUM, BOARD_NUM, TABLE_NUM,
-		IMG_TITLE,GROUP_NUM
-		FROM OLLE_IMG
-		WHERE BOARD_NUM=4 AND TABLE_NUM=#{table_num}
-		ORDER BY IMG_NUM DESC)A)B
-		WHERE B.RN=1
-	</select> -->
 	<select id="storeImg" parameterType="paginationIdxDto" resultType="imgDto">
 		SELECT IMG_NUM, BOARD_NUM, TABLE_NUM,IMG_TITLE, GROUP_NUM FROM OLLE_IMG
 		WHERE BOARD_NUM=4 AND (TABLE_NUM BETWEEN #{startIdx} AND #{endIdx})

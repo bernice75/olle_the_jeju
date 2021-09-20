@@ -8,17 +8,16 @@
 		<result property="situ_num" column="SITU_NUM"/>
 		<result property="situ_name" column="SITU_NAME"/>
 		<result property="situ_writer" column="SITU_WRITER"/>
-		<result property="situ_regDate" column="SITU_REGDATE"/>
+		<result property="situ_regdate" column="SITU_REGDATE"/>
 		<result property="situ_phone" column="SITU_PHONE"/>
 		<result property="situ_addr" column="SITU_ADDR"/>
 		<result property="situ_open_time" column="SITU_OPEN_TIME"/>
 		<result property="situ_close_time" column="SITU_CLOSE_TIME"/>
 		<result property="situ_home" column="SITU_HOME"/>
-<!-- 		<collection property="menuList" resultMap="menu.menuUnit"></collection> -->
 	</resultMap>
 	
-	<select id="selectList" resultMap="jejuMap">
-
+	<select id="selectList" parameterType="int" resultMap="jejuMap">
+	
 	</select>
 	
 	<select id="selectOne" resultType="jejuDto">
@@ -26,15 +25,44 @@
 	</select>
 	
 	<!-- 제주상황 맛집등록 게시판 최대 pk값 가져올 수 있도록 하기 -->
-	<select id="olleSituStoreMaxPk" resultType="long">
-		SELECT MAX(SITU_NUM)+1 FROM OLLE_SITUATION
+	<select id="olleSituStoreMaxPk" resultType="int">
+		SELECT (NVL(MAX(SITU_NUM),0)+1)  FROM OLLE_SITUATION
+	</select>
+	
+	<!-- 제주상황 맛집 페이징처리를 위한 전체 게시글 갯수 카운트 -->
+	<select id="countTotalElements" resultType="int">
+		SELECT COUNT(SITU_NUM) FROM OLLE_SITUATION
+	</select>
+	
+	<!-- 조건이 없을 때 제주상황 가게 리스트 가져오기 -->
+	<!-- paginationIdxDto -->
+	<select id="totalStoreSelect" parameterType="paginationIdxDto" resultType="jejuDto">
+		SELECT B.*
+		FROM(
+    		SELECT ROWNUM AS RN,A.* FROM (
+				SELECT SITU_NUM,SITU_NAME,SITU_WRITER,SITU_REGDATE,SITU_PHONE,
+						SITU_ADDR,SITU_OPEN_TIME,SITU_CLOSE_TIME,SITU_GUBUN
+				FROM OLLE_SITUATION
+				WHERE SITU_NUM>0
+			) A
+			ORDER BY A.SITU_NUM ASC
+			)B
+			WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
+	</select>
+	
+	<!-- 작성자 조건 페이징 조회 -->
+	<!-- 주소    조건 페이징 조회 -->
+	<select id="storeAddrPagination">
+	
 	</select>
 	
 	<insert id="insertSit" parameterType="jejuDto">
-		INSERT INTO OLLE_SITUATION(SITU_NUM,SITU_NAME,SITU_WRITER,SITU_PHONE,SITU_ADDR,SITU_OPEN_TIME,SITU_CLOSE_TIME,SITU_HOME)
-		VALUES(#{situ_num},#{situ_name},#{situ_writer},#{situ_phone},#{situ_addr},#{situ_open_time},#{situ_close_time},#{situ_home})
+		<selectKey resultType="int" keyProperty="situ_num" order="BEFORE">
+		  SELECT (NVL2(MAX(SITU_NUM)+1,MAX(SITU_NUM)+1,1)) AS PRI  FROM OLLE_SITUATION
+		</selectKey>
+		INSERT INTO OLLE_SITUATION(SITU_NUM,SITU_NAME,SITU_WRITER,SITU_PHONE,SITU_ADDR,SITU_OPEN_TIME,SITU_CLOSE_TIME,SITU_GUBUN)
+		VALUES(#{situ_num},#{situ_name},#{situ_writer},#{situ_phone},#{situ_addr},#{situ_open_time},#{situ_close_time},#{situ_gubun})
 	</insert>
-
 	
 	<update id="update" parameterType="jejuDto">
 		UPDATE OLLE_SITUATION
@@ -43,6 +71,6 @@
 	
 	<delete id="delete" parameterType="int">
 		DELETE FROM OLLE_SITUATION
-		WHERE SITU_NUM = #{situNum}
+		WHERE SITU_NUM = #{situ_num}
 	</delete>
 </mapper>

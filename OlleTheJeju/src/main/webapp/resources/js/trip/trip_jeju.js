@@ -24,7 +24,7 @@ function page(p){
 		}else{
 			$(".page").append("<a style='margin:3px;' href='trip_jeju_page.do?page="+i+"'>"+i+"</a>");
 		}
-	}	
+	}
 }
      	   	
 function prev(){

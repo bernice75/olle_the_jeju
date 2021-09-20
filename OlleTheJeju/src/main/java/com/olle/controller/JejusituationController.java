@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,39 +26,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.util.WebUtils;
 
-import com.olle.biz.etc.ImageBiz;
+import com.olle.biz.etc.ImgBiz;
 import com.olle.biz.jejusituation.JejuBiz;
 import com.olle.biz.jejusituation.menu.MenuBiz;
 import com.olle.biz.member.MemberBiz;
-import com.olle.biz.pagination.jejusit.JejuPageBiz;
+import com.olle.biz.pagination.JejuPageBiz;
 import com.olle.dto.etc.ImgDto;
 import com.olle.dto.jejusituation.CoronaDto;
 import com.olle.dto.jejusituation.JejuDto;
-import com.olle.dto.jejusituation.menu.MenuDto;
+import com.olle.dto.jejusituation.MenuDto;
 import com.olle.dto.member.MemberDto;
-import com.olle.dto.pagination.jejusitu.JejuPage;
-import com.olle.mapper.biz.MenuBatchService;
+import com.olle.dto.pagination.JejuPage;
+import com.olle.mapper.MenuBatchService;
 
 @Controller
 public class JejusituationController {
-	
 	@Autowired
 	private JejuBiz biz;
 	@Autowired
 	private MemberBiz memberBiz;
 	@Autowired
-	private ImageBiz imageBiz;
+	private ImgBiz imageBiz;
 	@Autowired
 	private MenuBiz menuBiz;
 	@Autowired
 	private JejuPageBiz pBiz;
 	@Autowired
 	private MenuBatchService mBatchService;
-
 	
 	private static Logger logger=LoggerFactory.getLogger(JejusituationController.class);
-	
 	
 	@RequestMapping(value = "jejusituation_main.do", method = RequestMethod.GET)
 	public String jejusituation_main() {
@@ -70,7 +70,8 @@ public class JejusituationController {
 	 * 리스트버튼은 5개씩 보일것이라 5개씩 보일때 그 단위체를 갖고 있을 필요도 있음
 	 * */
 	@RequestMapping(value = "/jejusituation_rest.do", method = RequestMethod.GET)
-	public String jejusituation_rest(Model model ,@RequestParam(defaultValue="1") int page ) {
+	public String jejusituation_detail(@RequestParam(defaultValue="1") int page, Model model) {
+		
 		JejuPage pageList=new JejuPage();
 		pageList.setCurPage(page); //현재 페이지
 		pageList.setElementsPerPage(6); //한 페이지당 아이템수
@@ -121,14 +122,13 @@ public class JejusituationController {
 		
 		for(int i=0;i<size;i++) {
 			model.addAttribute(div[i]+"Jeju",jeju.get(i));
-			//model.addAttribute(div[i]+"Menu",menuList.get(i));
 			model.addAttribute(div[i]+"Img", imgList.get(i));
 		}
 		//총 페이지 정보도 보낼 것
 		model.addAttribute("totPages",totPage);
+		
 		return "page_jejusituation/jejusituation_rest";
 	}
-	
 	@RequestMapping(value="/jejusituation_rest_detail.do")
 	public String jejusituation_rest_detail() {
 		return "page_jejusituation/jejusituation_rest_detail";
@@ -149,7 +149,6 @@ public class JejusituationController {
 				model.addAttribute("user",dto);
 			}
 		}
-		
 		return "page_jejusituation/jejusituation_rest_create";
 	}
 	
@@ -162,7 +161,6 @@ public class JejusituationController {
 		logger.info("corona info: {}",list);
 		
 		return "page_jejusituation/test";
-		
 	}
 	
 	@RequestMapping(value="/jejuSituationValidUser.do")
@@ -189,12 +187,11 @@ public class JejusituationController {
 		}
 		
 		return msg;
-		
 	}
 	
 	@RequestMapping(value="/registerStore.do")
 	public String registerFoodStore(Model model,MultipartHttpServletRequest request) throws IOException {
-		
+		MultipartFile multipartFile=request.getFile("file");
 		String writer=request.getParameter("writer");
 		//JejuDto
 		//게시글 최대 번호 가져오기
@@ -203,10 +200,9 @@ public class JejusituationController {
 		int groupNo=0;
 		//메뉴 최대 번호 가져오기
 		int menuNo=0;
-
+		
 		JejuDto jeju=new JejuDto();
 		String[] arr=request.getParameter("time").split("~");
-	//	jeju.setSitu_num(boardNo);
 		jeju.setSitu_name(request.getParameter("company"));
 		jeju.setSitu_phone(request.getParameter("phone"));
 		jeju.setSitu_addr(request.getParameter("address"));
@@ -215,7 +211,6 @@ public class JejusituationController {
 		jeju.setSitu_open_time(arr[0]);
 		jeju.setSitu_close_time(arr[1]);
 		jeju.setSitu_gubun(request.getParameter("gubun"));
-		
 		
 		//제주 정보 저장
 		int jRes=biz.saveStore(jeju);//여기에 최댓값이 담길것
@@ -238,7 +233,6 @@ public class JejusituationController {
 		}else {
 			size=pSize;
 		}
-		
 		
 		for(int i=0; i<size;i++) {
 			String chk=tempMenu[i];
@@ -263,13 +257,10 @@ public class JejusituationController {
 		int menuRes=mBatchService.batchInsert(menuList);
 		logger.info("menu save result:{}",menuRes);
 		
-		
-		
-		
 		//이미지 저장
-		MultipartFile multipartFile=request.getFile("file");
+		MultipartFile mf=request.getFile("file");
 		//파일 이름 가져오기
-		String originName=multipartFile.getOriginalFilename();
+		String originName=mf.getOriginalFilename();
 		//루트 경로
 		String root=request.getSession().getServletContext().getRealPath("/");
 		logger.info("contex path:{}",root);
@@ -286,7 +277,6 @@ public class JejusituationController {
 		
 		File toSave=new File(full,originName);
 		//파일 저장
-		//multipartFile.transferTo(toSave);
 		if(!toSave.exists()) {
 			toSave.createNewFile();
 		}
@@ -320,23 +310,7 @@ public class JejusituationController {
 		int saveRes=imageBiz.saveStoreImg(dto);
 		
 		logger.info("saved image?: {}",saveRes);
-
+		
 		return "redirect:jejusituation_main.do";
 	}
-	
-//	@Transactional
-//	public int saveStore(JejuDto jeju,ImgDto img,HashMap<String, Object> map) {
-//		int tot=0;
-//		int res1=biz.saveStore(jeju);
-//		int res2=imageBiz.saveStoreImg(img);
-//		int res3=menuBiz.saveMenu(map);
-//		
-//		
-//		if(res1>0&&res2>0&&res3>0) {
-//			tot=1;
-//		}else {
-//			tot=-1;
-//		}
-//		return tot;
-//	}
 }
