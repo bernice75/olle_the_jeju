@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -16,8 +17,12 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+<<<<<<< HEAD
         <script src="./resources/js/mypage/mypageupdate.js" type="text/javascript"></script>
         
+=======
+		<script src="./resources/js/mypage/mypageupdate.js" type="text/javascript"></script>
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
 	</head>
 	<body>
 		<div class="wrapper">
@@ -28,18 +33,28 @@
 	            <div class="myp_nav_align">
 	                <p style="font-size: 22px;padding-left: 30px;">마이페이지</p>
 	                <br>
+<<<<<<< HEAD
 	                <ul style="list-style: none;">            
 	                    <li><a href="mypage_plan.do">나의 일정</a></li>
 	                    <li><a href="mypage_main.do">회원 정보 수정</a></li>
 	                    <li><a href="mypage_inquire.do">문의 내역</a></li>
 	                    <li><a href="mypage_warn.do">신고 확인</a></li>
+=======
+	                <ul style="list-style: none;">
+	                    <li><a href="mypage_plan.do?plan_writer=${sessionScope.user_id}">나의 일정</a></li>
+	                    <li><a href="mypage_main.do?user_id=${sessionScope.user_id}">회원 정보 수정</a></li>
+	                    <li><a href="mypage_inquire.do?user_id=${sessionScope.user_id}">문의 내역</a></li>
+	                    <li><a href="mypage_warn.do?user_id=${sessionScope.user_id}">신고 확인</a></li>
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
 	              </ul>
 	            </div>
 	        </div>
 	        <!-- mypage 좌측 nav 끝 -->
-	        <!-- 유저 정보 입력 -->
+	        <!--  우측, 유저 정보 입력 -->
 	        <main class="main item">
 	            <div class="user_update">
+	            <form id="mypage_form" name="mypage_form" action="updateUser.do" method="post">
+	        	<input type="hidden" name="mypage_form" value="${dto.user_id }">
 	                <div class="update_title">
 	                    <p style="font-size: 25px;"><b>회원 정보 수정</b></p>
 	                </div>
@@ -51,10 +66,13 @@
 	                    <p style="font-size: 11px;">1mb 이하의 JPEG파일만 등록 가능합니다</p>
 	                </div>
 	                <br><br>
+<<<<<<< HEAD
 	                <!-- 우측, 유저 정보 form -->
 	                <form id="mypage_form" name="mypage_form" action="updateUser.do" method="post">
 	                    <input type="hidden" name="mypage_form" value="${dto.user_id }">
 	                    
+=======
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
 	                    <div class="mb-3 row">
 	                        <label for="name" class="col-sm-3 col-form-label">이름</label>
 	                        <div class="col-sm-6">
@@ -123,16 +141,25 @@
 	                        <input type="submit" class="btn btn-primary btn-block"  value="정보수정" onclick="pwChkForm();">
 	                        <!-- <input type="button" class="btn btn-primary btn-block" onclick="" value="회원탈퇴"> -->
 	                        <!-- Button trigger modal -->
+<<<<<<< HEAD
 	                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">회원탈퇴</button>
 	                       
+=======
+	                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">회원탈퇴</button> 
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
 	                    </div>
 	                    <br>
-	                </form>
-	            </div> 
+	                    </form>
+	            	</div> 
 	        </main>
 	        <br><br><br><br>
+<<<<<<< HEAD
 	         <!-- Modal 시작 -->
              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+=======
+	        <!-- Modal 시작 -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
                  <div class="modal-dialog">
                  <div class="modal-content">
                      <div class="modal-header">
@@ -140,7 +167,11 @@
                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                      </div>
                      <!-- 회원탈퇴 모달창 -->
+<<<<<<< HEAD
                      <form name="deletemodal" action="deleteUser.do" method="POST">
+=======
+                     <form name="deletemodal">
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
                      <input type="hidden" value="${dto.user_id }">
                          <div class="modal-body" >
                              <p class="modal-text1">탈퇴 후 재 로그인이 불가능합니다.</p>
@@ -153,7 +184,11 @@
                          </div>
                          <div class="modal-footer">
                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+<<<<<<< HEAD
                              <button type="button" class="btn btn-primary" id="btnDelete">회원탈퇴</button>
+=======
+                             <button type="button" class="btn btn-primary" id="btnDelete" onclick="userDelete();">회원탈퇴</button>
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
                          </div>
                      </form>
                  </div>

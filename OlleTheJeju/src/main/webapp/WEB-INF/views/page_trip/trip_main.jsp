@@ -31,9 +31,9 @@
                 </div>
                 <br><br>
                 <div class="menu">
-                    <div class="menu1">관광명소</div>
-                    <div class="menu2">착한가격 업소</div>
-                    <div class="menu3">맛집 15선</div>
+                    <div class="menu1" onclick="">관광명소</div>
+                    <div class="menu2" onclick="">착한가격 업소</div>
+                    <div class="menu3" onclick="">맛집 15선</div>
                     <div class="menu4" onclick="location.href='trip_jeju.do'">방언 사전</div>
                 </div>
                 <br><br>

@@ -8,12 +8,18 @@
 		<result property="hash_num" column="HASH_NUM"/>
 		<result property="board_num" column="BOARD_NUM"/>
 		<result property="table_num" column="TABLE_NUM"/>
-		<result property="group_num" column="GROUP_NUM"/>
 		<result property="hash_content" column="HASH_CONTENT"/>
 	</resultMap>
 	
-	<select id="selectList" resultMap="hashtagMap">
-
+	<select id="maxNum" resultType="int">
+		SELECT MAX(HASH_NUM)
+		FROM OLLE_HASHTAG
+	</select>
+	
+	<select id="selectList" parameterType="int" resultMap="hashtagMap">
+		SELECT * 
+		FROM OLLE_HASHTAG
+		WHERE BOARD_NUM = #{board_num}
 	</select>
 	
 	<select id="selectOne" resultType="hashtagDto">
@@ -22,7 +28,9 @@
 	
 	<insert id="insert" parameterType="hashtagDto">
 		INSERT INTO OLLE_HASHTAG
-		VALUES()
+		VALUES(
+			#{hash_num}, #{board_num}, #{table_num}, #{hash_content}
+		)
 	</insert>
 	
 	<update id="update" parameterType="hashtagDto">

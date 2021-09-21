@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -65,10 +66,13 @@
 	                </div>
 	              </div>
 				<br><br>
-	            <div class="write">
-                    <button class="btn btn-outline-secondary" onclick="location.href='notice_insert.do'">글등록</button>
-                </div>
-	
+				<c:choose>
+					<c:when test="${sessionScope.user_id eq 'admin' }">
+						<div class="write">
+		                    <button class="btn btn-outline-secondary" onclick="location.href='notice_insert.do'">글등록</button>
+		                </div>
+					</c:when>
+				</c:choose>
 	            <div class="not_map">
 	                <p>제주 관광지도 Down</p>
 	                

@@ -95,12 +95,16 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return res;
 	}
-//제주상황에서 추가
+	
 	@Override
 	public MemberDto selectUser(String user_id) {
-		// TODO Auto-generated method stub
-		MemberDto dto=sqlSession.selectOne(NAMESPACE+"selectUser",user_id);
+		MemberDto dto = sqlSession.selectOne(NAMESPACE + "selectUser", user_id);
+		
 		return dto;
 	}
 
+	@Override
+	public int warn_update(String user_id) {
+		return sqlSession.update(NAMESPACE + "warn_update", user_id);
+	}
 }

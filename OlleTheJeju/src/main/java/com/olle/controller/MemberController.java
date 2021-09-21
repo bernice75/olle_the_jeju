@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.olle.biz.member.MemberBiz;
+//import com.olle.dto.etc.ChatSession;
 import com.olle.dto.member.MemberDto;
 
 import java.io.IOException;
@@ -19,6 +20,10 @@ public class MemberController {
 
 	@Autowired
 	private MemberBiz memberBiz;
+	
+	 /* 채팅 */
+//    @Autowired
+//    private ChatSession cSession;
 	
 	//회원가입
 	@RequestMapping(value="userInsert.do", method=RequestMethod.POST)
@@ -46,25 +51,35 @@ public class MemberController {
 	//로그인
 	@RequestMapping(value = "login.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(String user_id, String user_pw, HttpServletRequest request) throws IOException {
+	public String login(String user_id, String user_pw, HttpServletRequest request, HttpSession session) throws IOException {
 		String res = memberBiz.login(user_id, user_pw);
-		HttpSession session = request.getSession();
 
 		if(res == null || res == "") {
 			session.setAttribute("loginChk", false);
 		} else {
+			MemberDto user = memberBiz.selectUser(user_id);
 			session.setAttribute("loginChk", true);
 	        session.setAttribute("user_id", user_id);
+//	        cSession.addLoginUser(user_id); //채팅 세션에 로그인한 유저 정보 추가
 		}
 		
 		return res;
 	}
 	
 	//로그아웃
-	@RequestMapping(value = "logout.do", method = RequestMethod.POST)
-	public String logout(HttpSession session) {
+	@RequestMapping(value = "logout.do", method = RequestMethod.GET)
+	public String logout(HttpSession session, HttpServletRequest req) {
+		String user_id = req.getParameter("user_id");
+		String naverChk = (String) session.getAttribute("naver");
 		
-		session.invalidate();
+		if(naverChk == null || naverChk == "") {
+			if(user_id != null || user_id != "") {
+				session.setAttribute("user_id", null);
+				session.setAttribute("loginChk", false);
+			}
+		} else {
+			return "redirect:http://nid.naver.com/nidlogin.logout";
+		}
 		
 		return "redirect:home.do";
 	}

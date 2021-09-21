@@ -33,3 +33,17 @@
     height: fit-content;
     text-align: center;
 }
+
+/* 채팅 모달 css */
+.modal-body {
+	justify-content: space-between;
+	height: 500px !important;
+}
+.from_user {
+	width: 100% !important;
+	text-align: end;
+}
+.to_user {
+	width: 100% !important;
+	text-align: start;
+}

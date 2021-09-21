@@ -34,9 +34,9 @@
                 </div>
                 <br><br>
                 <div class="menu">
-                    <div class="menu1">관광명소</div>
-                    <div class="menu2">착한가격 업소</div>
-                    <div class="menu3">맛집 15선</div>
+                    <div class="menu1" onclick="">관광명소</div>
+                    <div class="menu2" onclick="">착한가격 업소</div>
+                    <div class="menu3" onclick="">맛집 15선</div>
                     <div class="menu4" onclick="locationn.href='trip_jeju.do'">방언 사전</div>
                 </div>
                 <br>
@@ -76,11 +76,21 @@
                     </div>
                 </div>
                 <br><br><br>
-                <div class="paging">
-                		<a href="#" onclick="prev();">&lt;&lt;</a>
-						<span class="page"></span>
-                		<a href="#" onclick="next();">&gt;&gt;</a>
-                </div>
+                <nav aria-label="Page navigation example" class="paging">
+				  <ul class="pagination">
+				    <li class="page-item">
+				      <a class="page-link" href="#" aria-label="Previous" onclick="prev();">
+				        <span aria-hidden="true"><<</span>
+				      </a>
+				    </li>
+				    <li class="page-item"><span class="page-link page"></span></li>
+				    <li class="page-item">
+				      <a class="page-link" href="#" aria-label="Next" onclick="next();">
+				        <span aria-hidden="true">>></span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
                 <br><br><br><br>
 			</div>
 			<jsp:include page="../include/footer.jsp"></jsp:include>

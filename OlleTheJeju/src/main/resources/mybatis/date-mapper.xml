@@ -8,14 +8,21 @@
 		<result property="date_num" column="DATE_NUM"/>
 		<result property="board_num" column="BOARD_NUM"/>
 		<result property="table_num" column="TABLE_NUM"/>
-		<result property="date_n" column="DATE_N"/>
 		<result property="group_num" column="GROUP_NUM"/>
+		<result property="date_lat" column="DATE_LAT"/>
+		<result property="date_lon" column="DATE_LON"/>
 		<result property="date_name" column="DATE_NAME"/>
 		<result property="date_addr" column="DATE_ADDR"/>
+		<result property="date_phone" column="DATE_PHONE"/>
 	</resultMap>
 	
+	<select id="maxNum" resultType="int">
+		SELECT MAX(DATE_NUM)
+		FROM OLLE_DATE
+	</select>
+	
 	<select id="selectList" resultMap="dateMap">
-
+		SELECT * FROM OLLE_DATE
 	</select>
 	
 	<select id="selectOne" resultType="dateDto">
@@ -24,7 +31,9 @@
 	
 	<insert id="insert" parameterType="dateDto">
 		INSERT INTO OLLE_DATE
-		VALUES()
+		VALUES(
+			#{date_num}, #{board_num}, #{table_num}, #{group_num}, #{date_lat}, #{date_lon}, #{date_name}, #{date_addr}, #{date_phone}
+		)
 	</insert>
 	
 	<update id="update" parameterType="dateDto">

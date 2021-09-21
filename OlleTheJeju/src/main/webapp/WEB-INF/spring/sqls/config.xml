@@ -8,6 +8,8 @@
 		<typeAlias type="com.olle.dto.customplan.CustomDto" alias="customDto"/>
 		<typeAlias type="com.olle.dto.jejusituation.JejuDto" alias="jejuDto"/>
 		<typeAlias type="com.olle.dto.jejusituation.menu.MenuDto" alias="menuDto"/>
+		<typeAlias type="com.olle.dto.jejusituation.CoronaDto" alias="coronaDto"/>
+		<typeAlias type="com.olle.dto.jejusituation.MenuDto" alias="menuDto"/>
 		<typeAlias type="com.olle.dto.trip.TripDto" alias="tripDto"/>
 		<typeAlias type="com.olle.dto.etc.ImgDto" alias="imgDto"/>
 		<typeAlias type="com.olle.mapper.MenuMapper" alias="menuMapper"/>
@@ -22,6 +24,9 @@
 		<typeAlias type="com.olle.dto.etc.ReportDto" alias="reportDto"/>
 		<typeAlias type="com.olle.dto.etc.FoodDto" alias="foodDto"/>
 		<typeAlias type="com.olle.dto.etc.DateDto" alias="dateDto"/>
+		<typeAlias type="com.olle.dto.etc.ChatMessage" alias="chatMessage"/>
+		<typeAlias type="com.olle.dto.etc.ChatRoom" alias="chatRoom"/>
+		<typeAlias type="com.olle.dto.pagination.PaginationIdxes" alias="paginationIdxDto"/>
 	</typeAliases>
 	
 	<mappers>
@@ -42,6 +47,7 @@
 		<mapper resource="/mybatis/food-mapper.xml"/>
 		<mapper resource="/mybatis/date-mapper.xml"/>
 		<mapper resource="/mybatis/menu-batch.xml"/>
+		<mapper resource="/mybatis/menu-mapper.xml"/>
 	</mappers>
 
 

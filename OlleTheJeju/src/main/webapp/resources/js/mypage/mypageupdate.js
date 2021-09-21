@@ -1,5 +1,4 @@
-
- // 맨 상단 프로플 사진 첨부 미리보기 기능 시작
+// 맨 상단 프로플 사진 첨부 미리보기 기능 시작
  function previewImage(targetObj, previewId) {
 	 var preview = document.getElementById(previewId);  //div id   
 	 var ua = window.navigator.userAgent; 
@@ -135,13 +134,28 @@ function pwChkForm() {
 });*/
 
 //회원탈퇴
-$(document).ready(function(){
-	$("#btnDelete").click(function(){
-		if(confirm("삭제하시겠습니까?")){
-			document.deletemodal.action="${path}/user/delete.do";
-			document.deletemodal.submit();
-		}
-	});
-});
-
-
+function userDelete() {
+	var user_id = $("#id").val();
+	var user_pw = $("#leave-pw").val();
+	
+	if(confirm("삭제하시겠습니까?")){
+		$.ajax({
+			url: "deleteUser.do",
+			type: "POST",
+			data: {user_id: user_id, user_pw: user_pw},
+			dataType: "text",
+			success: function(data){
+				console.log(data);
+				if(data == 1) {
+					alert("바이바이 .");
+					location.href="home.do";
+				} else if(data == 0) {
+					alert("아직 못 간다.");
+				}
+			},
+			error: function(){
+			    alert("회원탈퇴 실패입니다. \n 관리자에게 문의하세요.");
+			}
+		});
+	}
+}

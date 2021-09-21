@@ -286,7 +286,8 @@ public class JejusituationController {
 		if(session.getAttribute("user_id")!=null) {
 			user_id=(String)session.getAttribute("user_id");
 			if(user_id!=null) {
-				dto=memberBiz.selectUser(user_id);				
+				dto=memberBiz.selectUser(user_id);
+				session.setAttribute("prev", dto.getUser_member());//권한을 세션에서 공유하도록 설정
 				model.addAttribute("user",dto);
 			}
 		}

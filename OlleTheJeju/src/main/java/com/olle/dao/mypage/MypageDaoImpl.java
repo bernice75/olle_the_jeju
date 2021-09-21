@@ -9,7 +9,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.olle.dao.member.MemberDao;
+import com.olle.dto.customplan.CustomDto;
+import com.olle.dto.etc.DibDto;
+import com.olle.dto.etc.HashtagDto;
 import com.olle.dto.member.MemberDto;
 
 @Repository
@@ -73,7 +75,7 @@ public class MypageDaoImpl implements MypageDao {
 	
 	//회원강제 탈퇴(관리자 권한/신고수적용)
 	@Override
-	public int mypageLeave(String user_id, String user_pw) {
+	public int mypageLeave(String user_id, int user_warning) {
 		int res = 0;
 		
 		try {
@@ -86,54 +88,79 @@ public class MypageDaoImpl implements MypageDao {
 	}
 
 	//회원 자진탈퇴(로그인한 본인이 탈퇴시 계정삭제)
-	/*@Override
-	public int mypageDelete(String user_id, String user_pw) {
-		int res = 0;
-		try {
-			res = sqlSession.delete(NAMESPACE+"deleteUser", user_id);
-		} catch (Exception e) {
-			System.out.println("[error]  :  mypageDelete");
-			e.printStackTrace();
-		}
-		return res;
-	}*/
 	@Override
-	public void deleteUser(String user_id) {
-		sqlSession.delete(NAMESPACE+"deleteUser", user_id);
+	public int deleteUser(String user_id, String user_pw) {
+		MemberDto dto = new MemberDto();
+		dto.setUser_id(user_id);
+		dto.setUser_pw(user_pw);
+		
+		int res = sqlSession.delete(NAMESPACE+"userDelete", dto);
+		return res;
 	}
 
 	//내가 작성한 게시글 조회
+	//썸네일 부분 전체
 	@Override
-	public List<MemberDto> myWriteList(String user_nick, int pageNum) {
-		List<MemberDto> list = new ArrayList<MemberDto>();
+	public List<CustomDto> myWriteList(String plan_writer) {
+		List<CustomDto> list = new ArrayList<CustomDto>();
 		
 		try {
-			list = sqlSession.selectList(NAMESPACE+"mywritelist");
+			list = sqlSession.selectList("customplan.mywritelist", plan_writer);
 		} catch (Exception e) {
 			System.out.println("[error] : myWriteList");
 			e.printStackTrace();
 		}
 		return list;
 	}
-
-	//내가 찜한 게시글 조회 
+	//해시태그는 따로 추가
 	@Override
-	public List<MemberDto> myDibList(String user_nick, int pageNum) {
-		List<MemberDto> diblist = new ArrayList<MemberDto>();
+	public List<HashtagDto> hashList(int table_num) {
 		
-		try {
-			diblist = sqlSession.selectList(NAMESPACE+"mydiblist");
-		} catch (Exception e) {
-			System.out.println("[error] : myDiblist");
-			e.printStackTrace();
-		}
-		return diblist;
+		List<HashtagDto> dto = sqlSession.selectList("hashtag.selectList",table_num);
+		
+		return dto;
 	}
-
 	
+	//내가 작성한 게시글 rowcount
+	/*@Override
+	public int myWriteRowCount(String user_id) {
+		
+		int count = 0;
+		
+		return 0;
+	}*/
+
+	//내가 찜한 게시글 조회에서는 찜 목록만 추가
+
+	@Override
+	public List<DibDto> myDibList(int table_num) {
+		
+		List<DibDto> dibDto = sqlSession.selectList("dib.selectdDibList", table_num);
+		
+		return dibDto;
+	}
 
 	//문의사항 (실시간 채팅)
 	
 	//신고확인
+	@Override
+	public MemberDto mypageWarn(String user_id) {
+		
+		MemberDto dto = null;
+		
+		try {
+			dto = sqlSession.selectOne(NAMESPACE+"mypageWarn", user_id);
+		} catch (Exception e) {
+			System.out.println("[error] : mypageWarn");
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public int mypageInfoUpdate(MemberDto userUpdate) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

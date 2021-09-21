@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -24,7 +25,7 @@
 	                <p style="font-size: 22px;padding-left: 30px;">관리자페이지</p>
 	                <br>
 	                <ul style="list-style: none;">
-	                    <li><a href="admin.do">회원관리</a></li><br>
+	                    <li><a href="admin_main.do">회원관리</a></li><br>
 	                    <li><a href="admin_warn.do">신고 내역</a></li><br>
 	                    <li><a href="admin_plan.do">게시물 관리</a></li><br>
 	                    <li><a href="admin_inquire.do">문의 내역</a></li><br>
@@ -38,48 +39,73 @@
 	                    <p><b>회원 관리</b></p>
 	                </div>
 	            
-	            <br>
-	        
-	            <div class="admin_user">
-	                <button class="btn btn-primary btn-block" onclick="">전체 수정</button>
-	
-	                <br><br>
-	            
-	            <div class="admin_user_table">
-	                <table class="table" border="1">
-	                    <tr>
-	                        <th>아이디</th>
-	                        <th>가입일</th>
-	                        <th>가입구분</th>
-	                        <th>강제 탈퇴</th>
-	                        <th>수정여부</th>
-	                    </tr>
-	                    <c:forEach var="user" items="${userList }">
-	                    	<tr>
-	                        <td>${user.user_id }</td>
-	                        <td>${user.user_regdate }</td>
-	                        <td>${user.user_member }</td>
-	                        <td>
-	                            <select class="form-control">
-	                                <option>예</option>
-	                                <option>아니오</option>
-	                            </select>
-	                        </td>
-	                        <td>
-	                            <button class="btn btn-primary btn-block" onclick="">수정</button>
-	                        </td>
-	                    </tr>
-	                    </c:forEach>
-	                    
-	                </table>
-	            </div>    
-	        </div>
-	
-	        <br><br><br>
-	            <!-- 페이징 처리 -->
-	            <div class="admin_user_paging">
-	                페이징 처리
-	            </div>
+		            <br>
+		        
+		            <div class="admin_user">
+		                <br><br>
+			            <div class="admin_user_table">
+			                <table class="table" border="1">
+			                    <tr>
+			                        <th>아이디</th>
+			                        <th>가입일</th>
+			                        <th>가입구분</th>
+			                        <th>강제 탈퇴 여부</th>
+			                        <th>강제 탈퇴일</th>
+			                    </tr>
+			                    <c:choose>
+			                    	<c:when test="${empty userList }">
+			                    		<tr>
+			                    			<td colspan="5">-----------------조회된 회원이 존재하지 않습니다.-----------------</td>
+			                    		</tr>
+			                    	</c:when>
+			                    	<c:otherwise>
+			                    		<c:forEach var="user" items="${userList }">
+					                    	<tr>
+					                        <td>${user.user_id }</td>
+					                        
+					                        <td>
+					                        <fmt:formatDate var="userRegdate" value="${user.user_regdate }" pattern="yyyy.MM.dd"/>
+					                        ${userRegdate }
+					                        </td>
+					                        <td>${user.user_member }</td>
+					                        <td>
+					                        	<select class="form-control">
+					                        		<c:choose>
+					                        			<c:when test="${user.user_status eq 'N' }">
+							                        		<option>예</option>
+						                                	<option selected>아니오</option>
+							                        	</c:when>
+					                        			<c:otherwise>
+					                        				<option selected>예</option>
+					                                		<option>아니오</option>
+					                        			</c:otherwise>
+					                        		</c:choose>
+					                            </select>
+					                        </td>
+					                        <td>
+					                            <c:choose>
+					                            	<c:when test="${empty user.user_sec_date }">
+					                            		-----
+					                            	</c:when>
+					                            	<c:otherwise>
+					                            		<fmt:formatDate var="userSecdate" value="${user.user_sec_date }" pattern="yyyy.MM.dd"/>
+					                        			${userSecdate }
+					                            	</c:otherwise>
+					                            </c:choose>
+					                        </td>
+					                    </tr>
+					                    </c:forEach>
+			                    	</c:otherwise>
+			                    </c:choose>
+			                </table>
+			            </div>    
+		        </div>
+		
+		        <br><br><br>
+		            <!-- 페이징 처리 -->
+		            <div class="admin_user_paging">
+		                페이징 처리
+		            </div>
 	            </div>
 	                
 	        </main>
