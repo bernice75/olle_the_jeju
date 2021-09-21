@@ -28,10 +28,10 @@
 	                <p style="font-size: 22px;padding-left: 30px;">마이페이지</p>
 	                <br>
 	                <ul style="list-style: none;">
-	                    <li><a href="mypage_plan.do?plan_writer=${sessionScope.user_id}">나의 일정</a></li><br>
-	                    <li><a href="mypage_inquire.do?user_id=${sessionScope.user_id}">문의 내역</a></li><br>
-	                    <li><a href="mypage_main.do?user_id=${sessionScope.user_id}">회원 정보 수정</a></li><br>
-	                    <li><a href="mypage_warn.do?user_id=${sessionScope.user_id}">신고 확인</a></li><br>
+	                    <li><a href="mypage_main.do?user_id=${sessionScope.user_id}">회원 정보 수정</a></li>
+	                    <li><a href="mypage_plan.do?plan_writer=${sessionScope.user_id}">나의 일정</a></li> 
+	                    <li><a href="mypage_inquire.do?user_id=${sessionScope.user_id}">문의 내역</a></li>
+	                    <li><a href="mypage_warn.do?user_id=${sessionScope.user_id}">신고 확인</a></li>
 	              </ul>
 	            </div>
 	        </div>
@@ -98,26 +98,22 @@
 	                
 	            </div>
 	            <br>
-	            <!-- 기능구현시 수정해야함 (연결하기)(아이콘 안보임)-->
-	            <div>
-	            <nav class="paging" aria-label="Page navigation example">
-	                <ul class="pagination">
-	                  <li class="page-item">
-	                    <a class="page-link" href="#" aria-label="Previous">
-	                      <span aria-hidden="true">&laquo;</span>
-	                    </a>
-	                  </li>
-	                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                  <li class="page-item">
-	                    <a class="page-link" href="#" aria-label="Next">
-	                      <span aria-hidden="true">&raquo;</span>
-	                    </a>
-	                  </li>
-	                </ul>
-	              </nav>
-	              </div>
+	            <!-- 페이징처리 -->
+	           <div class="paging">
+	            	<nav aria-label="Page navigation example">
+					  <ul class="pagination">
+					    <%-- <c:if test="${pageMaker.prev}"> --%>
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(pageMaker.startPage - 1)}&plan_writer=${sessionScope.user_id}">이전</a></li>
+					    <%-- </c:if>  --%>
+					    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(idx)}&plan_writer=${sessionScope.user_id}">${idx}</a></li>
+					    </c:forEach>
+					    <%-- <c:if test="${pageMaker.next && pageMaker.endPage > 0}"> --%>
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(pageMaker.endPage + 1)}&plan_writer=${sessionScope.user_id}">다음</a></li>
+					    <%-- </c:if>  --%>
+					  </ul>
+				 	 </nav>
+				</div>
 	            <br><br>
 	
 	            <!-- 내가 찜한 일정 -->
@@ -196,24 +192,22 @@
 	                </c:choose>
 	            </div>
 	            <br>
-	            <!-- 기능구현시 수정해야함 (연결하기)(아이콘 안보임)-->
-	            <nav class="paging" aria-label="Page navigation example">
-	                <ul class="pagination">
-	                  <li class="page-item">
-	                    <a class="page-link" href="#" aria-label="Previous">
-	                      <span aria-hidden="true">&laquo;</span>
-	                    </a>
-	                  </li>
-	                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                  <li class="page-item">
-	                    <a class="page-link" href="#" aria-label="Next">
-	                      <span aria-hidden="true">&raquo;</span>
-	                    </a>
-	                  </li>
-	                </ul>
-	              </nav>
+	            <!-- 페이징 -->
+	            <div class="paging">
+	            	<nav aria-label="Page navigation example">
+					  <ul class="pagination">
+					    <%-- <c:if test="${pageMaker.prev}"> --%>
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(pageMaker.startPage - 1)}&plan_writer=${sessionScope.user_id}">이전</a></li>
+					    <%-- </c:if>  --%>
+					    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(idx)}&plan_writer=${sessionScope.user_id}">${idx}</a></li>
+					    </c:forEach>
+					    <%-- <c:if test="${pageMaker.next && pageMaker.endPage > 0}"> --%>
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(pageMaker.endPage + 1)}&plan_writer=${sessionScope.user_id}">다음</a></li>
+					    <%-- </c:if>  --%>
+					  </ul>
+				 	 </nav>
+				</div>
 	            <br><br><br><br>
 	        </main>
 	        <!-- main 끝 -->

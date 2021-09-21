@@ -6,6 +6,7 @@ import java.util.List;
 import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.DibDto;
 import com.olle.dto.etc.HashtagDto;
+import com.olle.dto.member.Criteria;
 import com.olle.dto.member.MemberDto;
 
 public interface MypageDao {
@@ -16,11 +17,12 @@ public interface MypageDao {
 	public MemberDto mypageInfo(String user_id);
 	
 	//회원정보 수정
-	/*public int userUpdate(MemberDto userUpdate);*/
-	//public void updateUser(MemberDto dto);
-	public int newPw(String user_pw, String new_pw);
+	public int userUpdate(MemberDto dto);
 	
-	//회원정보 수정 및 삭제를 위한 비밀번호체크
+	//회원정보 수정 (프로필 이미지) //회원정보 수정 (프로필 이미지 등록 및 변경) - 작업중
+	public int profileUpdate(String user_img);
+	
+	//회원정보 수정 및 삭제를 위한 비밀번호체크 
 	public boolean checkPw(String user_id, String user_pw);
 	
 	//회원 강제 탈퇴(관리자 권한/신고수적용)
@@ -30,11 +32,11 @@ public interface MypageDao {
 	public int deleteUser(String user_id, String user_pw);
 	
 	//내가 작성한 게시글 조회
-	public List<CustomDto> myWriteList(String plan_writer);
+	public List<CustomDto> myWriteList(String plan_writer, Criteria cri);
 	public List<HashtagDto> hashList(int table_num);
 	
-	//내가 작성한 게시글 rowcount
-	//public int myWriteRowCount(String user_id);
+	//내가 작성한 게시글 총 갯수
+	public int listCount();
 	
 	//내가 찜한 게시글 조회 
 	public List<DibDto> myDibList(int table_num);
