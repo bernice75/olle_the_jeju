@@ -14,7 +14,8 @@
 	</resultMap>
 	
 	<select id="selectList" resultMap="reportMap">
-
+		SELECT *
+		FROM OLLE_REPORT
 	</select>
 	
 	<select id="selectOne" resultType="reportDto">

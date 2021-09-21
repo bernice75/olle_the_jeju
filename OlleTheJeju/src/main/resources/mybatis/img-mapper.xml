@@ -12,17 +12,45 @@
 		<result property="group_num" column="GROUP_NUM"/>
 	</resultMap>
 	
-	<select id="selectList" resultMap="imgMap">
-
+	<select id="selectList"  parameterType="int" resultMap="imgMap">
+		SELECT *
+		FROM OLLE_IMG
+		WHERE BOARD_NUM = #{board_num}
 	</select>
 	
 	<select id="selectOne" resultType="imgDto">
 
 	</select>
 	
+	<!-- image PK 최대 값 가져오기 -->
+	<select id="selectMaxPK" resultType="int">
+		  SELECT (NVL2(MAX(IMG_NUM)+1,MAX(IMG_NUM)+1,1)) AS PRI  FROM OLLE_IMG
+	</select>
+	
+	<select id="selectMaxGroupId" parameterType="int" resultType="int">
+		SELECT (NVL(MAX(GROUP_NUM),0)+1) FROM OLLE_IMG
+		WHERE BOARD_NUM=#{board_num} 
+	</select>
+	
+	<select id="storeImg" parameterType="paginationIdxDto" resultType="imgDto">
+		SELECT IMG_NUM, BOARD_NUM, TABLE_NUM,IMG_TITLE, GROUP_NUM FROM OLLE_IMG
+		WHERE BOARD_NUM=4 AND (TABLE_NUM BETWEEN #{startIdx} AND #{endIdx})
+	</select>
+	
 	<insert id="insert" parameterType="imgDto">
+		<selectKey resultType="int" keyProperty="img_num" order="BEFORE">
+			SELECT (NVL2(MAX(IMG_NUM)+1,MAX(IMG_NUM)+1,1)) AS PRI  FROM OLLE_IMG
+		</selectKey>
 		INSERT INTO OLLE_IMG
-		VALUES()
+		VALUES(#{img_num},#{board_num},#{table_num},#{img_title},#{group_num})
+	</insert>
+	
+	<insert id="customInsert" parameterType="imgDto">
+		<selectKey resultType="int" keyProperty="img_num" order="BEFORE">
+			SELECT (NVL2(MAX(IMG_NUM)+1,MAX(IMG_NUM)+1,1)) AS PRI  FROM OLLE_IMG
+		</selectKey>
+		INSERT INTO OLLE_IMG
+		VALUES(#{img_num}, 3, #{table_num}, #{img_title}, #{group_num})
 	</insert>
 	
 	<update id="update" parameterType="imgDto">

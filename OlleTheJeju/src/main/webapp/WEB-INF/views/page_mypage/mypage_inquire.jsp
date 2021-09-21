@@ -46,15 +46,82 @@
 	            <!-- 채팅 -->
 	            <div class="inq_chat">    
 	                <div class="chat">채팅내역</div>
-	                <div class="chat_area"></div>
+	                <div class="chat_area" style="overflow: scroll;">
+	                	<ul style="display: flex; flex-direction: column; padding: 0; margin: 20px;">
+	                	</ul>
+	                </div>
 	                <div class="chat_write">
 	                    <input type="text" class="chat_content">
-	                    <button type="submit">보내기</button>
+	                    <button type="button" onclick="sendBtn();">보내기</button>
 	                </div>
 	            </div>
 	        </main>
 	        <!-- main 끝 -->
 			<jsp:include page="../include/footer.jsp"></jsp:include>
 		</div>
+		<script type="text/javascript">
+	    	<!-- 채팅 방 관련 -->
+	    	let roomId;
+	    	var ws;
+	    	
+	    	$(document).ready(function() {
+	    		var to_user = $("input#to_user").val();
+	    		ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo.do");
+		    	
+		    	ws.onopen = function(data) {
+		    		//소켓 연결 시 초기화 세팅
+		    		console.log("info: 연결 성공");
+		    	};
+		    	ws.onmessage = function(data) {
+		    		var new_msg = data.data;
+					if(new_msg != null && new_msg.trim() != ''){
+						var d = JSON.parse(new_msg);
+						if(d.type == "getId"){
+							var si = d.sessionId != null ? d.sessionId : "";
+							if(si != ''){
+								$("#sessionId").val(si); 
+							}
+						} else if(d.type == "message") {
+							if(d.sessionId == $("#sessionId").val()){
+								$(".chat_area>ul").append("<p class='from_user'>" + d.msg + " : " + `${sessionScope.user_id}` + "</p>");
+							}else{
+								$(".chat_area>ul").append("<p class='others'>" + d.from_user + " :" + d.msg + "</p>");
+							}
+						} else {
+							console.warn("unknown type!")
+						}
+					}
+				};
+				
+		    	ws.onerror = function(error) {
+		    		console.log("error: " + error);
+	    		};
+		    	ws.onclose = function(event) {
+		    		console.log("info: 연결 끊김");
+		    		//끊김이 발생했을 경우 1초에 한번씩 연결 시도
+		    		//setTimeout(function() { connect(); }, 1000);
+	    		};
+	    	});
+	    	
+	    	//엔터 누르면 메세지 전송되도록 설정
+			document.addEventListener("keypress", function(e){
+				if(e.keyCode == 13){ //enter press
+					sendBtn();
+				}
+			});
+	    	
+	    	function sendBtn() {
+	    		var option ={
+    				type: "message",
+    				sessionId : $("#sessionId").val(),
+    				from_user : `${sessionScope.user_id}`,
+    				to_user : "admin",
+    				msg : $(".chat_content").val()
+    			}
+	    		ws.send(JSON.stringify(option));
+    			$(".chat_content").val("");
+	    	}
+	    	
+	    </script>
 	</body>
 </html>

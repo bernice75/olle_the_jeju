@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "member">
+	<resultMap id="memberMap" type="memberDto">
+		<result property="user_id" column="USER_ID"/>
+		<result property="user_pw" column="USER_PW"/>
+		<result property="user_name" column="USER_NAME"/>
+		<result property="user_age" column="USER_AGE"/>
+		<result property="user_addr" column="USER_ADDR"/>
+		<result property="user_addrdetail" column="USER_ADDRDETAIL"/>
+		<result property="user_phone" column="USER_PHONE"/>
+		<result property="user_email" column="USER_EMAIL"/>
+		<result property="user_member" column="USER_MEMBER"/>
+		<result property="user_status" column="USER_STATUS"/>
+		<result property="user_warning" column="USER_WARNING"/>
+		<result property="user_regdate" column="USER_REGDATE"/>
+		<result property="user_secdate" column="USER_SECDATE"/>
+		<result property="user_img" column="USER_IMG"/>
+		<result property="user_nick" column="USER_NICK"/>
+	</resultMap>
+	
+	<select id="idChk" parameterType="string" resultType="int">
+		SELECT COUNT(USER_ID)
+		FROM OLLE_USER
+		WHERE USER_NICK = #{user_id}
+	</select>
+	
+	<select id="nickChk" parameterType="string" resultType="int">
+		SELECT COUNT(USER_NICK)
+		FROM OLLE_USER
+		WHERE USER_NICK = #{user_nick}
+	</select>
+	
+	<select id="login" parameterType="memberDto" resultType="String">
+		SELECT USER_ID
+		FROM OLLE_USER
+		WHERE USER_ID = #{user_id} AND USER_PW = #{user_pw}
+	</select>
+	
+	<select id="selectList" resultMap="memberMap">
+		SELECT *
+		FROM OLLE_USER
+	</select>
+	
+	<select id="selectUser" parameterType="string" resultType="memberDto">
+        SELECT *
+        FROM OLLE_USER
+        WHERE USER_ID = #{user_id}
+     </select>
+	
+	<insert id="userInsert" parameterType="memberDto">
+		INSERT INTO OLLE_USER
+		VALUES(#{user_id}, #{user_pw}, #{user_name}, #{user_age}, #{user_addr}, #{user_addrdetail}, #{user_phone}, #{user_email}, #{user_member}, 'N', 0, SYSDATE, null, 'test.jpg', #{user_nick})
+	</insert>
+	
+	<update id="update" parameterType="memberDto">
+		UPDATE OLLE_USER
+		SET 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM OLLE_USER
+		WHERE USER_ID = #{user_id}
+	</delete>
+</mapper>

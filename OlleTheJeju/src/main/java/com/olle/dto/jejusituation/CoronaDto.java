@@ -1,8 +1,5 @@
 package com.olle.dto.jejusituation;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class CoronaDto {
 	private String createDt;
 	private String updateDt;
@@ -18,9 +15,9 @@ public class CoronaDto {
 	private String qurRate;
 	private Long seq;
 	private String stdDay;
+	
 	public CoronaDto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public CoronaDto(String createDt, String updateDt, int deathCnt, int defCnt, String gubun, String gubunCn,
 			String gubunEn, int incDec, int isolClearCnt, int localOccCnt, int overFlowCnt, String qurRate, Long seq,
@@ -41,6 +38,7 @@ public class CoronaDto {
 		this.seq = seq;
 		this.stdDay = stdDay;
 	}
+	
 	public String getCreateDt() {
 		return createDt;
 	}
@@ -125,14 +123,4 @@ public class CoronaDto {
 	public void setStdDay(String stdDay) {
 		this.stdDay = stdDay;
 	}
-	@Override
-	public String toString() {
-		return "CoronaDto [createDt=" + createDt + ", updateDt=" + updateDt + ", deathCnt=" + deathCnt + ", defCnt="
-				+ defCnt + ", gubun=" + gubun + ", gubunCn=" + gubunCn + ", gubunEn=" + gubunEn + ", incDec=" + incDec
-				+ ", isolClearCnt=" + isolClearCnt + ", localOccCnt=" + localOccCnt + ", overFlowCnt=" + overFlowCnt
-				+ ", qurRate=" + qurRate + ", seq=" + seq + ", stdDay=" + stdDay + "]";
-	}
-
-	
-	
 }

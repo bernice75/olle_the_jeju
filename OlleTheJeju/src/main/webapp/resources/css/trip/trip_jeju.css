@@ -29,6 +29,7 @@
     display: table-cell;
     vertical-align: middle;
     transition: all .2s;
+    cursor: pointer;
 }
 .menu div:hover {
     background: lightgray;
@@ -72,7 +73,6 @@
     grid-column-end: 3;
     height: 100%;
     width: 60%;
-
 }
 th{
     background-color: rgb(226, 226, 226);

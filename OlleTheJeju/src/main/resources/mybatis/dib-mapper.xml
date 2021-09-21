@@ -17,7 +17,6 @@
 		WHERE TABLE_NUM = #{table_num}
 	</select>
 	
-	
 	<select id="selectList" resultMap="dibMap">
 
 	</select>

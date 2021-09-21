@@ -81,27 +81,23 @@
     cursor: pointer;
     overflow:hidden;  
 }
-.nail1 {
-    grid-column-start: 1;
-    grid-column-end: 2;
-    background: rgb(255, 255, 255);
+.nail > div {
+	background: rgb(255, 255, 255);
     border-radius: 20px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 2px 2px 3px 2px rgb(207, 207, 207);
 }
+.nail1 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
 .nail2 {
     grid-column-start: 2;
     grid-column-end: 3;
-    background: lightgray;
-    border-radius: 20px;
-    box-shadow: 2px 2px 3px 2px rgb(207, 207, 207);
 }
 .nail3 {
     grid-column-start: 3;
     grid-column-end: 4;
-    background: lightgray;
-    border-radius: 20px;
-    box-shadow: 2px 2px 3px 2px rgb(207, 207, 207);
 }
 
 .nail_img{

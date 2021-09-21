@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -38,76 +39,100 @@
                     <button class="btn btn-outline-secondary search2"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
                 <br><br>
-            <!--모달창<-아이템-->
-            <div class="my-modal">
-                <div class="close-btn" onclick="closeModal();">❌</div>
-                <iframe src="jejusituation_rest_detail.do" title="모달창">
+	            <!--모달창<-아이템-->
+	            <div class="my-modal">
+	                <div class="close-btn" onclick="closeModal();">❌</div>
+	                <iframe src="jejusituation_rest_detail.do" title="모달창">
+	
+	                </iframe>
+	            </div>
+	            <!--추후 사용자 모드(사장님인지에 따라) 자바스크립트가 변경되어야 할 것-->
+	            <div class="my-modal2">
+	                <div class="close-btn2" onclick="closeModal2();">❌</div>
+	                <iframe src="jejusituation_rest_create.do" title="모달창">
+	
+	                </iframe>
+	            </div>
 
-                </iframe>
-            </div>
-            <!--추후 사용자 모드(사장님인지에 따라) 자바스크립트가 변경되어야 할 것-->
-            <div class="my-modal2">
-                <div class="close-btn2" onclick="closeModal2();">❌</div>
-                <iframe src="jejusituation_rest_create.do" title="모달창">
-
-                </iframe>
-            </div>
-
-                <!-- 썸네일 -->
+            	<!-- 썸네일 -->
                 <div class="nail">
-                    <div class="nail1" onclick="openModal();">
-                        <div class="nail_img">
+                    <div class="nail1" onclick="openModal('${oneJeju.situ_num}');">
+<<<<<<< HEAD
+                        <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${oneImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png';"/>
+=======
+                        <img class="store" src="./resources/img/jejusitu/${oneImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png';"/>
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
+                        <div class="nail1-text1 text">${oneJeju.situ_name }
+                            <span class="nail1-text2 text">${oneJeju.situ_gubun }</span>
                         </div>
-                        <div class="nail_inner">
-                            <p class="nail_title">맛집명</p>
-                            <hr style="margin: 0 0 10px 0;">
-                            <span>구분 | 한식</span>
-                            <br>
-                            <span>주소 | 서울 관악구 관악로 14길</span>
-                        </div>
+                        <div class="nail1-text3 text">${oneJeju.situ_addr }</div>
                     </div>
-                    <div class="nail2" onclick="openModal();">
-                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
-                        <div class="nail1-text1 text">맛집명
-                            <span class="nail1-text2 text">양식</span>
+                    <div class="nail2" onclick="openModal('${twoJeju.situ_num}');">
+<<<<<<< HEAD
+                        <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${twoImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+=======
+                        <img class="store" src="./resources/img/jejusitu/${twoImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
+                        <div class="nail1-text1 text">${twoJeju.situ_name }
+                            <span class="nail1-text2 text">${twoJeju.situ_gubun }</span>
                         </div>
-                        <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
+                        <div class="nail1-text3 text">${twoJeju.situ_addr }</div>
                     </div>
-                    <div class="nail3" onclick="openModal();">
-                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
-                        <div class="nail1-text1 text">맛집명
-                            <span class="nail1-text2 text">양식</span>
+                    <div class="nail3" onclick="openModal('${threeJeju.situ_num}');">
+<<<<<<< HEAD
+                        <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${threeImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+=======
+                        <img class="store" src="./resources/img/jejusitu/${threeImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
+                        <div class="nail1-text1 text">${threeJeju.situ_name}
+                            <span class="nail1-text2 text">${threeJeju.situ_gubun }</span>
                         </div>
-                        <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
+                        <div class="nail1-text3 text">${threeJeju.situ_addr }</div>
                     </div>
                 </div>
                 <br><br><br>
                 <div class="nail">
-                    <div class="nail4" onclick="openModal();">
-                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
-                        <div class="nail1-text1 text">맛집명
-                            <span class="nail1-text2 text">양식</span>
+                    <div class="nail4" onclick="openModal('${fourJeju.situ_num}');">
+<<<<<<< HEAD
+                        <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${fourImg.img_title}" alt="ex"  onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+=======
+                        <img class="store" src="./resources/img/jejusitu/${fourImg.img_title}" alt="ex"  onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
+                        <div class="nail1-text1 text">${fourJeju.situ_name }
+                            <span class="nail1-text2 text">${fourJeju.situ_gubun }</span>
                         </div>
-                        <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
+                        <div class="nail1-text3 text">${fourJeju.situ_addr}</div>
                     </div>
-                    <div class="nail5" onclick="openModal();">
-                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
-                        <div class="nail1-text1 text">맛집명
-                            <span class="nail1-text2 text">양식</span>
+                    <div class="nail5" onclick="openModal('${fiveJeju.situ_num }');">
+<<<<<<< HEAD
+                        <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${fiveImg.img_title }" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+=======
+                        <img class="store" src="./resources/img/jejusitu/${fiveImg.img_title }" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
+                        <div class="nail1-text1 text">${fiveJeju.situ_name }
+                            <span class="nail1-text2 text">${fiveJeju.situ_gubun }</span>
                         </div>
-                        <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
+                        <div class="nail1-text3 text">${fiveJeju.situ_addr }</div>
                     </div>
-                    <div class="nail6" onclick="openModal();">
-                        <img class="store" src="./resources/img/logo.png" alt="ex"/>
-                        <div class="nail1-text1 text">맛집명
-                            <span class="nail1-text2 text">양식</span>
+                    <div class="nail6" onclick="openModal('${sixJeju.situ_num}');">
+<<<<<<< HEAD
+                        <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${sixImg.img_title }" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+=======
+                        <img class="store" src="./resources/img/jejusitu/${sixImg.img_title }" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
+                        <div class="nail1-text1 text">${sixJeju.situ_name }
+                            <span class="nail1-text2 text">${sixJeju.situ_gubun }</span>
                         </div>
-                        <div class="nail1-text3 text">서울 관악구 관악로 14길</div>
+                        <div class="nail1-text3 text">${sixJeju.situ_addr }</div>
                     </div>
                 </div>
                 <br>
                 <div class="write">
-                    <button class="btn btn-outline-secondary" name="createrest" onclick="openModal2();">맛집등록</button>
+<<<<<<< HEAD
+                    <!-- <button class="btn btn-outline-secondary" name="createrest" onclick="openModal2();">맛집등록</button> -->
+=======
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
+                    <button class="btn btn-outline-secondary" name="createrest" onclick="registerStoreForm();">맛집등록</button>
                 </div>
                 <br><br>
                 <!-- 페이징 처리 -->
@@ -117,5 +142,31 @@
 			<jsp:include page="../include/footer.jsp"></jsp:include>
         </div>
         <script type="text/javascript" src="./resources/js/jejusituation/jejusituation_rest.js"></script>
+<<<<<<< HEAD
+        <script>
+=======
+        <script type="text/javascript">
+>>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
+        	function registerStoreForm(){
+        		$.ajax({
+        			method:"POST",
+        			data:`<%=session.getAttribute("user_id")%>`,
+        			contentType:false,
+        			url:"jejuSituationValidUser.do",
+        			success:function(json){
+        				console.log(`msg:${json}`);
+					   if(json.msg===true){
+        					alert("맛집 등록 페이지로 이동합니다");
+            				openModal2();
+        				}else{
+        					alert("권한이 부여되지 않았습니다");
+        				}
+        			},
+        			error:function(msg){
+        				alert("죄송합니다. 접근하실 수 없습니다.");
+        			}
+        		});
+        	}
+        </script>
     </body>
 </html>

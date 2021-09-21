@@ -95,5 +95,16 @@ public class MemberDaoImpl implements MemberDao {
 		
 		return res;
 	}
+	
+	@Override
+	public MemberDto selectUser(String user_id) {
+		MemberDto dto = sqlSession.selectOne(NAMESPACE + "selectUser", user_id);
+		
+		return dto;
+	}
 
+	@Override
+	public int warn_update(String user_id) {
+		return sqlSession.update(NAMESPACE + "warn_update", user_id);
+	}
 }
