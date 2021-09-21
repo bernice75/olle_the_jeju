@@ -8,19 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.olle.biz.etc.ImgBiz;
-import com.olle.biz.jejusituation.menu.MenuBiz;
 import com.olle.dto.etc.ImgDto;
 import com.olle.dto.jejusituation.JejuDto;
-import com.olle.dto.jejusituation.MenuDto;
 import com.olle.dto.pagination.PaginationIdxes;
 
 @Repository
 public class JejuPageDaoImpl implements JejuPageDao {
 	@Autowired
 	private SqlSessionTemplate session;
-	
-	@Autowired
-	private MenuBiz mBiz;
 	
 	@Autowired
 	private ImgBiz iBiz;

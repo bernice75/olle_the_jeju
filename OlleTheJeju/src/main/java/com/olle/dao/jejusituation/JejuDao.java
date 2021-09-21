@@ -1,7 +1,5 @@
 package com.olle.dao.jejusituation;
 
-import java.util.List;
-
 import com.olle.dto.jejusituation.JejuDto;
 
 public interface JejuDao {

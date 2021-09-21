@@ -28,7 +28,6 @@ public class JejuBizImpl implements JejuBiz {
 	//코로나 정보 가져오기
 	@Override
 	public List<CoronaDto> searchData() {
-		// TODO Auto-generated method stub
 		String weekAgo=LocalDate.now().minusDays(7).toString().replaceAll("-","");
 		String today=LocalDate.now().toString().replaceAll("-","");
 		
