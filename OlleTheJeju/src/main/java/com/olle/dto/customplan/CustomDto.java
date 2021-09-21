@@ -2,6 +2,8 @@ package com.olle.dto.customplan;
 
 import java.util.Date;
 
+import com.olle.dto.member.Criteria;
+
 public class CustomDto {
 	private int plan_num;
 	private String plan_title;
@@ -13,11 +15,15 @@ public class CustomDto {
 	private int plan_views;
 	private int plan_push;
 	private int plan_hide;
+
 	
+	
+
 	public CustomDto() {
 		super();
 	}
 
+	
 	public CustomDto(int plan_num, String plan_title, String plan_content, String plan_writer, Date plan_regdate,
 			String plan_tendency, String plan_term, int plan_views, int plan_push,
 			int plan_hide) {
@@ -32,11 +38,14 @@ public class CustomDto {
 		this.plan_views = plan_views;
 		this.plan_push = plan_push;
 		this.plan_hide = plan_hide;
+		
 	}
+
 
 	public int getPlan_num() {
 		return plan_num;
 	}
+
 
 	public void setPlan_num(int plan_num) {
 		this.plan_num = plan_num;
@@ -113,6 +122,7 @@ public class CustomDto {
 	public void setPlan_hide(int plan_hide) {
 		this.plan_hide = plan_hide;
 	}
+
 	
 	
 }

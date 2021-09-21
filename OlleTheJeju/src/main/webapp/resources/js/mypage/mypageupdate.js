@@ -92,10 +92,12 @@ function addressForm() {
 	}).open();
 }
 
- //회원정보 수정 - 기존 비밀번호 확인
+//회원정보 수정 - 기존 비밀번호 확인
 function pwChkForm() {
 	var pw = $("#password").val();
 	var newPw = $("#newpassword").val();
+	var addrdetail = $("#address2").val();
+	var user_id = $("#id").val();
 	
 	if(pw == newPw) {
 		alert("기존과 같은 비밀번호는 사용할 수 없습니다.");
@@ -103,14 +105,16 @@ function pwChkForm() {
 	} else {
 		alert("새로운 비밀번호를 입력하셨습니다.");
 		$.ajax({
-			url: "newPw.do",
+			url: "userUpdate.do",
 			type: "POST",
-			data: {user_pw: pw, new_pw:newPw},
+			data: {user_pw:pw, user_newpw:newPw, user_addrdetail:addrdetail},
 			dataType: "text",
-			success: function(data){
+			success: function(data) {
 				if(data > 0) {
+					console.log(data);
+					
 					alert("성공적으로 변경되었습니다.");
-					location.href="mypage_main.do";
+					location.href="mypage_main.do?user_id=" + user_id;
 				} else {
 					alert("변경에 오류가 있습니다.");
 				}
@@ -122,6 +126,7 @@ function pwChkForm() {
 		});
 	}
 }
+
 
 //회원정보 수정
 /*$(document).ready(function(){
@@ -147,10 +152,10 @@ function userDelete() {
 			success: function(data){
 				console.log(data);
 				if(data == 1) {
-					alert("바이바이 .");
+					alert("탈퇴 되었습니다. 바이바이.");
 					location.href="home.do";
 				} else if(data == 0) {
-					alert("아직 못 간다.");
+					alert("비밀번호가 틀렸네? 아직 못 간다.");
 				}
 			},
 			error: function(){
@@ -159,3 +164,4 @@ function userDelete() {
 		});
 	}
 }
+

@@ -16,6 +16,9 @@
     text-align: left;
     float: right;
 }
+.myp_nav_align > ul > li{
+    padding-bottom: 25px;
+}
 /* 나의 일정 타이틀 */
 .user_plan{
     margin-top: 54px;
@@ -95,6 +98,6 @@
     font-weight: bold;
 }
 .paging{
-    margin-left: 38%;
+    margin-left: 37%;
     text-align: center;
 }
