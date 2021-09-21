@@ -8,6 +8,8 @@
   		<selectKey resultType="int" keyProperty="menu_id" order="BEFORE">
   			SELECT (NVL2(MAX(MENU_ID)+1,MAX(MENU_ID)+1,1)) AS PRI FROM OLLE_SITU_MENU	
   		</selectKey>
+<!--   		INSERT INTO OLLE_SITU_MENU(MENU_ID,STORE_ID,MENU,PRICE)
+  		VALUES -->
   		<foreach collection="list" item="item" separator=" " index="index" open="INSERT ALL" close="SELECT * FROM DUAL">
   		INTO OLLE_SITU_MENU(MENU_ID,STORE_ID,MENU,PRICE)
   		VALUES (
@@ -15,4 +17,5 @@
   		)
   		</foreach>
   	</update>
+  
   </mapper>

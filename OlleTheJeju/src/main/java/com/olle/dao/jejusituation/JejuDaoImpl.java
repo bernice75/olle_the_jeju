@@ -1,18 +1,16 @@
 package com.olle.dao.jejusituation;
 
-import java.util.List;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.olle.biz.etc.ImgBiz;
+import com.olle.biz.etc.ImageBiz;
 import com.olle.biz.jejusituation.JejuBiz;
 import com.olle.biz.jejusituation.menu.MenuBiz;
 import com.olle.dto.jejusituation.JejuDto;
 
 @Repository
-public class JejuDaoImpl implements JejuDao {
+public class JejuDaoImpl implements JejuDao{
 	
 	@Autowired
 	private JejuBiz jejuBiz;
@@ -21,25 +19,27 @@ public class JejuDaoImpl implements JejuDao {
 	private MenuBiz menuBiz;
 	
 	@Autowired
-	private ImgBiz imgBiz;
+	private ImageBiz imgBiz;
 	
 	public static int primaryKey;
 	
 	@Autowired
-	private SqlSessionTemplate sqlSession;
-
+	private SqlSessionTemplate session;
+	
 	@Override
 	public int getMaxJejuDtoNum() {
+		// TODO Auto-generated method stub
 		int maxPk=0;
-		maxPk=sqlSession.selectOne(NAMESPACE+"olleSituStoreMaxPk");
+		maxPk=session.selectOne(NAMESPACE+"olleSituStoreMaxPk");
 		return maxPk;
 	}
 
 	@Override
 	public int saveStore(JejuDto dto) {
+		// TODO Auto-generated method stub
 		int res=0;
 		try {
-			sqlSession.insert(NAMESPACE+"insertSit",dto);
+			session.insert(NAMESPACE+"insertSit",dto);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -51,12 +51,34 @@ public class JejuDaoImpl implements JejuDao {
 
 	@Override
 	public int getMaxPkFromSelectKey() {
+		// TODO Auto-generated method stub
 		return this.primaryKey;
 	}
 
 	@Override
 	public void setMaxPkFromSelectKey(int primaryKey) {
+		// TODO Auto-generated method stub
 		this.primaryKey=primaryKey;
 	}
+
+//	@Transactional
+//	@Override
+//	public int saveStore(JejuDto dto, ImgDto img, HashMap<String,Object> map) {
+//		// TODO Auto-generated method stub
+//		int res=0;
+//		int r1,r2,r3;
+//		r1=jejuBiz.saveStore(dto);
+//		r2=menuBiz.saveMenu(map);
+//		r3=imgBiz.saveStoreImg(img);
+//		
+//		if(r1>0&&r2>0 &&r3>0) {
+//			res=3;
+//		}else {
+//			res=-1;
+//		}
+//		
+//		
+//		return res;
+//	}
 
 }

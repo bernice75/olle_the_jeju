@@ -5,9 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,37 +24,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.util.WebUtils;
 
-import com.olle.biz.etc.ImgBiz;
+import com.olle.biz.etc.ImageBiz;
 import com.olle.biz.jejusituation.JejuBiz;
 import com.olle.biz.jejusituation.menu.MenuBiz;
 import com.olle.biz.member.MemberBiz;
-import com.olle.biz.pagination.JejuPageBiz;
+import com.olle.biz.pagination.jejusit.JejuPageBiz;
 import com.olle.dto.etc.ImgDto;
 import com.olle.dto.jejusituation.CoronaDto;
 import com.olle.dto.jejusituation.JejuDto;
-import com.olle.dto.jejusituation.MenuDto;
+import com.olle.dto.jejusituation.menu.MenuDto;
 import com.olle.dto.member.MemberDto;
-import com.olle.dto.pagination.JejuPage;
-import com.olle.mapper.MenuBatchService;
+import com.olle.dto.pagination.jejusitu.JejuPage;
+import com.olle.mapper.biz.MenuBatchService;
 
 @Controller
 public class JejusituationController {
+	
 	@Autowired
 	private JejuBiz biz;
 	@Autowired
 	private MemberBiz memberBiz;
 	@Autowired
-	private ImgBiz imageBiz;
+	private ImageBiz imageBiz;
 	@Autowired
 	private MenuBiz menuBiz;
 	@Autowired
 	private JejuPageBiz pBiz;
 	@Autowired
 	private MenuBatchService mBatchService;
+
 	
 	private static Logger logger=LoggerFactory.getLogger(JejusituationController.class);
+	
 	
 	@RequestMapping(value = "jejusituation_main.do", method = RequestMethod.GET)
 	public String jejusituation_main() {
@@ -70,14 +70,13 @@ public class JejusituationController {
 	 * 리스트버튼은 5개씩 보일것이라 5개씩 보일때 그 단위체를 갖고 있을 필요도 있음
 	 * */
 	@RequestMapping(value = "/jejusituation_rest.do", method = RequestMethod.GET)
-	public String jejusituation_detail(@RequestParam(defaultValue="1") int page, Model model) {
-		
+	public String jejusituation_rest(Model model ,@RequestParam(defaultValue="1") int page ) {
 		JejuPage pageList=new JejuPage();
 		pageList.setCurPage(page); //현재 페이지
 		pageList.setElementsPerPage(6); //한 페이지당 아이템수
 		int totPage=pBiz.getTotalPages(6); //총 페이지수 계산
 		int totRows=pBiz.getTotalElements();
-		int listBtnUnit=(int)Math.round((double)totPage/3);//리스트 유닛
+		int listBtnUnit=(int)Math.round((double)totPage/5);//리스트 유닛
 		pageList.setTotalPages(totPage); //총 페이지수
 		pageList.setTotalElements(totRows); //총 행 개수
 		pageList.setListBtnUnit(listBtnUnit);
@@ -90,34 +89,174 @@ public class JejusituationController {
 		
 		int unit=(int)Math.ceil((double)page/5);
 		int finUnit=(int)Math.ceil((double)totPage/5);
+
+		
+		logger.info("current page: {}, unit: {}",page,unit);
+		Boolean pFlag=false;
+		Boolean nFlag=false;
 		//1~5같이 1인 경우는 이전페이지는 없음
 		if(unit==1) {
-			pageList.setPrevUnit(false);
-			pageList.setNextUnit(true);
-		}else if(unit==finUnit) {
-			//마지막 유닛은 다음페이지가 없음
-			pageList.setPrevUnit(true);
-			pageList.setNextUnit(false);
-		}else {
-			//그 외에는 이전, 이후 유닛페이지가 없음
-			pageList.setPrevUnit(true);
-			pageList.setNextUnit(true);
+			if(finUnit==1) {
+				pFlag=false;
+				nFlag=false;
+			}else {
+				pFlag=false;
+				nFlag=true;
+			}
+
 		}
+		else if(unit==finUnit) {
+			//마지막 유닛은 다음페이지가 없음
+			pFlag=true;
+			nFlag=false;
+		}else if(unit<finUnit){
+			//그 외에 앞으로 단위체가 더 많으면 이전, 이후 유닛페이지가 있음
+			pFlag=true;
+			nFlag=true;
+		}
+		pageList.setPrevUnit(pFlag);
+		pageList.setNextUnit(nFlag);
+		model.addAttribute("unit",unit);
+		model.addAttribute("finUnit",finUnit);
+		model.addAttribute("prevFlag", pFlag);
+		model.addAttribute("nextFlag",nFlag);
+		logger.info("finUnit:{}",finUnit);
 		
 		logger.info("start:{}",indexes[0]);
 		logger.info("end:{}",indexes[1]);
+		logger.info("prevFlag:{}",pFlag);
+		logger.info("nextFlag:{}",nFlag);
 		//가게정보
 		List<JejuDto> jeju=pBiz.getStoreElementsPerPage(indexes[0], indexes[1], page);
 		//가게들에 대한 메뉴정보
-		ArrayList<ArrayList<MenuDto>> menuList=pBiz.getMenuListElementsPerPage(indexes[0], indexes[1], page);
+		int mStartIdx=36*page-35;
+		logger.info("menuList startIdx: {}",mStartIdx);
+	//	List<MenuDto> menuList=menuBiz.getPageMenuList(mStartIdx, page);
 		//이미지에 대한 정보
 		List<ImgDto> imgList=pBiz.getImgElementsPerPage(indexes[0], indexes[1], page);
+		
+		pageList.setJeju(jeju);
+		pageList.setImg(imgList);
+		
+		//유닛값에 따른 시작버튼 값
+		int unitStartBtn=5*unit-4;//1,6,...
+		pageList.setListBtnStartIdx(unitStartBtn);
+		logger.info("pagination meta info: {}",pageList);
+		logger.info("list unit start idx(btn):"+unitStartBtn);
+		model.addAttribute("paginationMetaInfo",pageList );
+		
 		logger.info("defaultPage-jeju:{}",jeju);
 		logger.info("jejusize: {}",jeju.size());
+	//	logger.info("defaultPage-menuList:{}",menuList);
 		logger.info("defaultPage-img:{}",imgList);
 		//model에 6개를 뽑아서 전달하기
 		//그런데 그 전에 몇 개가 그 페이지에 들어가는지 확인해야 할 것
-		int size=jeju.size();
+		int size1=jeju.size();
+		int size2=imgList.size();
+		int size=Math.min(size1, size2);//이미지가 삽입되지 않은 경우의 수도 존재
+		
+		
+		String[] div= {"one","two","three","four","five","six"};
+		
+		for(int i=0;i<size;i++) {
+			model.addAttribute(div[i]+"Jeju",jeju.get(i));
+			//model.addAttribute(div[i]+"Menu",menuList.get(i));->전체조회에서는 메뉴를 뿌려줄 필요는 없을 것이지만
+			//나중에 상세조회에서는 페이지에 대해서 6등분해서 소분해줄 필요는 있을 것
+			model.addAttribute(div[i]+"Img", imgList.get(i));
+		}
+		//총 페이지 정보도 보낼 것
+		model.addAttribute("totPages",totPage);
+		return "page_jejusituation/jejusituation_rest";
+	}
+	
+	//구분조건에 따른 페이징 조회
+	@RequestMapping(value="/jejusituation_search_gubun.do")
+	public String jejusituation_search_gubun(Model model,@RequestParam(value="gubun") String gubun, @RequestParam(value="page",defaultValue="1") int page) {
+		JejuPage pageList=new JejuPage();
+		pageList.setCurPage(page); //현재 페이지
+		pageList.setElementsPerPage(6); //한 페이지당 아이템수
+		int totPage=pBiz.getTotalPagesByGubun(gubun, 6); //총 페이지수 계산
+		int totRows=pBiz.getTotalElementsByGubun(gubun);
+		int listBtnUnit=(int)Math.round((double)totPage/5);//리스트 유닛
+		pageList.setTotalPages(totPage); //총 페이지수
+		pageList.setTotalElements(totRows); //총 행 개수
+		pageList.setListBtnUnit(listBtnUnit);
+		
+		int[] indexes=pBiz.getStartAndEndIdx(6, page);//시작 인덱스, 끝인덱스 가져오기
+		
+		pageList.setStartIdx(indexes[0]); //시작 인덱스
+		pageList.setEndIdx(indexes[1]); //끝 인덱스
+		pageList.setCurPage(page);
+		
+		int unit=(int)Math.ceil((double)page/5);
+		int finUnit=(int)Math.ceil((double)totPage/5);
+
+		
+		logger.info("current page gubun: {}, unit: {}",page,unit);
+		Boolean pFlag=false;
+		Boolean nFlag=false;
+		//1~5같이 1인 경우는 이전페이지는 없음
+		if(unit==1) {
+			if(finUnit==1) {
+				pFlag=false;
+				nFlag=false;
+			}else {
+				pFlag=false;
+				nFlag=true;
+			}
+
+		}
+		else if(unit==finUnit) {
+			//마지막 유닛은 다음페이지가 없음
+			pFlag=true;
+			nFlag=false;
+		}else if(unit<finUnit){
+			//그 외에 앞으로 단위체가 더 많으면 이전, 이후 유닛페이지가 있음
+			pFlag=true;
+			nFlag=true;
+		}
+		pageList.setPrevUnit(pFlag);
+		pageList.setNextUnit(nFlag);
+		model.addAttribute("unit",unit);
+		model.addAttribute("finUnit",finUnit);
+		model.addAttribute("prevFlag", pFlag);
+		model.addAttribute("nextFlag",nFlag);
+		logger.info("finUnit:{}",finUnit);
+		
+		logger.info("start:{}",indexes[0]);
+		logger.info("end:{}",indexes[1]);
+		logger.info("prevFlag:{}",pFlag);
+		logger.info("nextFlag:{}",nFlag);
+		//가게정보
+		List<JejuDto> jeju=pBiz.getStoreElementsByGubun(gubun, indexes[0],indexes[1], page);
+		//가게들에 대한 메뉴정보
+		int mStartIdx=36*page-35;
+		logger.info("menuList startIdx: {}",mStartIdx);
+	//	List<MenuDto> menuList=menuBiz.getPageMenuList(mStartIdx, page);
+		//이미지에 대한 정보
+		List<ImgDto> imgList=pBiz.getImgElementsByGubun(gubun, indexes[0],indexes[1], page);
+		
+		pageList.setJeju(jeju);
+		pageList.setImg(imgList);
+		pageList.setGubun(gubun);
+		
+		//유닛값에 따른 시작버튼 값
+		int unitStartBtn=5*unit-4;//1,6,...
+		pageList.setListBtnStartIdx(unitStartBtn);
+		logger.info("pagination meta info: {}",pageList);
+		logger.info("list unit start idx(btn):"+unitStartBtn);
+		model.addAttribute("paginationMetaInfo",pageList );
+		
+		logger.info("defaultPage of gubun-jeju:{}",jeju);
+		logger.info("jejusize of gubun: {}",jeju.size());
+		logger.info("defaultPage of gubun-img:{}",imgList);
+		//model에 6개를 뽑아서 전달하기
+		//그런데 그 전에 몇 개가 그 페이지에 들어가는지 확인해야 할 것
+		int size1=jeju.size();
+		int size2=imgList.size();
+		int size=Math.min(size1, size2);//이미지가 삽입되지 않은 경우의 수도 존재
+		
+		
 		String[] div= {"one","two","three","four","five","six"};
 		
 		for(int i=0;i<size;i++) {
@@ -127,8 +266,10 @@ public class JejusituationController {
 		//총 페이지 정보도 보낼 것
 		model.addAttribute("totPages",totPage);
 		
-		return "page_jejusituation/jejusituation_rest";
+		
+		return "page_jejusituation/jejusituation_rest2";
 	}
+	
 	@RequestMapping(value="/jejusituation_rest_detail.do")
 	public String jejusituation_rest_detail() {
 		return "page_jejusituation/jejusituation_rest_detail";
@@ -145,10 +286,12 @@ public class JejusituationController {
 		if(session.getAttribute("user_id")!=null) {
 			user_id=(String)session.getAttribute("user_id");
 			if(user_id!=null) {
-				dto=memberBiz.selectUser(user_id);				
+				dto=memberBiz.selectUser(user_id);
+				session.setAttribute("prev", dto.getUser_member());//권한을 세션에서 공유하도록 설정
 				model.addAttribute("user",dto);
 			}
 		}
+		
 		return "page_jejusituation/jejusituation_rest_create";
 	}
 	
@@ -161,6 +304,7 @@ public class JejusituationController {
 		logger.info("corona info: {}",list);
 		
 		return "page_jejusituation/test";
+		
 	}
 	
 	@RequestMapping(value="/jejuSituationValidUser.do")
@@ -187,11 +331,12 @@ public class JejusituationController {
 		}
 		
 		return msg;
+		
 	}
 	
 	@RequestMapping(value="/registerStore.do")
 	public String registerFoodStore(Model model,MultipartHttpServletRequest request) throws IOException {
-		MultipartFile multipartFile=request.getFile("file");
+		
 		String writer=request.getParameter("writer");
 		//JejuDto
 		//게시글 최대 번호 가져오기
@@ -200,9 +345,10 @@ public class JejusituationController {
 		int groupNo=0;
 		//메뉴 최대 번호 가져오기
 		int menuNo=0;
-		
+
 		JejuDto jeju=new JejuDto();
 		String[] arr=request.getParameter("time").split("~");
+	//	jeju.setSitu_num(boardNo);
 		jeju.setSitu_name(request.getParameter("company"));
 		jeju.setSitu_phone(request.getParameter("phone"));
 		jeju.setSitu_addr(request.getParameter("address"));
@@ -211,6 +357,7 @@ public class JejusituationController {
 		jeju.setSitu_open_time(arr[0]);
 		jeju.setSitu_close_time(arr[1]);
 		jeju.setSitu_gubun(request.getParameter("gubun"));
+		
 		
 		//제주 정보 저장
 		int jRes=biz.saveStore(jeju);//여기에 최댓값이 담길것
@@ -234,6 +381,7 @@ public class JejusituationController {
 			size=pSize;
 		}
 		
+		
 		for(int i=0; i<size;i++) {
 			String chk=tempMenu[i];
 			String pr=tempPrice[i];
@@ -247,7 +395,7 @@ public class JejusituationController {
 			}else {
 				dto.setMenu_id(menuNo);
 				dto.setMenu("없음");
-				dto.setPrice(0);
+				dto.setPrice(1);//Wrapper->null로 0인식가능
 			}
 			menuNo++;
 			menuList.add(dto);
@@ -257,10 +405,13 @@ public class JejusituationController {
 		int menuRes=mBatchService.batchInsert(menuList);
 		logger.info("menu save result:{}",menuRes);
 		
+		
+		
+		
 		//이미지 저장
-		MultipartFile mf=request.getFile("file");
+		MultipartFile multipartFile=request.getFile("file");
 		//파일 이름 가져오기
-		String originName=mf.getOriginalFilename();
+		String originName=multipartFile.getOriginalFilename();
 		//루트 경로
 		String root=request.getSession().getServletContext().getRealPath("/");
 		logger.info("contex path:{}",root);
@@ -277,6 +428,7 @@ public class JejusituationController {
 		
 		File toSave=new File(full,originName);
 		//파일 저장
+		//multipartFile.transferTo(toSave);
 		if(!toSave.exists()) {
 			toSave.createNewFile();
 		}
@@ -310,7 +462,23 @@ public class JejusituationController {
 		int saveRes=imageBiz.saveStoreImg(dto);
 		
 		logger.info("saved image?: {}",saveRes);
-		
+
 		return "redirect:jejusituation_main.do";
 	}
+	
+//	@Transactional
+//	public int saveStore(JejuDto jeju,ImgDto img,HashMap<String, Object> map) {
+//		int tot=0;
+//		int res1=biz.saveStore(jeju);
+//		int res2=imageBiz.saveStoreImg(img);
+//		int res3=menuBiz.saveMenu(map);
+//		
+//		
+//		if(res1>0&&res2>0&&res3>0) {
+//			tot=1;
+//		}else {
+//			tot=-1;
+//		}
+//		return tot;
+//	}
 }
