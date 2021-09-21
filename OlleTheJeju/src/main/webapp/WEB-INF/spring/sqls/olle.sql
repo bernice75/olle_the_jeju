@@ -109,8 +109,6 @@ CREATE TABLE OLLE_IMG(
     GROUP_NUM NUMBER NOT NULL
 );
 
-select * from olle_img;
-
 insert into olle_img
 values((select max(img_num) from olle_img)+1, 3, 11, 'KakaoTalk_20210224_190043790_10.png', 1);
 
@@ -259,11 +257,13 @@ CREATE TABLE OLLE_SITUATION(
 	SITU_ADDR VARCHAR2(3000) NOT NULL, 
     SITU_OPEN_TIME VARCHAR2(300),
 	SITU_CLOSE_TIME  VARCHAR2(300)  NOT NULL, 
-	SITU_HOME VARCHAR2(500)
+	SITU_GUBUN VARCHAR2(500)
 );
 
+select * from olle_situation;
+commit;
 insert into OLLE_SITUATION
-values((select max(situ_num)from OLLE_SITUATION) + 1,123, '김길동', '21/09/16', 123, 123, '09:00', '06:00', 123);
+values((select NVL(max(situ_num), 0) from OLLE_SITUATION) + 1,123, '김길동', '21/09/16', 123, 123, '09:00', '06:00', '한식');
 
 COMMENT ON COLUMN OLLE_SITUATION.SITU_NUM IS '글번호';
 COMMENT ON COLUMN OLLE_SITUATION.SITU_NAME IS '음식점 이름';
