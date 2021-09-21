@@ -66,22 +66,17 @@
 				                    </div>
 				                    <div class="thum_text">
 				                        <div style="font-size: 20px;">${plan.plan_title }</div>
-				                        <!-- 내가 작성한 게시글의 제목 데이터를 받아와서 삽입-->
-				                        <span class="thum_text_span1" style="font-size: 12px;">${plan.plan_tendency }</span>
-				                        <!-- 내가 작성한 게시글의 성향ㄴ 데이터를 받아와서 삽입-->
-				                        <span class="thum_text_span1" style="font-size: 12px;">|</span>
+				                        <span class="thum_text_span1" style="font-size: 12px;">${plan.plan_tendency } | </span>
 				                        <c:choose>
 				                        	<c:when test="${empty tag }">
 				                        		<span class="thum_text_span1"style="font-size: 12px;">해시태그 정보없음</span>
 				                        	</c:when>
 				                        	<c:otherwise>
-				                        			<c:forEach var="hash" begin="0" items="${tag }">
-				                        				<c:forEach var="code" begin="0" items="${hash }">
-				                        					<c:if test="${plan.plan_num eq code.table_num }">
-				                        						<span class="thum_text_span1"style="font-size: 12px;">${code.hash_content }</span>
-				                        					</c:if>
-				                        				</c:forEach>
-				                        			</c:forEach>
+				                        		<c:forEach var="tag" items="${tag }">
+				                        			<c:if test="${plan.plan_num eq tag.table_num }">
+	                        							<span class="thum_text_span1" style="font-size: 12px;">${tag.hash_content }</span>
+	                        						</c:if>
+				                        		</c:forEach>
 				                        	</c:otherwise>
 				                        </c:choose>
 				                        <!-- 내가 작성한 게시글의 해시태그 데이터를 받아와서 삽입-->
@@ -98,26 +93,22 @@
 	                
 	            </div>
 	            <br>
-	            <!-- 기능구현시 수정해야함 (연결하기)(아이콘 안보임)-->
-	            <div>
-	            <nav class="paging" aria-label="Page navigation example">
-	                <ul class="pagination">
-	                  <li class="page-item">
-	                    <a class="page-link" href="#" aria-label="Previous">
-	                      <span aria-hidden="true">&laquo;</span>
-	                    </a>
-	                  </li>
-	                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                  <li class="page-item">
-	                    <a class="page-link" href="#" aria-label="Next">
-	                      <span aria-hidden="true">&raquo;</span>
-	                    </a>
-	                  </li>
-	                </ul>
-	              </nav>
-	              </div>
+	            <!-- 페이징처리 -->
+	           <div class="paging">
+	            	<nav aria-label="Page navigation example">
+					  <ul class="pagination">
+					    <%-- <c:if test="${pageMaker.prev}"> --%>
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(pageMaker.startPage - 1)}&plan_writer=${sessionScope.user_id}">이전</a></li>
+					    <%-- </c:if>  --%>
+					    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(idx)}&plan_writer=${sessionScope.user_id}">${idx}</a></li>
+					    </c:forEach>
+					    <%-- <c:if test="${pageMaker.next && pageMaker.endPage > 0}"> --%>
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(pageMaker.endPage + 1)}&plan_writer=${sessionScope.user_id}">다음</a></li>
+					    <%-- </c:if>  --%>
+					  </ul>
+				 	 </nav>
+				</div>
 	            <br><br>
 	
 	            <!-- 내가 찜한 일정 -->
@@ -131,13 +122,13 @@
 	            <div class="plan_thum">
 	                <!-- jstl core foreach로 썸네일 목록 반복 -->
 	                <c:choose>
-	                	<c:when test="${empty list }">
+	                	<c:when test="${empty plan }">
 	                		<tr>
 								<td colspan ="4">----내가 찜한 일정이 존재하지 않습니다----</td>
 							</tr>
 	                	</c:when>
 	                	<c:otherwise>
-	                		<c:forEach var="plan" items="${list }">
+	                		<c:forEach var="plan" items="${plan }">
 	                			<div class="thum_item" onclick="location.href='#'">
 				                    <div class="img_thum">
 			                            <div class="nail_img">
@@ -158,13 +149,11 @@
 				                        		<span class="thum_text_span1"style="font-size: 12px;">해시태그 정보없음</span>
 				                        	</c:when>
 				                        	<c:otherwise>
-				                        			<c:forEach var="hash" begin="0" items="${tag }">
-				                        				<c:forEach var="code" begin="0" items="${hash }">
-				                        					<c:if test="${plan.plan_num eq code.table_num }">
-				                        						<span class="thum_text_span1"style="font-size: 12px;">${code.hash_content }</span>
-				                        					</c:if>
-				                        				</c:forEach>
-				                        			</c:forEach>
+				                        		<c:forEach var="tag" items="${tag }">
+				                        			<c:if test="${plan.plan_num eq tag.table_num }">
+		                        						<span class="thum_text_span1"style="font-size: 12px;">${tag.hash_content }</span>
+		                        					</c:if>
+				                        		</c:forEach>
 				                        	</c:otherwise>
 				                        </c:choose>
 				                        <!-- 내가 작성한 게시글의 해시태그 데이터를 받아와서 삽입-->
@@ -196,24 +185,22 @@
 	                </c:choose>
 	            </div>
 	            <br>
-	            <!-- 기능구현시 수정해야함 (연결하기)(아이콘 안보임)-->
-	            <nav class="paging" aria-label="Page navigation example">
-	                <ul class="pagination">
-	                  <li class="page-item">
-	                    <a class="page-link" href="#" aria-label="Previous">
-	                      <span aria-hidden="true">&laquo;</span>
-	                    </a>
-	                  </li>
-	                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                  <li class="page-item">
-	                    <a class="page-link" href="#" aria-label="Next">
-	                      <span aria-hidden="true">&raquo;</span>
-	                    </a>
-	                  </li>
-	                </ul>
-	              </nav>
+	            <!-- 페이징 -->
+	            <div class="paging">
+	            	<nav aria-label="Page navigation example">
+					  <ul class="pagination">
+					    <%-- <c:if test="${pageMaker.prev}"> --%>
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(pageMaker.startPage - 1)}&plan_writer=${sessionScope.user_id}">이전</a></li>
+					    <%-- </c:if>  --%>
+					    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(idx)}&plan_writer=${sessionScope.user_id}">${idx}</a></li>
+					    </c:forEach>
+					    <%-- <c:if test="${pageMaker.next && pageMaker.endPage > 0}"> --%>
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(pageMaker.endPage + 1)}&plan_writer=${sessionScope.user_id}">다음</a></li>
+					    <%-- </c:if>  --%>
+					  </ul>
+				 	 </nav>
+				</div>
 	            <br><br><br><br>
 	        </main>
 	        <!-- main 끝 -->

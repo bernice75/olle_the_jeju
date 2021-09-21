@@ -8,12 +8,12 @@
 		<result property="situ_num" column="SITU_NUM"/>
 		<result property="situ_name" column="SITU_NAME"/>
 		<result property="situ_writer" column="SITU_WRITER"/>
-		<result property="situ_regdate" column="SITU_REGDATE"/>
+		<result property="situ_regDate" column="SITU_REGDATE"/>
 		<result property="situ_phone" column="SITU_PHONE"/>
 		<result property="situ_addr" column="SITU_ADDR"/>
 		<result property="situ_open_time" column="SITU_OPEN_TIME"/>
 		<result property="situ_close_time" column="SITU_CLOSE_TIME"/>
-		<result property="situ_home" column="SITU_HOME"/>
+		<result property="situ_gubun" column="SITU_GUBUN"/>
 	</resultMap>
 	
 	<select id="selectList" parameterType="int" resultMap="jejuMap">
@@ -33,7 +33,11 @@
 	<select id="countTotalElements" resultType="int">
 		SELECT COUNT(SITU_NUM) FROM OLLE_SITUATION
 	</select>
-	
+	<!-- 제주상황 맛집 구분별 페이징 처리를 위한 전체 게시글 갯수 카운트 -->
+	<select id="countTotalElementsByGubun" parameterType="String" resultType="int">
+			SELECT COUNT(SITU_NUM) FROM OLLE_SITUATION
+			WHERE SITU_GUBUN=#{situ_gubun}
+	</select>
 	<!-- 조건이 없을 때 제주상황 가게 리스트 가져오기 -->
 	<!-- paginationIdxDto -->
 	<select id="totalStoreSelect" parameterType="paginationIdxDto" resultType="jejuDto">
@@ -51,9 +55,20 @@
 	</select>
 	
 	<!-- 작성자 조건 페이징 조회 -->
-	<!-- 주소    조건 페이징 조회 -->
-	<select id="storeAddrPagination">
-	
+	<!-- 구분    조건 페이징 조회 -->
+	<select id="storeGubunPagination" parameterType="paginationIdxDto" resultType="jejuDto">
+		SELECT B.*
+		FROM(
+    			SELECT ROWNUM AS RN,A.* FROM (
+					SELECT SITU_NUM,SITU_NAME,SITU_WRITER,SITU_REGDATE,SITU_PHONE,
+					SITU_ADDR,SITU_OPEN_TIME,SITU_CLOSE_TIME,SITU_GUBUN
+					FROM OLLE_SITUATION
+					WHERE SITU_NUM>0 AND
+					SITU_GUBUN=#{situ_gubun}
+					) A
+				ORDER BY A.SITU_NUM ASC
+		)B
+		WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
 	</select>
 	
 	<insert id="insertSit" parameterType="jejuDto">

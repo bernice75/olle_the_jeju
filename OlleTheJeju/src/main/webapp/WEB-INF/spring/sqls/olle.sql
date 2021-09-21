@@ -105,8 +105,27 @@ CREATE TABLE OLLE_IMG(
 	IMG_NUM  NUMBER PRIMARY KEY, 
 	BOARD_NUM NUMBER NOT NULL, 
 	TABLE_NUM NUMBER NOT NULL, 
-	IMG_TITLE VARCHAR2(1000) NOT NULL
+	IMG_TITLE VARCHAR2(1000) NOT NULL,
+    GROUP_NUM NUMBER NOT NULL
 );
+
+select * from olle_img;
+
+insert into olle_img
+values((select max(img_num) from olle_img)+1, 3, 11, 'KakaoTalk_20210224_190043790_10.png', 1);
+
+insert into olle_img
+values((select max(img_num) from olle_img)+1, 3,11, 'KakaoTalk_20210224_190043790_21.jpg', 2);
+
+insert into olle_img
+values((select max(img_num) from olle_img)+1, 3, 11, 'KakaoTalk_20210315_215420498.jpg', 3);
+
+
+insert into olle_hashtag
+values(11, 3,2, '힐링');
+
+commit;
+
 
 ALTER TABLE OLLE_IMG ADD CONSTRAINT BOARD_NUM_CHK CHECK (BOARD_NUM IN (1, 2, 3, 4));
 --1 : 관광일정, 2 : 추천일정, 3 : 나만의 일정, 4 : 제주상황

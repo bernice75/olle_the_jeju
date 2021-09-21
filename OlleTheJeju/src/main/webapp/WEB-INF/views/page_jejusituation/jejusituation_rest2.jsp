@@ -112,7 +112,7 @@
                 <div class="paging">
                 	<%-- 이전버튼을 보여줄 필요가 있음 --%> 
                 	<c:if test="${prevFlag == true}">
-						<a class="prev" href="jejusituation_rest.do?page=${paginationMetaInfo.listBtnStartIdx-5}">이전</a>
+						<a class="prev" href="jejusituation_search_gubun.do?gubun=${paginationMetaInfo.gubun}&page=${paginationMetaInfo.listBtnStartIdx-5}">이전</a>
 					</c:if>
 					<%-- 리스트버튼을 보여줄 필요가 있음 --%>
 					<c:choose>
@@ -120,7 +120,7 @@
 						<c:when test="${not empty paginationMetaInfo.jeju }">
 							  <c:forEach begin="${paginationMetaInfo.listBtnStartIdx}" end="${paginationMetaInfo.listBtnStartIdx+4}" var="item">
 						  		<c:if test="${item le paginationMetaInfo.totalPages}">
-						  			<a href="jejusituation_rest.do?page=${item }">${item }</a>
+						  			<a href="jejusituation_search_gubun.do?gubun=${paginationMetaInfo.gubun}&page=${item }">${item }</a>
 						  		</c:if>
 						  </c:forEach>
 							
@@ -128,14 +128,14 @@
 					</c:choose>
 							<%-- 이후버튼을 보여줄 필요가 있음 --%>
 					 	<c:if test="${nextFlag eq true}">
-						 	<a class="next" href="jejusituation_rest.do?page=${paginationMetaInfo.listBtnStartIdx+5}">이후</a>
+						 	<a class="next" href="jejusituation_search_gubun.do?gubun=${paginationMetaInfo.gubun}&page=${paginationMetaInfo.listBtnStartIdx+5}">이후</a>
 					 	</c:if>
                 </div>
                 <br><br><br>
             </div>
 			<jsp:include page="../include/footer.jsp"></jsp:include>
         </div>
-        <script type="text/javascript" src="./resources/js/jejusituation/jejusituation_rest.js"></script>
+        <script type="text/javascript" src="./resources/js/jejusituation/jejusituation_rest2.js"></script>
         <script>
         	function registerStoreForm(){
         		$.ajax({
@@ -160,4 +160,3 @@
         	
         </script>
     </body>
-</html>

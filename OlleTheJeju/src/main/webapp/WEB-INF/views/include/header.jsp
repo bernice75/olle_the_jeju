@@ -48,7 +48,7 @@
                    <ul class="slide two">
                        <li><a href="#">코로나상황</a></li>
                        <li><a href="#">관광지혼잡도</a></li>
-                       <li><a href="jejusituation_rest.do">맛집예약/현황</a></li>
+                       <li><a href="jejusituation_rest.do?page=1">맛집예약/현황</a></li>
                    </ul>
                </li>
                <li><a href="notice_main.do">고객지원</a></li>

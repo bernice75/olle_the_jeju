@@ -5,6 +5,7 @@ import java.util.Date;
 public class MemberDto {
 	private String user_id;
 	private String user_pw;
+	private String user_newpw;
 	private String user_name;
 	private int user_age;
 	private String user_addr;
@@ -22,12 +23,13 @@ public class MemberDto {
 	public MemberDto() {
 		super();
 	}
-	public MemberDto(String user_id, String user_pw, String user_name, int user_age, String user_addr,
+	public MemberDto(String user_id, String user_pw, String user_newpw, String user_name, int user_age, String user_addr,
 			String user_addrdetail, String user_phone, String user_email, String user_member, String user_status,
 			int user_warning, Date user_regdate, Date user_sec_date, String user_img, String user_nick) {
 		super();
 		this.user_id = user_id;
 		this.user_pw = user_pw;
+		this.user_newpw = user_newpw;
 		this.user_name = user_name;
 		this.user_age = user_age;
 		this.user_addr = user_addr;
@@ -54,6 +56,12 @@ public class MemberDto {
 	}
 	public void setUser_pw(String user_pw) {
 		this.user_pw = user_pw;
+	}
+	public String getUser_newpw() {
+		return user_newpw;
+	}
+	public void setUser_newpw(String user_newpw) {
+		this.user_newpw = user_newpw;
 	}
 	public String getUser_name() {
 		return user_name;

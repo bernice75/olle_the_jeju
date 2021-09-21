@@ -68,6 +68,16 @@ public class ImgDaoImpl implements ImgDao {
 		List<ImgDto> list=sqlSession.selectList(NAMESPACE+"storeImg",pg);
 		return list;
 	}
+	
+	@Override
+	public List<ImgDto> getStoreImgByGubun(String gubun, int startIdx, int endIdx) {
+		PaginationIdxes pg=new PaginationIdxes();
+		pg.setSitu_gubun(gubun);
+		pg.setStartIdx(startIdx);
+		pg.setEndIdx(endIdx);
+		List<ImgDto> list=sqlSession.selectList(NAMESPACE+"storeImgByGubun",pg);
+		return list;
+	}
 
 	@Override
 	public int cusInsert(ImgDto dto) {

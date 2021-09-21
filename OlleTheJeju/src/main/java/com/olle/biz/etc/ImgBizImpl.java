@@ -38,4 +38,8 @@ public class ImgBizImpl implements ImgBiz {
 	public List<ImgDto> selectList(int board_num) {
 		return dao.selectList(board_num);
 	}
+	@Override
+	public List<ImgDto> getStoreImgByGubun(String gubun, int startIdx, int endIdx) {
+		return dao.getStoreImgByGubun(gubun, startIdx, endIdx);
+	}
 }

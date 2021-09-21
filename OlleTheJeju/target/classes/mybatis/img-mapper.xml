@@ -37,9 +37,23 @@
 		WHERE BOARD_NUM=4 AND (TABLE_NUM BETWEEN #{startIdx} AND #{endIdx})
 	</select>
 	
+	<!-- 구분에 따른 페이징 처리 -->
+	<select id="storeImgByGubun" parameterType="paginationIdxDto" resultType="imgDto">
+		SELECT B.*
+		FROM (SELECT A.*, ROWNUM AS RN
+			  FROM
+				(SELECT IMG_NUM, BOARD_NUM, TABLE_NUM,IMG_TITLE, GROUP_NUM,S.SITU_GUBUN
+				FROM OLLE_IMG I
+				JOIN OLLE_SITUATION S ON(S.SITU_NUM=I.TABLE_NUM)
+				WHERE I.BOARD_NUM=4
+				ORDER BY I.TABLE_NUM)A
+				WHERE A.SITU_GUBUN=#{situ_gubun})B
+		WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
+	</select>
+	
 	<insert id="insert" parameterType="imgDto">
 		<selectKey resultType="int" keyProperty="img_num" order="BEFORE">
-			SELECT (NVL2(MAX(IMG_NUM)+1,MAX(IMG_NUM)+1,1)) AS PRI  FROM OLLE_IMG
+		  SELECT (NVL2(MAX(IMG_NUM)+1,MAX(IMG_NUM)+1,1)) AS PRI  FROM OLLE_IMG
 		</selectKey>
 		INSERT INTO OLLE_IMG
 		VALUES(#{img_num},#{board_num},#{table_num},#{img_title},#{group_num})

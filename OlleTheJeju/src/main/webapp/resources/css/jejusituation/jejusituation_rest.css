@@ -86,36 +86,42 @@
     grid-column-end: 2;
     background: lightgray;
     color: black;
+    height:350px;
 }
 .nail2 {
     grid-column-start: 2;
     grid-column-end: 3;
     background: lightgray;
     color: black;
+	height:350px;
 }
 .nail3 {
     grid-column-start: 3;
     grid-column-end: 4;
     background: lightgray;
     color: black;
+	height:350px;    
 }
 .nail4 {
     grid-column-start: 1;
     grid-column-end: 2;
     background: lightgray;
     color: black;
+	height:350px;    
 }
 .nail5 {
     grid-column-start: 2;
     grid-column-end: 3;
     background: lightgray;
     color: black;
+	height:350px;    
 }
 .nail6 {
     grid-column-start: 3;
     grid-column-end: 4;
     background: lightgray;
     color: black;
+	height:350px;    
 }
 .write {
     height: fit-content;
@@ -134,7 +140,7 @@
     right: 0;
     bottom: 0;
     display:none;
-    overflow: auto;
+   /*  overflow: auto; */
     width:100%;
     height:100%;
     z-index: 2;
@@ -161,4 +167,26 @@
     content:"";
     clear:both;
     display: block;
+}
+
+img.store{
+	width:150px;
+	height:150px;
+}
+
+.nail1-text2{
+	background:pink;
+	font-weight:bold;
+	color:white;
+	border-radius:5px;
+	padding:5px;
+}
+
+.prev,
+.next{
+	font-size:15px;
+	font-weight:bold;
+	background:orange;
+	color:white;
+	padding:10px;
 }

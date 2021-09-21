@@ -40,17 +40,19 @@
 	        <!--  우측, 유저 정보 입력 -->
 	        <main class="main item">
 	            <div class="user_update">
-	            <form id="mypage_form" name="mypage_form" action="updateUser.do" method="post">
+	            <form id="mypage_form" name="mypage_form" action="profileUpdate.do" method="post" enctype="multipart/form-data">
 	        	<input type="hidden" name="mypage_form" value="${dto.user_id }">
 	                <div class="update_title">
 	                    <p style="font-size: 25px;"><b>회원 정보 수정</b></p>
 	                </div>
-	                <div class="user_img">
-	                    <div id='previewId' style='width: 100px; height: 100px; position: absolute; '></div>
+	                <!-- 프로필 이미지 추가는 일단 빼는걸로 -->
+	                <div class="user_img" style="background-image: url('./resources/img/${dto.user_img}');">
+	                    <div id='previewId' style='width: 100px; height: 100px; position: absolute;'></div>
 	                </div>
 	                <div class="img_update">
 	                    <input type="file" id="ex_file" name="poster" onchange="previewImage(this,'previewId')">
-	                    <p style="font-size: 11px;">1mb 이하의 JPEG파일만 등록 가능합니다</p>
+	                    <p style="font-size: 11px;">1mb 이하의 JPEG파일만 프로필 이미지로 등록 가능합니다</p>
+	                    <input type="submit" class="btn btn-primary btn-block" id="profileimg" name="profileimg" value="등록/변경">
 	                </div>
 	                <br><br>
 	                    <div class="mb-3 row">
@@ -66,7 +68,6 @@
 	                        <div class="col-sm-6">
 	                            <input type="text" class="form-control" id="nickname" value="${dto.user_nick }" readonly="readonly">
 	                        </div>
-	                        <!--<button class="btn btn-default">변경</button>-->
 	                    </div>
 	                                
 	                    <div class="mb-3 row">
@@ -79,13 +80,13 @@
 	                    <div class="mb-3 row">
 	                        <label for="password" class="col-sm-3 col-form-label">기존 비밀번호</label>
 	                        <div class="col-sm-6">
-	                            <input type="password" class="form-control" id="password" name="password" value="">
+	                            <input type="password" class="form-control" id="password" value="">
 	                        </div>
 	                    </div>
 	                    <div class="mb-3 row">
 	                        <label for="newpassword" class="col-sm-3 col-form-label">신규 비밀번호</label>
 	                        <div class="col-sm-6">
-	                            <input type="password" class="form-control" id="newpassword" name="newpassword" value="">
+	                            <input type="password" class="form-control" id="newpassword" value="">
 	                        </div>
 	                    </div>
 	                    <div class="mb-3 row">
@@ -104,7 +105,7 @@
 	                    <div class="mb-3 row">
 	                        <label for="address" class="col-sm-3 col-form-label">주소</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" id="address1" name="address1" value="${dto.user_addr }" readonly="readonly">
+	                            <input type="text" class="form-control" id="address1"  value="${dto.user_addr }" readonly="readonly">
 	                        </div>
 	                        <div class="col-sm-2">
 	                            <input type="button" class="btn btn-primary btn-block" onclick="addressForm();" value="주소찾기">
@@ -113,14 +114,12 @@
 	                    <div class="mb-3 row">
 	                        <label for="address" class="col-sm-3 col-form-label">상세주소</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" id="address2" name="address2" value="${dto.user_addrdetail }" >
+	                            <input type="text" class="form-control" id="address2" value="${dto.user_addrdetail }" >
 	                        </div>
 	                    </div>
 	                    <div class="btn_group">
-	                        <input type="button" class="btn btn-primary btn-block" onclick="location.href='../page_mypage/mypageplan.html'" value="취소">
-	                        <input type="submit" class="btn btn-primary btn-block"  value="정보수정" onclick="pwChkForm();">
-	                        <!-- <input type="button" class="btn btn-primary btn-block" onclick="" value="회원탈퇴"> -->
-	                        <!-- Button trigger modal -->
+	                        <input type="button" class="btn btn-primary btn-block" onclick="location.href='mypage_plan.do?plan_writer=${sessionScope.user_id}'" value="취소">
+	                        <input type="button" class="btn btn-primary btn-block"  value="정보수정" onclick="pwChkForm();">
 	                        <button type="button" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#staticBackdrop">회원탈퇴</button> 
 	                    </div>
 	                    <br>

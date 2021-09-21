@@ -14,7 +14,7 @@
 	<resultMap type="menuDto" id="maxPk">
 		<result column="PRI" property="menu_id"/>
 	</resultMap>	
-	<select id="pkMax" resultMap="maxPk">
+	<select id="pkMax" resultType="int">
 		<![CDATA[
 		SELECT (NVL2(MAX(MENU_ID)+1,MAX(MENU_ID)+1,1)) AS PRI FROM OLLE_SITU_MENU
 		]]>
@@ -25,5 +25,15 @@
 		FROM OLLE_SITU_MENU
 		WHERE STORE_ID=#{store_id}
 	</select>	
+	<!-- 페이지별로 메뉴리스트 가져오기(구분별로) -->
+	<select id="getPageMenuList" parameterType="paginationIdxDto" resultMap="menuMap">
+		SELECT B.*
+		FROM (SELECT A.*, ROWNUM AS RN
+			  FROM (SELECT MENU_ID,STORE_ID,MENU,PRICE
+					FROM OLLE_SITU_MENU M
+					JOIN OLLE_SITUATION S ON(M.STORE_ID=S.SITU_NUM)
+			ORDER BY STORE_ID,MENU_ID) A)B
+		WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
+	</select>
 		
 </mapper>

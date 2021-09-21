@@ -4,7 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.olle.mapper.MenuMapper">
-  	<update id="batchInsert" parameterType="menuDto">
+  
+     <update id="batchInsert" parameterType="menuDto">
   		<selectKey resultType="int" keyProperty="menu_id" order="BEFORE">
   			SELECT (NVL2(MAX(MENU_ID)+1,MAX(MENU_ID)+1,1)) AS PRI FROM OLLE_SITU_MENU	
   		</selectKey>
@@ -15,4 +16,5 @@
   		)
   		</foreach>
   	</update>
+  
   </mapper>

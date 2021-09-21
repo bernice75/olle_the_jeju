@@ -33,6 +33,7 @@ import com.olle.biz.etc.DateBiz;
 import com.olle.biz.etc.HashBiz;
 import com.olle.biz.etc.ImgBiz;
 import com.olle.biz.member.MemberBiz;
+import com.olle.biz.mypage.MypageBiz;
 import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.DateDto;
 import com.olle.dto.etc.HashtagDto;
@@ -54,6 +55,9 @@ public class CustomplanController {
 	
 	@Autowired
 	private ImgBiz imgBiz;
+	
+	@Autowired
+	private MypageBiz mbiz;
 	
 	@RequestMapping(value = "customplan_main.do", method = RequestMethod.GET)
 	public String customplan_main(Model model, String search, @RequestParam(value="page", defaultValue="1") int page) {
@@ -94,8 +98,25 @@ public class CustomplanController {
 		
 		model.addAttribute("imgList", nameList);
 		
-		//나만의 일정 게시판에 대한 해시태그 받아오기
-		List<HashtagDto> hashList = hashbiz.selectList(3);
+		//해시태그 조회
+		CustomDto dto = new CustomDto();
+		int plan_num = 0;
+		List<HashtagDto> hash = new ArrayList<HashtagDto>();
+		for(int i = 0; i < plan.size(); i++) {
+			dto.setPlan_num(plan.get(i).getPlan_num());
+			plan_num = dto.getPlan_num();
+			hash.add(i, mbiz.hashList(plan_num));
+		}
+		//해시태그 형식은 해시1, 해시2 이런 방식이므로 대표 1개의 해시태그만 끊어오려면 split을 사용
+		List<HashtagDto> hashList = new ArrayList<HashtagDto>();
+		for(int i = 0; i < hash.size(); i++) {
+			HashtagDto hashTag = new HashtagDto();
+			hashTag.setHash_num(hash.get(i).getHash_num());
+			hashTag.setBoard_num(hash.get(i).getBoard_num());
+			hashTag.setTable_num(hash.get(i).getTable_num());
+			hashTag.setHash_content(hash.get(i).getHash_content().split(",")[0]);
+			hashList.add(i, hashTag);
+		}
 		
 		model.addAttribute("hashList", hashList);
 		
@@ -103,7 +124,16 @@ public class CustomplanController {
 	}
 	
 	@RequestMapping(value = "customplan_detail.do", method = RequestMethod.GET)
-	public String customplan_detail() {
+	public String customplan_detail(int plan_num, Model model) {
+		//글정보
+		CustomDto dto = cusbiz.selectOne(plan_num);
+		model.addAttribute("dto", dto);
+		
+		//해시태그
+		
+		//코스정보(date)
+		
+		//이미지 정보
 		return "page_customplan/customplan_detail";
 	}
 	

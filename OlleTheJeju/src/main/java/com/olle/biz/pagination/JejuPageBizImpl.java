@@ -38,12 +38,31 @@ public class JejuPageBizImpl implements JejuPageBiz {
 
 	@Override
 	public List<ImgDto> getImgElementsPerPage(int startIdx, int endIdx, int page) {
-		// TODO Auto-generated method stub
 		return dao.getImgElementsPerPage(startIdx, endIdx, page);
 	}
 
 	@Override
 	public ArrayList<ArrayList<MenuDto>> getMenuListElementsPerPage(int startIdx, int endIdx, int page) {
 		return null;
+	}
+
+	@Override
+	public List<JejuDto> getStoreElementsByGubun(String gubun, int startIdx, int endIdx, int page) {
+		return dao.getStoreElementsByGubun(gubun, startIdx, endIdx, page);
+	}
+
+	@Override
+	public List<ImgDto> getImgElementsByGubun(String gubun, int startIdx, int endIdx, int page) {
+		return dao.getImgElementsByGubun(gubun, startIdx, endIdx, page);
+	}
+
+	@Override
+	public int getTotalElementsByGubun(String gubun) {
+		return dao.getTotalElementsByGubun(gubun);
+	}
+
+	@Override
+	public int getTotalPagesByGubun(String gubun,int unit) {
+		return dao.getTotalPagesByGubun(gubun,unit);
 	}
 }

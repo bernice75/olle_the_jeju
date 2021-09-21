@@ -1,4 +1,3 @@
-
 @font-face {
     font-family: 'cafe24_ddh';
     src: url('../../font/Cafe24Dangdanghae.ttf');
@@ -46,6 +45,7 @@ body {
 
 .main {
     grid-column: 1/3;
+    grid-row: 1/3;
     background: #F8F8FA;
 }
 .nail-first {
@@ -67,9 +67,15 @@ body {
     color: black;
 
 }
+
 .nail1 .preview-target{
     width:100%;
     height:100%;
+}
+
+.attached_img{
+    position: absolute;
+    margin-left:100px;
 }
 
 .nail2 {
@@ -95,7 +101,6 @@ body {
     grid-gap: 40px;
     padding-left: 40px;
     padding-right: 40px;
-    height: 210px;
     justify-content: center;
 }
 .nail3 {
@@ -109,7 +114,7 @@ body {
 
 .bottom-btn{
     color: black;
-    text-align: center;
+    margin-left: 43%;
 }
 #btn1{
     width: 80px;
@@ -120,3 +125,11 @@ body {
     margin-left: 20px;
 }
 
+select[name=gubun]{
+    width:100px;
+    height: 30px;
+}
+
+input[type=file]{
+	margin-top:350px;
+}

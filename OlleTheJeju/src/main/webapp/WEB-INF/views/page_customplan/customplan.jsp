@@ -58,21 +58,48 @@
                 		<div class="nail">
 	                		<c:forEach var="plan" items="${planList }" varStatus="status">
 	                				<div class="nail${status.count }">
-				                        <a href="customplan_detail.do">
-				                            <div class="nail_img">
-				                                <div class="sleep">${plan.plan_term }</div>
-				                            </div>
+				                        <a href="customplan_detail.do?plan_num=${plan.plan_num }">
+				                            <c:choose>
+		                						<c:when test="${empty imgList }">
+		                							<div class="nail_img">
+				                							<div class="sleep">${plan.plan_term }</div>
+						                            </div>
+		                						</c:when>
+		                						<c:otherwise>
+		                							<c:forEach var="img" items="${imgList }">
+		                								<c:if test="${plan.plan_num eq img.table_num }">
+		                        							<div class="nail_img" style="background-image: url('./resources/plan/${img.img_title}');">
+						                							<div class="sleep">${plan.plan_term }</div>
+								                            </div>
+		                        						</c:if>
+		                							</c:forEach>
+		                						</c:otherwise>
+		                					</c:choose>
+				                                
 				                        </a>
 				
 					                    <div class="nail_inner">
 					                        <p class="nail_title">${plan.plan_title }</p>
-					                        <p class="nail_con_hash">${plan.plan_tendency } | 해쉬태그명</p>
+					                        <p class="nail_con_hash">${plan.plan_tendency } | 
+						                        <c:choose>
+						                        	<c:when test="${empty hashList }">
+						                        		해시정보 없음
+						                        	</c:when>
+						                        	<c:otherwise>
+						                        		<c:forEach var="tag" items="${hashList }">
+						                        			<c:if test="${plan.plan_num eq tag.table_num }">
+			                        							${tag.hash_content }
+			                        						</c:if>
+						                        		</c:forEach>
+						                        	</c:otherwise>
+						                        </c:choose>
+					                        </p>
 					                        <span class="nail_like">추천수 | ${plan.plan_push }</span>
 					                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					                        <span class="nail_view">조회수 | ${plan.plan_views }</span>
 					                        <hr style="margin-bottom: 0;">
-					                        <div class="nail_hrt"><a href=""><i class="fa fa-heart-o fa-xs"></i></a> &nbsp; 찜하기</div>
+					                        <!-- <div class="nail_hrt"><a href=""><i class="fa fa-heart-o fa-xs"></i></a> &nbsp; 찜하기</div> -->
 					                    </div>
 				                    </div>
 	                		</c:forEach>
@@ -84,8 +111,18 @@
                 
                 <!-- 페이징 처리 -->
                 <div class="paging">
+                	<nav aria-label="Page navigation example">
+                		<ul class="pagination">
+               				<li class="page-item"><a class="page-link" href="customplan_main.do?search=&page=${paging.beginPage}">처음으로</a></li>
+                			<c:forEach begin="${paging.beginPage}" end="${paging.endPage }" step="1" var="index">
+                				<li class="page-item"><a class="page-link" href="customplan_main.do?search=&page=${index}">${index}</a></li>
+						    </c:forEach>
+					    	<li class="page-item"><a class="page-link" href="customplan_main.do?search=&page=${paging.beginPage+1}">다음</a></li>
+                		</ul>
+                	</nav>
+                	<!-- 
 					<c:if test="${paging.prev}">
-		    			<a href="customplan_main.do?search=&page=${paging.beginPage-1}" class="prev" style="font-size:20px; margin-right: 5px;">prev</a>
+		    			<a href="customplan_main.do?search=&page=${paging.beginPage+1}" class="prev" style="font-size:20px; margin-right: 5px;">prev</a>
 					</c:if>
 					<c:forEach begin="${paging.beginPage}" end="${paging.endPage }" step="1" var="index">
 		    			<c:choose>
@@ -100,6 +137,7 @@
 					<c:if test="${paging.next}">
 		   				<a href="customplan_main.do?search=&page=${paging.beginPage+1}" class="next" style="font-size:20px; margin-left: 5px;">next</a>
 					</c:if>
+					 -->
 				</div>
                 <br><br><br><br><br>
 			</div>
