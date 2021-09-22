@@ -58,7 +58,7 @@
                 		<div class="nail">
 	                		<c:forEach var="plan" items="${planList }" varStatus="status">
 	                				<div class="nail${status.count }">
-				                        <a href="customplan_detail.do">
+				                        <a href="customplan_detail.do?plan_num=${plan.plan_num}">
 				                            <div class="nail_img">
 				                                <div class="sleep">${plan.plan_term }</div>
 				                            </div>

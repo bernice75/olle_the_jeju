@@ -25,8 +25,12 @@
 		SELECT * FROM OLLE_DATE
 	</select>
 	
+	<!-- 나만의 일정 디테일 -->
 	<select id="selectOne" resultType="dateDto">
-
+		SELECT *
+		FROM OLLE_DATE
+		WHERE BOARD_NUM = 3 AND TABLE_NUM= #{plan_num}
+		ORDER BY TABLE_NUM
 	</select>
 	
 	<insert id="insert" parameterType="dateDto">

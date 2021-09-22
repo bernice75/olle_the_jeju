@@ -38,4 +38,8 @@ public class ImgBizImpl implements ImgBiz {
 	public List<ImgDto> selectList(int board_num) {
 		return dao.selectList(board_num);
 	}
+	@Override
+	public ImgDto selectOne(int img_num) {
+		return dao.selectOne(img_num);
+	}
 }

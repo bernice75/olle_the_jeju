@@ -27,4 +27,20 @@ public class DateDaoImpl implements DateDao {
 	public int maxNum() {
 		return (Integer) (sqlSession.selectOne(NAMESPACE + "maxNum") == null ? 0:sqlSession.selectOne(NAMESPACE + "maxNum"));
 	}
+	
+	//나만의 일정 디테일 지도 값 가져오기
+	@Override
+	public DateDto selectOne(int plan_num) {
+		
+		DateDto dto = null;
+		
+		try {
+			dto = sqlSession.selectOne(NAMESPACE + "selectOne", plan_num);
+		} catch (Exception e) {
+			System.out.println("[error] : 나만의 일정 디테일 date 가져오기 실패");
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
 }

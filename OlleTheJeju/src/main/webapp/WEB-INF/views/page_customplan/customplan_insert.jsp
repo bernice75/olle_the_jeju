@@ -135,7 +135,6 @@
                         당일 여행부터 4일 이상의 여행까지,<br>
                         개인의 취향과 시간에 맞게 다양한 여행 일정을 계획해 더욱 즐거운 제주도 여행을 경험하세요!</p><br><br>
                     <h2>사진 첨부 및 게시글 등록</h2>
-                    </p>
                 </div>
                 <br>
                 <form action="customplan_insert.do" method="post" enctype="multipart/form-data">
@@ -227,7 +226,7 @@
                     </div>
                     <br><br>
                     <div class="bottom-btn-group2">
-                        <input id="btn1" type="submit" class="btn btn-primary" value="등록" onclick="">
+                        <input id="btn1" type="submit" class="btn btn-primary" value="등록" onclick="location.href='customplan_insert.do'">
                         <input id="btn2" type="button" class="btn btn-secondary" value="취소" onclick="location.href='customplan_main.do'">
                     </div>
                 </form>

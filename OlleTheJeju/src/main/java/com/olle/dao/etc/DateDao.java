@@ -7,4 +7,5 @@ public interface DateDao {
 
 	public int insert(DateDto dto);
 	public int maxNum();
+	public DateDto selectOne(int plan_num);
 }

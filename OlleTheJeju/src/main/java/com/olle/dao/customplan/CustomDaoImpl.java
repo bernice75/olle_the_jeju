@@ -41,7 +41,18 @@ public class CustomDaoImpl implements CustomDao{
 
 	@Override
 	public CustomDto selectOne(int plan_num) {
-		return null;
+		
+		CustomDto dto = null;
+		
+		try {
+			dto = sqlSession.selectOne(NAMESPACE + "selectOne",plan_num);
+		} catch (Exception e) {
+			System.out.println("[error] : 나만의 일정 select one");
+			e.printStackTrace();
+		}
+		
+		
+		return dto;
 	}
 
 	@Override

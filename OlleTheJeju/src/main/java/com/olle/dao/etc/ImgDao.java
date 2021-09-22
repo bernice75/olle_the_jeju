@@ -26,4 +26,5 @@ public interface ImgDao {
 	//나만의 일정 이미지 저장
 	public int cusInsert(ImgDto dto);
 	public List<ImgDto> selectList(int board_num);
+	
 }

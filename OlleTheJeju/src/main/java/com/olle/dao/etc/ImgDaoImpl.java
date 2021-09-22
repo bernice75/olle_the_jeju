@@ -1,11 +1,13 @@
 package com.olle.dao.etc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.ImgDto;
 import com.olle.dto.pagination.PaginationIdxes;
 
@@ -22,7 +24,17 @@ public class ImgDaoImpl implements ImgDao {
 
 	@Override
 	public ImgDto selectOne(int img_num) {
-		return null;
+		
+		ImgDto dto = null;
+		
+		try {
+			dto = sqlSession.selectOne(NAMESPACE+"selectOne",img_num);
+		} catch (Exception e) {
+			System.out.println("[error] : 나만의 일정 디테일 이미지 불러오기 실패");
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
