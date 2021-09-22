@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,12 +13,12 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx142479165b1048a5b99ae1b5a05f5d1b"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script src="./resources/js/customplan/customplan_detail.js" type="text/javascript"></script>
-        <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx142479165b1048a5b99ae1b5a05f5d1b"></script>
-		        <script type="text/javascript">
+        <script type="text/javascript">
 	        var map;
 	        var markers = []; //마커병합 저장
 			var tripList = ${trip};
@@ -176,9 +178,11 @@
                         </div>
                         <div class="tag">
                             <h6 class="day"><strong>기간</strong> | 1박2일</h6>
-                            <h6 class="regdate"><strong>작성일</strong> | ${CustomDto.plan_regdate }</h6>
+                            <h6 class="regdate"><strong>작성일</strong> | 
+                            	<fmt:formatDate var="Regdate" value="${CustomDto.plan_regdate }" pattern="yyyy/MM/dd"/>
+                            	${Regdate }</h6>
                             <h6 class="den"><strong>성향</strong> | ${CustomDto.plan_tendency }</h6>
-                            <h6 class="hash"><strong>태그</strong> | 힐링, 숲속</h6>
+                            <h6 class="hash"><strong>태그</strong> | ${HashDto.hash_content }</h6>
                         </div>
                     </div>
                 </div>
@@ -191,13 +195,27 @@
                         <div class="map_list">
                         	
                         </div>
+                        <c:choose>
+                        	<c:when test="${empty DateDto }">
+                        		
+                        	</c:when>
+                        	<c:otherwise>
+                        		<c:forEach var="date" items="${DateDto }">
+                        			<input type="hidden" id="date_lat" value="${date.date_lat }">
+                        			<input type="hidden" id="date_lon" value="${date.date_lon }">
+                        			<input type="hidden" id="date_name" value="${date.date_name }">
+                        			<input type="hidden" id="date_addr" value="${date.date_addr }">
+                        			<input type="hidden" id="date_phone" value="${date.date_phone }">
+                        		</c:forEach>
+                        	</c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
                 <br><br>
                 <div class="bottom-btn-group2">
                     <input id="btn1" class="btn btn-secondary" type="button" value="목록" onclick="location.href='customplan_main.do'">
-                    <input id="btn2" class="btn btn-primary" type="button" value="수정" onclick="">
-                    <input id="btn3" class="btn btn-danger" type="button" value="삭제" onclick="">
+                    <input id="btn2" class="btn btn-primary" type="button" value="수정" onclick="location.href='customplan_update.do'">
+                    <input id="btn3" class="btn btn-danger" type="button" value="삭제" onclick="location.href='customplan_delete.do'">
                 </div>
                 <br><br>
 			</div>

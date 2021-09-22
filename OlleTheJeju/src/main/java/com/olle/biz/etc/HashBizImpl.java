@@ -27,4 +27,9 @@ public class HashBizImpl implements HashBiz {
 	public List<HashtagDto> selectList(int board_num) {
 		return dao.selectList(board_num);
 	}
+
+	@Override
+	public HashtagDto selectOne(int plan_num) {
+		return dao.selectOne(plan_num);
+	}
 }

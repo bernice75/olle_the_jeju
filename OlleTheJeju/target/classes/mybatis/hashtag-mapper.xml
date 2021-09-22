@@ -23,7 +23,9 @@
 	</select>
 	
 	<select id="selectOne" resultType="hashtagDto">
-
+		SELECT *
+		FROM OLLE_HASHTAG
+		WHERE BOARD_NUM=3 AND TABLE_NUM = #{plan_num}
 	</select>
 	
 	<insert id="insert" parameterType="hashtagDto">

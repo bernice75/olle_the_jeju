@@ -1,5 +1,7 @@
 package com.olle.biz.etc;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,4 +28,11 @@ public class DateBizImpl implements DateBiz {
 	public DateDto selectOne(int plan_num) {
 		return dao.selectOne(plan_num);
 	}
+
+	@Override
+	public List<DateDto> selectList(int plan_num) {
+		return dao.selectList(plan_num);
+	}
+
+
 }

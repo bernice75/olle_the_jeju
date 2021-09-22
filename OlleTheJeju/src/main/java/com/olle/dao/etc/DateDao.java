@@ -1,5 +1,7 @@
 package com.olle.dao.etc;
 
+import java.util.List;
+
 import com.olle.dto.etc.DateDto;
 
 public interface DateDao {
@@ -8,4 +10,5 @@ public interface DateDao {
 	public int insert(DateDto dto);
 	public int maxNum();
 	public DateDto selectOne(int plan_num);
+	public List<DateDto> selectList(int plan_num);
 }

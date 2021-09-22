@@ -104,6 +104,7 @@ public class CustomplanController {
 	
 	@RequestMapping(value = "customplan_detail.do", method = RequestMethod.GET)
 	public String customplan_detail(Model model,int plan_num,HttpServletRequest req) throws ParseException {
+		
 		//======관광지 정보 받아오기
 		JSONParser trip_parser = new JSONParser();
 		JSONArray trip = new JSONArray();
@@ -120,15 +121,6 @@ public class CustomplanController {
 		}
 		//======관광지 정보 받아오기 끝
 		
-		//dateSize
-		DateDto dateDto = datebiz.selectOne(plan_num);
-		String addrSize = dateDto.getDate_addr();
-		
-		
-		
-		System.out.println("주소의 길이: "+addrSize.length());
-		
-		
 		//나만의 일정 디테일 페이지 값 가져오기
 		model.addAttribute("CustomDto", cusbiz.selectOne(plan_num));
 		
@@ -136,9 +128,10 @@ public class CustomplanController {
 		model.addAttribute("ImgDto", imgBiz.selectList(plan_num));
 		
 		//나만의 일정 지도 부분 가져오기
-		model.addAttribute("DateDto", datebiz.selectOne(plan_num));
+		model.addAttribute("DateDto", datebiz.selectList(plan_num));
 		
-		
+		//나만의 일정 해쉬태그 가져오기
+		model.addAttribute("HashDto", hashbiz.selectOne(plan_num));
 		
 		return "page_customplan/customplan_detail";
 	}
