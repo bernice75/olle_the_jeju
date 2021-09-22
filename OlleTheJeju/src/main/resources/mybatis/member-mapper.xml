@@ -43,6 +43,7 @@
 	<select id="selectList" resultMap="memberMap">
 		SELECT *
 		FROM OLLE_USER
+		WHERE USER_ID NOT IN('admin')
 	</select>
 	
 	<select id="selectUser" parameterType="string" resultType="memberDto">

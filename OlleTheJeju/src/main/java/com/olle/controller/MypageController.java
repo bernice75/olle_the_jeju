@@ -237,7 +237,9 @@ public class MypageController {
 	
 	//문의하기 (채팅 기능) - 보류중 / 작업해해야됨
 	@RequestMapping(value = "mypage_inquire.do", method = RequestMethod.GET)
-	public String mypage_inquire() {
+	public String mypage_inquire(Model model) {
+		//채팅 내역 있으면 띄우기
+		
 		return "page_mypage/mypage_inquire";
 	}
 	

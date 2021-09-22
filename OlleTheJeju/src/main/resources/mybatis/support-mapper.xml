@@ -4,38 +4,53 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace = "support">
-    <resultMap type="ChatMessage" id="chatMessageResultSet">
-        <id property="messageId" column="MESSAGE_ID" />
-        <result property="roomId" column="ROOM_ID" />
-        <result property="message" column="MESSAGE_CONTENT" />
-        <result property="name" column="USER_ID" />
-        <result property="unReadCount" column="UNREAD_COUNT" />
+    <resultMap type="ChatMessage" id="chatMessageMap">
+        <result property="message_id" column="MESSAGE_ID" />
+        <result property="room_id" column="ROOM_ID" />
+        <result property="from_user" column="FROM_USER" />
+        <result property="to_user" column="TO_USER" />
+        <result property="message_content" column="MESSAGE_CONTENT" />
+        <result property="message_regdate" column="MESSAGE_REGDATE" />
     </resultMap>
     
-    <insert id="insertMessage" parameterType="ChatMessage">
-        <if test="sessionCount == 1">
-        	INSERT INTO CHATMESSAGE
-        	VALUES(#{roomId}, SEQ_CHATMESSAGE_ID.NEXTVAL, #{message}, #{name}, 1)
-        </if>
-        <if test="sessionCount == 2">
-	        INSERT INTO CHATMESSAGE
-	        VALUES(#{roomId}, SEQ_CHATMESSAGE_ID.NEXTVAL, #{message}, #{name}, 0)
-        </if>
+    <!-- 테이블 메세지 번호 -->
+    <select id="maxNum" resultType="int">
+		SELECT MAX(TO_NUMBER(MESSAGE_ID))
+		FROM OLLE_CHAT
+	</select>
+	
+	<!-- 특정 방번호의 최신 메세지 불러오기 -->
+	<select id="newMessage" parameterType="string" resultMap="chatMessageMap">
+		SELECT MESSAGE_ID, ROOM_ID, FROM_USER, TO_USER, MESSAGE_CONTENT, MESSAGE_REGDATE
+		FROM(
+			SELECT ROWNUM AS RNUM, C.*
+			FROM (
+				 SELECT *
+			    FROM OLLE_CHAT
+			    WHERE ROOM_ID = #{room_id}
+			    ORDER BY MESSAGE_REGDATE DESC
+			) C
+		)
+		WHERE RNUM = 1
+	</select>
+    
+    <!-- 방을 기준으로 채팅목록 불러오기 -->
+    <select id="selectRoom" parameterType="string" resultType="string">
+    	SELECT ROOM_ID FROM OLLE_CHAT
+    	GROUP BY ROOM_ID
+    </select>
+    
+    <!-- 방정보를 통해 메세지 목록 불러오기 -->
+    <select id="selectList" parameterType="string" resultMap="chatMessageMap">
+    	SELECT * FROM OLLE_CHAT
+    	WHERE ROOM_ID = #{room_id}
+    	ORDER BY TO_NUMBER(MESSAGE_ID)
+    </select>
+    
+    <!-- 메세지 저장 -->
+    <insert id="insert" parameterType="ChatMessage">
+    	INSERT INTO OLLE_CHAT
+    	VALUES(#{message_id}, #{room_id}, #{from_user}, #{to_user} ,#{message_content}, SYSDATE)
     </insert>
     
-    <select id="messageList" parameterType="string" resultMap="chatMessageResultSet">
-        SELECT * FROM CHATMESSAGE
-        WHERE ROOM_ID = #{rooomId}
-    </select>
-    
-    <select id="selectUnReadCount" parameterType="ChatMessage" resultType="int">
-        SELECT COUNT(*) FROM CHATMESSAGE
-        WHERE ROOM_ID = #{roomId} AND USER_ID != #{name} AND UNREAD_COUNT = 1
-    </select>
-    
-    <update id="updateCount" parameterType="ChatMessage">
-        UPDATE CHATMESSAGE
-        SET UNREAD_COUNT = 0
-        WHERE ROOM_ID = #{roomId} AND USER_ID != #{name} AND UNREAD_COUNT = 1
-    </update>
 </mapper>

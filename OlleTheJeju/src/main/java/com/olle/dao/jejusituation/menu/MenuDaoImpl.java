@@ -18,7 +18,6 @@ public class MenuDaoImpl implements MenuDao {
 
 	@Override
 	public int maxMenuPerStore(int storeId) {
-		// TODO Auto-generated method stub
 		int res=0;
 		
 		try {
@@ -34,7 +33,6 @@ public class MenuDaoImpl implements MenuDao {
 	
 	@Override
 	public List<MenuDto> getMenuByStoreId(int storeId) {
-		// TODO Auto-generated method stub
 		List<MenuDto> list=new ArrayList<MenuDto>();
 		try {
 			list=session.selectList(NAMESPACE+"getMenuListByStoreId", storeId);

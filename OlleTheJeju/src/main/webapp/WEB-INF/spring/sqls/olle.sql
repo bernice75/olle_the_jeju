@@ -408,8 +408,47 @@ CREATE TABLE OLLE_CHAT(
 
 DROP TABLE OLLE_CHAT;
 
+select ROWNUM AS RNUM, C.*
+from (
+    SELECT *
+    FROM OLLE_CHAT
+    WHERE ROOM_ID = 'user1'
+    ORDER BY MESSAGE_REGDATE DESC
+) C;
+
+select message_content
+from (
+select ROWNUM AS RNUM, C.*
+from (
+    SELECT *
+    FROM OLLE_CHAT
+    WHERE ROOM_ID = 'user1'
+    ORDER BY MESSAGE_REGDATE DESC
+) C
+)
+where RNUM = 1;
+
 select ROOM_ID from olle_chat
-GROUP BY ROOM_ID;
+GROUP BY RN, ROOM_ID;
+
+SELECT MESSAGE_ID, ROOM_ID, FROM_USER, TO_USER, MESSAGE_CONTENT, MESSAGE_REGDATE
+		FROM(
+			SELECT ROWNUM AS RNUM, C.*
+			FROM (
+				 SELECT *
+			    FROM OLLE_CHAT
+			    WHERE ROOM_ID = 'good12388'
+			    ORDER BY MESSAGE_REGDATE DESC
+			) C
+		)
+		WHERE RNUM = 1;
+
+SELECT * FROM OLLE_CHAT
+    	WHERE ROOM_ID = 'good12388'
+    	ORDER BY TO_NUMBER(MESSAGE_ID);
+        
+SELECT * FROM OLLE_chat;
+commit;
 
 insert into olle_chat
 values(1, 'user1', 'user1', 'admin', '안낭하세요. 여쭤볼게 있어 문의드려요', SYSDATE);

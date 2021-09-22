@@ -33,6 +33,13 @@
     height: fit-content;
     text-align: center;
 }
+.user_plan table td p {
+	margin: 0;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 300px;
+}
 
 /* 채팅 모달 css */
 .modal-body {

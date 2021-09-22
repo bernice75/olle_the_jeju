@@ -213,6 +213,7 @@ public class CustomplanController {
 			}
 			//4. 이미지 관련 저장
 			String path = req.getSession().getServletContext().getRealPath("/") + "/resources/plan";
+			System.out.println("path : " + path);
 
 			//db에 저장할 이름
 			String fileName_1 = img_1.getOriginalFilename();
