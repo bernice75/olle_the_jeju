@@ -34,7 +34,7 @@ CREATE TABLE OLLE_USER(
 	USER_NICK VARCHAR2(500) NOT NULL
 );
 
-select * from olle_user;
+select * from olle_user where user_id != 'admin';
 
 SELECT COUNT(USER_ID)
 		FROM OLLE_USER
@@ -359,7 +359,6 @@ COMMENT ON COLUMN OLLE_REPORT.REP_USER IS '신고대상';
 COMMENT ON COLUMN OLLE_REPORT.PLAN_NUM IS '게시글번호';
 COMMENT ON COLUMN OLLE_REPORT.REP_REGDATE IS '신고일';
 
-
 -- OLLE_FOOD Table Create SQL
 CREATE TABLE OLLE_FOOD(
 	FOOD_NUM NUMBER PRIMARY KEY, 
@@ -398,17 +397,40 @@ COMMENT ON COLUMN OLLE_DATE.DATE_NAME IS '장소명';
 COMMENT ON COLUMN OLLE_DATE.DATE_ADDR IS '주소';
 
 --여기서부터 채팅 관련
-CREATE TABLE CHATROOM(
-    ROOM_ID VARCHAR2(500) PRIMARY KEY,
-    FROM_USER VARCHAR2(500) NOT NULL,
-    FROM_PIC VARCHAR2(1000) NOT NULL,
-    TO_USER VARCHAR2(500) NOT NULL,
-    TO_PIC VARCHAR2(1000) NOT NULL
-);
-
-CREATE TABLE CHATMESSAGE(
+CREATE TABLE OLLE_CHAT(
     MESSAGE_ID VARCHAR2(500) PRIMARY KEY,
     ROOM_ID VARCHAR2(500) NOT NULL,
+    FROM_USER VARCHAR2(500) NOT NULL,
+    TO_USER VARCHAR2(500) NOT NULL,
     MESSAGE_CONTENT VARCHAR(3000) NOT NULL,
-    FROM_USER VARCHAR2(500) NOT NULL
+    MESSAGE_REGDATE DATE NOT NULL
 );
+
+DROP TABLE OLLE_CHAT;
+
+select ROOM_ID from olle_chat
+GROUP BY ROOM_ID;
+
+insert into olle_chat
+values(1, 'user1', 'user1', 'admin', '안낭하세요. 여쭤볼게 있어 문의드려요', SYSDATE);
+insert into olle_chat
+values(2, 'user1', 'admin', 'user1', '네, 안녕하세요. 무엇을 도와드릴까요?', SYSDATE);
+insert into olle_chat
+values(3, 'user1', 'user1', 'admin', '일정을 등록하는 과정에서 문제가 생겨서요', SYSDATE);
+insert into olle_chat
+values(4, 'user1', 'admin', 'user1', '혹시 어떤 문제가 발생하시는 걸까요??', SYSDATE);
+insert into olle_chat
+values(5, 'user1', 'user1', 'admin', '일정기간을  선택하고 나서 수정하려고 바꾸면 중첩으로 들어가더라구요...', SYSDATE);
+
+insert into olle_chat
+values(6, 'good12388', 'good12388', 'admin', '안녕하세요. 여쭤볼게 있어 문의드려요', SYSDATE);
+insert into olle_chat
+values(7, 'good12388', 'admin', 'good12388', '네, 안녕하세요. 무엇을 도와드릴까요?', SYSDATE);
+insert into olle_chat
+values(8, 'good12388', 'good12388', 'admin', '일정을 등록하는 과정에서 문제가 생겨서요', SYSDATE);
+insert into olle_chat
+values(9, 'good12388', 'admin', 'good12388', '혹시 어떤 문제가 발생하시는 걸까요??', SYSDATE);
+insert into olle_chat
+values(10, 'good12388', 'good12388', 'admin', '일정기간을  선택하고 나서 수정하려고 바꾸면 중첩으로 들어가더라구요...', SYSDATE);
+
+commit;

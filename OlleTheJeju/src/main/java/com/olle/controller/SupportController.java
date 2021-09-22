@@ -19,7 +19,6 @@ import com.google.gson.JsonIOException;
 import com.olle.biz.etc.ChatBiz;
 import com.olle.biz.member.MemberBiz;
 import com.olle.dto.etc.ChatMessage;
-import com.olle.dto.etc.ChatRoom;
 import com.olle.dto.member.MemberDto;
 
 @Controller
