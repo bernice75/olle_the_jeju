@@ -23,12 +23,12 @@ public class ImgDaoImpl implements ImgDao {
 	}
 
 	@Override
-	public ImgDto selectOne(int img_num) {
+	public List<ImgDto> selectDetailList(int plan_num) {
 		
-		ImgDto dto = null;
+		List<ImgDto> dto = new ArrayList<ImgDto>();
 		
 		try {
-			dto = sqlSession.selectOne(NAMESPACE+"selectOne",img_num);
+			dto = sqlSession.selectList(NAMESPACE+"selectDetailList",plan_num);
 		} catch (Exception e) {
 			System.out.println("[error] : 나만의 일정 디테일 이미지 불러오기 실패");
 			e.printStackTrace();

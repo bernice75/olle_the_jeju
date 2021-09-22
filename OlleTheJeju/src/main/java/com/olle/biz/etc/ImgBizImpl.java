@@ -39,7 +39,7 @@ public class ImgBizImpl implements ImgBiz {
 		return dao.selectList(board_num);
 	}
 	@Override
-	public ImgDto selectOne(int img_num) {
-		return dao.selectOne(img_num);
+	public List<ImgDto> selectDetailList(int plan_num) {
+		return dao.selectDetailList(plan_num);
 	}
 }

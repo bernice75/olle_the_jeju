@@ -125,7 +125,11 @@ public class CustomplanController {
 		model.addAttribute("CustomDto", cusbiz.selectOne(plan_num));
 		
 		//나만의 일정 이미지 가져오기
-		model.addAttribute("ImgDto", imgBiz.selectList(plan_num));
+		model.addAttribute("ImgDto", imgBiz.selectDetailList(plan_num));
+		
+		//이미지 경로
+		String path = req.getSession().getServletContext().getRealPath("/") + "/resources/plan/";
+		model.addAttribute("path",path);
 		
 		//나만의 일정 지도 부분 가져오기
 		model.addAttribute("DateDto", datebiz.selectList(plan_num));
@@ -212,7 +216,9 @@ public class CustomplanController {
 			}
 			//4. 이미지 관련 저장
 			String path = req.getSession().getServletContext().getRealPath("/") + "/resources/plan";
-
+			
+			
+			
 			//db에 저장할 이름
 			String fileName_1 = img_1.getOriginalFilename();
 			String fileName_2 = img_2.getOriginalFilename();
@@ -229,6 +235,7 @@ public class CustomplanController {
 
 			input = img_1.getInputStream();
 			File store = new File(path);
+			System.out.println(path);
 			if(!store.exists()) {
 	            try {
 	               //디렉토리 생성

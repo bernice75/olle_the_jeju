@@ -143,15 +143,20 @@
                 <div class="nail">
                     <div id="carouselExampleFade" class="carousel slide carousel-fade slider" data-bs-ride="carousel">
                         <div class="carousel-inner imgs">
-                            <div class="carousel-item active">
-                                <img src="./resources/img/1.png" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="./resources/img/dolpin.png" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="./resources/img/test.jpg" class="d-block w-100" alt="...">
-                            </div>
+                            
+                        <c:choose>
+                            <c:when test="${empty ImgDto} ">
+                            
+                            </c:when>
+                            	<c:otherwise>
+                            	<c:forEach var="img" items="${ImgDto}">
+	                            	<div class="carousel-item active">
+	                                	<img src="./resources/plan/${img.img_title}" class="d-block w-100" alt="...">
+	                            	</div>
+                            	</c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                            
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -193,14 +198,20 @@
                     <div class="main-second">
              			<div id="map_div"></div>
                         <div class="map_list">
-                        	
-                        </div>
-                        <c:choose>
+                        	<c:choose>
                         	<c:when test="${empty DateDto }">
                         		
                         	</c:when>
                         	<c:otherwise>
                         		<c:forEach var="date" items="${DateDto }">
+                        			<div class=list_inner>
+				                        <p class=list_title ><b>1. 코스명</b></p>
+				                        <p class=list_title><input type=text value= "${date.date_name }" style=width:200px readonly=readonly></p>
+				                        <p class=list_addr><b>2. 주소</b></p>
+				                        <p class=list_addr><input type=text value= "${date.date_addr }" style=width:200px readonly=readonly></p>
+				                        <p class=list_phone><b>3. 전화번호</b></p>
+				                        <p class=list_phone><input type=text value= "${date.date_phone }" style=width:200px readonly=readonly></p>
+	                    			</div>
                         			<input type="hidden" id="date_lat" value="${date.date_lat }">
                         			<input type="hidden" id="date_lon" value="${date.date_lon }">
                         			<input type="hidden" id="date_name" value="${date.date_name }">
@@ -209,6 +220,7 @@
                         		</c:forEach>
                         	</c:otherwise>
                         </c:choose>
+                        </div>
                     </div>
                 </div>
                 <br><br>
