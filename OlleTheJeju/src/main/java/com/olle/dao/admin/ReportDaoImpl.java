@@ -24,4 +24,10 @@ public class ReportDaoImpl implements ReportDao {
 		return sqlSession.delete(NAMESPACE + "delete", rep_num);
 	}
 
+	@Override
+	public int reportInsert(ReportDto dto) {
+		return sqlSession.insert(NAMESPACE + "Insert", dto);
+	}
+
+	
 }

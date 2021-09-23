@@ -24,4 +24,8 @@ public class ReportBizImpl implements ReportBiz {
 		return dao.delete(rep_num);
 	}
 
+	@Override
+	public int reportInsert(ReportDto dto) {
+		return dao.reportInsert(dto);
+	}
 }

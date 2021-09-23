@@ -38,7 +38,7 @@
   		SET USER_PW=#{user_newpw}, USER_ADDRDETAIL=#{user_addrdetail}
   		WHERE USER_ID=#{user_id}
   	</update>
-  	<!--  회원정보 수정 (프로필 이미지) //회원정보 수정 (프로필 이미지 등록 및 변경) - 작업중  -->
+  <!--  회원정보 수정 (프로필 이미지) //회원정보 수정 (프로필 이미지 등록 및 변경) - 작업중  -->
   	<update id="profileUpdate" parameterType="String">
   		UPDATE OLLE_USER
   		SET USER_IMG=#{user_img}

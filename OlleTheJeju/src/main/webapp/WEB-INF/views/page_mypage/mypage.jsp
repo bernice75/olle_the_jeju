@@ -29,8 +29,8 @@
 	                <p style="font-size: 22px;padding-left: 30px;">마이페이지</p>
 	                <br>
 	                <ul style="list-style: none;">
-	                    <li><a href="mypage_plan.do?plan_writer=${sessionScope.user_id}">나의 일정</a></li>
 	                    <li><a href="mypage_main.do?user_id=${sessionScope.user_id}">회원 정보 수정</a></li>
+	                    <li><a href="mypage_plan.do?plan_writer=${sessionScope.user_id}">나의 일정</a></li>
 	                    <li><a href="mypage_inquire.do?user_id=${sessionScope.user_id}">문의 내역</a></li>
 	                    <li><a href="mypage_warn.do?user_id=${sessionScope.user_id}">신고 확인</a></li>
 	              </ul>
@@ -45,7 +45,6 @@
 	                <div class="update_title">
 	                    <p style="font-size: 25px;"><b>회원 정보 수정</b></p>
 	                </div>
-	                <!-- 프로필 이미지 추가는 일단 빼는걸로 -->
 	                <div class="user_img" style="background-image: url('./resources/mypage/${dto.user_img}');">
 	                    <div id='previewId' style='width: 100px; height: 100px; position: absolute;'></div>
 	                </div>
