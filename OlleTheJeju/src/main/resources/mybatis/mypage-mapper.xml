@@ -73,7 +73,7 @@
   	
   	<!-- 문의내역 채팅  / 작성해야함 -->
   	
-  	<!-- 신고확인  / 수정 해야함-->
+  	<!-- 신고확인  / 수정 해야되나 ?-->
 	<select id="mypageWarn" parameterType="String" resultType="memberDto">
 	  	SELECT *
 	  	FROM OLLE_USER 

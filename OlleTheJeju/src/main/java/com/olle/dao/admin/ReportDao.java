@@ -8,5 +8,8 @@ public interface ReportDao {
 	String NAMESPACE = "report.";
 	
 	public List<ReportDto> selectList();
+	
 	public int delete(int rep_num);
+	
+	public int reportInsert(ReportDto dto);
 }

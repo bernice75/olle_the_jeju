@@ -11,6 +11,15 @@
 		<result property="hash_content" column="HASH_CONTENT"/>
 	</resultMap>
 	
+	<!-- 마이페이지 내가 작성한 일정 해시태그 조회-->
+   <select id="selectHash" parameterType="int" resultMap="hashtagMap">
+      SELECT * 
+      FROM OLLE_HASHTAG
+      WHERE TABLE_NUM = #{table_num}
+      ORDER BY TABLE_NUM
+   </select>
+   <!-- 마이페이지 내가 작성한 일정 해시태그 조회-->
+	
 	<select id="maxNum" resultType="int">
 		SELECT MAX(HASH_NUM)
 		FROM OLLE_HASHTAG

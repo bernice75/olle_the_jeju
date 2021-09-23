@@ -111,6 +111,9 @@
                         </div>
                     </div>
                 </div>
+                <!-- 신고버튼 -->
+                <button type="button" class="btn btn-danger btn-block" id="reportbtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">신고</button>
+                <!--  -->
                 <br><br>
                 <div class="bottom-btn-group2">
                     <input id="btn1" class="btn btn-secondary" type="button" value="목록" onclick="location.href='customplan_main.do'">
@@ -119,6 +122,60 @@
                 </div>
                 <br><br>
 			</div>
+			 <!-- 신고 버튼 클릭시 Modal 시작 -->
+             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                 <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                     <h5 class="modal-title" id="staticBackdropLabel">신고 접수</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <form name="reportmodal" action="reportInsert.do" method="post">
+                     <input type="hidden" value="${dto.user_id }">
+                         <div class="modal-body">
+                             <p class="modal-text1">해당 게시글을 신고 하시겠습니까?</p>
+                             <br>
+                             <div class="mb-3 row">
+		                        <label for="text" class="col-sm-3 col-form-label">신고일 : </label>
+		                        <div class="col-sm-6">
+		                            <input type="text" class="form-control" id="rep_regdate" name="rep_regdate" value="${dto.rep_regdate }" readonly="readonly">
+		                        </div>
+		                     </div>
+		                      <div class="mb-3 row">
+		                        <label for="text" class="col-sm-3 col-form-label">대상 글 번호 : </label>
+		                        <div class="col-sm-6">
+		                            <input type="text" class="form-control" id="rep_regdate" name="rep_regdate" value="${dto.plan_num }" readonly="readonly">
+		                        </div>
+		                     </div>
+                             <div class="mb-3 row">
+		                        <label for="text" class="col-sm-3 col-form-label">신고자 : </label>
+		                        <div class="col-sm-6">
+		                            <input type="text" class="form-control" id="user_id" name="user_id" value="${dto.user_id }" readonly="readonly">
+		                        </div>
+		                     </div>
+		                     <div class="mb-3 row">
+		                        <label for="text" class="col-sm-3 col-form-label">신고대상 : </label>
+		                        <div class="col-sm-6">
+		                            <input type="text" class="form-control" id="rep_user" name="rep_user" value="${dto.rep_user }" readonly="readonly">
+		                        </div>
+		                    </div>
+                   			<br>
+                        	<p class="modal-text1">신고 사유를 작성해주세요.</p>
+		                    <div class="col">
+		                    	<textarea rows="5" cols="60"  class="report-content" placeholder="내용을 입력하세요."></textarea>
+		                        <!-- <input type="text" class="form-control" id="rep_reson" name="rep_reson" value="" > -->
+		                    </div>
+                    		<br><br>
+                         </div>
+                         <div class="modal-footer">
+                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                             <button type="button" class="btn btn-danger" id="report-btn" onclick="Report();">신고하기</button>
+                         </div>
+                     </form>
+                 </div>
+                 </div>
+             </div>
+             <!-- 신고 Modal 끝-->
 			<jsp:include page="../include/footer.jsp"></jsp:include>
 		</div>
 	</body>

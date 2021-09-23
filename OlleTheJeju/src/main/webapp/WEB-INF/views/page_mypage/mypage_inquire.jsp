@@ -36,29 +36,31 @@
 	            </div>
 	        </div>
 	        <!-- mypage 좌측 nav 끝 -->
-	
 	        <main class="main item">
 	            <div class="user_inq">
-	                <div class="inq_title">
-	                    문의 내역
-	                </div>
+	                <div class="inq_title">문의 내역</div>
 	            </div>
-	            <!-- 채팅 -->
+	           <!--  채팅 -->
 	            <div class="inq_chat">    
-	                <div class="chat">채팅내역</div>
-	                <div class="chat_area" style="overflow: scroll;">
-	                	<ul style="display: flex; flex-direction: column; padding: 0; margin: 20px;">
-	                	</ul>
-	                </div>
-	                <div class="chat_write">
-	                    <input type="text" class="chat_content">
-	                    <button type="button" onclick="sendBtn();">보내기</button>
-	                </div>
+	                <div class="chat"><h5 class="modal-title" id="staticBackdropLabel">user님의 문의</h5></div>
+	                <form name="chat">
+			        <input type="hidden" id="sessionId" value="">
+		                <div class="chat_area" style="overflow: scroll;">
+		                	<ul style="display: flex; flex-direction: column; padding: 0; margin: 20px;"></ul>
+		                	<br>
+		                </div>
+		                <br>
+		                 <div class="">
+		                	<textarea rows="5" cols="70"  id="msg" placeholder="메세지 입력"></textarea>
+		                    <div><button type="button" class="btn btn-secondary" id="send" onclick="sendBtn();">전송</button></div>
+		                </div>
+		             </form>
 	            </div>
 	        </main>
 	        <!-- main 끝 -->
 			<jsp:include page="../include/footer.jsp"></jsp:include>
 		</div>
+		
 		<script type="text/javascript">
 	    	<!-- 채팅 방 관련 -->
 	    	let roomId;

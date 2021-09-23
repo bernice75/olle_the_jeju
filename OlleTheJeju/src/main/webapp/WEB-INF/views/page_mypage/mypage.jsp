@@ -46,13 +46,13 @@
 	                    <p style="font-size: 25px;"><b>회원 정보 수정</b></p>
 	                </div>
 	                <!-- 프로필 이미지 추가는 일단 빼는걸로 -->
-	                <div class="user_img" style="background-image: url('./resources/img/${dto.user_img}');">
+	                <div class="user_img" style="background-image: url('./resources/mypage/${dto.user_img}');">
 	                    <div id='previewId' style='width: 100px; height: 100px; position: absolute;'></div>
 	                </div>
 	                <div class="img_update">
-	                    <input type="file" id="ex_file" name="poster" onchange="previewImage(this,'previewId')">
+	                    <input type="file" id="ex_file" name="profileimg" onchange="previewImage(this,'previewId')">
 	                    <p style="font-size: 11px;">1mb 이하의 JPEG파일만 프로필 이미지로 등록 가능합니다</p>
-	                    <input type="submit" class="btn btn-primary btn-block" id="profileimg" name="profileimg" value="등록/변경">
+	                    <input type="submit" class="btn btn-primary btn-block" id="profileimg" value="등록/변경" >
 	                </div>
 	                <br><br>
 	                    <div class="mb-3 row">
@@ -73,7 +73,7 @@
 	                    <div class="mb-3 row">
 	                        <label for="id" class="col-sm-3 col-form-label">아이디</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" id="id" value="${dto.user_id }" readonly="readonly">
+	                            <input type="text" class="form-control" id="id" name="user_id" value="${dto.user_id }" readonly="readonly">
 	                        </div>
 	                    </div>
 	                    

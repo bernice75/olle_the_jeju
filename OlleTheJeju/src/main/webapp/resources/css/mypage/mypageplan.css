@@ -36,6 +36,7 @@
 .plan_thum{
     margin-left: 11%;
 }
+
 .thum_item{
     width: 220px;
     height: 270px;
@@ -98,6 +99,7 @@
     font-weight: bold;
 }
 .paging{
-    margin-left: 37%;
+	width: 90%;
+    /* margin-left: 37%; */
     text-align: center;
 }

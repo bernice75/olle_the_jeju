@@ -28,11 +28,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.olle.biz.admin.ReportBiz;
 import com.olle.biz.customplan.CustomBiz;
 import com.olle.biz.etc.DateBiz;
 import com.olle.biz.etc.HashBiz;
 import com.olle.biz.etc.ImgBiz;
 import com.olle.biz.member.MemberBiz;
+import com.olle.dto.admin.ReportDto;
 import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.DateDto;
 import com.olle.dto.etc.HashtagDto;
@@ -54,6 +56,9 @@ public class CustomplanController {
 	
 	@Autowired
 	private ImgBiz imgBiz;
+	
+	@Autowired
+	private ReportBiz repbiz;
 	
 	@RequestMapping(value = "customplan_main.do", method = RequestMethod.GET)
 	public String customplan_main(Model model, String search, @RequestParam(value="page", defaultValue="1") int page) {
@@ -312,4 +317,25 @@ public class CustomplanController {
 		//-----------------------------------------관광지 관련 데이터 끝
 		return "page_customplan/customplan_insert";
 	}
+	
+	//신고하기
+	@RequestMapping(value="reportInsert.do", method=RequestMethod.POST)
+	public String reportInsert(Model model, ReportDto dto) {
+		
+		int res = repbiz.reportInsert(dto);
+		
+		if(res>0) {
+			return "redirect: reportInsert.do";
+		}else {
+			return "redirect: customplan_detail.do";
+		}
+		
+		
+		
+		
+		
+	}
+	
+	
+	
 }

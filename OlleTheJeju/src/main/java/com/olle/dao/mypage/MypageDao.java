@@ -19,8 +19,8 @@ public interface MypageDao {
 	//회원정보 수정
 	public int userUpdate(MemberDto dto);
 	
-	//회원정보 수정 (프로필 이미지) //회원정보 수정 (프로필 이미지 등록 및 변경) - 작업중
-	public int profileUpdate(String user_img);
+	//회원정보 수정 (프로필 이미지) //회원정보 수정 (프로필 이미지 등록 및 변경)
+	public int profileUpdate(MemberDto dto);
 	
 	//회원정보 수정 및 삭제를 위한 비밀번호체크 
 	public boolean checkPw(String user_id, String user_pw);
@@ -33,7 +33,7 @@ public interface MypageDao {
 	
 	//내가 작성한 게시글 조회
 	public List<CustomDto> myWriteList(String plan_writer, Criteria cri);
-	public List<HashtagDto> hashList(int table_num);
+	/* public HashtagDto hashList(int table_num); */
 	
 	//내가 작성한 게시글 총 갯수
 	public int listCount();
