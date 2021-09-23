@@ -70,7 +70,7 @@
                         <div class="name">
                         	<!-- 작성자 -->
                             <h6><strong>작성자</strong> | ${CustomDto.plan_writer }</h6>
-                            <h6 class="like" onclick="push();"><i class="fa fa-heart-o" aria-hidden="true"></i> | ${CustomDto.plan_push }</h6>
+                            <h6 class="like" onclick="pushPlan(this);"><i class="fa fa-heart-o" aria-hidden="true"></i> | ${CustomDto.plan_push }</h6>
                             <input type="hidden" class="plan_num" value="${CustomDto.plan_num }">
                             <h6>조회수 | ${CustomDto.plan_views }</h6>
                             <h6><i class="fa fa-thumb-tack" aria-hidden="true"></i> | ${dib }</h6>

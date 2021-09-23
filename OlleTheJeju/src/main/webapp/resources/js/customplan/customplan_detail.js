@@ -1,4 +1,4 @@
-function push(obj) {
+function pushPlan(obj) {
 	if($(obj).children().hasClass("fa-heart-o") == true) {
         $(obj).children().removeClass();
         $(obj).children().addClass('fa fa-heart');
