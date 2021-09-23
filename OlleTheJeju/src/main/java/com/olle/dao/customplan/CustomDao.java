@@ -13,6 +13,7 @@ public interface CustomDao {
 	public int insert(CustomDto dto);
 	public int update(CustomDto dto);
 	public int updateView(int plan_num);
+	public int updatePush(int plan_num);
 	public int update_hide(int plan_num);
 	public int delete(int plan_num);
 	public int maxNum();

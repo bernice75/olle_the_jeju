@@ -26,10 +26,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.olle.biz.customplan.CustomBiz;
 import com.olle.biz.etc.DateBiz;
+import com.olle.biz.etc.DibBiz;
 import com.olle.biz.etc.HashBiz;
 import com.olle.biz.etc.ImgBiz;
 import com.olle.biz.member.MemberBiz;
@@ -58,6 +60,9 @@ public class CustomplanController {
 	
 	@Autowired
 	private MypageBiz mbiz;
+	
+	@Autowired
+	private DibBiz dBiz;
 	
 	@RequestMapping(value = "customplan_main.do", method = RequestMethod.GET)
 	public String customplan_main(Model model, String search, @RequestParam(value="page", defaultValue="1") int page) {
@@ -128,8 +133,6 @@ public class CustomplanController {
 		
 		plan_num = Integer.parseInt(req.getParameter("plan_num"));
 		
-		cusbiz.updateView(plan_num);
-		
 		//나만의 일정 디테일 페이지 값 가져오기
 		model.addAttribute("CustomDto", cusbiz.selectOne(plan_num));
 		
@@ -146,7 +149,23 @@ public class CustomplanController {
 		//나만의 일정 해쉬태그 가져오기
 		model.addAttribute("HashDto", hashbiz.selectOne(plan_num));
 		
+		//찜 개수 가져오기
+		model.addAttribute("dib", dBiz.countDib(plan_num));
+		
 		return "page_customplan/customplan_detail";
+	}
+	
+	@RequestMapping(value="customplan_push.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String customplan_push(int plan_num) {
+		String result = "";
+		int res = cusbiz.updatePush(plan_num);
+		if(res > 0) {
+			result = "true";
+		} else {
+			result = "false";
+		}
+		return result;
 	}
 	
 	@RequestMapping(value = "customplan_insert.do", method = RequestMethod.POST)

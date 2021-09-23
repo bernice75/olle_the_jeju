@@ -22,6 +22,13 @@
 
 	</select>
 	
+	<!-- 특정 게시물의 찜 개수 -->
+	<select id="countDib" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM OLLE_DIB
+		WHERE BOARD_NUM = 3 AND TABLE_NUM = #{table_num}
+	</select>
+	
 	<select id="selectOne" resultType="dibDto">
 
 	</select>

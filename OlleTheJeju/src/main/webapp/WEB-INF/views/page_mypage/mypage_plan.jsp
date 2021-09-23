@@ -125,14 +125,14 @@
 	            <div class="plan_thum">
 	                <!-- jstl core foreach로 썸네일 목록 반복 -->
 	                <c:choose>
-	                	<c:when test="${empty plan }">
+	                	<c:when test="${empty planList }">
 	                		<tr>
 								<td colspan ="4">----내가 찜한 일정이 존재하지 않습니다----</td>
 							</tr>
 	                	</c:when>
 	                	<c:otherwise>
-	                		<c:forEach var="plan" items="${plan }">
-	                			<div class="thum_item" onclick="location.href='#'">
+	                		<c:forEach var="plan" items="${planList }">
+	                			<div class="thum_item" onclick="location.href='customplan_detail.do?plan_num=${plan.plan_num}'">
 				                    <div class="img_thum">
 			                            <div class="nail_img">
 			                                <!-- 기간 정보 데이터 받아와서 삽입 -->

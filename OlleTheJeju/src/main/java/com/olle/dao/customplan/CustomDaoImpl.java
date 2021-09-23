@@ -67,6 +67,11 @@ public class CustomDaoImpl implements CustomDao{
 	public int updateView(int plan_num) {
 		return sqlSession.update(NAMESPACE + "viewsUpdate", plan_num);
 	}
+	
+	@Override
+	public int updatePush(int plan_num) {
+		return sqlSession.update(NAMESPACE + "likeUpdate", plan_num);
+	}
 
 	@Override
 	public int delete(int plan_num) {
