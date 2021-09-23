@@ -31,11 +31,33 @@ public class ImgBizImpl implements ImgBiz {
 		return dao.getStoreImg(startIdx, endIdx);
 	}
 	@Override
+	public List<ImgDto> getStoreImgByGubun(String gubun, int startIdx, int endIdx) {
+		return dao.getStoreImgByGubun(gubun, startIdx, endIdx);
+	}
+	@Override
+	public List<ImgDto> getStoreImgByKeyword(String keyword, int startIdx, int endIdx) {
+		return dao.getStoreImgByKeyword(keyword, startIdx, endIdx);
+	}
+
+	@Override
+	public ImgDto getDetailImage(int situ_num) {
+		return dao.getDetailImage(situ_num);
+	}
+	
+	@Override
 	public int cusInsert(ImgDto dto) {
 		return dao.cusInsert(dto);
 	}
 	@Override
 	public List<ImgDto> selectList(int board_num) {
 		return dao.selectList(board_num);
+	}
+	@Override
+	public List<ImgDto> selectDetailList(int plan_num) {
+		return dao.selectDetailList(plan_num);
+	}
+	@Override
+	public int delete(int plan_num) {
+		return dao.delete(plan_num);
 	}
 }

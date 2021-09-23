@@ -34,12 +34,13 @@ CREATE TABLE OLLE_USER(
 	USER_NICK VARCHAR2(500) NOT NULL
 );
 
-select * from olle_user;
+select * from olle_user where user_id != 'admin';
 
 SELECT COUNT(USER_ID)
 		FROM OLLE_USER
 		WHERE USER_ID = '1234';
-
+select * from olle_user;
+commit;
 insert into olle_user
 values('admin', 'admin', 'admin', 0, '서울','4층', '010-4568-1234', 'admin@ac.kr', '개인', 'N', 0, SYSDATE, null, 'test.jpg', 'admin');
 insert into olle_user
@@ -105,8 +106,25 @@ CREATE TABLE OLLE_IMG(
 	IMG_NUM  NUMBER PRIMARY KEY, 
 	BOARD_NUM NUMBER NOT NULL, 
 	TABLE_NUM NUMBER NOT NULL, 
-	IMG_TITLE VARCHAR2(1000) NOT NULL
+	IMG_TITLE VARCHAR2(1000) NOT NULL,
+    GROUP_NUM NUMBER NOT NULL
 );
+
+insert into olle_img
+values((select max(img_num) from olle_img)+1, 3, 11, 'KakaoTalk_20210224_190043790_10.png', 1);
+
+insert into olle_img
+values((select max(img_num) from olle_img)+1, 3,11, 'KakaoTalk_20210224_190043790_21.jpg', 2);
+
+insert into olle_img
+values((select max(img_num) from olle_img)+1, 3, 11, 'KakaoTalk_20210315_215420498.jpg', 3);
+
+
+insert into olle_hashtag
+values(11, 3,2, '힐링');
+
+commit;
+
 
 ALTER TABLE OLLE_IMG ADD CONSTRAINT BOARD_NUM_CHK CHECK (BOARD_NUM IN (1, 2, 3, 4));
 --1 : 관광일정, 2 : 추천일정, 3 : 나만의 일정, 4 : 제주상황
@@ -240,11 +258,13 @@ CREATE TABLE OLLE_SITUATION(
 	SITU_ADDR VARCHAR2(3000) NOT NULL, 
     SITU_OPEN_TIME VARCHAR2(300),
 	SITU_CLOSE_TIME  VARCHAR2(300)  NOT NULL, 
-	SITU_HOME VARCHAR2(500)
+	SITU_GUBUN VARCHAR2(500)
 );
 
+select * from olle_situation;
+commit;
 insert into OLLE_SITUATION
-values((select max(situ_num)from OLLE_SITUATION) + 1,123, '김길동', '21/09/16', 123, 123, '09:00', '06:00', 123);
+values((select NVL(max(situ_num), 0) from OLLE_SITUATION) + 1,123, '김길동', '21/09/16', 123, 123, '09:00', '06:00', '한식');
 
 COMMENT ON COLUMN OLLE_SITUATION.SITU_NUM IS '글번호';
 COMMENT ON COLUMN OLLE_SITUATION.SITU_NAME IS '음식점 이름';
@@ -271,15 +291,15 @@ COMMENT ON COLUMN OLLE_SITU_MENU.PRICE IS '메뉴 가격';
 
 -- OLLE_BOOKING Table Create SQL
 CREATE TABLE OLLE_BOOKING(
-	BOOK_NUM NUMBER PRIMARY KEY, 
-	SITU_NUM NUMBER NOT NULL, 
-	BOOK_NAME VARCHAR2(500) NOT NULL, 
-	BOOK_PEOPLE NUMBER NOT NULL, 
-	BOOK_REGDATE DATE  DEFAULT SYSDATE NOT NULL, 
-	BOOK_TIME VARCHAR2(300) NOT NULL, 
-	BOOK_PHONE VARCHAR2(100) NOT NULL, 
-	BOOK_CONTENT VARCHAR2(3000) NOT NULL,
-	CONSTRAINT SITU_NUM_FK FOREIGN KEY(SITU_NUM) REFERENCES OLLE_SITUATION(SITU_NUM) ON DELETE CASCADE
+	BOOK_NUM NUMBER NULL, 
+    SITU_NUM NUMBER NULL, 
+    BOOK_NAME VARCHAR2(500) NULL, 
+    BOOK_PEOPLE NUMBER NULL, 
+    BOOK_REGDATE VARCHAR2(2000) NULL, 
+    BOOK_TIME VARCHAR2(2000) NULL, 
+    BOOK_PHONE VARCHAR2(100) NULL, 
+    BOOK_CONTENT VARCHAR2(3000) NULL, 
+    CONSTRAINT PK_OLLE_BOOKING PRIMARY KEY (BOOK_NUM)
 );
 
 COMMENT ON TABLE OLLE_BOOKING IS '맛집예약 테이블';
@@ -340,7 +360,6 @@ COMMENT ON COLUMN OLLE_REPORT.REP_USER IS '신고대상';
 COMMENT ON COLUMN OLLE_REPORT.PLAN_NUM IS '게시글번호';
 COMMENT ON COLUMN OLLE_REPORT.REP_REGDATE IS '신고일';
 
-
 -- OLLE_FOOD Table Create SQL
 CREATE TABLE OLLE_FOOD(
 	FOOD_NUM NUMBER PRIMARY KEY, 
@@ -379,17 +398,79 @@ COMMENT ON COLUMN OLLE_DATE.DATE_NAME IS '장소명';
 COMMENT ON COLUMN OLLE_DATE.DATE_ADDR IS '주소';
 
 --여기서부터 채팅 관련
-CREATE TABLE CHATROOM(
-    ROOM_ID VARCHAR2(500) PRIMARY KEY,
-    FROM_USER VARCHAR2(500) NOT NULL,
-    FROM_PIC VARCHAR2(1000) NOT NULL,
-    TO_USER VARCHAR2(500) NOT NULL,
-    TO_PIC VARCHAR2(1000) NOT NULL
-);
-
-CREATE TABLE CHATMESSAGE(
+CREATE TABLE OLLE_CHAT(
     MESSAGE_ID VARCHAR2(500) PRIMARY KEY,
     ROOM_ID VARCHAR2(500) NOT NULL,
+    FROM_USER VARCHAR2(500) NOT NULL,
+    TO_USER VARCHAR2(500) NOT NULL,
     MESSAGE_CONTENT VARCHAR(3000) NOT NULL,
-    FROM_USER VARCHAR2(500) NOT NULL
+    MESSAGE_REGDATE DATE NOT NULL
 );
+
+DROP TABLE OLLE_CHAT;
+
+select ROWNUM AS RNUM, C.*
+from (
+    SELECT *
+    FROM OLLE_CHAT
+    WHERE ROOM_ID = 'user1'
+    ORDER BY MESSAGE_REGDATE DESC
+) C;
+
+select message_content
+from (
+select ROWNUM AS RNUM, C.*
+from (
+    SELECT *
+    FROM OLLE_CHAT
+    WHERE ROOM_ID = 'user1'
+    ORDER BY MESSAGE_REGDATE DESC
+) C
+)
+where RNUM = 1;
+
+select ROOM_ID from olle_chat
+GROUP BY RN, ROOM_ID;
+
+SELECT MESSAGE_ID, ROOM_ID, FROM_USER, TO_USER, MESSAGE_CONTENT, MESSAGE_REGDATE
+		FROM(
+			SELECT ROWNUM AS RNUM, C.*
+			FROM (
+				 SELECT *
+			    FROM OLLE_CHAT
+			    WHERE ROOM_ID = 'good12388'
+			    ORDER BY MESSAGE_REGDATE DESC
+			) C
+		)
+		WHERE RNUM = 1;
+
+SELECT * FROM OLLE_CHAT
+    	WHERE ROOM_ID = 'good12388'
+    	ORDER BY TO_NUMBER(MESSAGE_ID);
+        
+SELECT * FROM OLLE_chat;
+commit;
+
+insert into olle_chat
+values(1, 'user1', 'user1', 'admin', '안낭하세요. 여쭤볼게 있어 문의드려요', SYSDATE);
+insert into olle_chat
+values(2, 'user1', 'admin', 'user1', '네, 안녕하세요. 무엇을 도와드릴까요?', SYSDATE);
+insert into olle_chat
+values(3, 'user1', 'user1', 'admin', '일정을 등록하는 과정에서 문제가 생겨서요', SYSDATE);
+insert into olle_chat
+values(4, 'user1', 'admin', 'user1', '혹시 어떤 문제가 발생하시는 걸까요??', SYSDATE);
+insert into olle_chat
+values(5, 'user1', 'user1', 'admin', '일정기간을  선택하고 나서 수정하려고 바꾸면 중첩으로 들어가더라구요...', SYSDATE);
+
+insert into olle_chat
+values(6, 'good12388', 'good12388', 'admin', '안녕하세요. 여쭤볼게 있어 문의드려요', SYSDATE);
+insert into olle_chat
+values(7, 'good12388', 'admin', 'good12388', '네, 안녕하세요. 무엇을 도와드릴까요?', SYSDATE);
+insert into olle_chat
+values(8, 'good12388', 'good12388', 'admin', '일정을 등록하는 과정에서 문제가 생겨서요', SYSDATE);
+insert into olle_chat
+values(9, 'good12388', 'admin', 'good12388', '혹시 어떤 문제가 발생하시는 걸까요??', SYSDATE);
+insert into olle_chat
+values(10, 'good12388', 'good12388', 'admin', '일정기간을  선택하고 나서 수정하려고 바꾸면 중첩으로 들어가더라구요...', SYSDATE);
+
+commit;

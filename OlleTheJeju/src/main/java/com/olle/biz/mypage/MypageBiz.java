@@ -9,7 +9,6 @@ import com.olle.dto.member.Criteria;
 import com.olle.dto.member.MemberDto;
 
 public interface MypageBiz {
-	
 	//회원정보 조회
 	public MemberDto mypageInfo(String user_id);
 		
@@ -30,7 +29,7 @@ public interface MypageBiz {
 	
 	//내가 작성한 게시글 조회
 	public List<CustomDto> myWriteList(String plan_writer, Criteria cri);
-	/* public HashtagDto hashList(int table_num); */
+	public HashtagDto hashList(int table_num);
 	
 	//내가 작성한 게시글 총 갯수
 	public int listCount();

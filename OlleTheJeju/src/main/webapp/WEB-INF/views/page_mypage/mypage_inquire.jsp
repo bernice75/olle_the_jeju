@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>추천일정 main</title>
+		<title>마이페이지 문의</title>
 		
 		<link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/mypage/mypageinquire.css" rel="stylesheet" type="text/css" />
@@ -36,38 +38,53 @@
 	            </div>
 	        </div>
 	        <!-- mypage 좌측 nav 끝 -->
+	
 	        <main class="main item">
 	            <div class="user_inq">
-	                <div class="inq_title">문의 내역</div>
+	                <div class="inq_title">
+	                    문의 내역
+	                </div>
 	            </div>
-	           <!--  채팅 -->
-	            <div class="inq_chat">    
-	                <div class="chat"><h5 class="modal-title" id="staticBackdropLabel">user님의 문의</h5></div>
-	                <form name="chat">
-			        <input type="hidden" id="sessionId" value="">
-		                <div class="chat_area" style="overflow: scroll;">
-		                	<ul style="display: flex; flex-direction: column; padding: 0; margin: 20px;"></ul>
-		                	<br>
-		                </div>
-		                <br>
-		                 <div class="">
-		                	<textarea rows="5" cols="70"  id="msg" placeholder="메세지 입력"></textarea>
-		                    <div><button type="button" class="btn btn-secondary" id="send" onclick="sendBtn();">전송</button></div>
-		                </div>
-		             </form>
+	            <!-- 채팅 -->
+	            <div class="inq_chat">
+	                <div class="chat">채팅내역</div>
+	                <div class="chat_area" style="overflow: scroll;">
+	                	<ul style="display: flex; flex-direction: column; padding: 0; margin: 20px;">
+	                		<c:choose>
+	                    		<c:when test="${empty message_list }">
+	                    			<p>채팅내역이 없습니다.</p>
+	                    		</c:when>
+	                    		<c:otherwise>
+	                    			<c:forEach var="message" items="${message_list }">
+	                    				<c:if test="${message.room_id eq sessionScope.user_id }">
+                    						<c:if test="${message.from_user eq 'admin' }">
+                    							<p class="to_user">관리자 : ${message.message_content }</p>
+                    						</c:if>
+                    						<c:if test="${message.from_user == sessionScope.user_id }">
+                    							<p class="from_user">${message.message_content } : ${message.from_user}</p>
+                    						</c:if>
+                    						
+                    					</c:if>
+	                    			</c:forEach>
+	                    		</c:otherwise>
+	                    	</c:choose>
+	                    	<!-- 동적 생성 -->
+	                	</ul>
+	                </div>
+	                <div class="chat_write" style="width: 540px;">
+	                    <textarea rows="5" cols="50" class="form-control" id="msg" placeholder="메세지 입력"></textarea>
+	                    <button type="button" class="btn btn-secondary" id="send">전송</button>
+	                </div>
 	            </div>
 	        </main>
 	        <!-- main 끝 -->
 			<jsp:include page="../include/footer.jsp"></jsp:include>
 		</div>
-		
 		<script type="text/javascript">
 	    	<!-- 채팅 방 관련 -->
-	    	let roomId;
 	    	var ws;
 	    	
 	    	$(document).ready(function() {
-	    		var to_user = $("input#to_user").val();
 	    		ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo.do");
 		    	
 		    	ws.onopen = function(data) {
@@ -84,10 +101,10 @@
 								$("#sessionId").val(si); 
 							}
 						} else if(d.type == "message") {
-							if(d.sessionId == $("#sessionId").val()){
+							if(d.from_user == `${sessionScope.user_id}`){
 								$(".chat_area>ul").append("<p class='from_user'>" + d.msg + " : " + `${sessionScope.user_id}` + "</p>");
 							}else{
-								$(".chat_area>ul").append("<p class='others'>" + d.from_user + " :" + d.msg + "</p>");
+								$(".chat_area>ul").append("<p class='others'>관리자 :" + d.msg + "</p>");
 							}
 						} else {
 							console.warn("unknown type!")
@@ -103,26 +120,34 @@
 		    		//끊김이 발생했을 경우 1초에 한번씩 연결 시도
 		    		//setTimeout(function() { connect(); }, 1000);
 	    		};
+	    		
+	    		//엔터 누르면 메세지 전송되도록 설정
+				document.addEventListener("keypress", function(e){
+					if(e.keyCode == 13){
+						var option ={
+		    				type: "message",
+		    				room_id : `${sessionScope.user_id}`,
+		    				from_user : `${sessionScope.user_id}`,
+		    				to_user : "admin",
+		    				msg : $("#msg").val()
+		    			}
+			    		ws.send(JSON.stringify(option));
+		    			$("#msg").val("");
+					}
+				});
+	    		
+	    		$("#send").on('click', function() {
+		    		var option ={
+	    				type: "message",
+	    				room_id : `${sessionScope.user_id}`,
+	    				from_user : `${sessionScope.user_id}`,
+	    				to_user : "admin",
+	    				msg : $("#msg").val()
+	    			}
+		    		ws.send(JSON.stringify(option));
+	    			$("#msg").val("");
+	    		});
 	    	});
-	    	
-	    	//엔터 누르면 메세지 전송되도록 설정
-			document.addEventListener("keypress", function(e){
-				if(e.keyCode == 13){ //enter press
-					sendBtn();
-				}
-			});
-	    	
-	    	function sendBtn() {
-	    		var option ={
-    				type: "message",
-    				sessionId : $("#sessionId").val(),
-    				from_user : `${sessionScope.user_id}`,
-    				to_user : "admin",
-    				msg : $(".chat_content").val()
-    			}
-	    		ws.send(JSON.stringify(option));
-    			$(".chat_content").val("");
-	    	}
 	    	
 	    </script>
 	</body>

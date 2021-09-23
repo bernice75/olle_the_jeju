@@ -16,10 +16,6 @@
 		SELECT * FROM OLLE_FAQ
 	</select>
 	
-	<select id="selectOne" resultType="faqDto">
-
-	</select>
-	
 	<insert id="insert" parameterType="faqDto">
 		INSERT INTO OLLE_FAQ
 		VALUES(

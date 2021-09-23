@@ -4,53 +4,48 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace = "menu">
-
-   <resultMap type="menuDto" id="menuMap">
-      <result column="MENU_ID" property="menu_id"/>
-      <result column="STORE_ID" property="store_id"/>
-      <result column="MENU" property="menu"/>
-      <result column="PRICE" property="price"/>
-   </resultMap>
-   
-   <resultMap type="menuDto" id="maxPk">
-      <result column="PRI" property="menu_id"/>
-   </resultMap>   
-   <select id="pkMax" resultType="int">
-      <![CDATA[
-      SELECT (NVL2(MAX(MENU_ID)+1,MAX(MENU_ID)+1,1)) AS PRI FROM OLLE_SITU_MENU
-      ]]>
-   </select>
-      <!-- 조건별 리스트 가져오기 -->
-   <select id="getMenuListByStoreId" parameterType="int" resultType="menuDto">
-      SELECT MENU_ID,STORE_ID,MENU
-      FROM OLLE_SITU_MENU
-      WHERE STORE_ID=#{store_id}
-   </select>   
-   <!-- 페이지별로 메뉴리스트 가져오기(구분별로) -->
-   <select id="getPageMenuList" parameterType="paginationIdxDto" resultMap="menuMap">
-      SELECT B.*
-      FROM (SELECT A.*, ROWNUM AS RN
-           FROM (SELECT MENU_ID,STORE_ID,MENU,PRICE
-               FROM OLLE_SITU_MENU M
-               JOIN OLLE_SITUATION S ON(M.STORE_ID=S.SITU_NUM)
-         ORDER BY STORE_ID,MENU_ID) A)B
-      WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
-   </select>   
-<!--       INSERT ALL open="INSERT ALL" close="SELECT * FROM DUAL"-->
-<!--    <insert id="batchInsert" parameterType="java.util.List">
-      INSERT INTO OLLE_SITU_MENU(
-         MENU_ID,
-         STORE_ID,
-         MENU
-      )VALUES
-      <foreach collection="list" item="item" index="index">
-      <if test="index>0">,</if>
-      (
-            #{item.menu_id},
-            #{item.store_id},
-            #{item.menu}
-         )
-      </foreach>
-   </insert> -->
-
+	<resultMap type="menuDto" id="menuMap">
+		<result column="MENU_ID" property="menu_id"/>
+		<result column="STORE_ID" property="store_id"/>
+		<result column="MENU" property="menu"/>
+		<result column="PRICE" property="price"/>
+	</resultMap>
+	
+	<resultMap type="menuDto" id="maxPk">
+		<result column="PRI" property="menu_id"/>
+	</resultMap>	
+	
+	<select id="pkMax" resultType="int">
+		<![CDATA[
+		SELECT (NVL2(MAX(MENU_ID)+1,MAX(MENU_ID)+1,1)) AS PRI FROM OLLE_SITU_MENU
+		]]>
+	</select>
+	
+	<!-- 조건별 리스트 가져오기 -->
+	<select id="getMenuListByStoreId" parameterType="int" resultType="menuDto">
+		SELECT MENU_ID,STORE_ID,MENU
+		FROM OLLE_SITU_MENU
+		WHERE STORE_ID=#{store_id}
+	</select>	
+	
+	<!-- 가게의 메뉴 가져오기 -->
+	<select id="getMenuListForStore" parameterType="int" resultType="menuDto">
+	SELECT MENU_ID,STORE_ID,MENU,PRICE,S.SITU_NUM
+	FROM OLLE_SITU_MENU M
+	JOIN OLLE_SITUATION S ON(M.STORE_ID=S.SITU_NUM)
+	WHERE S.SITU_NUM=#{situ_num} AND M.MENU!='없음'
+	ORDER BY STORE_ID,MENU_ID
+	</select>
+	
+	<!-- 페이지별로 메뉴리스트 가져오기(구분별로) -->
+	<select id="getPageMenuList" parameterType="paginationIdxDto" resultMap="menuMap">
+		SELECT B.*
+		FROM (SELECT A.*, ROWNUM AS RN
+			  FROM (SELECT MENU_ID,STORE_ID,MENU,PRICE
+					FROM OLLE_SITU_MENU M
+					JOIN OLLE_SITUATION S ON(M.STORE_ID=S.SITU_NUM)
+			ORDER BY STORE_ID,MENU_ID) A)B
+		WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
+	</select>	
+		
 </mapper>

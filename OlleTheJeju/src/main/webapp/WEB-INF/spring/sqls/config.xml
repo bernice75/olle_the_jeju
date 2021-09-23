@@ -21,7 +21,6 @@
 		<typeAlias type="com.olle.dto.etc.FoodDto" alias="foodDto"/>
 		<typeAlias type="com.olle.dto.etc.DateDto" alias="dateDto"/>
 		<typeAlias type="com.olle.dto.etc.ChatMessage" alias="chatMessage"/>
-		<typeAlias type="com.olle.dto.etc.ChatRoom" alias="chatRoom"/>
 		<typeAlias type="com.olle.dto.pagination.PaginationIdxes" alias="paginationIdxDto"/>
 	</typeAliases>
 	

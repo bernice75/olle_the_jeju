@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.olle.dao.member.MemberDao;
 import com.olle.dao.mypage.MypageDao;
 import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.DibDto;
@@ -14,8 +13,7 @@ import com.olle.dto.member.Criteria;
 import com.olle.dto.member.MemberDto;
 
 @Service
-public class MypageBizImpl implements MypageBiz{
-
+public class MypageBizImpl implements MypageBiz {
 	@Autowired
 	private MypageDao dao;
 	
@@ -59,11 +57,12 @@ public class MypageBizImpl implements MypageBiz{
 	public List<CustomDto> myWriteList(String plan_writer, Criteria cri) {
 		return dao.myWriteList(plan_writer, cri);
 	}
-	//해시태그는 따로 추가
-	/*
-	 * @Override public HashtagDto hashList(int table_num) { return
-	 * dao.hashList(table_num); }
-	 */
+	
+	@Override
+	public HashtagDto hashList(int table_num) {
+		return dao.hashList(table_num);
+	}
+	
 	//내가 작성한 게시글 총 갯수
 	@Override
 	public int listCount() {
@@ -82,10 +81,4 @@ public class MypageBizImpl implements MypageBiz{
 	public MemberDto mypageWarn(String user_id) {
 		return dao.mypageWarn(user_id);
 	}
-
-	
-
-
-	
-	
 }

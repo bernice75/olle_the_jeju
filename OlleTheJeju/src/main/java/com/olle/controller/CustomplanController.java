@@ -28,13 +28,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.olle.biz.admin.ReportBiz;
 import com.olle.biz.customplan.CustomBiz;
 import com.olle.biz.etc.DateBiz;
 import com.olle.biz.etc.HashBiz;
 import com.olle.biz.etc.ImgBiz;
 import com.olle.biz.member.MemberBiz;
-import com.olle.dto.admin.ReportDto;
+import com.olle.biz.mypage.MypageBiz;
 import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.DateDto;
 import com.olle.dto.etc.HashtagDto;
@@ -58,7 +57,7 @@ public class CustomplanController {
 	private ImgBiz imgBiz;
 	
 	@Autowired
-	private ReportBiz repbiz;
+	private MypageBiz mbiz;
 	
 	@RequestMapping(value = "customplan_main.do", method = RequestMethod.GET)
 	public String customplan_main(Model model, String search, @RequestParam(value="page", defaultValue="1") int page) {
@@ -99,8 +98,25 @@ public class CustomplanController {
 		
 		model.addAttribute("imgList", nameList);
 		
-		//나만의 일정 게시판에 대한 해시태그 받아오기
-		List<HashtagDto> hashList = hashbiz.selectList(3);
+		//해시태그 조회
+		CustomDto dto = new CustomDto();
+		int plan_num = 0;
+		List<HashtagDto> hash = new ArrayList<HashtagDto>();
+		for(int i = 0; i < plan.size(); i++) {
+			dto.setPlan_num(plan.get(i).getPlan_num());
+			plan_num = dto.getPlan_num();
+			hash.add(i, mbiz.hashList(plan_num));
+		}
+		//해시태그 형식은 해시1, 해시2 이런 방식이므로 대표 1개의 해시태그만 끊어오려면 split을 사용
+		List<HashtagDto> hashList = new ArrayList<HashtagDto>();
+		for(int i = 0; i < hash.size(); i++) {
+			HashtagDto hashTag = new HashtagDto();
+			hashTag.setHash_num(hash.get(i).getHash_num());
+			hashTag.setBoard_num(hash.get(i).getBoard_num());
+			hashTag.setTable_num(hash.get(i).getTable_num());
+			hashTag.setHash_content(hash.get(i).getHash_content().split(",")[0]);
+			hashList.add(i, hashTag);
+		}
 		
 		model.addAttribute("hashList", hashList);
 		
@@ -108,7 +124,39 @@ public class CustomplanController {
 	}
 	
 	@RequestMapping(value = "customplan_detail.do", method = RequestMethod.GET)
-	public String customplan_detail() {
+	public String customplan_detail(int plan_num, Model model, HttpServletRequest req) throws ParseException {
+		//======관광지 정보 받아오기
+		JSONParser trip_parser = new JSONParser();
+		JSONArray trip = new JSONArray();
+		
+		try {
+			Reader trip_reader = new FileReader(req.getSession().getServletContext().getRealPath("/") + "/resources/json/trip.json");
+			JSONObject trip_obj = (JSONObject)trip_parser.parse(trip_reader);
+			
+			trip = (JSONArray)trip_obj.get("trip");
+			
+			model.addAttribute("trip", trip);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		//======관광지 정보 받아오기 끝
+		
+		//나만의 일정 디테일 페이지 값 가져오기
+		model.addAttribute("CustomDto", cusbiz.selectOne(plan_num));
+		
+		//나만의 일정 이미지 가져오기
+		model.addAttribute("ImgDto", imgBiz.selectDetailList(plan_num));
+		
+		//이미지 경로
+		String path = req.getSession().getServletContext().getRealPath("/") + "/resources/plan/";
+		model.addAttribute("path",path);
+		
+		//나만의 일정 지도 부분 가져오기
+		model.addAttribute("DateDto", datebiz.selectList(plan_num));
+		
+		//나만의 일정 해쉬태그 가져오기
+		model.addAttribute("HashDto", hashbiz.selectOne(plan_num));
+		
 		return "page_customplan/customplan_detail";
 	}
 	
@@ -188,6 +236,7 @@ public class CustomplanController {
 			}
 			//4. 이미지 관련 저장
 			String path = req.getSession().getServletContext().getRealPath("/") + "/resources/plan";
+			System.out.println("path : " + path);
 
 			//db에 저장할 이름
 			String fileName_1 = img_1.getOriginalFilename();
@@ -299,7 +348,7 @@ public class CustomplanController {
 	}
 	
 	//지도 관련 제이슨으로 받아서 처리하는 메서드
-	@RequestMapping(value = "customplan_insert.do", method = RequestMethod.GET)
+	@RequestMapping(value = "customplan_insertForm.do", method = RequestMethod.GET)
 	public String customplan_Tmap(Model model, HttpServletRequest req) throws ParseException {
 		JSONParser trip_parser = new JSONParser();
 		JSONArray trip = new JSONArray();
@@ -318,24 +367,29 @@ public class CustomplanController {
 		return "page_customplan/customplan_insert";
 	}
 	
-	//신고하기
-	@RequestMapping(value="reportInsert.do", method=RequestMethod.POST)
-	public String reportInsert(Model model, ReportDto dto) {
+	//나만의 일정 삭제
+	@RequestMapping(value="customplan_delete.do")
+	public String customplan_delete(int plan_num,HttpServletResponse response) throws IOException {
 		
-		int res = repbiz.reportInsert(dto);
+		System.out.println("나만의 일정 삭제 시작");
 		
-		if(res>0) {
-			return "redirect: reportInsert.do";
+		int hashRes = hashbiz.delete(plan_num);
+		int dateRes = datebiz.delete(plan_num);
+		int imgRes = imgBiz.delete(plan_num);
+		int cusRes = cusbiz.delete(plan_num);
+		
+		System.out.println("나만의 일정 값 가져옴");
+		if(hashRes>0 && dateRes>0 && imgRes>0 && cusRes>0) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter writer = response.getWriter(); 
+			writer.println("<script>alert('글 삭제 완료');"
+					+ "location.href='customplan_main.do';</script>"); 
+			writer.close();
+			return null;
+			
 		}else {
-			return "redirect: customplan_detail.do";
+			return "redirect:customplan_detail.do?plan_num="+plan_num;
 		}
 		
-		
-		
-		
-		
 	}
-	
-	
-	
 }

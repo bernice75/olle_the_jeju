@@ -17,17 +17,16 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.olle.biz.etc.ChatBiz;
+import com.olle.biz.admin.ChatBiz;
+import com.olle.dto.etc.ChatMessage;
 
 @RequestMapping("echo.do")
 public class EchoHandler extends TextWebSocketHandler {
 	@Autowired
-    ChatBiz cService;
+    ChatBiz chatBiz;
     
     private final ObjectMapper objectMapper = new ObjectMapper();
     
-    // 채팅방 목록 <방 번호, ArrayList<session>>이 들어간다.
-    private Map<String, ArrayList<WebSocketSession>> RoomList = new HashMap<String, ArrayList<WebSocketSession>>();
     //웹소켓 세션을 담아둘 맵
     HashMap<String, WebSocketSession> sessionMap = new HashMap<String, WebSocketSession>();
     
@@ -51,7 +50,33 @@ public class EchoHandler extends TextWebSocketHandler {
     	String msg = message.getPayload();
     	System.out.println(msg);
 		JSONObject obj = jsonToObjectParser(msg);
+		ChatMessage chat = new ChatMessage();
 		
+		//테이블에서 message_id 최대값 조회
+		int message_id = chatBiz.maxNum();
+		System.out.println("message_id : " + message_id);
+		
+		//메세지 저장
+		String room_id = (String) obj.get("room_id");
+		String from_user = (String) obj.get("from_user");
+		String to_user = (String) obj.get("to_user");
+		String message_content = (String) obj.get("msg");
+		
+		chat.setMessage_id(message_id + 1);
+		chat.setRoom_id(room_id);
+		chat.setFrom_user(from_user);
+		chat.setTo_user(to_user);
+		chat.setMessage_content(message_content);
+		
+		int res = chatBiz.insert(chat);
+		
+		if(res > 0) {
+			System.out.println("해당 메세지 저장 완료");
+		} else {
+			System.out.println("메세지 저장 실패");
+		}
+		
+		//다른 사람한테 메세지 수신
 		for(String key : sessionMap.keySet()) {
 			WebSocketSession wss = sessionMap.get(key);
 			try {

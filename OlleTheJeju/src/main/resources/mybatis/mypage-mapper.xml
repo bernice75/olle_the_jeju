@@ -35,7 +35,7 @@
   	<!-- 회원정보 비밀번호 수정 -->
   	<update id="userUpdate" parameterType="String"> <!-- 이미지 일단 제외 -->
   		UPDATE OLLE_USER
-  		SET USER_PW=#{user_newpw}, USER_ADDRDETAIL=#{user_addrdetail} 
+  		SET USER_PW=#{user_newpw}, USER_ADDRDETAIL=#{user_addrdetail}
   		WHERE USER_ID=#{user_id}
   	</update>
   	<!--  회원정보 수정 (프로필 이미지) //회원정보 수정 (프로필 이미지 등록 및 변경) - 작업중  -->
@@ -79,7 +79,5 @@
 	  	FROM OLLE_USER 
 	  	WHERE USER_ID=#{user_id}
   	</select>
-  
-  	
   
   </mapper>

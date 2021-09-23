@@ -31,13 +31,20 @@ public class JejuPage {
 	//이미지
 	List<ImgDto> img=new ArrayList<ImgDto>();
 	//각 가게당 메뉴 리스트들을 담을 리스트
-	List<ArrayList<MenuDto>> menuList=new ArrayList<ArrayList<MenuDto>>();
+	List<MenuDto> menuList=new ArrayList<MenuDto>();
+	//버튼리스트 시작버튼값
+	int listBtnStartIdx;
+	//구분값
+	String gubun;
+	//키워드
+	String keyword;
 	public JejuPage() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 	public JejuPage(int totalElements, int totalPages, int elementsPerPage, int startIdx, int endIdx, int curPage,
 			int listBtnUnit, boolean prevUnit, boolean nextUnit, List<JejuDto> jeju, List<ImgDto> img,
-			List<ArrayList<MenuDto>> menuList) {
+			List<MenuDto> menuList, int listBtnStartIdx, String gubun, String keyword) {
 		super();
 		this.totalElements = totalElements;
 		this.totalPages = totalPages;
@@ -51,6 +58,9 @@ public class JejuPage {
 		this.jeju = jeju;
 		this.img = img;
 		this.menuList = menuList;
+		this.listBtnStartIdx = listBtnStartIdx;
+		this.gubun = gubun;
+		this.keyword = keyword;
 	}
 	public int getTotalElements() {
 		return totalElements;
@@ -118,10 +128,36 @@ public class JejuPage {
 	public void setImg(List<ImgDto> img) {
 		this.img = img;
 	}
-	public List<ArrayList<MenuDto>> getMenuList() {
+	public List<MenuDto> getMenuList() {
 		return menuList;
 	}
-	public void setMenuList(List<ArrayList<MenuDto>> menuList) {
+	public void setMenuList(List<MenuDto> menuList) {
 		this.menuList = menuList;
+	}
+	public int getListBtnStartIdx() {
+		return listBtnStartIdx;
+	}
+	public void setListBtnStartIdx(int listBtnStartIdx) {
+		this.listBtnStartIdx = listBtnStartIdx;
+	}
+	public String getGubun() {
+		return gubun;
+	}
+	public void setGubun(String gubun) {
+		this.gubun = gubun;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	@Override
+	public String toString() {
+		return "JejuPage [totalElements=" + totalElements + ", totalPages=" + totalPages + ", elementsPerPage="
+				+ elementsPerPage + ", startIdx=" + startIdx + ", endIdx=" + endIdx + ", curPage=" + curPage
+				+ ", listBtnUnit=" + listBtnUnit + ", prevUnit=" + prevUnit + ", nextUnit=" + nextUnit + ", jeju="
+				+ jeju + ", img=" + img + ", menuList=" + menuList + ", listBtnStartIdx=" + listBtnStartIdx + ", gubun="
+				+ gubun + ", keyword=" + keyword + "]";
 	}
 }

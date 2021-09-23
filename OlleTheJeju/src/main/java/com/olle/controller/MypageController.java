@@ -19,20 +19,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.olle.biz.mypage.MypageBizImpl;
+
+import com.olle.biz.admin.ChatBiz;
 import com.olle.biz.etc.DateBiz;
 import com.olle.biz.etc.HashBiz;
 import com.olle.biz.etc.ImgBiz;
 import com.olle.biz.mypage.MypageBiz;
 import com.olle.dto.customplan.CustomDto;
-import com.olle.dto.etc.DibDto;
+import com.olle.dto.etc.ChatMessage;
 import com.olle.dto.etc.HashtagDto;
 import com.olle.dto.etc.ImgDto;
 import com.olle.dto.member.Criteria;
@@ -57,6 +56,9 @@ public class MypageController {
 	@Autowired
 	private ImgBiz imgBiz;
 	
+	@Autowired
+	private ChatBiz chatBiz;
+	
 	//회원정보 조회 - 작업완료 
 	@RequestMapping(value = "mypage_main.do", method = RequestMethod.GET)
 	public String mypage_main(Model model, String user_id) {
@@ -72,14 +74,8 @@ public class MypageController {
 	public int userUpdate(HttpSession session, MemberDto dto) { 
 		logger.info("userUpdate");
 		
-		//System.out.println("dto.getUser_newpw :" + dto.getUser_newpw());
-		//System.out.println("dto.getUser_id :" + dto.getUser_id());
-		//System.out.println("dto.getUser_addrdetail :" + dto.getUser_addrdetail());
-		//System.out.println("dto.getUser_pw :" + dto.getUser_pw());
-		
 		int res = 0;
 		dto.setUser_id((String)session.getAttribute("user_id"));
-		//System.out.println("dto.getUser_id - 2 :" + dto.getUser_id());
 		
 		try {
 			res = biz.userUpdate(dto);
@@ -182,7 +178,7 @@ public class MypageController {
 	 */
 	
 	//회원 강제 탈퇴 - 보류중 / 작업해야함
-	@RequestMapping(value="", method= RequestMethod.POST) 
+	@RequestMapping(value="", method= RequestMethod.POST)
 	public int mypageLeave(String user_id, int user_warning, Model model) {
 		logger.info("myapgeLeave");
 	 
@@ -287,9 +283,23 @@ public class MypageController {
 	}
 		
 	
-	//문의하기 (채팅 기능) - 보류중 / 작업해해야됨
+	//문의하기 (채팅 기능)
 	@RequestMapping(value = "mypage_inquire.do", method = RequestMethod.GET)
-	public String mypage_inquire() {
+	public String mypage_inquire(@RequestParam("user_id") String user_id, Model model) {
+		
+		//해당 유저에 대한 메세지 목록 가져오기
+		List<ChatMessage> dto_list = chatBiz.selectList(user_id);
+		/*
+		for(int i = 0; i < dto_list.size(); i++) {
+			System.out.println(dto_list.get(i).getMessage_content());
+		}
+		*/
+		if(dto_list.size() > 0) {
+			model.addAttribute("message_list", dto_list);
+		} else {
+			model.addAttribute("message_list", null);
+		}
+		
 		return "page_mypage/mypage_inquire";
 	}
 	

@@ -7,7 +7,7 @@ public class BookingDto {
 	private int situ_num;
 	private String book_name;
 	private int book_people;
-	private Date book_regdate;
+	private String book_regdate;
 	private String book_time;
 	private String book_phone;
 	private String book_content;
@@ -15,7 +15,7 @@ public class BookingDto {
 	public BookingDto() {
 		super();
 	}
-	public BookingDto(int book_num, int situ_num, String book_name, int book_people, Date book_regdate,
+	public BookingDto(int book_num, int situ_num, String book_name, int book_people, String book_regdate,
 			String book_time, String book_phone, String book_content) {
 		super();
 		this.book_num = book_num;
@@ -52,10 +52,10 @@ public class BookingDto {
 	public void setBook_people(int book_people) {
 		this.book_people = book_people;
 	}
-	public Date getBook_regdate() {
+	public String getBook_regdate() {
 		return book_regdate;
 	}
-	public void setBook_regdate(Date book_regdate) {
+	public void setBook_regdate(String book_regdate) {
 		this.book_regdate = book_regdate;
 	}
 	public String getBook_time() {

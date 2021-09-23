@@ -1,7 +1,5 @@
 package com.olle.dao.jejusituation;
 
-import java.util.List;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,7 +17,7 @@ public class JejuDaoImpl implements JejuDao {
 
 	@Autowired
 	private MenuBiz menuBiz;
-	
+
 	@Autowired
 	private ImgBiz imgBiz;
 	
@@ -57,6 +55,12 @@ public class JejuDaoImpl implements JejuDao {
 	@Override
 	public void setMaxPkFromSelectKey(int primaryKey) {
 		this.primaryKey=primaryKey;
+	}
+	
+	@Override
+	public JejuDto getOurStoreInfo(int situ_num) {
+		JejuDto dto=sqlSession.selectOne(NAMESPACE+"selectOne",situ_num);
+		return dto;
 	}
 
 }

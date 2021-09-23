@@ -28,10 +28,10 @@
                 <br>
                 <br><br>
                 <div class="menu">
-                    <div class="menu1">한식</div>
-                    <div class="menu2">중식</div>
-                    <div class="menu3">일식</div>
-                    <div class="menu4">양식</div>
+                    <div class="menu1"><span onclick="location.href=`jejusituation_search_gubun.do?gubun=한식&page=1`;">한식</span></div>
+                    <div class="menu2"><span onclick="location.href=`jejusituation_search_gubun.do?gubun=중식&page=1`;">중식</span></div>
+                    <div class="menu3"><span onclick="location.href=`jejusituation_search_gubun.do?gubun=일식&page=1`;">일식</span></div>
+                    <div class="menu4"><span onclick="location.href=`jejusituation_search_gubun.do?gubun=양식&page=1`;">양식</span></div>
                 </div>
                 <br>
                 <div class="search">
@@ -39,53 +39,41 @@
                     <button class="btn btn-outline-secondary search2"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
                 <br><br>
-	            <!--모달창<-아이템-->
-	            <div class="my-modal">
-	                <div class="close-btn" onclick="closeModal();">❌</div>
-	                <iframe src="jejusituation_rest_detail.do" title="모달창">
-	
-	                </iframe>
-	            </div>
-	            <!--추후 사용자 모드(사장님인지에 따라) 자바스크립트가 변경되어야 할 것-->
-	            <div class="my-modal2">
-	                <div class="close-btn2" onclick="closeModal2();">❌</div>
-	                <iframe src="jejusituation_rest_create.do" title="모달창">
-	
-	                </iframe>
-	            </div>
+            <!--모달창<-아이템-->
+            <div class="my-modal">
+                <div class="close-btn" onclick="closeModal();">❌</div>
+                <iframe src="jejusituation_rest_detail.do" title="모달창">
 
-            	<!-- 썸네일 -->
+                </iframe>
+            </div>
+            <!--추후 사용자 모드(사장님인지에 따라) 자바스크립트가 변경되어야 할 것-->
+            <div class="my-modal2">
+                <div class="close-btn2" onclick="closeModal2();">❌</div>
+                <iframe src="jejusituation_rest_create.do" title="모달창">
+
+                </iframe>
+            </div>
+
+                <!-- 썸네일 -->
                 <div class="nail">
                     <div class="nail1" onclick="openModal('${oneJeju.situ_num}');">
-<<<<<<< HEAD
                         <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${oneImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png';"/>
-=======
-                        <img class="store" src="./resources/img/jejusitu/${oneImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png';"/>
->>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
                         <div class="nail1-text1 text">${oneJeju.situ_name }
-                            <span class="nail1-text2 text">${oneJeju.situ_gubun }</span>
+                            <br>구분 | <span class="nail1-text2 text">${oneJeju.situ_gubun }</span>
                         </div>
                         <div class="nail1-text3 text">${oneJeju.situ_addr }</div>
                     </div>
                     <div class="nail2" onclick="openModal('${twoJeju.situ_num}');">
-<<<<<<< HEAD
                         <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${twoImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
-=======
-                        <img class="store" src="./resources/img/jejusitu/${twoImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
->>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
                         <div class="nail1-text1 text">${twoJeju.situ_name }
-                            <span class="nail1-text2 text">${twoJeju.situ_gubun }</span>
+                            <br>구분 | <span class="nail1-text2 text">${twoJeju.situ_gubun }</span>
                         </div>
                         <div class="nail1-text3 text">${twoJeju.situ_addr }</div>
                     </div>
                     <div class="nail3" onclick="openModal('${threeJeju.situ_num}');">
-<<<<<<< HEAD
                         <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${threeImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
-=======
-                        <img class="store" src="./resources/img/jejusitu/${threeImg.img_title}" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
->>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
                         <div class="nail1-text1 text">${threeJeju.situ_name}
-                            <span class="nail1-text2 text">${threeJeju.situ_gubun }</span>
+                            <br>구분 | <span class="nail1-text2 text">${threeJeju.situ_gubun }</span>
                         </div>
                         <div class="nail1-text3 text">${threeJeju.situ_addr }</div>
                     </div>
@@ -93,60 +81,62 @@
                 <br><br><br>
                 <div class="nail">
                     <div class="nail4" onclick="openModal('${fourJeju.situ_num}');">
-<<<<<<< HEAD
                         <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${fourImg.img_title}" alt="ex"  onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
-=======
-                        <img class="store" src="./resources/img/jejusitu/${fourImg.img_title}" alt="ex"  onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
->>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
                         <div class="nail1-text1 text">${fourJeju.situ_name }
-                            <span class="nail1-text2 text">${fourJeju.situ_gubun }</span>
+                            <br>구분 | <span class="nail1-text2 text">${fourJeju.situ_gubun }</span>
                         </div>
                         <div class="nail1-text3 text">${fourJeju.situ_addr}</div>
                     </div>
                     <div class="nail5" onclick="openModal('${fiveJeju.situ_num }');">
-<<<<<<< HEAD
                         <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${fiveImg.img_title }" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
-=======
-                        <img class="store" src="./resources/img/jejusitu/${fiveImg.img_title }" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
->>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
                         <div class="nail1-text1 text">${fiveJeju.situ_name }
-                            <span class="nail1-text2 text">${fiveJeju.situ_gubun }</span>
+                            <br>구분 | <span class="nail1-text2 text">${fiveJeju.situ_gubun }</span>
                         </div>
                         <div class="nail1-text3 text">${fiveJeju.situ_addr }</div>
                     </div>
                     <div class="nail6" onclick="openModal('${sixJeju.situ_num}');">
-<<<<<<< HEAD
                         <img class="store" src="<%=request.getContextPath() %>/resources/img/jejusitu/${sixImg.img_title }" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
-=======
-                        <img class="store" src="./resources/img/jejusitu/${sixImg.img_title }" alt="ex" onerror="this.src='<%=request.getContextPath()%>/resources/img/noImage.png'"/>
->>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
                         <div class="nail1-text1 text">${sixJeju.situ_name }
-                            <span class="nail1-text2 text">${sixJeju.situ_gubun }</span>
+                            <br>구분 | <span class="nail1-text2 text">${sixJeju.situ_gubun }</span>
                         </div>
                         <div class="nail1-text3 text">${sixJeju.situ_addr }</div>
                     </div>
                 </div>
                 <br>
                 <div class="write">
-<<<<<<< HEAD
                     <!-- <button class="btn btn-outline-secondary" name="createrest" onclick="openModal2();">맛집등록</button> -->
-=======
->>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
                     <button class="btn btn-outline-secondary" name="createrest" onclick="registerStoreForm();">맛집등록</button>
                 </div>
                 <br><br>
                 <!-- 페이징 처리 -->
-                <div class="paging"> 페이징 처리 </div>
+                <div class="paging">
+                	<%-- 이전버튼을 보여줄 필요가 있음 --%> 
+                	<c:if test="${prevFlag == true}">
+						<a class="prev" href="jejusituation_rest.do?page=${paginationMetaInfo.listBtnStartIdx-5}">이전</a>
+					</c:if>
+					<%-- 리스트버튼을 보여줄 필요가 있음 --%>
+					<c:choose>
+
+						<c:when test="${not empty paginationMetaInfo.jeju }">
+							  <c:forEach begin="${paginationMetaInfo.listBtnStartIdx}" end="${paginationMetaInfo.listBtnStartIdx+4}" var="item">
+						  		<c:if test="${item le paginationMetaInfo.totalPages}">
+						  			<a href="jejusituation_rest.do?page=${item }">${item }</a>
+						  		</c:if>
+						  </c:forEach>
+							
+						</c:when>
+					</c:choose>
+							<%-- 이후버튼을 보여줄 필요가 있음 --%>
+					 	<c:if test="${nextFlag eq true}">
+						 	<a class="next" href="jejusituation_rest.do?page=${paginationMetaInfo.listBtnStartIdx+5}">이후</a>
+					 	</c:if>
+                </div>
                 <br><br><br>
             </div>
 			<jsp:include page="../include/footer.jsp"></jsp:include>
         </div>
         <script type="text/javascript" src="./resources/js/jejusituation/jejusituation_rest.js"></script>
-<<<<<<< HEAD
         <script>
-=======
-        <script type="text/javascript">
->>>>>>> 37f0145d73c4b6845bc8b28e0380873c44dcd606
         	function registerStoreForm(){
         		$.ajax({
         			method:"POST",
@@ -167,6 +157,7 @@
         			}
         		});
         	}
+        	
         </script>
     </body>
 </html>

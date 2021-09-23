@@ -12,7 +12,7 @@ import com.olle.dto.jejusituation.MenuDto;
 public class MenuBizImpl implements MenuBiz {
 	@Autowired
 	private MenuDao dao;
-	
+
 	@Override
 	public int maxMenuPerStore(int storeId) {
 		return dao.maxMenuPerStore(storeId);
@@ -22,4 +22,15 @@ public class MenuBizImpl implements MenuBiz {
 	public List<MenuDto> getMenuByStoreId(int storeId) {
 		return dao.getMenuByStoreId(storeId);
 	}
+
+	@Override
+	public List<MenuDto> getPageMenuList(int startIdx, int page) {
+		return dao.getPageMenuList(startIdx, page);
+	}
+	
+	@Override
+	public List<MenuDto> getMenuListForOurStore(int situ_num) {
+		return dao.getMenuListForOurStore(situ_num);
+	}
+
 }

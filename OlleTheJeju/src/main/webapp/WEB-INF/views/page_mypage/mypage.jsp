@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -16,8 +17,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        <script src="./resources/js/mypage/mypageupdate.js" type="text/javascript"></script>
-        
+		<script src="./resources/js/mypage/mypageupdate.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div class="wrapper">
@@ -28,9 +28,9 @@
 	            <div class="myp_nav_align">
 	                <p style="font-size: 22px;padding-left: 30px;">마이페이지</p>
 	                <br>
-	                <ul style="list-style: none;">           
-	               		<li><a href="mypage_main.do?user_id=${sessionScope.user_id}">회원 정보 수정</a></li> 
+	                <ul style="list-style: none;">
 	                    <li><a href="mypage_plan.do?plan_writer=${sessionScope.user_id}">나의 일정</a></li>
+	                    <li><a href="mypage_main.do?user_id=${sessionScope.user_id}">회원 정보 수정</a></li>
 	                    <li><a href="mypage_inquire.do?user_id=${sessionScope.user_id}">문의 내역</a></li>
 	                    <li><a href="mypage_warn.do?user_id=${sessionScope.user_id}">신고 확인</a></li>
 	              </ul>
@@ -46,13 +46,13 @@
 	                    <p style="font-size: 25px;"><b>회원 정보 수정</b></p>
 	                </div>
 	                <!-- 프로필 이미지 추가는 일단 빼는걸로 -->
-	                <div class="user_img" style="background-image: url('./resources/mypage/${dto.user_img}');">
+	                <div class="user_img" style="background-image: url('./resources/img/${dto.user_img}');">
 	                    <div id='previewId' style='width: 100px; height: 100px; position: absolute;'></div>
 	                </div>
 	                <div class="img_update">
-	                    <input type="file" id="ex_file" name="profileimg" onchange="previewImage(this,'previewId')">
+	                    <input type="file" id="ex_file" name="poster" onchange="previewImage(this,'previewId')">
 	                    <p style="font-size: 11px;">1mb 이하의 JPEG파일만 프로필 이미지로 등록 가능합니다</p>
-	                    <input type="submit" class="btn btn-primary btn-block" id="profileimg" value="등록/변경" >
+	                    <input type="submit" class="btn btn-primary btn-block" id="profileimg" name="profileimg" value="등록/변경">
 	                </div>
 	                <br><br>
 	                    <div class="mb-3 row">
@@ -73,7 +73,7 @@
 	                    <div class="mb-3 row">
 	                        <label for="id" class="col-sm-3 col-form-label">아이디</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" id="id" name="user_id" value="${dto.user_id }" readonly="readonly">
+	                            <input type="text" class="form-control" id="id" value="${dto.user_id }" readonly="readonly">
 	                        </div>
 	                    </div>
 	                    
@@ -127,8 +127,8 @@
 	            	</div> 
 	        </main>
 	        <br><br><br><br>
-	         <!-- Modal 시작 -->
-             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	        <!-- Modal 시작 -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                  <div class="modal-dialog">
                  <div class="modal-content">
                      <div class="modal-header">

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -42,24 +43,52 @@
 	                <br>
 	
 	                <table class="table" border="1">
+	                	<col width="80px">
+	                	<col width="150px">
+	                	<col width="200px">
+	                	<col width="300px">
 	                    <tr>
 	                        <th>문의 번호</th>
 	                        <th>보낸    이</th>
 	                        <th>문의 일자</th>
 	                        <th>문의 내용</th>
 	                    </tr>
-	                    <tr>
-	                        <td>1</td>
-	                        <td>user<input type="hidden" value="user" id="to_user"></td>
-	                        <td>2021 / 05 / 21</td>
-	                        <td data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="connect();">혹시 나만의 일정 수정..</td>
-	                    </tr>
-	                    <tr>
-	                        <td>2</td>
-	                        <td>user2</td>
-	                        <td>2021 / 05 / 21</td>
-	                        <td><a href="">아 생각이 없어진다...</a></td>
-	                    </tr>
+	                    <c:choose>
+	                    	<c:when test="${empty room_id }">
+	                    		<tr>
+	                    			<td colspan="4">==========문의 내역이 없습니다.==========</td>
+	                    		</tr>
+	                    	</c:when>
+	                    	<c:otherwise>
+	                    		<c:forEach var="room_list" items="${room_id }" varStatus="status">
+		                    			<tr>
+		                    				<td>${status.count }</td>
+		                    				<td>
+		                    					${room_list }
+		                    					<input type="hidden" id="room_id" value="${room_list }">
+	                    					</td>
+		                    				
+		                    				<c:forEach var="message" items="${message_content }">
+		                    					<c:if test="${room_list eq message.room_id }">
+		                    						<fmt:formatDate var="Regdate" value="${message.message_regdate }" pattern="yyyy.MM.dd"/>
+		                    						<td>${Regdate }</td>
+		                    						<td class="${room_list }_msg" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="connect('${room_list}');">
+		                    							<p>${message.message_content }</p>
+		                    							
+		                    							<c:forEach var="message2" items="${message_list }">
+			                    							<c:forEach var="msg" items="${message2 }">
+			                    								<c:if test="${msg.room_id eq room_list }">
+			                    									<input type="hidden" class="${msg.from_user }" value="${msg.message_content }">
+			                    								</c:if>
+			                    							</c:forEach>
+			                    						</c:forEach>
+	                    							</td>
+		                    					</c:if>
+		                    				</c:forEach>
+		                    			</tr>
+	                    		</c:forEach>
+	                    	</c:otherwise>
+	                    </c:choose>
 	                </table>
 	            </div>
 	        </main>
@@ -71,20 +100,37 @@
 	        <div class="modal-dialog">
 		        <div class="modal-content">
 		            <div class="modal-header">
-		            <h5 class="modal-title" id="staticBackdropLabel">user님의 문의</h5>
+		            <h5 class="modal-title" id="staticBackdropLabel"></h5>
 		            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		            </div>
 		            <form name="reportmodal">
 			            <input type="hidden" id="sessionId" value="">
 		                <div class="modal-body chatMiddle" style="overflow: scroll;">
 		                    <ul style="display: flex; flex-direction: column; padding: 0;">
+		                    	<c:choose>
+		                    		<c:when test="${empty message_list }">
+		                    		
+		                    		</c:when>
+		                    		<c:otherwise>
+		                    			<c:forEach var="message" items="${message_list }">
+		                    				<c:forEach var="msg" items="${message }">
+		                    					<c:if test="${msg.room_id eq room_id }">
+		                    						<c:if test="${msg.from_user eq 'admin' }">
+		                    							<p>${msg.message_content } : 관리자</p>
+		                    						</c:if>
+		                    						<p>${msg.from_user} : ${msg.message_content }</p>
+		                    					</c:if>
+		                    				</c:forEach>
+		                    			</c:forEach>
+		                    		</c:otherwise>
+		                    	</c:choose>
 		                    	<!-- 동적 생성 -->
 		                    </ul>
 		                    <br>
 		                </div>
 		                <div class="modal-footer">
 		                	<textarea rows="5" cols="50" class="form-control" id="msg" placeholder="메세지 입력"></textarea>
-		                    <button type="button" class="btn btn-secondary" id="send" onclick="sendBtn();">전송</button>
+		                    <button type="button" class="btn btn-secondary" id="send">전송</button>
 		                </div>
 		            </form>
 		        </div>
@@ -93,12 +139,33 @@
 	    <!-- Modal 끝-->
 	    <script type="text/javascript">
 	    	<!-- 채팅 방 관련 -->
-	    	let roomId;
+	    	var room_id;
 	    	var ws;
 	    	
-	    	function connect() {
+	    	function connect(room_id) {
+	    		room_id = room_id;
+	    		$(".modal-title").text(room_id + "님의 문의");
+	    		
+	    		var li = $(".chatMiddle>ul").children();
+	    		
+	    		if(li.length > 0) {
+	    			$(".chatMiddle>ul").children().remove();
+	    		}
+	    		
+	    		var td = $("."+room_id+"_msg");
+	    		console.log(td);
+	    		var input = td.children('input');
+	    		for(var i = 0; i < input.length; i++) {
+	    			//console.log(input[i]);
+	    			if(input[i].className == room_id) {
+	    				$(".chatMiddle>ul").append("<p class='to_user'>" + room_id + " :" + input[i].value + "</p>");
+	    			} else {
+	    				$(".chatMiddle>ul").append("<p class='from_user'>" + input[i].value + " : 관리자</p>");
+	    			}
+	    		}
+	    		
 	    		var to_user = $("input#to_user").val();
-	    		ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo.do?room_id=${sessionScope.user_id}");
+	    		ws = new WebSocket("ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/echo.do");
 		    	
 		    	ws.onopen = function(data) {
 		    		//소켓 연결 시 초기화 세팅
@@ -111,13 +178,13 @@
 						if(d.type == "getId"){
 							var si = d.sessionId != null ? d.sessionId : "";
 							if(si != ''){
-								$("#sessionId").val(si); 
+								$("#sessionId").val(si);
 							}
 						} else if(d.type == "message") {
-							if(d.sessionId == $("#sessionId").val()){
-								$(".chatMiddle>ul").append("<p class='from_user'>" + d.msg + " : " + `${sessionScope.user_id}` + "</p>");
+							if(d.from_user == room_id){
+								$(".chatMiddle>ul").append("<p class='to_user'>" + d.from_user + " :" + d.msg + "</p>");
 							} else {
-								$(".chatMiddle>ul").append("<p class='others'>" + d.from_user + " :" + d.msg + "</p>");
+								$(".chatMiddle>ul").append("<p class='from_user'>" + d.msg + " : 관리자</p>");
 							}
 						} else {
 							console.warn("unknown type!");
@@ -136,26 +203,29 @@
 	    		
 	    		$(".btn-close").on('click', function() {
 					ws.close();
+					location.reload();
 	    		});
-	    	}
-	    	
-	    	//엔터 누르면 메세지 전송되도록 설정
-			document.addEventListener("keypress", function(e){
-				if(e.keyCode == 13){ //enter press
-					sendBtn();
-				}
-			});
-	    	
-	    	function sendBtn() {
-	    		var option ={
-    				type: "message",
-    				sessionId : $("#sessionId").val(),
-    				from_user : `${sessionScope.user_id}`,
-    				to_user : "user1",
-    				msg : $("#msg").val()
-    			}
-	    		ws.send(JSON.stringify(option));
-    			$("#msg").val("");
+	    		
+	    		//엔터 누르면 메세지 전송되도록 설정
+				document.addEventListener("keypress", function(e){
+					if(e.keyCode == 13){
+						console.log(room_id);
+						sendBtn();
+					}
+				});
+	    		
+	    		$("#send").on('click', function() {
+	    			console.log(room_id);
+		    		var option ={
+	    				type: "message",
+	    				room_id : room_id,
+	    				from_user : "admin",
+	    				to_user : room_id,
+	    				msg : $("#msg").val()
+	    			}
+		    		ws.send(JSON.stringify(option));
+	    			$("#msg").val("");
+	    		});
 	    	}
 	    	
 	    </script>

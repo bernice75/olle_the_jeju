@@ -21,10 +21,6 @@ public class MemberController {
 	@Autowired
 	private MemberBiz memberBiz;
 	
-	 /* 채팅 */
-//    @Autowired
-//    private ChatSession cSession;
-	
 	//회원가입
 	@RequestMapping(value="userInsert.do", method=RequestMethod.POST)
 	@ResponseBody
@@ -58,9 +54,13 @@ public class MemberController {
 			session.setAttribute("loginChk", false);
 		} else {
 			MemberDto user = memberBiz.selectUser(user_id);
-			session.setAttribute("loginChk", true);
-	        session.setAttribute("user_id", user_id);
-//	        cSession.addLoginUser(user_id); //채팅 세션에 로그인한 유저 정보 추가
+			if(user.getUser_status().equals("Y")) {
+				res = "status";
+				session.setAttribute("loginChk", false);
+			} else {
+				session.setAttribute("loginChk", true);
+		        session.setAttribute("user_id", user_id);
+			}
 		}
 		
 		return res;

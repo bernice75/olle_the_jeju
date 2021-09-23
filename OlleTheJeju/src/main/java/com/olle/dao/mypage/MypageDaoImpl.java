@@ -134,14 +134,15 @@ public class MypageDaoImpl implements MypageDao {
 		}
 		return list;
 	}
-	//해시태그는 따로 추가
-	/*
-	 * @Override public HashtagDto hashList(int table_num) {
-	 * 
-	 * HashtagDto dto = sqlSession.selectOne("hashtag.selectHash", table_num);
-	 * 
-	 * return dto; }
-	 */
+	
+	@Override
+	public HashtagDto hashList(int table_num) {
+		
+		HashtagDto dto = sqlSession.selectOne("hashtag.selectHash", table_num);
+		
+		return dto;
+	}
+	
 	//내가 작성한 게시글 총 갯수
 	@Override
 	public int listCount() {
@@ -173,10 +174,4 @@ public class MypageDaoImpl implements MypageDao {
 		}
 		return dto;
 	}
-
-	
-
-	
-
-	
 }

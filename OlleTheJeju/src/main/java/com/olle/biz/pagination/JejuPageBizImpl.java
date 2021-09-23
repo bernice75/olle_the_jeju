@@ -45,4 +45,44 @@ public class JejuPageBizImpl implements JejuPageBiz {
 	public ArrayList<ArrayList<MenuDto>> getMenuListElementsPerPage(int startIdx, int endIdx, int page) {
 		return null;
 	}
+
+	@Override
+	public List<JejuDto> getStoreElementsByGubun(String gubun, int startIdx, int endIdx, int page) {
+		return dao.getStoreElementsByGubun(gubun, startIdx, endIdx, page);
+	}
+
+	@Override
+	public List<ImgDto> getImgElementsByGubun(String gubun, int startIdx, int endIdx, int page) {
+		return dao.getImgElementsByGubun(gubun, startIdx, endIdx, page);
+	}
+
+	@Override
+	public int getTotalElementsByGubun(String gubun) {
+		return dao.getTotalElementsByGubun(gubun);
+	}
+
+	@Override
+	public int getTotalPagesByGubun(String gubun,int unit) {
+		return dao.getTotalPagesByGubun(gubun,unit);
+	}
+
+	@Override
+	public List<JejuDto> getStoreElementsByKeyword(String keyword, int startIdx, int endIdx, int page) {
+		return dao.getStoreElementsByKeyword(keyword, startIdx, endIdx, page);
+	}
+
+	@Override
+	public List<ImgDto> getStoreImgElementsByKeyword(String keyword, int startIdx, int endIdx, int page) {
+		return dao.getStoreImgElementsByKeyword(keyword, startIdx, endIdx, page);
+	}
+
+	@Override
+	public int getTotalElementsByKeyword(String keyword) {
+		return dao.getTotalElementsByKeyword(keyword);
+	}
+
+	@Override
+	public int getTotalPagesByKeyword(String keyword, int unit) {
+		return dao.getTotalPagesByKeyword(keyword, unit);
+	}
 }

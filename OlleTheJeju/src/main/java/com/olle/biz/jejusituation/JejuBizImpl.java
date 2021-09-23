@@ -28,10 +28,9 @@ public class JejuBizImpl implements JejuBiz {
 	//코로나 정보 가져오기
 	@Override
 	public List<CoronaDto> searchData() {
-		// TODO Auto-generated method stub
 		String weekAgo=LocalDate.now().minusDays(7).toString().replaceAll("-","");
 		String today=LocalDate.now().toString().replaceAll("-","");
-		
+
 		String uri=new StringBuilder()
 				.append("http://openapi.data.go.kr/openapi/service/rest/Covid19")
 				.append("/getCovid19SidoInfStateJson")
@@ -41,9 +40,9 @@ public class JejuBizImpl implements JejuBiz {
 				.append("&startCreateDt="+weekAgo)
 				.append("&endCreateDt="+today)
 				.toString();
-		
+
 		System.out.println("uri: "+uri);
-		
+
 		  //Document 객체 생성
         Document document=null;
         try {
@@ -57,17 +56,18 @@ public class JejuBizImpl implements JejuBiz {
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		}
+        //root tag
         document.getDocumentElement().normalize();
-        
+
         NodeList list=document.getElementsByTagName("item");
 
         List<CoronaDto> corona=new ArrayList<CoronaDto>();
-        
+
         for(int i=0;i<list.getLength();i++) {
         	Node node=list.item(i);
         	if(node.getNodeType()==Node.ELEMENT_NODE) {
         		Element e=(Element)node;
-        		
+
         		CoronaDto dto=new CoronaDto();
         		dto.setCreateDt(getTagValue("createDt",e));
         		dto.setUpdateDt(getTagValue("updateDt",e));        		
@@ -83,14 +83,14 @@ public class JejuBizImpl implements JejuBiz {
         		dto.setQurRate(getTagValue("qurRate",e));
         		dto.setSeq(Long.valueOf(getTagValue("seq",e)));
         		dto.setStdDay(getTagValue("stdDay",e));
-        		
+
         		corona.add(dto);
-        		
+
         	}
         }
-        
+
         System.out.println("corona: "+corona);
-		
+
 		return corona;
 	}
 	
@@ -98,14 +98,14 @@ public class JejuBizImpl implements JejuBiz {
 	public String getTagValue(String tagName, Element element) {
 		NodeList list=null;
 		Node val=null;
-			  
+	
 		try {
 			list=element.getElementsByTagName(tagName).item(0).getChildNodes();
 			val=(Node)list.item(0);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-			  
+	
 		if(val==null) {
 			return null;
 		}
@@ -133,5 +133,10 @@ public class JejuBizImpl implements JejuBiz {
 	@Override
 	public int getMaxPkFromSelectKey() {
 		return dao.getMaxPkFromSelectKey();
+	}
+	
+	@Override
+	public JejuDto getOurStoreInfo(int situ_num) {
+		return dao.getOurStoreInfo(situ_num);
 	}
 }
