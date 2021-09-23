@@ -2,10 +2,12 @@ package com.olle.dao.etc;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.olle.dto.etc.BookingDto;
 
+@Repository
 public class BookingDaoImpl implements BookingDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
