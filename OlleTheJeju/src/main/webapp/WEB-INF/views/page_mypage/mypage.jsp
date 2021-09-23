@@ -41,12 +41,12 @@
 	        <main class="main item">
 	            <div class="user_update">
 	            <form id="mypage_form" name="mypage_form" action="profileUpdate.do" method="post" enctype="multipart/form-data">
-	        	<input type="hidden" name="mypage_form" value="${dto.user_id }">
+	        		<input type="hidden" name="mypage_form" value="${dto.user_id }">
 	                <div class="update_title">
 	                    <p style="font-size: 25px;"><b>회원 정보 수정</b></p>
 	                </div>
 	                <!-- 프로필 이미지 추가는 일단 빼는걸로 -->
-	                <div class="user_img" style="background-image: url('./resources/img/${dto.user_img}');">
+	                <div class="user_img" style="background-image: url('./resources/mypage/${dto.user_img}');">
 	                    <div id='previewId' style='width: 100px; height: 100px; position: absolute;'></div>
 	                </div>
 	                <div class="img_update">

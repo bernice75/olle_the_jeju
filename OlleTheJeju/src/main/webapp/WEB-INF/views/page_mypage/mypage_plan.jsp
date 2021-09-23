@@ -60,7 +60,11 @@
 			                            	<!-- 기간 정보 데이터 받아와서 삽입 -->
 			                                <div class="sleep">${plan.plan_term }</div>
 			                                 <!-- 이미지 데이터 작성 / 추후에 이미지태그는 삭제하고 데이터값만 적어야함-->
-                                			<img src="./resources/img/제주도샘플사진1.jpg">
+			                                 <c:forEach var="img" items="${imgList }">
+			                                 	<c:if test="${plan.plan_num eq img.table_num }">
+			                                 	<img src="./resources/plan/${img.img_title }">
+			                                 </c:if>
+			                                 </c:forEach>
 			                            </div>
 				                    </div>
 				                    <div class="thum_text">

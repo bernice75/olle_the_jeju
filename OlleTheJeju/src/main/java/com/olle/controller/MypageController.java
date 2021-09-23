@@ -87,8 +87,8 @@ public class MypageController {
 	//회원정보 수정 (프로필 이미지 등록 및 변경) - 작업중
 	@RequestMapping(value="profileUpdate.do", method=RequestMethod.POST)
 	public void profileUpdate(HttpServletRequest req
-							  , @RequestParam("user_id") String user_id
-							  , @RequestParam("profileimg") MultipartFile profileimg
+							  , @RequestParam("mypage_form") String user_id
+							  , @RequestParam("poster") MultipartFile profileimg
 							  , HttpServletResponse response) throws IOException {
 		
 		logger.info("profileimg");
@@ -98,15 +98,8 @@ public class MypageController {
 		
 		//db에 저장할 이름
 		String fileName = profileimg.getOriginalFilename();
-
-		List<String> imgName = new ArrayList<String>();
-		imgName.add(fileName);
+		String safeFile = path + "/" + fileName;
 		
-		//폴더에 이미지 저장
-		InputStream input = null;
-		OutputStream out = null;
-
-		input = profileimg.getInputStream();
 		File store = new File(path);
 		if(!store.exists()) {
 		   try {
@@ -118,37 +111,26 @@ public class MypageController {
 		        e.printStackTrace();
 		   }
 		}
-
-		File newFile = new File(path + "/" + fileName);
-
-		//해당 경로 안에 해당하는 파일이 존재하는지 여부
-		if(!newFile.exists()) {
-		    //새로 생성
-		    newFile.createNewFile();
-		}
-
-		out = new FileOutputStream(newFile);
 		
-		int read = 0;
-		byte[] b = new byte[(int)profileimg.getSize()];
-		
-		while((read = input.read(b)) != -1) {
-		     //파일 저장
-		     out.write(b, 0, read);
-		}
+		try {
+			profileimg.transferTo(new File(safeFile));
+            
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 		
 		int resImg = 0;
 		    
         //MemberDto 파일명 테이블 저장
-        for(int i = 0; i < imgName.size(); i++) {
-       	 MemberDto dto = new MemberDto();
-       	 dto.setUser_img(imgName.get(i));
-       	 dto.setUser_id(user_id);
-       	 biz.profileUpdate(dto);
-       	 resImg++;
-        }
+		MemberDto dto = new MemberDto();
+	  	dto.setUser_img(fileName);
+	  	dto.setUser_id(user_id);
+	  	biz.profileUpdate(dto);
+	  	resImg++;
        
-        if( resImg == 1) {
+        if(resImg == 1) {
 			System.out.println("프로필 이미지 저장 완료");
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter pw = response.getWriter();
