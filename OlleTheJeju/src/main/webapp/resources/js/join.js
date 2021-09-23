@@ -152,7 +152,6 @@ function emailChkForm() {
 		}
 	}
 }
-
 //인증번호 체크
 function emailNumberChk() {
 	var emailChk = $('#user_email_chk').val().trim();

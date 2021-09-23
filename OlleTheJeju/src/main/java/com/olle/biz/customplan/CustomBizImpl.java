@@ -33,6 +33,11 @@ public class CustomBizImpl implements CustomBiz{
 	public int update(CustomDto dto) {
 		return dao.update(dto);
 	}
+	
+	@Override
+	public int updateView(int plan_num) {
+		return dao.updateView(plan_num);
+	}
 
 	@Override
 	public int delete(int plan_num) {

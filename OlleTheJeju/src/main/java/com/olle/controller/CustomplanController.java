@@ -125,21 +125,10 @@ public class CustomplanController {
 	
 	@RequestMapping(value = "customplan_detail.do", method = RequestMethod.GET)
 	public String customplan_detail(int plan_num, Model model, HttpServletRequest req) throws ParseException {
-		//======관광지 정보 받아오기
-		JSONParser trip_parser = new JSONParser();
-		JSONArray trip = new JSONArray();
 		
-		try {
-			Reader trip_reader = new FileReader(req.getSession().getServletContext().getRealPath("/") + "/resources/json/trip.json");
-			JSONObject trip_obj = (JSONObject)trip_parser.parse(trip_reader);
-			
-			trip = (JSONArray)trip_obj.get("trip");
-			
-			model.addAttribute("trip", trip);
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		//======관광지 정보 받아오기 끝
+		plan_num = Integer.parseInt(req.getParameter("plan_num"));
+		
+		cusbiz.updateView(plan_num);
 		
 		//나만의 일정 디테일 페이지 값 가져오기
 		model.addAttribute("CustomDto", cusbiz.selectOne(plan_num));
@@ -166,6 +155,7 @@ public class CustomplanController {
 			, @RequestParam("img_2") MultipartFile img_2
 			, @RequestParam("img_3") MultipartFile img_3
 			, HttpServletResponse response) throws IOException {
+		
 		//1. plan 관련 저장
 		String plan_title = req.getParameter("plan_title");
 		String plan_content = req.getParameter("plan_content");
@@ -211,48 +201,37 @@ public class CustomplanController {
 			String[] lst_lon = req.getParameterValues("lst_lon");
 			
 			int mapRes = 0;
+			
 			for(int i = 0; i < lst_title.length; i++) {
 				DateDto date = new DateDto();
-				for(int j = 0; j <= i; j++) {
-					date.setDate_num(datebiz.maxNum() + 1);
-					date.setBoard_num(3);
-					date.setTable_num(plan_num);
-					date.setGroup_num(i+1);
-					date.setDate_lat(Double.parseDouble(lst_lat[j]));
-					date.setDate_lon(Double.parseDouble(lst_lon[j]));
-					date.setDate_name(lst_title[j]);
-					date.setDate_addr(lst_addr[j]);
-					date.setDate_phone(lst_phone[j]);
-					
-					int lstRes = datebiz.insert(date);
-					if(lstRes > 0) {
-						mapRes++;
-					}
+				date.setDate_num(datebiz.maxNum() + 1);
+				date.setBoard_num(3);
+				date.setTable_num(plan_num);
+				date.setGroup_num(i+1);
+				date.setDate_lat(Double.parseDouble(lst_lat[i]));
+				date.setDate_lon(Double.parseDouble(lst_lon[i]));
+				date.setDate_name(lst_title[i]);
+				date.setDate_addr(lst_addr[i]);
+				date.setDate_phone(lst_phone[i]);
+				
+				int lstRes = datebiz.insert(date);
+				if(lstRes > 0) {
+					mapRes++;
 				}
 			}
 			
 			if(mapRes > 0) {
 				System.out.println("지도 관련 저장 완료");
 			}
-			//4. 이미지 관련 저장
-			String path = req.getSession().getServletContext().getRealPath("/") + "/resources/plan";
-			System.out.println("path : " + path);
-
-			//db에 저장할 이름
-			String fileName_1 = img_1.getOriginalFilename();
-			String fileName_2 = img_2.getOriginalFilename();
-			String fileName_3 = img_3.getOriginalFilename();
 			
-			List<String> imgName = new ArrayList<String>();
-			imgName.add(fileName_1);
-			imgName.add(fileName_2);
-			imgName.add(fileName_3);
-
-			//폴더에 이미지 파일 저장 -------------------------------------------------------
-			InputStream input = null;
-			OutputStream out = null;
-
-			input = img_1.getInputStream();
+			//4. 이미지 관련 저장
+			List<MultipartFile> imgList = new ArrayList<MultipartFile>();
+			imgList.add(img_1);
+			imgList.add(img_2);
+			imgList.add(img_3);
+			
+			String path = req.getSession().getServletContext().getRealPath("/") + "/resources/plan";
+			
 			File store = new File(path);
 			if(!store.exists()) {
 	            try {
@@ -264,67 +243,31 @@ public class CustomplanController {
 	               e.printStackTrace();
 	            }
 	        }
-			//img_1 파일에 대한 처리---------------------------------
-			File newFile = new File(path + "/" + fileName_1);
-			//해당 경로 안에 해당하는 파일이 존재하는지 여부
-	        if(!newFile.exists()) {
-	           //새로 생성
-	           newFile.createNewFile();
-	        }
+			//경로에 이미지 저장
+			for(MultipartFile mf : imgList) {
+				String fileName = mf.getOriginalFilename();
+				String safeFile = path + "/" + fileName;
 
-	        out = new FileOutputStream(newFile);
+				try {
+	                mf.transferTo(new File(safeFile));
+	                
+	            } catch (IllegalStateException e) {
+	                e.printStackTrace();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
 
-	        int read = 0;
-	        byte[] b = new byte[(int)img_1.getSize()];
-
-	        while((read = input.read(b)) != -1) {
-	           //파일 저장
-	           out.write(b, 0, read);
-	        }
-	        //img_1 파일에 대한 처리 마감 ----------------------------
-
-	        //img_2 처리 시작 --------------------------------
-	        newFile = new File(path + "/" + fileName_2);
-	        if(!newFile.exists()) {
-	           //새로 생성
-	           newFile.createNewFile();
-	        }
-
-	        out = new FileOutputStream(newFile);
-
-	        read = 0;
-	        b = new byte[(int)img_2.getSize()];
-
-	        while((read = input.read(b)) != -1) {
-	           //파일 저장
-	           out.write(b, 0, read);
-	        }
-	        //img_2 파일에 대한 처리 마감 ----------------------------
-			//img_3 처리 시작 ----------------------------
-	         newFile = new File(path + "/" + fileName_3);
-	         if(!newFile.exists()) {
-	            //새로 생성
-	            newFile.createNewFile();
-	         }
-
-	         out = new FileOutputStream(newFile);
-
-	         read = 0;
-	         b = new byte[(int)img_3.getSize()];
-
-	         while((read = input.read(b)) != -1) {
-	            //파일 저장
-	            out.write(b, 0, read);
-	         }
-	         //폴더에 이미지 파일 저장 끝 -------------------------------------------------------
+			}
 	         
 	         int resImg = 0;
 	         
 	         //이미지 파일명 테이블 저장
-	         for(int i = 0; i < imgName.size(); i++) {
+	         for(int i = 0; i < imgList.size(); i++) {
+	        	 String name = imgList.get(i).getOriginalFilename();
+	        	 
 	        	 ImgDto img = new ImgDto();
 	        	 img.setGroup_num(i+1);
-	        	 img.setImg_title(imgName.get(i));
+	        	 img.setImg_title(name);
 	        	 img.setTable_num(plan_num);
 	        	 imgBiz.cusInsert(img);
 	        	 resImg++;

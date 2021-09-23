@@ -10,6 +10,7 @@ public interface CustomBiz {
 	public CustomDto selectOne(int plan_num);
 	public int insert(CustomDto dto);
 	public int update(CustomDto dto); //글 수정
+	public int updateView(int plan_num);
 	public int update_hide(int plan_num); //신고당한 후 복귀
 	public int delete(int plan_num);
 	public int maxNum();
