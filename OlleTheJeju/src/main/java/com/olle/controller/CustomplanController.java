@@ -38,6 +38,7 @@ import com.olle.biz.member.MemberBiz;
 import com.olle.biz.mypage.MypageBiz;
 import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.DateDto;
+import com.olle.dto.etc.DibDto;
 import com.olle.dto.etc.HashtagDto;
 import com.olle.dto.etc.ImgDto;
 import com.olle.dto.member.MemberDto;
@@ -133,6 +134,8 @@ public class CustomplanController {
 		
 		plan_num = Integer.parseInt(req.getParameter("plan_num"));
 		
+		cusbiz.updateView(plan_num);
+		
 		//나만의 일정 디테일 페이지 값 가져오기
 		model.addAttribute("CustomDto", cusbiz.selectOne(plan_num));
 		
@@ -165,6 +168,41 @@ public class CustomplanController {
 		} else {
 			result = "false";
 		}
+		return result;
+	}
+	
+	@RequestMapping(value="dib_insert.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String dib_insert(String user_id, int plan_num) {
+		String result = "";
+		
+		//우선 해당 유저가, 해당 글을 찜한게 있는지 확인
+		DibDto chk = new DibDto();
+		chk.setTable_num(plan_num);
+		chk.setUser_id(user_id);
+		int dibChk = dBiz.dibChk(chk);
+		
+		if(dibChk > 0) {
+			//찜 목록에 있다는 의미
+			result = "already";
+		} else {
+			//찜 목록에 없다는 의미
+			DibDto dib = new DibDto();
+			int dib_num = dBiz.maxNum();
+			dib.setDib_num(dib_num + 1);
+			dib.setBoard_num(3);
+			dib.setTable_num(plan_num);
+			dib.setUser_id(user_id);
+			
+			int res = dBiz.insert(dib);
+			
+			if(res > 0) {
+				result = "true";
+			} else {
+				result = "false";
+			}
+		}
+		
 		return result;
 	}
 	
