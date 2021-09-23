@@ -52,12 +52,12 @@ public class MypageDaoImpl implements MypageDao {
 	
 	//회원정보 수정 (프로필 이미지) //회원정보 수정 (프로필 이미지 등록 및 변경) - 작업중
 	@Override
-	public int profileUpdate(String user_img) {
+	public int profileUpdate(MemberDto dto) {
 		
 		int res = 0;
 		
 		try {
-			res = sqlSession.update(NAMESPACE+"profileUpdate", user_img);
+			res = sqlSession.update(NAMESPACE+"profileUpdate", dto);
 		} catch (Exception e) {
 			System.out.println("[error] : profileUpdate"); 
 			e.printStackTrace();
@@ -113,11 +113,10 @@ public class MypageDaoImpl implements MypageDao {
 	public List<CustomDto> myWriteList(String plan_writer, Criteria cri) {
 		List<CustomDto> list = new ArrayList<CustomDto>();
 		
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();;
 		map.put("plan_writer", plan_writer);
 		map.put("rowStart", cri.getRowStart());
 		map.put("rowEnd", cri.getRowEnd());
-		
 		
 		System.out.println("myWriteList::plan_writer{}"+plan_writer);
 		System.out.println("myWriteList::getRowStart{}"+cri.getRowStart());
@@ -135,7 +134,7 @@ public class MypageDaoImpl implements MypageDao {
 		}
 		return list;
 	}
-	//해시태그는 따로 추가
+	
 	@Override
 	public HashtagDto hashList(int table_num) {
 		
@@ -143,6 +142,7 @@ public class MypageDaoImpl implements MypageDao {
 		
 		return dto;
 	}
+	
 	//내가 작성한 게시글 총 갯수
 	@Override
 	public int listCount() {

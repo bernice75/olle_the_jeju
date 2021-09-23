@@ -11,16 +11,16 @@ import com.olle.dto.member.MemberDto;
 
 public interface MypageDao {
 
-String NAMESPACE="user.";
-	
+	String NAMESPACE="user.";
+		
 	//회원정보 조회
 	public MemberDto mypageInfo(String user_id);
 	
 	//회원정보 수정
 	public int userUpdate(MemberDto dto);
 	
-	//회원정보 수정 (프로필 이미지) //회원정보 수정 (프로필 이미지 등록 및 변경) - 작업중
-	public int profileUpdate(String user_img);
+	//회원정보 수정 (프로필 이미지) //회원정보 수정 (프로필 이미지 등록 및 변경)
+	public int profileUpdate(MemberDto dto);
 	
 	//회원정보 수정 및 삭제를 위한 비밀번호체크 
 	public boolean checkPw(String user_id, String user_pw);

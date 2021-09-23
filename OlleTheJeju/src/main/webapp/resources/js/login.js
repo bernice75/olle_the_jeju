@@ -20,8 +20,12 @@ function loginForm() {
 				alert("로그인 정보가 일지하지 않습니다.");
 				$("#user_pw").focus();
 			} else {
-				alert("반갑습니다~ \nOLLE THE JEJU 입니다!");
-				location.href="home.do?user_id=" + user_id;
+				if(data == "status") {
+					alert("강제탈되된 아이디입니다.\n로그인하실 수 없습니다.");
+				} else {
+					alert("반갑습니다~ \nOLLE THE JEJU 입니다!");
+					location.href="home.do?user_id=" + user_id;
+				}
 			}
 		},
 		error: function(){

@@ -39,7 +39,7 @@ select * from olle_user where user_id != 'admin';
 SELECT COUNT(USER_ID)
 		FROM OLLE_USER
 		WHERE USER_ID = '1234';
-
+commit;
 insert into olle_user
 values('admin', 'admin', 'admin', 0, '서울','4층', '010-4568-1234', 'admin@ac.kr', '개인', 'N', 0, SYSDATE, null, 'test.jpg', 'admin');
 insert into olle_user

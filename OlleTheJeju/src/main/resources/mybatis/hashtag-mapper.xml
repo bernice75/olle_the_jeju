@@ -31,10 +31,6 @@
 		WHERE BOARD_NUM = #{board_num}
 	</select>
 	
-	<select id="selectOne" resultType="hashtagDto">
-
-	</select>
-	
 	<insert id="insert" parameterType="hashtagDto">
 		INSERT INTO OLLE_HASHTAG
 		VALUES(

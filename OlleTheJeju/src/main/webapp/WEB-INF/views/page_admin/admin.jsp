@@ -84,11 +84,11 @@
 					                        </td>
 					                        <td>
 					                            <c:choose>
-					                            	<c:when test="${empty user.user_sec_date }">
+					                            	<c:when test="${empty user.user_secdate }">
 					                            		-----
 					                            	</c:when>
 					                            	<c:otherwise>
-					                            		<fmt:formatDate var="userSecdate" value="${user.user_sec_date }" pattern="yyyy.MM.dd"/>
+					                            		<fmt:formatDate var="userSecdate" value="${user.user_secdate }" pattern="yyyy.MM.dd"/>
 					                        			${userSecdate }
 					                            	</c:otherwise>
 					                            </c:choose>

@@ -17,25 +17,24 @@
 	</resultMap>
 	
 	<!-- 마이페이지 내가 작성한 게시글 총 갯수 페이징 -->
-     <select id="listCount" resultType="int">
-      SELECT COUNT(PLAN_NUM)
-      FROM OLLE_PLAN
-      WHERE PLAN_NUM > 0   
-   	</select>
-    <!-- 마이페이지 내가 작성한 게시글 총 갯수 페이징 끝 -->
+  	<select id="listCount" resultType="int">
+		SELECT COUNT(PLAN_NUM)
+		FROM OLLE_PLAN
+		WHERE PLAN_NUM > 0	
+	</select>
+	 <!-- 마이페이지 내가 작성한 게시글 총 갯수 페이징 끝 -->
     
     <!-- 마이페이지 내가 작성한 게시글 조회  페이징 -->
      <select id="mywritelist" parameterType="Map" resultMap="customMap">
       SELECT * 
       FROM (
-            SELECT ROW_NUMBER() OVER(ORDER BY PLAN_NUM) NUM,
-            OLLE_PLAN.*
-            FROM OLLE_PLAN OLLE_PLAN
-            WHERE PLAN_WRITER=#{plan_writer}
-            ORDER BY PLAN_NUM
+            SELECT ROW_NUMBER() OVER(ORDER BY PLAN_NUM DESC) NUM,
+            PLAN_NUM, PLAN_TITLE, PLAN_TENDENCY, PLAN_TERM, PLAN_VIEWS, PLAN_PUSH
+            FROM OLLE_PLAN
+            WHERE PLAN_HIDE = 0 AND PLAN_WRITER = #{plan_writer}
+            ORDER BY PLAN_NUM DESC
             )
       WHERE NUM BETWEEN #{rowStart} AND #{rowEnd}
-      ORDER BY PLAN_NUM
      </select>
      <!-- 마이페이지 내가 작성 -->
   	

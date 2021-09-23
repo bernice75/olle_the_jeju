@@ -29,17 +29,16 @@ public class MypageBizImpl implements MypageBiz {
 		 return dao.userUpdate(dto); 
 	}
 	
-	//회원정보 수정 (프로필 이미지) //회원정보 수정 (프로필 이미지 등록 및 변경) - 작업중
+	//회원정보 수정 (프로필 이미지) //회원정보 수정 (프로필 이미지 등록 및 변경)
 	@Override
-	public int profileUpdate(String user_img) {
-		return dao.profileUpdate(user_img);
+	public int profileUpdate(MemberDto dto) {
+		return dao.profileUpdate(dto);
 	}
 	 
 	//회원정보 수정 및 탈퇴를 위한 비밀번호체크
 	@Override public boolean checkPw(String user_id, String user_pw) { 
 		return dao.checkPw(user_id, user_pw); 
 	}
-	 
 
 	//회원 강제 탈퇴
 	@Override
@@ -58,18 +57,17 @@ public class MypageBizImpl implements MypageBiz {
 	public List<CustomDto> myWriteList(String plan_writer, Criteria cri) {
 		return dao.myWriteList(plan_writer, cri);
 	}
-	//해시태그는 따로 추가
+	
 	@Override
 	public HashtagDto hashList(int table_num) {
 		return dao.hashList(table_num);
 	}
+	
 	//내가 작성한 게시글 총 갯수
 	@Override
 	public int listCount() {
 		return dao.listCount();
 	}
-
-
 	//내가 찜한 게시글 조회 
 	@Override
 	public List<DibDto> myDibList(int table_num) {
