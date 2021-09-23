@@ -53,4 +53,9 @@ public class CustomBizImpl implements CustomBiz{
 	public int getAllCount(String search) {
 		return dao.getAllCount(search);
 	}
+
+	@Override
+	public int cusUpdate(int plan_num) {
+		return dao.cusUpdate(plan_num);
+	}
 }

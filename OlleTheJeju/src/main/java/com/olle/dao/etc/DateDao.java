@@ -12,4 +12,5 @@ public interface DateDao {
 	public DateDto selectOne(int plan_num);
 	public List<DateDto> selectList(int plan_num);
 	public int delete(int plan_num);
+	public int cusUpdate(int plan_num);
 }

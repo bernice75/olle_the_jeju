@@ -65,4 +65,18 @@ public class HashDaoImpl implements HashDao {
 		
 		return res;
 	}
+
+	@Override
+	public int cusUpdate(int plan_num) {
+		int res = 0;
+		
+		try {
+			res = sqlSession.update(NAMESPACE+"update",plan_num);
+		} catch (Exception e) {
+			System.out.println("[error] : 나만의 일정 HASH 테이블 수정 실패");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 }

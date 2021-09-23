@@ -10,4 +10,5 @@ public interface HashBiz {
 	public List<HashtagDto> selectList(int board_num);
 	public HashtagDto selectOne(int plan_num);
 	public int delete(int plan_num);
+	public int cusUpdate(int plan_num);
 }

@@ -14,4 +14,5 @@ public interface CustomBiz {
 	public int delete(int plan_num); //나만의 일정 삭제
 	public int maxNum();
 	public int getAllCount(String search);
+	public int cusUpdate(int plan_num);//나만의 일정 수정
 }

@@ -40,9 +40,10 @@
 		)
 	</insert>
 	
-	<update id="update" parameterType="dateDto">
+	<update id="cusUpdate" parameterType="dateDto">
 		UPDATE OLLE_DATE
-		SET 
+		SET DATE_TITLE = #{date_title},DATE_ADDR= #{date_addr} ,DATE_PHONE= #{date_phone}, DATE_LAT= #{date_lat},DATE_LON=#{date_lon}
+		WHERE BOARD_NUM = 3 AND TABLE_NUM = #{plan_num}
 	</update>
 	
 	<!-- 나만의 일정 삭제 -->

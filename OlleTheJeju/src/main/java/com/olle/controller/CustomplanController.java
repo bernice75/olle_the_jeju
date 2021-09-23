@@ -376,10 +376,47 @@ public class CustomplanController {
 		
 	}
 	
-	
-	public String customplan_update() {
+	@RequestMapping(value="customplan_updateform.do", method=RequestMethod.GET)
+	public String customplan_updateform(Model model, int plan_num,HttpServletRequest req) throws ParseException {
 		
-		return null;
+		//======관광지 정보 받아오기
+		JSONParser trip_parser = new JSONParser();
+		JSONArray trip = new JSONArray();
+		
+		try {
+			Reader trip_reader = new FileReader(req.getSession().getServletContext().getRealPath("/") + "/resources/json/trip.json");
+			JSONObject trip_obj = (JSONObject)trip_parser.parse(trip_reader);
+			
+			trip = (JSONArray)trip_obj.get("trip");
+			
+			model.addAttribute("trip", trip);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		//======관광지 정보 받아오기 끝
+		
+		//나만의 일정 디테일 페이지 값 가져오기
+		model.addAttribute("CustomDto", cusbiz.selectOne(plan_num));
+		
+		//나만의 일정 이미지 가져오기
+		model.addAttribute("ImgDto", imgBiz.selectDetailList(plan_num));
+		
+		//나만의 일정 지도 부분 가져오기
+		model.addAttribute("DateDto", datebiz.selectList(plan_num));
+		
+		//나만의 일정 해쉬태그 가져오기
+		model.addAttribute("HashDto", hashbiz.selectOne(plan_num));
+		
+		return "page_customplan/customplan_update";
+	}
+	
+	@RequestMapping(value="customplan_update.do", method = RequestMethod.POST)
+	public void customplan_update(int plan_num) {
+		
+		int hashRes = hashbiz.cusUpdate(plan_num);
+		int dateRes = datebiz.cusUpdate(plan_num);
+		int imgRes = imgBiz.cusUpdate(plan_num);
+		int cusRes = cusbiz.cusUpdate(plan_num);
 	}
 	
 }

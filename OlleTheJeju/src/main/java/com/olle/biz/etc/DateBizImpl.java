@@ -39,5 +39,10 @@ public class DateBizImpl implements DateBiz {
 		return dao.delete(plan_num);
 	}
 
+	@Override
+	public int cusUpdate(int plan_num) {
+		return dao.cusUpdate(plan_num);
+	}
+
 
 }

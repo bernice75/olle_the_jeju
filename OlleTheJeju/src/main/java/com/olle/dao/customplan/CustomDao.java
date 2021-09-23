@@ -16,4 +16,5 @@ public interface CustomDao {
 	public int delete(int plan_num);
 	public int maxNum();
 	public int getAllCount(String search);
+	public int cusUpdate(int plan_num);
 }

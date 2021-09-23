@@ -28,5 +28,6 @@ public interface ImgDao {
 	public int cusInsert(ImgDto dto);
 	public List<ImgDto> selectList(int board_num);
 	
+	public int cusUpdate(int plan_num);
 	
 }

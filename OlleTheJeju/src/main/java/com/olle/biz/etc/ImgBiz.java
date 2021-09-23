@@ -18,4 +18,5 @@ public interface ImgBiz {
 	public List<ImgDto> selectList(int board_num);
 	public List<ImgDto> selectDetailList(int plan_num); //나만의 일정 디테일 페이지 이미지 불러오기
 	public int delete(int plan_num); //나만의 일정 삭제
+	public int cusUpdate(int plan_num);
 }

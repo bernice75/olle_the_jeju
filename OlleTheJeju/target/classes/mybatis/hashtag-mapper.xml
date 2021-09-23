@@ -35,9 +35,10 @@
 		)
 	</insert>
 	
-	<update id="update" parameterType="hashtagDto">
+	<update id="cusUpdate" parameterType="int">
 		UPDATE OLLE_HASHTAG
-		SET 
+		SET HASH_CONTENT = #{hash_content}
+		WHERE BOARD_NUM = 3 AND TABLE_NUM = #{plan_num}
 	</update>
 	
 	<delete id="delete" parameterType="int">
