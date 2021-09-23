@@ -243,7 +243,7 @@
                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                      </div>
                      <form name="reportmodal" action="reportInsert.do" method="post">
-                     <input type="hidden" value="${dto.user_id }">
+                     <input type="hidden" value="${Memberdto.user_id }">
                          <div class="modal-body">
                              <p class="modal-text1">해당 게시글을 신고 하시겠습니까?</p>
                              <br>

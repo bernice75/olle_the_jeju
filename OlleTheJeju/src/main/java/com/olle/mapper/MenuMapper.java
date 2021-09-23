@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.olle.dto.jejusituation.menu.MenuDto;
+import com.olle.dto.jejusituation.MenuDto;
 
 
 @Mapper
