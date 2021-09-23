@@ -95,4 +95,18 @@ public class ImgDaoImpl implements ImgDao {
 		
 		return dto;
 	}
+	@Override
+	public int delete(int plan_num) {
+		
+		int res = 0;
+		
+		try {
+			res = sqlSession.delete(NAMESPACE + "delete",plan_num);
+		} catch (Exception e) {
+			System.out.println("[error] : 나만의 일정 이미지 삭제 실패");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 }

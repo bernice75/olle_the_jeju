@@ -28,4 +28,5 @@ public interface ImgDao {
 	
 	//나만의 일정 상세보기 이미지 가져오기
 	public List<ImgDto> selectDetailList(int plan_num);
+	public int delete(int plan_num);
 }

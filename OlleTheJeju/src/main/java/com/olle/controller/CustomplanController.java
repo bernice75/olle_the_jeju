@@ -348,7 +348,7 @@ public class CustomplanController {
 	}
 	
 	//지도 관련 제이슨으로 받아서 처리하는 메서드
-	@RequestMapping(value = "customplan_insert.do", method = RequestMethod.GET)
+	@RequestMapping(value = "customplan_insertForm.do", method = RequestMethod.GET)
 	public String customplan_Tmap(Model model, HttpServletRequest req) throws ParseException {
 		JSONParser trip_parser = new JSONParser();
 		JSONArray trip = new JSONArray();
@@ -365,5 +365,31 @@ public class CustomplanController {
 		}
 		//-----------------------------------------관광지 관련 데이터 끝
 		return "page_customplan/customplan_insert";
+	}
+	
+	//나만의 일정 삭제
+	@RequestMapping(value="customplan_delete.do")
+	public String customplan_delete(int plan_num,HttpServletResponse response) throws IOException {
+		
+		System.out.println("나만의 일정 삭제 시작");
+		
+		int hashRes = hashbiz.delete(plan_num);
+		int dateRes = datebiz.delete(plan_num);
+		int imgRes = imgBiz.delete(plan_num);
+		int cusRes = cusbiz.delete(plan_num);
+		
+		System.out.println("나만의 일정 값 가져옴");
+		if(hashRes>0 && dateRes>0 && imgRes>0 && cusRes>0) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter writer = response.getWriter(); 
+			writer.println("<script>alert('글 삭제 완료');"
+					+ "location.href='customplan_main.do';</script>"); 
+			writer.close();
+			return null;
+			
+		}else {
+			return "redirect:customplan_detail.do?plan_num="+plan_num;
+		}
+		
 	}
 }
