@@ -10,7 +10,6 @@
 		<link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/mypage/mypageplan.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/footer.css" rel="stylesheet" type="text/css" />
-        
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -61,7 +60,11 @@
 			                            	<!-- 기간 정보 데이터 받아와서 삽입 -->
 			                                <div class="sleep">${plan.plan_term }</div>
 			                                 <!-- 이미지 데이터 작성 / 추후에 이미지태그는 삭제하고 데이터값만 적어야함-->
-                                			<img src="./resources/img/제주도샘플사진1.jpg">
+			                                 <c:forEach var="img" items="${imgList }">
+			                                 	<c:if test="${plan.plan_num eq img.table_num }">
+			                                 	<img src="./resources/plan/${img.img_title }">
+			                                 </c:if>
+			                                 </c:forEach>
 			                            </div>
 				                    </div>
 				                    <div class="thum_text">

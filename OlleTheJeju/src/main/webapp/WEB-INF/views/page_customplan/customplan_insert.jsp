@@ -175,6 +175,7 @@
                                 <section>
                                     <label for="plan_term" style="margin-right: 90px;">시작일 : <input type="date" id="plan_term" class="form-control plan_term_start" name="plan_term_start"></label>
                                     <label for="plan_term">마감일 : <input type="date" class="form-control plan_term_end" name="plan_term_end" onchange="date();"></label>
+                                    <input type="hidden" name="plan_term">
                                 </section>
                                 <section>
                                     <label for="tendency">성향 : </label>

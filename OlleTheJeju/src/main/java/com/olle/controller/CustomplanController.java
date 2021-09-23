@@ -161,6 +161,7 @@ public class CustomplanController {
 		String plan_content = req.getParameter("plan_content");
 		String plan_writer = req.getParameter("plan_writer");
 		String plan_tendency = req.getParameter("tend_content");
+		String plan_term = req.getParameter("plan_term");
 		
 		//글 번호 따오기
 		int plan_num = cusbiz.maxNum();
@@ -172,7 +173,7 @@ public class CustomplanController {
 		plan.setPlan_content(plan_content);
 		plan.setPlan_writer(plan_writer);
 		plan.setPlan_tendency(plan_tendency);
-		plan.setPlan_term("1박2일");
+		plan.setPlan_term(plan_term);
 
 		//글 관련 저장
 		int res = cusbiz.insert(plan);

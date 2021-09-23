@@ -56,10 +56,10 @@ function date() {
 	end = new Date(end.getFullYear(), end.getMonth() + 1, end.getDate());
 
 	var diff = Math.abs(end.getTime() - start.getTime());
-	diff = Math.ceil(diff / (1000 * 3600 * 24));
-
-	console.log(diff + "일차");
-
+	diff = Math.ceil(diff / (1000 * 3600 * 24)); //diff박(diff+1)일
+	
+	$("input[name=plan_term]").val(diff+"박"+(diff+1) + "일");
+	/*
     for(var i = 0; i < (diff + 1); i++) {
         var button = document.createElement('button');
         button.setAttribute('class', 'btn btn-outline-dark ' + (start.getDate() + i) + " " + (i+1));
@@ -69,6 +69,7 @@ function date() {
         button.appendChild(btnText);
         $('.day-btn').append(button);
     }
+    */
 }
 
 function createList(obj) {
