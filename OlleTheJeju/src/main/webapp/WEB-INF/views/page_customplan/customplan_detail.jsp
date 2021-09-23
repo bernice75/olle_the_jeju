@@ -70,10 +70,19 @@
                         <div class="name">
                         	<!-- 작성자 -->
                             <h6><strong>작성자</strong> | ${CustomDto.plan_writer }</h6>
+                            
                             <h6 class="like" onclick="pushPlan(this);"><i class="fa fa-heart-o" aria-hidden="true"></i> | ${CustomDto.plan_push }</h6>
                             <input type="hidden" class="plan_num" value="${CustomDto.plan_num }">
+                            <input type="hidden" class="user_id" value="${sessionScope.user_id }">
                             <h6>조회수 | ${CustomDto.plan_views }</h6>
-                            <h6><i class="fa fa-thumb-tack" aria-hidden="true"></i> | ${dib }</h6>
+                            <c:choose>
+                            	<c:when test="${empty sessionScope.user_id }">
+                            		<h6 onclick="noDib();"><i class="fa fa-thumb-tack" aria-hidden="true"></i> | ${dib }</h6>
+                            	</c:when>
+                            	<c:otherwise>
+                            		<h6 onclick="dibPlan();"><i class="fa fa-thumb-tack" aria-hidden="true"></i> | ${dib }</h6>
+                            	</c:otherwise>
+                            </c:choose>
                             <h6><i class="fa fa-bullhorn" aria-hidden="true"></i> | 신고</h6>
                         </div>
                         <div class="content">
