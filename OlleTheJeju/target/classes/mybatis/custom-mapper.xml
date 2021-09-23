@@ -82,9 +82,10 @@
 		ORDER BY PLAN_NUM DESC
 	</select>
 	
-	<select id="selectOne" resultType="customDto">
-		SELECT * FROM OLLE_PLAN
-		WHERE PLAN_NUM = #{plan_num}
+	<select id="selectOne" parameterType="int" resultType="customDto">
+		SELECT PLAN_TITLE,PLAN_WRITER,PLAN_CONTENT,PLAN_NUM, PLAN_TENDENCY, PLAN_REGDATE
+		FROM OLLE_PLAN
+		WHERE PLAN_NUM =#{plan_num}
 	</select>
 	
 	<insert id="insert" parameterType="customDto">

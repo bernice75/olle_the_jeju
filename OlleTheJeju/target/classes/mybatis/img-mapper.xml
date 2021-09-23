@@ -17,9 +17,11 @@
 		FROM OLLE_IMG
 		WHERE BOARD_NUM = #{board_num}
 	</select>
-	
-	<select id="selectOne" resultType="imgDto">
-
+	<!-- 나만의 일정 디테일 -->
+	<select id="selectDetailList" parameterType="int" resultMap="imgMap">
+		SELECT *
+		FROM OLLE_IMG
+		WHERE BOARD_NUM=3 AND TABLE_NUM = #{plan_num}
 	</select>
 	
 	<!-- 제주상황 이미지 받아오기 -->

@@ -30,7 +30,10 @@ public class ImgBizImpl implements ImgBiz {
 	public List<ImgDto> getStoreImg(int startIdx, int endIdx) {
 		return dao.getStoreImg(startIdx, endIdx);
 	}
-	
+	@Override
+	public List<ImgDto> getStoreImgByGubun(String gubun, int startIdx, int endIdx) {
+		return dao.getStoreImgByGubun(gubun, startIdx, endIdx);
+	}
 	@Override
 	public List<ImgDto> getStoreImgByKeyword(String keyword, int startIdx, int endIdx) {
 		return dao.getStoreImgByKeyword(keyword, startIdx, endIdx);
@@ -50,7 +53,8 @@ public class ImgBizImpl implements ImgBiz {
 		return dao.selectList(board_num);
 	}
 	@Override
-	public List<ImgDto> getStoreImgByGubun(String gubun, int startIdx, int endIdx) {
-		return dao.getStoreImgByGubun(gubun, startIdx, endIdx);
+	public List<ImgDto> selectDetailList(int plan_num) {
+		return dao.selectDetailList(plan_num);
 	}
+	
 }

@@ -6,12 +6,6 @@ import com.olle.dto.etc.ImgDto;
 
 public interface ImgDao {
 	String NAMESPACE = "img.";
-
-	public List<ImgDto> selectList();
-	public ImgDto selectOne(int img_num);
-	public int insert(ImgDto dto);
-	public int update(ImgDto dto);
-	public int delete(int img_num);
 	
 	//이미지 최대 PK값 가져오기
 	int selectMaxPK();
@@ -31,4 +25,7 @@ public interface ImgDao {
 	//나만의 일정 이미지 저장
 	public int cusInsert(ImgDto dto);
 	public List<ImgDto> selectList(int board_num);
+	
+	//나만의 일정 상세보기 이미지 가져오기
+	public List<ImgDto> selectDetailList(int plan_num);
 }

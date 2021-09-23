@@ -124,16 +124,39 @@ public class CustomplanController {
 	}
 	
 	@RequestMapping(value = "customplan_detail.do", method = RequestMethod.GET)
-	public String customplan_detail(int plan_num, Model model) {
-		//글정보
-		CustomDto dto = cusbiz.selectOne(plan_num);
-		model.addAttribute("dto", dto);
+	public String customplan_detail(int plan_num, Model model, HttpServletRequest req) throws ParseException {
+		//======관광지 정보 받아오기
+		JSONParser trip_parser = new JSONParser();
+		JSONArray trip = new JSONArray();
 		
-		//해시태그
+		try {
+			Reader trip_reader = new FileReader(req.getSession().getServletContext().getRealPath("/") + "/resources/json/trip.json");
+			JSONObject trip_obj = (JSONObject)trip_parser.parse(trip_reader);
+			
+			trip = (JSONArray)trip_obj.get("trip");
+			
+			model.addAttribute("trip", trip);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		//======관광지 정보 받아오기 끝
 		
-		//코스정보(date)
+		//나만의 일정 디테일 페이지 값 가져오기
+		model.addAttribute("CustomDto", cusbiz.selectOne(plan_num));
 		
-		//이미지 정보
+		//나만의 일정 이미지 가져오기
+		model.addAttribute("ImgDto", imgBiz.selectDetailList(plan_num));
+		
+		//이미지 경로
+		String path = req.getSession().getServletContext().getRealPath("/") + "/resources/plan/";
+		model.addAttribute("path",path);
+		
+		//나만의 일정 지도 부분 가져오기
+		model.addAttribute("DateDto", datebiz.selectList(plan_num));
+		
+		//나만의 일정 해쉬태그 가져오기
+		model.addAttribute("HashDto", hashbiz.selectOne(plan_num));
+		
 		return "page_customplan/customplan_detail";
 	}
 	

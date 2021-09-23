@@ -34,4 +34,20 @@ public class HashDaoImpl implements HashDao {
 	public List<HashtagDto> selectList(int board_num) {
 		return sqlSession.selectList(NAMESPACE + "selectList", board_num);
 	}
+	
+	@Override
+	public HashtagDto selectOne(int plan_num) {
+		
+		HashtagDto dto = null;
+		
+		try {
+			dto = sqlSession.selectOne(NAMESPACE + "selectOne",plan_num);
+		} catch (Exception e) {
+			System.out.println("[error] : 나만의 일정 detail 해시태그 불러오기 실패");
+			e.printStackTrace();
+		}
+		
+		
+		return dto;
+	}
 }
