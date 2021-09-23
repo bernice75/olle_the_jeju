@@ -17,12 +17,11 @@
 <!-- 		<collection property="menuList" resultMap="menu.menuUnit"></collection> -->
 	</resultMap>
 	
-	<select id="selectList" resultMap="jejuMap">
-
-	</select>
-	
-	<select id="selectOne" resultType="jejuDto">
-
+	<select id="selectOne" parameterType="int" resultType="jejuDto">
+	  SELECT SITU_NUM,SITU_NAME,SITU_WRITER,SITU_REGDATE,SITU_PHONE,
+			SITU_ADDR,SITU_OPEN_TIME,SITU_CLOSE_TIME,SITU_GUBUN
+	  FROM OLLE_SITUATION
+	  WHERE SITU_NUM=#{situ_num}
 	</select>
 	
 	<!-- 제주상황 맛집등록 게시판 최대 pk값 가져올 수 있도록 하기 -->
@@ -54,7 +53,26 @@
 			)B
 			WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
 	</select>
-	<!-- 작성자 조건 페이징 조회 -->
+	<!--주소 조건 페이징 조회 -->
+	<!-- 갯수 카운트 -->
+	<select id="countForKeywordPaging" parameterType="String" resultType="int">
+			SELECT COUNT(SITU_NUM) FROM OLLE_SITUATION
+			WHERE SITU_ADDR LIKE '%${parameter}%'
+	</select>
+	<select id="searchKeywordPaging" parameterType="paginationIdxDto" resultType="jejuDto">
+		SELECT B.*
+		FROM(
+    		SELECT ROWNUM AS RN,A.* FROM (
+				SELECT SITU_NUM,SITU_NAME,SITU_WRITER,SITU_REGDATE,SITU_PHONE,
+				SITU_ADDR,SITU_OPEN_TIME,SITU_CLOSE_TIME,SITU_GUBUN
+				FROM OLLE_SITUATION
+				WHERE SITU_NUM>0 AND
+				SITU_ADDR LIKE '%'||#{keyword}||'%'
+			) A
+		ORDER BY A.SITU_NUM ASC
+		)B
+		WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
+	</select>
 	<!-- 구분    조건 페이징 조회 -->
 	<select id="storeGubunPagination" parameterType="paginationIdxDto" resultType="jejuDto">
 		SELECT B.*

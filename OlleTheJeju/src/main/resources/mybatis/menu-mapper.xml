@@ -26,6 +26,14 @@
 		FROM OLLE_SITU_MENU
 		WHERE STORE_ID=#{store_id}
 	</select>	
+	<!-- 가게의 메뉴 가져오기 -->
+	<select id="getMenuListForStore" parameterType="int" resultType="menuDto">
+	SELECT MENU_ID,STORE_ID,MENU,PRICE,S.SITU_NUM
+	FROM OLLE_SITU_MENU M
+	JOIN OLLE_SITUATION S ON(M.STORE_ID=S.SITU_NUM)
+	WHERE S.SITU_NUM=#{situ_num} AND M.MENU!='없음'
+	ORDER BY STORE_ID,MENU_ID
+	</select>
 	<!-- 페이지별로 메뉴리스트 가져오기(구분별로) -->
 	<select id="getPageMenuList" parameterType="paginationIdxDto" resultMap="menuMap">
 		SELECT B.*

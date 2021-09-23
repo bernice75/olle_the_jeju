@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.olle.dto.etc.ImgDto;
-import com.olle.dto.pagination.jejusitu.PaginationIdxes;
+import com.olle.dto.pagination.PaginationIdxes;
 
 @Repository
 public class ImgDaoImpl implements ImgDao {
@@ -15,11 +15,6 @@ public class ImgDaoImpl implements ImgDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	@Override
-	public List<ImgDto> selectList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public ImgDto selectOne(int img_num) {
@@ -95,6 +90,25 @@ public class ImgDaoImpl implements ImgDao {
 	@Override
 	public List<ImgDto> selectList(int board_num) {
 		return sqlSession.selectList(NAMESPACE + "selectList", board_num);
+	}
+
+	@Override
+	public List<ImgDto> getStoreImgByKeyword(String keyword, int startIdx, int endIdx) {
+		// TODO Auto-generated method stub
+		PaginationIdxes pg=new PaginationIdxes();
+		pg.setKeyword(keyword);
+		pg.setStartIdx(startIdx);
+		pg.setEndIdx(endIdx);
+		System.out.println("keyword--imgdao---: "+pg);
+		List<ImgDto> list=sqlSession.selectList(NAMESPACE+"searchKeywordImgPaging",pg);
+		return list;
+	}
+
+	@Override
+	public ImgDto getDetailImage(int situ_num) {
+		// TODO Auto-generated method stub
+		ImgDto dto=sqlSession.selectOne(NAMESPACE+"selectOneFromJejuDetail",situ_num);
+		return dto;
 	}
 
 //	@Override
