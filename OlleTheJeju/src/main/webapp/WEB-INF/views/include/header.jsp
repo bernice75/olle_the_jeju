@@ -9,7 +9,7 @@
 	</head>
 	<body>
        <div class="logo item">
-           <a href="home.do"><img class="logo" src="./resources/img/logo.png"></a>
+           <a href="home.do?user_id=${sessionScope.user_id}"><img class="logo" src="./resources/img/logo.png"></a>
        </div>
        <div class="header item">
            <div class="headerbtn">
@@ -35,23 +35,23 @@
        </div>
        <div class="nav item">
            <ul class="navi">
-               <li><a href="home.do">Home</a></li>
+               <li><a href="home.do?user_id=${sessionScope.user_id}">Home</a></li>
                <li>
-                   <a href="trip_main.do">관광일정</a>
+                   <a href="trip_main.do?user_id=${sessionScope.user_id}">관광일정</a>
                </li>
                <li>
-                   <a href="suggest_main.do">추천일정</a>
+                   <a href="suggest_main.do?user_id=${sessionScope.user_id}">추천일정</a>
                </li>
-               <li><a href="customplan_main.do">나만의일정</a></li>
+               <li><a href="customplan_main.do?user_id=${sessionScope.user_id}">나만의일정</a></li>
                <li>
-                   <a href="jejusituation_main.do">제주상황<i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+                   <a href="jejusituation_main.do?user_id=${sessionScope.user_id}">제주상황<i class="fa fa-arrow-down" aria-hidden="true"></i></a>
                    <ul class="slide two">
                        <li><a href="#">코로나상황</a></li>
                        <li><a href="#">관광지혼잡도</a></li>
-                       <li><a href="jejusituation_rest.do">맛집예약/현황</a></li>
+                       <li><a href="jejusituation_rest.do?user_id=${sessionScope.user_id}">맛집예약/현황</a></li>
                    </ul>
                </li>
-               <li><a href="notice_main.do">고객지원</a></li>
+               <li><a href="notice_main.do?user_id=${sessionScope.user_id}">고객지원</a></li>
            </ul>
        </div>
 	</body>

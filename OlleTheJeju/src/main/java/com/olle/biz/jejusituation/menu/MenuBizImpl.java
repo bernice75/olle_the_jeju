@@ -9,7 +9,7 @@ import com.olle.dao.jejusituation.menu.MenuDao;
 import com.olle.dto.jejusituation.MenuDto;
 
 @Service
-public class menuBizImpl implements MenuBiz {
+public class MenuBizImpl implements MenuBiz {
 	@Autowired
 	private MenuDao dao;
 	

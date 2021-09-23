@@ -24,14 +24,14 @@
                      <div class="info">Navigations</div>
                      <div class="business_nav">
                          <ul class="txtWrap nav1">
-                             <a href="#"><li style="color:#86868c">Home</li></a>
-                             <a href="#"><li style="color:#86868c">관광일정</li></a>
-                             <a href="#"><li style="color:#86868c">추천일정</li></a>
+                             <a href="home.do?user_id=${sessionScope.user_id}""><li style="color:#86868c">Home</li></a>
+                             <a href="trip_main.do?user_id=${sessionScope.user_id}"><li style="color:#86868c">관광일정</li></a>
+                             <a href="suggest_main.do?user_id=${sessionScope.user_id}"><li style="color:#86868c">추천일정</li></a>
                          </ul>
                          <ul class="txtWrap nav2">
-                             <a href="#"><li style="color:#86868c">고객지원</li></a>
-                             <a href="#"><li style="color:#86868c">제주상황</li></a>
-                             <a href="#"><li style="color:#86868c">나만의 일정</li></a>
+                             <a href="notice_main.do?user_id=${sessionScope.user_id}"><li style="color:#86868c">고객지원</li></a>
+                             <a href="jejusituation_main.do?user_id=${sessionScope.user_id}"><li style="color:#86868c">제주상황</li></a>
+                             <a href="customplan_main.do?user_id=${sessionScope.user_id}"><li style="color:#86868c">나만의 일정</li></a>
                          </ul>
                      </div>
                  </div>
