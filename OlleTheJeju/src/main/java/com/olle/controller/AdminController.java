@@ -66,9 +66,11 @@ public class AdminController {
 		
 		//특정 room_id를 통해 해당 room의 가장 최신 메세지 가져오기
 		List<ChatMessage> message_list = new ArrayList<ChatMessage>();
+		
 		for(int i = 0; i < room_list.size(); i++) {
 			message_list.add(i, chatBiz.newMessage(room_list.get(i)));
 		}
+		
 		model.addAttribute("message_content", message_list);
 		/* 잘 가져와지는 것이 확인되어 주석처리. 혹시 안 되면 다시 살려서 확인해볼 것
 		System.out.println("메세지들이 잘 담겼는가? : " + message_list.size());
@@ -81,14 +83,14 @@ public class AdminController {
 			dto_list.add(i, chatBiz.selectList(room_list.get(i)));
 		}
 		model.addAttribute("message_list", dto_list);
-		/* 잘 가져와지는 것이 확인되어 주석처리. 혹시 안 되면 다시 살려서 확인해볼 것
-		System.out.println("총 10줄인데, 그거만큼 담겨 왔는가? : " + dto_list.size());
+		/*
 		for(int i = 0; i < dto_list.size(); i++) {
 			for(int j = 0; j < dto_list.get(i).size(); j++) {
-				System.out.println(dto_list.get(i).get(j).getMessage_id());
+				System.out.println(dto_list.get(i).get(j).getMessage_content());
 			}
 		}
 		*/
+		
 		return "page_admin/admin_inquire";
 	}
 	

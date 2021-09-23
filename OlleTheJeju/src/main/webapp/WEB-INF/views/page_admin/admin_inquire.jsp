@@ -154,11 +154,11 @@
 	    		
 	    		var td = $("."+room_id+"_msg");
 	    		console.log(td);
-	    		var input = td.children();
+	    		var input = td.children('input');
 	    		for(var i = 0; i < input.length; i++) {
 	    			//console.log(input[i]);
 	    			if(input[i].className == room_id) {
-	    				$(".chatMiddle>ul").append("<p class='others'>" + room_id + " :" + input[i].value + "</p>");
+	    				$(".chatMiddle>ul").append("<p class='to_user'>" + room_id + " :" + input[i].value + "</p>");
 	    			} else {
 	    				$(".chatMiddle>ul").append("<p class='from_user'>" + input[i].value + " : 관리자</p>");
 	    			}
@@ -178,11 +178,11 @@
 						if(d.type == "getId"){
 							var si = d.sessionId != null ? d.sessionId : "";
 							if(si != ''){
-								$("#sessionId").val(si); 
+								$("#sessionId").val(si);
 							}
 						} else if(d.type == "message") {
 							if(d.from_user == room_id){
-								$(".chatMiddle>ul").append("<p class='others'>" + d.from_user + " :" + d.msg + "</p>");
+								$(".chatMiddle>ul").append("<p class='to_user'>" + d.from_user + " :" + d.msg + "</p>");
 							} else {
 								$(".chatMiddle>ul").append("<p class='from_user'>" + d.msg + " : 관리자</p>");
 							}
