@@ -74,6 +74,7 @@
                             <h6 class="like" onclick="pushPlan(this);"><i class="fa fa-heart-o" aria-hidden="true"></i> | ${CustomDto.plan_push }</h6>
                             <input type="hidden" class="plan_num" value="${CustomDto.plan_num }">
                             <input type="hidden" class="user_id" value="${sessionScope.user_id }">
+                            <input type="hidden" class="plan_writer" value="${CustomDto.plan_writer }">
                             <h6>조회수 | ${CustomDto.plan_views }</h6>
                             <c:choose>
                             	<c:when test="${empty sessionScope.user_id }">

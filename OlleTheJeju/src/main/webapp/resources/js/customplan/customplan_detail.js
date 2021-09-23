@@ -36,30 +36,35 @@ function noDib() {
 function dibPlan() {
 	var user_id = $(".user_id").val();
 	var plan_num = $(".plan_num").val();
+	var plan_writer = $(".plan_writer").val();
 	
-	$.ajax({
-		url: "dib_insert.do",
-		type: "POST",
-		data: {user_id: user_id, plan_num: plan_num},
-		dataType: "text",
-		success: function(data){
-			console.log(data);
-			if(data != null || data != "") {
-				if(data == "true") {
-					alert("해당 게시물을 찜했습니다.");
-					location.reload();
-				} else if(data == "already") {
-					alert("이미 찜한 게시물입니다.");
+	if(user_id == plan_writer) {
+		alert("본인이 작성한 게시물은 찜할 수 없습니다.");
+	} else {
+		$.ajax({
+			url: "dib_insert.do",
+			type: "POST",
+			data: {user_id: user_id, plan_num: plan_num},
+			dataType: "text",
+			success: function(data){
+				console.log(data);
+				if(data != null || data != "") {
+					if(data == "true") {
+						alert("해당 게시물을 찜했습니다.");
+						location.reload();
+					} else if(data == "already") {
+						alert("이미 찜한 게시물입니다.");
+					} else {
+						alert("찜하지 못했습니다.");
+					}
+					
 				} else {
-					alert("찜하지 못했습니다.");
+					alert("게시물을 찜하지 못했습니다.");
 				}
-				
-			} else {
-				alert("게시물을 찜하지 못했습니다.");
+			},
+			error: function(){
+			    alert("찜할 수 없습니다. \n 관리자에게 문의하세요.");
 			}
-		},
-		error: function(){
-		    alert("찜할 수 없습니다. \n 관리자에게 문의하세요.");
-		}
-	});
+		});
+	}
 }
