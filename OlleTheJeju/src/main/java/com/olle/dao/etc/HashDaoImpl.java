@@ -50,4 +50,19 @@ public class HashDaoImpl implements HashDao {
 		
 		return dto;
 	}
+
+	@Override
+	public int delete(int plan_num) {
+		
+		int res = 0;
+		
+		try {
+			res = sqlSession.delete(NAMESPACE + "delete",plan_num);
+		} catch (Exception e) {
+			System.out.println("[error] : 나만의 일정 해시태그 삭제 실패");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 }

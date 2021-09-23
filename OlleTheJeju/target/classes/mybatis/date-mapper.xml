@@ -45,8 +45,9 @@
 		SET 
 	</update>
 	
+	<!-- 나만의 일정 삭제 -->
 	<delete id="delete" parameterType="int">
 		DELETE FROM OLLE_DATE
-		WHERE DATE_NUM = #{date_num}
+		WHERE BOARD_NUM = 3 AND TABLE_NUM = #{plan_num}
 	</delete>
 </mapper>

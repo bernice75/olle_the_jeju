@@ -42,4 +42,8 @@ public class ImgBizImpl implements ImgBiz {
 	public List<ImgDto> selectDetailList(int plan_num) {
 		return dao.selectDetailList(plan_num);
 	}
+	@Override
+	public int delete(int plan_num) {
+		return dao.delete(plan_num);
+	}
 }

@@ -12,7 +12,7 @@ public interface ImgDao {
 	public List<ImgDto> selectDetailList(int plan_num);
 	public int insert(ImgDto dto);
 	public int update(ImgDto dto);
-	public int delete(int img_num);
+	public int delete(int plan_num);
 	
 	//이미지 최대 PK값 가져오기
 	int selectMaxPK();

@@ -68,6 +68,6 @@
 	
 	<delete id="delete" parameterType="int">
 		DELETE FROM OLLE_IMG
-		WHERE IMG_NUM = #{img_num}
+		WHERE BOARD_NUM = 3 AND TABLE_NUM = #{plan_num}
 	</delete>
 </mapper>

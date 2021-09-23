@@ -34,5 +34,10 @@ public class DateBizImpl implements DateBiz {
 		return dao.selectList(plan_num);
 	}
 
+	@Override
+	public int delete(int plan_num) {
+		return dao.delete(plan_num);
+	}
+
 
 }

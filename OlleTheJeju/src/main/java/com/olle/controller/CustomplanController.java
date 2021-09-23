@@ -350,7 +350,36 @@ public class CustomplanController {
 	}
 	
 	
+	//나만의 일정 삭제
+	@RequestMapping(value="customplan_delete.do")
+	public String customplan_delete(int plan_num,HttpServletResponse response) throws IOException {
+		
+		System.out.println("나만의 일정 삭제 시작");
+		
+		int hashRes = hashbiz.delete(plan_num);
+		int dateRes = datebiz.delete(plan_num);
+		int imgRes = imgBiz.delete(plan_num);
+		int cusRes = cusbiz.delete(plan_num);
+		
+		System.out.println("나만의 일정 값 가져옴");
+		if(hashRes>0 && dateRes>0 && imgRes>0 && cusRes>0) {
+			response.setContentType("text/html; charset=UTF-8"); 
+			PrintWriter writer = response.getWriter(); 
+			writer.println("<script>alert('글 삭제 완료');"
+					+ "location.href='customplan_main.do';</script>"); 
+			writer.close();
+			return null;
+			
+		}else {
+			return "redirect:customplan_detail.do"+plan_num;
+		}
+		
+	}
 	
 	
+	public String customplan_update() {
+		
+		return null;
+	}
 	
 }

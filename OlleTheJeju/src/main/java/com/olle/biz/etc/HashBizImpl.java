@@ -32,4 +32,9 @@ public class HashBizImpl implements HashBiz {
 	public HashtagDto selectOne(int plan_num) {
 		return dao.selectOne(plan_num);
 	}
+
+	@Override
+	public int delete(int plan_num) {
+		return dao.delete(plan_num);
+	}
 }

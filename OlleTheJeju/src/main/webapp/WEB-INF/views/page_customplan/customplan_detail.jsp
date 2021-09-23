@@ -226,8 +226,8 @@
                 <br><br>
                 <div class="bottom-btn-group2">
                     <input id="btn1" class="btn btn-secondary" type="button" value="목록" onclick="location.href='customplan_main.do'">
-                    <input id="btn2" class="btn btn-primary" type="button" value="수정" onclick="location.href='customplan_update.do'">
-                    <input id="btn3" class="btn btn-danger" type="button" value="삭제" onclick="location.href='customplan_delete.do'">
+                    <input id="btn2" class="btn btn-primary" type="button" value="수정" onclick="location.href='customplan_update.do?plan_num=${CustomDto.plan_num }'">
+                    <input id="btn3" class="btn btn-danger" type="button" value="삭제" onclick="location.href='customplan_delete.do?plan_num=${CustomDto.plan_num }'">
                 </div>
                 <br><br>
 			</div>
