@@ -83,7 +83,7 @@
 	</select>
 	
 	<select id="selectOne" parameterType="int" resultType="customDto">
-		SELECT PLAN_TITLE,PLAN_WRITER,PLAN_CONTENT,PLAN_NUM, PLAN_TENDENCY, PLAN_REGDATE
+		SELECT *
 		FROM OLLE_PLAN
 		WHERE PLAN_NUM =#{plan_num}
 	</select>

@@ -38,6 +38,11 @@ public class CustomBizImpl implements CustomBiz{
 	public int updateView(int plan_num) {
 		return dao.updateView(plan_num);
 	}
+	
+	@Override
+	public int updatePush(int plan_num) {
+		return dao.updatePush(plan_num);
+	}
 
 	@Override
 	public int delete(int plan_num) {
