@@ -1,0 +1,105 @@
+.main {
+    grid-column-start: 2;
+    grid-column-end: 9;
+    margin-top: 4%;  
+}
+/* 우측 메뉴 */
+.myp_nav{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    text-align: center;
+    color: black;
+    padding-top: 60px;
+    margin-top: 19%;  
+}
+.myp_nav_align{
+    text-align: left;
+    float: right;
+}
+.myp_nav_align > ul > li{
+    padding-bottom: 25px;
+}
+/* 나의 일정 타이틀 */
+.user_plan{
+    margin-top: 54px;
+    margin-left: 155px;
+    width: 65%;
+}
+.plan_title{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    font-size: 22px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+/* 나의 일정 썸네일 */
+.plan_thum{
+    margin-left: 11%;
+}
+
+.thum_item{
+    width: 220px;
+    height: 270px;
+    background: rgb(255, 255, 255);
+    border-radius: 20px 20px 20px 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 3px 2px rgb(207, 207, 207);
+    display: inline-block;
+    margin: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+.img_thum{
+    margin: 10px;
+    width: 200px;
+    height: 120px;
+    background-color: lightgray;
+    border-radius: 10px;
+}
+.sleep{
+	position: absolute;
+    background-color: azure;
+    border-radius: 10px;
+    width: 50px;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'cafe24_ddh';
+}
+/* 추후에 실제 테스트할때는 이미지 태그가 없어서 아래 css 삭제해야될수도 있음 */
+.nail_img > img{
+	width: 200px;
+    height: 120px;
+    border-radius: 10px;
+	
+}
+.thum_text{
+    margin-top: 20px;
+}
+.thum_text_span1{
+    position: relative;
+    top: 10px;
+    margin: 5px;
+}
+.thum_text_span2{
+    position: relative;
+    top: 15px;
+    margin: 20px;
+}
+
+/* 내가찜한 일정 타이틀 */
+.user_pick{
+    margin-top: 54px;
+    margin-left: 155px;
+    width: 65%;
+}
+.pick_title{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    font-size: 22px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+.paging{
+	width: 90%;
+    /* margin-left: 37%; */
+    text-align: center;
+}

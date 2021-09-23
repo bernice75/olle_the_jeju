@@ -1,0 +1,23 @@
+.main {
+    grid-column-start: 1;
+    grid-column-end: 9;
+}
+.main h4 {
+    text-align: center;
+}
+
+.not_write_form{
+    margin: 0 auto;
+    width: 1080px;
+}
+.not_write_form table {
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+table th {
+    text-align: center;
+}
+.form_button{
+    text-align: center;
+}

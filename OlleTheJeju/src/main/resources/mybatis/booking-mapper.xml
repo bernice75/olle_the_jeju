@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "booking">
+	<resultMap type="bookingDto" id="bookingMap">
+		<result property="book_num" column="BOOK_NUM"/>
+		<result property="situ_num" column="SITU_NUM"/>
+		<result property="book_name" column="BOOK_NAME"/>
+		<result property="book_people" column="BOOK_PEOPLE"/>
+		<result property="book_regdate" column="BOOK_REGDATE"/>
+		<result property="book_time" column="BOOK_TIME"/>
+		<result property="book_phone" column="BOOK_PHONE"/>
+		<result property="book_content" column="BOOK_CONTENT"/>
+	</resultMap>
+
+	
+	<select id="limit" parameterType="bookingDto" resultType="int">
+			SELECT COUNT(*) AS CNT
+      		FROM OLLE_BOOKING
+      		WHERE 
+		<choose>
+			<when test="situ_num!=0">
+				SITU_NUM=#{situ_num}
+			</when>
+			<when test="BOOK_REGDATE!=null">
+				AND BOOK_REGDATE=#{book_regdate}
+			</when>
+			<when test="BOOK_TIME!=null">
+				AND BOOK_TIME=#{book_time}
+			</when>
+		</choose>
+	</select>
+	
+	
+	<insert id="insert" parameterType="bookingDto">
+		<!-- 해당날짜, 해당시간, 해당가게의 예약 정보가 없을 수도, 있을수도 있어서 merge -->
+		<selectKey resultType="int" keyProperty="book_num" order="BEFORE">
+		   SELECT (NVL2(MAX(BOOK_NUM)+1,MAX(BOOK_NUM)+1,1)) AS PRI  FROM OLLE_BOOKING
+		</selectKey>
+		 INSERT INTO OLLE_BOOKING(BOOK_NUM,SITU_NUM,BOOK_NAME,BOOK_PEOPLE,BOOK_REGDATE,BOOK_TIME,
+		 BOOK_PHONE,BOOK_CONTENT)
+		 VALUES(#{book_num},#{situ_num},#{book_name},#{book_people},TO_DATE(#{book_regdate},'YYYY-MM-DD','NLS_DATE_LANGUAGE = KOREAN'),#{book_time},
+		 #{book_phone},#{book_content})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM OLLE_BOOKING
+		WHERE BOOK_NUM = #{book_num}
+	</delete>
+</mapper>

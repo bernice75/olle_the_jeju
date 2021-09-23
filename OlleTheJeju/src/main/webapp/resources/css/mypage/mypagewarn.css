@@ -1,0 +1,51 @@
+.main {
+    grid-column-start: 2;
+    grid-column-end: 9;
+}
+/* 우측 메뉴 */
+.myp_nav{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    text-align: center;
+    color: black;
+    padding-top: 60px;
+}
+.myp_nav_align{
+    text-align: left;
+    float: right;
+}
+.myp_nav_align > ul > li{
+    padding-bottom: 25px;
+}
+.user_warn{
+    margin-top: 54px;
+    margin-left: 155px;
+    width: 65%;
+}
+.warn_title{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    font-size: 22px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+.warn_text{
+    padding-top: 20px;
+    font-size: 13px;
+    color: red;
+}
+
+
+.user_warn_text{
+    text-align: center;
+    background-color: darkgray;
+    margin: 0 auto;
+    width: 400px;
+    height: 400px;
+    font-size: 20px;
+    padding-top: 150px;
+}
+
+.warn_box{
+    margin-top: 50px;
+}

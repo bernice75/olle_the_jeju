@@ -1,0 +1,58 @@
+.main {
+    grid-column-start: 2;
+    grid-column-end: 9;
+}
+/* 우측 메뉴 */
+.myp_nav{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    text-align: center;
+    color: black;
+    padding-top: 60px;
+}
+.myp_nav_align{
+    text-align: left;
+    float: right;
+}
+.myp_nav_align > ul > li{
+    padding-bottom: 25px;
+}
+/* 문의 내역 */
+.user_inq{
+    margin-top: 54px;
+    margin-left: 155px;
+    width: 65%;
+}
+.inq_title{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    font-size: 22px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+.inq_chat{
+    margin-left: 155px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    padding-left: 6%;
+}
+.chat_area{
+    width: 540px;
+    height: 400px;
+    background-color: gainsboro;
+    overflow: scroll;
+}
+/* .chat_content{
+    width: 438px;
+} */
+#send{
+	position : relative;
+	left : 47%;
+}
+.from_user {
+	width: 100% !important;
+	text-align: end;
+}
+.to_user {
+	width: 100% !important;
+	text-align: start;
+}

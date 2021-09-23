@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "faq">
+	<resultMap type="faqDto" id="faqMap">
+		<result property="faq_num" column="FAQ_NUM"/>
+		<result property="faq_kat" column="FAQ_KAT"/>
+		<result property="faq_title" column="FAQ_TITLE"/>
+		<result property="faq_content" column="FAQ_CONTENT"/>
+		<result property="faq_regdate" column="FAQ_REGDATE"/>
+	</resultMap>
+	
+	<select id="faqList" resultMap="faqMap">
+		SELECT * FROM OLLE_FAQ
+	</select>
+	
+	<insert id="insert" parameterType="faqDto">
+		INSERT INTO OLLE_FAQ
+		VALUES(
+			(SELECT COUNT(FAQ_NUM) FROM OLLE_FAQ) + 1, #{faq_kat}, #{faq_title}, #{faq_content}, SYSDATE
+		)
+	</insert>
+	
+	<update id="update" parameterType="faqDto">
+		UPDATE OLLE_FAQ
+		SET 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM OLLE_FAQ
+		WHERE FAQ_NUM = #{fAQ_num}
+	</delete>
+</mapper>

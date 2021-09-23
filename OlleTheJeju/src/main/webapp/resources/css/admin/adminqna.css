@@ -1,0 +1,56 @@
+
+/* 관리자 네비 */
+.main {
+    grid-column-start: 2;
+    grid-column-end: 9;
+    margin-left: 10%;
+}
+
+/* 우측 메뉴 */
+.admin_nav{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    text-align: center;
+    color: black;
+    padding-top: 100px;
+}
+.admin_nav_align{
+    text-align: left;
+    float: right;
+}
+.user_plan{
+    margin-top: 54px;
+    width: 80%;
+}
+.plan_title{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    font-size: 22px;
+    font-weight: bold;
+    text-align: start;
+}
+.user_plan table {
+    width: 100%;
+    height: fit-content;
+    text-align: center;
+}
+.user_plan table td p {
+	margin: 0;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 300px;
+}
+
+/* 채팅 모달 css */
+.modal-body {
+	justify-content: space-between;
+	height: 500px !important;
+}
+.from_user {
+	width: 100% !important;
+	text-align: end;
+}
+.to_user {
+	width: 100% !important;
+	text-align: start;
+}

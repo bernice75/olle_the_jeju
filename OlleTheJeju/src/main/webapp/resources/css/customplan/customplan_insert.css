@@ -1,0 +1,280 @@
+.main {
+    grid-column-start: 1;
+    grid-column-end: 9;
+    background: #F8F8FA;
+}
+
+.main-text {
+    text-align: center;
+}
+
+.main-place {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 515px);
+    grid-gap: 50px;
+    height: fit-content;
+    justify-content: center;
+}
+.slider {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    margin-top: 20px;
+    min-width: 515px;
+    height: 450px;
+    border-radius: 20px;
+    justify-self: center;
+    background-image: url('../../img/logo.png');
+    background-size: contain;
+}
+.slider > button {
+    margin-top: 15%;
+}
+.slider .imgs{
+    padding: 0;
+    margin: 0;
+}
+.slider .imgs img{
+    width: 515px;
+    height: 510px;
+    border-radius: 20px;
+    border: 1px solid #e7e7e7;
+}
+.place-info {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    background: white;
+    border: 1px solid #e7e7e7;
+    box-shadow: 1px 1px 4px 2px #e0e0e0;
+    padding: 4%;
+    border-radius: 20px;
+}
+.place-info label {
+    font-weight: bold;
+}
+.place-info section {
+    margin: 0 0 10px 0;
+}
+.place-info button {
+    float: right;
+}
+
+.place-info+fieldset {
+    margin: auto auto 0 auto;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+.place-img+fieldset {
+    grid-column-start: 2;
+    justify-self: end;
+    margin-top: 2%;
+}
+
+.suggest_text {
+    width: 1080px;
+    height: 700px;
+    margin: 0 auto;
+}
+.day-btn h3 {
+    float: left;
+    font-family: 'cafe24_djh';
+}
+.day-btn button {
+    float: right;
+}
+.day-btn button:not(:first-child) {
+    margin-right: 10px;
+}
+.line {
+    width: 100%;
+    margin: 10px auto;
+}
+.main-second{
+	position: absolute;
+    width: 1080px;
+    height: 600px;
+    color: black;
+}
+#map_div{
+    background: rgb(255, 255, 255);
+    text-align: center;
+    border: 1px solid #d4d4d4;
+/* 그림만 보여주는거라 구현할 때 지우면 됩니다. */
+    /* background-image: url('https://file.okky.kr/images/1488426125693.PNG'); */
+    /* background-size: cover; */
+    box-shadow: 1px 1px 4px 2px #e0e0e0;
+    border-radius: 20px;
+    width: 770px;
+    height: 100%;
+    float: left;
+}
+.map_list{
+    border: 1px solid #cfcfcf;
+    width: 300px;
+    height: 600px;
+    margin-left: 10px;
+    background-color: #f1f1f1;
+    overflow: scroll;
+    border-radius: 20px;
+    float: left;
+    padding: 20px;
+}
+
+.list{
+    background-color: antiquewhite;
+    width: 300px;
+    height: 200px;
+    margin: 20px;
+    margin-left: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 150px);
+    grid-column-start: 1;
+    grid-column-end: 2;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+}
+
+.list_nail{
+    background-color: aquamarine;
+    width: 120px;
+    height: 180px;
+    margin: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+}
+
+.list_inner{
+    text-align: left;
+	background-color: white;
+	border-radius: 20px;
+	padding: 20px;
+	margin-top: 20px;
+}
+.course_name{
+    font-size: 20px;
+    font-family: 'cafe24_ddh';
+}
+.suggest_info {
+    width: 65%;
+    height: 100%;
+    float: left;
+    background-color: brown;
+}
+.pupup {
+    position: relative;
+    width: 200px;
+    height: fit-content;
+    background: white;
+    float: right;
+    margin: 10px 10px 0 0;
+    border-radius: 20px;
+}
+.pupup img {
+    width: 90%;
+    height: 100px;
+    margin: 10px;
+    border-radius: 20px;
+    display: block;
+}
+.pupup i {
+    position: absolute;
+    right: 0;
+    margin: 10px 10px 0 0;
+}
+.pupup .pupup_info {
+    width: 90%;
+    height: 50%;
+    margin: 0 15px 15px 15px;
+}
+.plan {
+    width: 33%;
+    height: 100%;
+    float: right;
+    background-color: white;
+    box-shadow: 5px 5px 5px 5px;
+    display: flex;
+}
+.plan .day {
+    width: 20%;
+    height: 100%;
+    background-color: #333;
+}
+.plan .plan_day {
+    width: 80%;
+    height: 100%;
+    overflow: auto;
+}
+.plan .plan_day .first {
+    border-bottom: 1px solid rgba(225, 225, 225, 0.5);
+    text-align: center;
+}
+.first i {
+    float: right;
+    padding: 3px 10px 0 0;
+}
+.plan_day .plan_content {
+    width: 100%;
+    height: fit-content;
+    border-bottom: 1px solid rgba(225, 225, 225, 0.5);
+    display: flex;
+}
+.plan_content .img {
+    width: 30%;
+    height: auto;
+    background-image: url('../../img/logo.png');
+    background-size: contain;
+    border-right: 1px solid rgba(225, 225, 225, 0.5);
+}
+.plan_content .place_info {
+    width: 70%;
+    height: 100%;
+    padding: 5px;
+}
+.plan_content .place_info p {
+    margin: 0;
+    padding: 0;
+}
+
+.bottom-btn-group2{
+    color: black;
+    text-align: center;
+}
+#btn1{
+    font-size: 15px;
+    width: 70px;
+    margin-left: 25px;
+}
+#btn2{
+    font-size: 15px;
+    width: 70px;
+    margin-left: 25px;
+}
+#btn3{
+    font-size: 15px;
+    width: 70px;
+    margin-left: 25px;
+}
+
+.hash_inner {
+	margin-top: 5px;
+	display: flex;
+}
+.hash_inner .tag {
+	background-color: beige;
+    border-radius: 5px;
+    padding: 3px;
+}
+.hash_inner .tag:not(:last-child) {
+	margin-right: 10px;
+}
+.hash_inner .tag .button {
+	border: none;
+    background: none;
+    padding: 0 5px;
+}

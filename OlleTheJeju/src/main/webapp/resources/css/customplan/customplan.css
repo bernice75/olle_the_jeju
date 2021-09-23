@@ -1,0 +1,147 @@
+.main {
+    grid-column-start: 1;
+    grid-column-end: 9;
+    /* background: blueviolet; */
+}
+
+.main-img {
+    width: 100%;
+    height: 480px;
+    /* background-color: seagreen; */
+    background-image: url('../../img/custom_banner.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.main-img-box{
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: white;
+    width: 350px;
+    height: 280px;
+    border-radius: 20px 20px 20px 20px;
+    float: right;
+    margin-top: 100px;
+    margin-right: 150px;
+    box-shadow: 2px 2px 5px 2px rgb(59, 59, 59);
+    font-family: 'cafe24_sph';
+
+    
+}
+.main-img-box-p1{
+    color: black;
+    font-weight: bold;
+    position: relative;
+    left: 10%;
+    padding-top: 3px;
+}
+.main-img-box-p2{
+    color: black;
+    font-size: small;
+    position: relative;
+    left: 10%;
+}
+.btn-primary{
+    position: relative;
+    top: 6%;
+    left: 30%;
+    color: black;
+}
+.main-text {
+    text-align: center;
+    justify-content: center;
+    font-weight: bold;
+}
+.main-text h4{
+    left: 10%;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+.search{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding-left: 25px;
+}
+.search1{
+    width: 20% !important;
+    margin-right: 10px;
+}
+
+.nail {
+    display: grid;
+    grid-template-columns: 300px 300px 300px;
+    grid-template-rows: 340px;
+    grid-gap: 100px;
+    padding-left: 40px;
+    padding-right: 40px;
+    justify-content: center;
+
+}
+.nail > div:hover{
+    transform:scale(1.1);
+    cursor: pointer;
+    overflow:hidden;  
+}
+.nail > div {
+	background: rgb(255, 255, 255);
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 3px 2px rgb(207, 207, 207);
+}
+.nail1 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+.nail2 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+.nail3 {
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
+.nail_img{
+    background-color: antiquewhite;
+    width: 270px;
+    height: 155px;
+    margin-top: 15px;
+    margin-left: 15px;
+    border-radius: 10px;
+    background-image: url('https://cdnweb01.wikitree.co.kr/webdata/editor/202007/01/img_20200701143323_2ced7627.webp');
+    background-size: cover;
+}
+
+.nail_inner{
+    text-align: center;
+    font-family:  'cafe24_sph';
+}
+
+.nail_title{
+    font-size: 20px;
+    margin-top: 10px;
+    font-family:'cafe24_ddh';
+}
+
+.nail_hrt{
+    padding-top: 3px ;
+}
+
+.sleep{
+    background-color: azure;
+    border-radius: 10px;
+    width: 50px;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'cafe24_ddh';
+}
+
+.paging{
+    text-align: center;
+}
+ 
+.banner{
+    background-image: url('../../img/custom_banner.jpg');
+    background-repeat: no-repeat;
+}
+
+

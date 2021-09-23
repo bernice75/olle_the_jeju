@@ -1,0 +1,131 @@
+.main {
+    grid-column-start: 1;
+    grid-column-end: 9;
+    background: #F8F8FA;
+}
+
+form {
+    display: block;
+    box-shadow: none;
+    border: 1px solid #eee;
+    margin: 10px auto;
+    outline: none;
+    color: black;
+    width: 800px;
+    text-align: center;
+    background: white;
+}
+
+form fieldset {
+    border: none;
+    margin: 0;
+    padding: 25px 60px;
+}
+
+form section {
+    margin-bottom: 20px;
+}
+
+form input, select {
+	border: 1px solid #e7e7e7;
+    box-shadow: 1px 1px 4px 2px #e0e0e0;
+}
+
+form i {
+    box-shadow: 1px 1px 4px 2px #e0e0e0;
+}
+
+form button {
+	box-shadow: 2px 2px 2px 2px #e0e0e0;
+}
+
+form header {
+    text-align: center;
+    color: inherit;
+    display: block;
+    font-size: 20px;
+    background: #fff;
+    font-weight: 400;
+    padding: 8px 30px;
+}
+
+img {
+    vertical-align: middle;
+    width: 200px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+form .label.col {
+    width: 33.33%;
+    margin: 0;
+    padding-top: 10px;
+    font-size: 100%;
+    text-align: center;
+    color: inherit;
+}
+
+form .input, form .select, form .textarea, form .radio, form .checkbox, form .toggle, form .button {
+    position: relative;
+    display: block;
+}
+
+form .input {
+    width: 100%;
+}
+
+form input, form select {
+    border-radius: 0 !important;
+    border: 0 !important;
+}
+
+form .icon-append, form .icon-prepend {
+    color: #b3b3b3;
+    position: relative;
+    right: 1px;
+    padding: 0 3px;
+    min-width: 34px;
+    font-size: 14px;
+    line-height: 33px;
+    background: white;
+    border-left-style: solid;
+    border-left-width: 1px;
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+
+.fa-user:before {
+    content: "\f007";
+}
+
+.icon {
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+.col-8 {
+    width: 66.67%;
+}
+
+.btn-u {
+    border: 0;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 400;
+    padding: 7px 13px;
+    position: relative;
+    background: #72c02c;
+    white-space: nowrap;
+    display: inline-block;
+    text-decoration: none;
+}
+.btn-block:hover {
+    font-weight: bold;
+    color: royalblue;
+}

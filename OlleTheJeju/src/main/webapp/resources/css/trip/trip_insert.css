@@ -1,0 +1,117 @@
+.main {
+    grid-column-start: 1;
+    grid-column-end: 9;
+    background: #F8F8FA;
+}
+
+.main-text {
+    text-align: center;
+}
+.main-text h2 {
+    font-family: 'cafe24_djh';
+}
+.main-place {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 515px);
+    grid-gap: 50px;
+    height: fit-content;
+    justify-content: center;
+}
+.slider {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    margin-top: 20px;
+    min-width: 515px;
+    height: 450px;
+    border-radius: 20px;
+    justify-self: center;
+    background-image: url('../../img/logo.png');
+    background-size: contain;
+}
+.slider > button {
+    margin-top: 15%;
+}
+.slider .imgs{
+    padding: 0;
+    margin: 0;
+}
+.slider .imgs img{
+    width: 515px;
+    height: 510px;
+    border-radius: 20px;
+    border: 1px solid #e7e7e7;
+}
+.place-info {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    background: white;
+    border: 1px solid #e7e7e7;
+    box-shadow: 1px 1px 4px 2px #e0e0e0;
+    padding: 4%;
+    border-radius: 20px;
+}
+.place-info label {
+    font-weight: bold;
+}
+.btn-group-toggle label {
+    font-weight: inherit;
+}
+.place-info section:not(:last-child) {
+    margin: 0 0 20px 0;
+}
+.place-info button {
+    float: right;
+}
+
+.place-info+fieldset {
+    margin: auto auto 0 auto;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+.place-img+fieldset {
+    grid-column-start: 2;
+    justify-self: end;
+    margin-top: 2%;
+}
+.trip_text {
+    width: 1080px;
+    height: 700px;
+    margin: 0 auto;
+}
+.line {
+    width: 100%;
+}
+.main-second{
+    width: 1080px;
+    height: 600px;
+    margin: 0 auto;
+    background: rgb(255, 255, 255);
+    border: 1px solid #d4d4d4;
+    box-shadow: 1px 1px 4px 2px #e0e0e0;
+}
+.bottom-btn-group2{
+    color: black;
+    text-align: center;
+}
+#btn1{
+    font-size: 15px;
+    width: 70px;
+    margin-left: 25px;
+}
+#btn2{
+    font-size: 15px;
+    width: 70px;
+    margin-left: 25px;
+}
+#btn3{
+    font-size: 15px;
+    width: 70px;
+    margin-left: 25px;
+}

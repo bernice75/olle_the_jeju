@@ -1,0 +1,192 @@
+.main {
+    grid-column-start: 1;
+    grid-column-end: 9;
+    background: #F8F8FA;
+}
+.main-text {
+    text-align: center;
+    font-weight: bold;
+}
+.main-text h2 {
+    font-family: 'cafe24_djh';
+}
+.menu {
+    border-radius: 10px;
+    display: table;
+    text-align: center;
+    width: 1080px;
+    height: 30px;
+    margin: 0 auto;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 3px 2px rgb(207 207 207);
+}
+.menu div {
+    display: table-cell;
+    vertical-align: middle;
+    transition: all .2s;
+}
+.menu div:hover {
+    background: lightgray;
+}
+.search{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding-left: 25px;
+}
+.search1{
+    width: 20% !important;
+    margin-right: 10px;
+}
+.nail {
+    display: grid;
+    grid-template-columns: 300px 300px 300px;
+    grid-gap: 100px;
+    height: 300px;
+    text-align: center;
+    margin-bottom:50px;
+    justify-content: center;
+}
+.nail > div {
+    min-width: 300px;
+    background: rgb(255, 255, 255);
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 3px 2px rgb(207, 207, 207);
+}
+.nail_inner{
+    text-align: center;
+    font-family:  'cafe24_sph';
+}
+.nail_title{
+    font-size: 20px;
+    margin: 10px 0;
+    font-family:'cafe24_ddh';
+}
+.nail_hrt{
+    padding-top: 3px ;
+}
+.nail_img{
+    background-color: antiquewhite;
+    width: 270px;
+    height: 155px;
+    margin: 15px;
+    border-radius: 10px;
+    background-image: url('https://cdnweb01.wikitree.co.kr/webdata/editor/202007/01/img_20200701143323_2ced7627.webp');
+    background-size: cover;
+}
+.nail > div:hover{
+    transform:scale(1.1);
+    cursor: pointer;
+    overflow:hidden;  
+}
+.nail1 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    background: lightgray;
+    color: black;
+    height:350px;
+}
+.nail2 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    background: lightgray;
+    color: black;
+	height:350px;
+}
+.nail3 {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    background: lightgray;
+    color: black;
+	height:350px;    
+}
+.nail4 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    background: lightgray;
+    color: black;
+	height:350px;    
+}
+.nail5 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    background: lightgray;
+    color: black;
+	height:350px;    
+}
+.nail6 {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    background: lightgray;
+    color: black;
+	height:350px;    
+}
+.write {
+    height: fit-content;
+    text-align: center;
+    width: 100%;
+}
+.paging{
+    text-align: center;
+}
+
+.my-modal,
+.my-modal2{
+    position:fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display:none;
+   /*  overflow: auto; */
+    width:100%;
+    height:100%;
+    z-index: 2;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+}
+
+.my-modal .close-btn,
+.my-modal2 .close-btn2{
+    cursor:pointer;
+    position:relative;
+    top: 2%;
+    left: 3%;
+}
+
+.my-modal iframe,
+.my-modal2 iframe{
+    width: 1000px;
+    height: 730px;
+
+}
+
+.clearfix::after{
+    content:"";
+    clear:both;
+    display: block;
+}
+
+img.store{
+	width:150px;
+	height:150px;
+}
+
+.nail1-text2{
+	background:pink;
+	font-weight:bold;
+	color:white;
+	border-radius:5px;
+	padding:5px;
+}
+
+.prev,
+.next{
+	font-size:15px;
+	font-weight:bold;
+	background:orange;
+	color:white;
+	padding:10px;
+}

@@ -16,17 +16,16 @@ public class MemberDto {
 	private String user_status;
 	private int user_warning;
 	private Date user_regdate;
-	private Date user_sec_date;
+	private Date user_secdate;
 	private String user_img;
 	private String user_nick;
 	
 	public MemberDto() {
 		super();
 	}
-
 	public MemberDto(String user_id, String user_pw, String user_newpw, String user_name, int user_age, String user_addr,
 			String user_addrdetail, String user_phone, String user_email, String user_member, String user_status,
-			int user_warning, Date user_regdate, Date user_sec_date, String user_img, String user_nick) {
+			int user_warning, Date user_regdate, Date user_secdate, String user_img, String user_nick) {
 		super();
 		this.user_id = user_id;
 		this.user_pw = user_pw;
@@ -41,17 +40,9 @@ public class MemberDto {
 		this.user_status = user_status;
 		this.user_warning = user_warning;
 		this.user_regdate = user_regdate;
-		this.user_sec_date = user_sec_date;
+		this.user_secdate = user_secdate;
 		this.user_img = user_img;
 		this.user_nick = user_nick;
-	}
-	
-	
-	public String getUser_newpw() {
-		return user_newpw; 
-	} 
-	public void	setUser_newpw(String user_newpw) {
-		this.user_newpw = user_newpw; 
 	}
 	
 	public String getUser_id() {
@@ -65,6 +56,12 @@ public class MemberDto {
 	}
 	public void setUser_pw(String user_pw) {
 		this.user_pw = user_pw;
+	}
+	public String getUser_newpw() {
+		return user_newpw;
+	}
+	public void setUser_newpw(String user_newpw) {
+		this.user_newpw = user_newpw;
 	}
 	public String getUser_name() {
 		return user_name;
@@ -126,11 +123,11 @@ public class MemberDto {
 	public void setUser_regdate(Date user_regdate) {
 		this.user_regdate = user_regdate;
 	}
-	public Date getUser_sec_date() {
-		return user_sec_date;
+	public Date getUser_secdate() {
+		return user_secdate;
 	}
-	public void setUser_sec_date(Date user_sec_date) {
-		this.user_sec_date = user_sec_date;
+	public void setUser_secdate(Date user_secdate) {
+		this.user_secdate = user_secdate;
 	}
 	public String getUser_img() {
 		return user_img;

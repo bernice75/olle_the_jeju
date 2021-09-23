@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "report">
+	<resultMap type="reportDto" id="reportMap">
+		<result property="rep_num" column="REP_NUM"/>
+		<result property="user_id" column="USER_ID"/>
+		<result property="rep_reson" column="REP_RESON"/>
+		<result property="rep_user" column="REP_USER"/>
+		<result property="plan_num" column="PLAN_NUM"/>
+		<result property="rep_regdate" column="REP_REGDATE"/>
+	</resultMap>
+	
+	<select id="selectList" resultMap="reportMap">
+		SELECT *
+		FROM OLLE_REPORT
+	</select>
+	
+	<select id="selectOne" resultType="reportDto">
+
+	</select>
+	
+	<insert id="insert" parameterType="reportDto">
+		INSERT INTO OLLE_REPORT
+		VALUES()
+	</insert>
+	
+	<update id="update" parameterType="reportDto">
+		UPDATE OLLE_REPORT
+		SET 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM OLLE_REPORT
+		WHERE REP_NUM = #{rep_num}
+	</delete>
+</mapper>

@@ -160,7 +160,4 @@ public class JejuPage {
 				+ jeju + ", img=" + img + ", menuList=" + menuList + ", listBtnStartIdx=" + listBtnStartIdx + ", gubun="
 				+ gubun + ", keyword=" + keyword + "]";
 	}
-
-	
-	
 }

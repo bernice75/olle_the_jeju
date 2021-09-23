@@ -1,0 +1,188 @@
+.main {
+    grid-column-start: 1;
+    grid-column-end: 9;
+    background: #F8F8FA;
+}
+.main-text {
+    text-align: center;
+    font-weight: bold;
+}
+.main-text h2 {
+    font-family: 'cafe24_djh';
+}
+.main-text p {
+    font-family: 'cafe24_sph';
+    font-size: 18px;
+}
+
+.nail {
+    display: grid;
+    grid-template-columns: repeat(2, 515px);
+    grid-template-rows: 510px;
+    grid-gap: 0px 40px;
+    justify-content: center;
+}
+.slider {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    min-width: 515px;
+    justify-self: center;
+}
+.slider .imgs img{
+    width: 515px;
+    height: 510px;
+    border-radius: 20px;
+    border: 1px solid #e7e7e7;
+}
+
+.content_info {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    min-width: 515px;
+    border-radius: 20px;
+    background: white;
+    justify-self: center;
+    text-align: center;
+    border: 1px solid #e7e7e7;
+    box-shadow: 1px 1px 4px 2px #e0e0e0;
+    display: flex;
+    flex-direction: column;
+}
+
+.content_info h4 {
+    font-weight: bold;
+}
+.content_info .name {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #e0e0e0;
+}
+.content_info .name h6 i {
+    font-weight: bold;
+}
+.content_info .content {
+    height: 70%;
+    border: solid;
+    text-align: start;
+    margin: 5% 5% 0 5%;
+    padding: 3%;
+}
+.content_info .tag {
+    width: 100%;
+    height: 30%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-content: space-evenly;
+    padding-left: 6%;
+    text-align: start;
+}
+.content_info .tag h5 {
+    margin: 0;
+    padding: 0;
+}
+.content_info .tag .day {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+.content_info .tag .den {
+    grid-column-start: 1;
+    grid-column-end: 1;
+}
+.content_info .tag .hash {
+    grid-column-start: 2;
+    grid-column-end: 2;
+}
+
+.suggest_text {
+    width: 1080px;
+    height: 700px;
+    margin: 0 auto;
+}
+.line {
+    width: 100%;
+    margin: 10px auto;
+}
+.main-second{
+    width: 1080px;
+    height: 600px;
+    color: black;
+    margin: 0 auto;
+}
+#map_div{
+    background: rgb(255, 255, 255);
+    text-align: center;
+    border: 1px solid #d4d4d4;
+/* 그림만 보여주는거라 구현할 때 지우면 됩니다. */
+    /* background-image: url('https://file.okky.kr/images/1488426125693.PNG'); */
+    /* background-size: cover; */
+    box-shadow: 1px 1px 4px 2px #e0e0e0;
+    border-radius: 20px;
+    width: 770px;
+    height: 100%;
+    float: left;
+}
+.map_list{
+    border: 1px solid #cfcfcf;
+    width: 300px;
+    height: 600px;
+    margin-left: 10px;
+    background-color: #f1f1f1;
+    overflow: scroll;
+    border-radius: 20px;
+    float: left;
+    padding: 20px;
+}
+
+.list{
+    background-color: antiquewhite;
+    width: 300px;
+    height: 200px;
+    margin: 20px;
+    margin-left: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 150px);
+    grid-column-start: 1;
+    grid-column-end: 2;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+}
+
+.list_nail{
+    background-color: aquamarine;
+    width: 120px;
+    height: 180px;
+    margin: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+}
+
+.list_inner{
+    text-align: left;
+	background-color: white;
+	border-radius: 20px;
+	padding: 20px;
+	margin-top: 20px;
+}
+.course_name{
+    font-size: 20px;
+    font-family: 'cafe24_ddh';
+}
+.bottom-btn-group2{
+    color: black;
+    text-align: center;
+}
+#btn1{
+    font-size: 15px;
+    width: 70px;
+    margin-left: 25px;
+}
+#btn2{
+    font-size: 15px;
+    width: 70px;
+    margin-left: 25px;
+}
+#btn3{
+    font-size: 15px;
+    width: 70px;
+    margin-left: 25px;
+}

@@ -1,0 +1,77 @@
+.main {
+    grid-column-start: 1;
+    grid-column-end: 9;
+    background: #F8F8FA;
+}
+
+.notice , .not_search{
+    text-align: center;
+    padding-top: 50px;
+}
+
+.not_title{
+    font-family : 'cafe24_djh';
+    font-size: 25px;
+
+}
+
+.not_search{
+    padding: 18px;
+    display: flex;
+    justify-content: center
+}
+.not_search input {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.not_table{
+    padding: 30px;
+    text-align: center;
+}
+
+.table{
+    margin: auto;
+    text-align: center;
+    width: 800px;
+}
+
+.not_write{
+    padding: 20px;
+}
+
+.not_wrt_button{
+    margin-left: 570px;
+}
+
+.not_paging{
+    text-align: center;
+}
+
+.not_map{
+    text-align: center;
+    padding-top: 30px;
+}
+
+.map_bg{
+    padding: 20px;
+    width: 500px;
+    margin: auto;
+    background-image: url("../../img/jeju.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+}
+
+.accordion-flush{
+    width: 1080px; 
+    margin: 0 auto;
+    box-shadow: 1px 1px 4px 2px #e0e0e0;
+}
+
+.write {
+    height: fit-content;
+    text-align: center;
+    width: 100%;
+}
