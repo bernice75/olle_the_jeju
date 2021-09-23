@@ -11,6 +11,7 @@ import com.olle.dto.jejusituation.MenuDto;
 
 @Service
 public class MenuBatchService {
+
 	@Resource(name="sqlSessionTemplate")
 	private SqlSession session;
 	
@@ -29,4 +30,5 @@ public class MenuBatchService {
 		
 		return res;
 	}
+	
 }

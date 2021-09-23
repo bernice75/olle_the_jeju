@@ -9,7 +9,7 @@
 	</head>
 	<body>
        <div class="logo item">
-           <a href="home.do"><img class="logo" src="./resources/img/logo.png"></a>
+           <a href="home.do?user_id=${sessionScope.user_id}"><img class="logo" src="./resources/img/logo.png"></a>
        </div>
        <div class="header item">
            <div class="headerbtn">

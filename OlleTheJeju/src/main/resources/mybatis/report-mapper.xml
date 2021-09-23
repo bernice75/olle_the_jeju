@@ -24,7 +24,7 @@
 	
 	<insert id="insert" parameterType="reportDto">
 		INSERT INTO OLLE_REPORT
-		VALUES()
+		VALUES(#{rep_num},#{user_id},#{rep_reson},#{rep_user},#{plan_num},SYSDATE);
 	</insert>
 	
 	<update id="update" parameterType="reportDto">
