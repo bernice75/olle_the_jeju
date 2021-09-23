@@ -32,16 +32,16 @@
                 </div>
                 <br><br>
                 <div class="nail">
-                    <div class="nail1" onclick="location.href='trip_main.do'">
+                    <div class="nail1" onclick="location.href='trip_main.do?user_id=${sessionScope.user_id}'">
                         <div class="nail1-text">관광일정</div>
                     </div>
-                    <div class="nail2" onclick="location.href='suggest_main.do'">
+                    <div class="nail2" onclick="location.href='suggest_main.do?user_id=${sessionScope.user_id}'">
                         <div class="nail2-text">추천일정</div>
                     </div>
-                    <div class="nail3" onclick="location.href='customplan_main.do'">
+                    <div class="nail3" onclick="location.href='customplan_main.do?user_id=${sessionScope.user_id}'">
                         <div class="nail3-text">나만의일정</div>
                     </div>
-                    <div class="nail4" onclick="location.href='jejusituation_main.do'">
+                    <div class="nail4" onclick="location.href='jejusituation_main.do?user_id=${sessionScope.user_id}'">
                         <div class="nail4-text">제주상황</div>
                     </div>
                 </div>

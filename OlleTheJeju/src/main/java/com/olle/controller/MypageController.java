@@ -84,7 +84,7 @@ public class MypageController {
 		}
 		return res;
 	}
-	//회원정보 수정 (프로필 이미지 등록 및 변경) - 작업중
+	//회원정보 수정 (프로필 이미지 등록 및 변경) - 작업완료
 	@RequestMapping(value="profileUpdate.do", method=RequestMethod.POST)
 	public void profileUpdate(HttpServletRequest req
 							  , @RequestParam("mypage_form") String user_id

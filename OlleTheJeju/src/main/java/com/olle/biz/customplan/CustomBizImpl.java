@@ -58,4 +58,5 @@ public class CustomBizImpl implements CustomBiz{
 	public int getAllCount(String search) {
 		return dao.getAllCount(search);
 	}
+	
 }
