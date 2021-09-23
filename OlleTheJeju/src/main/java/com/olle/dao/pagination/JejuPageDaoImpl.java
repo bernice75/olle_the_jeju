@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.olle.biz.etc.ImgBiz;
+import com.olle.biz.jejusituation.menu.MenuBiz;
 import com.olle.dto.etc.ImgDto;
 import com.olle.dto.jejusituation.JejuDto;
 import com.olle.dto.pagination.PaginationIdxes;
@@ -16,6 +17,9 @@ import com.olle.dto.pagination.PaginationIdxes;
 public class JejuPageDaoImpl implements JejuPageDao {
 	@Autowired
 	private SqlSessionTemplate session;
+	
+	@Autowired
+	private MenuBiz mBiz;
 	
 	@Autowired
 	private ImgBiz iBiz;
@@ -33,8 +37,6 @@ public class JejuPageDaoImpl implements JejuPageDao {
 		tot=(int)Math.ceil((double)tot/unit);
 		return tot;
 	}
-
-
 
 	@Override
 	public int[] getStartAndEndIdx(int unit,int page) {
@@ -85,11 +87,40 @@ public class JejuPageDaoImpl implements JejuPageDao {
 	@Override
 	public int getTotalPagesByGubun(String gubun,int unit) {
 		int tot=getTotalElementsByGubun(gubun);
-		System.out.println(" bef tot: "+tot);
-		System.out.println(" unit : "+unit);
 		double temp=(double)tot/(double)unit;
 		tot=(int)Math.ceil(temp);
-		System.out.println("temp: "+temp);
+		return tot;
+	}
+
+	@Override
+	public List<JejuDto> getStoreElementsByKeyword(String keyword, int startIdx, int endIdx, int page) {
+		PaginationIdxes pg=new PaginationIdxes();
+		pg.setStartIdx(startIdx);
+		pg.setEndIdx(endIdx);
+		pg.setKeyword(keyword);
+		List<JejuDto> list=session.selectList(NAMESPACE+"searchKeywordPaging",pg);
+		return list;
+	}
+
+	@Override
+	public List<ImgDto> getStoreImgElementsByKeyword(String keyword, int startIdx, int endIdx, int page) {
+		System.out.println("jeju page dao--keyword list: "+keyword+" "+startIdx+" "+endIdx+" "+page);
+		List<ImgDto> list=iBiz.getStoreImgByKeyword(keyword, startIdx, endIdx);
+		return list;
+	}
+
+	@Override
+	public int getTotalElementsByKeyword(String keyword) {
+		System.out.println("keyword: "+keyword);
+		int tot=session.selectOne(NAMESPACE+"countForKeywordPaging",keyword);
+		return tot;
+	}
+
+	@Override
+	public int getTotalPagesByKeyword(String keyword, int unit) {
+		int tot=getTotalElementsByKeyword(keyword);
+		double temp=(double)tot/(double)unit;
+		tot=(int)Math.ceil(temp);
 		return tot;
 	}
 }

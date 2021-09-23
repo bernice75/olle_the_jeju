@@ -4,10 +4,22 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.olle.biz.etc.ImgBiz;
+import com.olle.biz.jejusituation.JejuBiz;
+import com.olle.biz.jejusituation.menu.MenuBiz;
 import com.olle.dto.jejusituation.JejuDto;
 
 @Repository
 public class JejuDaoImpl implements JejuDao {
+	
+	@Autowired
+	private JejuBiz jejuBiz;
+
+	@Autowired
+	private MenuBiz menuBiz;
+
+	@Autowired
+	private ImgBiz imgBiz;
 	
 	public static int primaryKey;
 	
@@ -43,6 +55,12 @@ public class JejuDaoImpl implements JejuDao {
 	@Override
 	public void setMaxPkFromSelectKey(int primaryKey) {
 		this.primaryKey=primaryKey;
+	}
+	
+	@Override
+	public JejuDto getOurStoreInfo(int situ_num) {
+		JejuDto dto=sqlSession.selectOne(NAMESPACE+"selectOne",situ_num);
+		return dto;
 	}
 
 }

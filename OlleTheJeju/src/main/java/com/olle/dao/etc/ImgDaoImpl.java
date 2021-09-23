@@ -78,6 +78,23 @@ public class ImgDaoImpl implements ImgDao {
 		List<ImgDto> list=sqlSession.selectList(NAMESPACE+"storeImgByGubun",pg);
 		return list;
 	}
+	
+	@Override
+	public List<ImgDto> getStoreImgByKeyword(String keyword, int startIdx, int endIdx) {
+		PaginationIdxes pg=new PaginationIdxes();
+		pg.setKeyword(keyword);
+		pg.setStartIdx(startIdx);
+		pg.setEndIdx(endIdx);
+		System.out.println("keyword--imgdao---: "+pg);
+		List<ImgDto> list=sqlSession.selectList(NAMESPACE+"searchKeywordImgPaging",pg);
+		return list;
+	}
+
+	@Override
+	public ImgDto getDetailImage(int situ_num) {
+		ImgDto dto=sqlSession.selectOne(NAMESPACE+"selectOneFromJejuDetail",situ_num);
+		return dto;
+	}
 
 	@Override
 	public int cusInsert(ImgDto dto) {

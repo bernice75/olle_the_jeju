@@ -22,6 +22,11 @@ public interface JejuPageBiz {
 	List<ImgDto> getImgElementsPerPage(int startIdx,int endIdx,int page);
 	ArrayList<ArrayList<MenuDto>> getMenuListElementsPerPage(int startIdx,int endIdx,int page);
 	//구분에 의한 페이징처리
+	int getTotalElementsByKeyword(String keyword);
+	int getTotalPagesByKeyword(String keyword,int unit);
 	List<JejuDto> getStoreElementsByGubun(String gubun,int startIdx,int endIdx,int page);
 	List<ImgDto> getImgElementsByGubun(String gubun,int startIdx,int endIdx,int page);
+	//키워드에 의한 페이징 처리
+	List<JejuDto> getStoreElementsByKeyword(String keyword,int startIdx, int endIdx,int page);
+	List<ImgDto> getStoreImgElementsByKeyword(String keyword,int startIdx,int endIdx,int page);
 }

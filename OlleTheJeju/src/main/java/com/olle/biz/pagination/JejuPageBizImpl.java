@@ -65,4 +65,24 @@ public class JejuPageBizImpl implements JejuPageBiz {
 	public int getTotalPagesByGubun(String gubun,int unit) {
 		return dao.getTotalPagesByGubun(gubun,unit);
 	}
+
+	@Override
+	public List<JejuDto> getStoreElementsByKeyword(String keyword, int startIdx, int endIdx, int page) {
+		return dao.getStoreElementsByKeyword(keyword, startIdx, endIdx, page);
+	}
+
+	@Override
+	public List<ImgDto> getStoreImgElementsByKeyword(String keyword, int startIdx, int endIdx, int page) {
+		return dao.getStoreImgElementsByKeyword(keyword, startIdx, endIdx, page);
+	}
+
+	@Override
+	public int getTotalElementsByKeyword(String keyword) {
+		return dao.getTotalElementsByKeyword(keyword);
+	}
+
+	@Override
+	public int getTotalPagesByKeyword(String keyword, int unit) {
+		return dao.getTotalPagesByKeyword(keyword, unit);
+	}
 }

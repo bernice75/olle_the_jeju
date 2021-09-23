@@ -27,5 +27,10 @@ public class MenuBizImpl implements MenuBiz {
 	public List<MenuDto> getPageMenuList(int startIdx, int page) {
 		return dao.getPageMenuList(startIdx, page);
 	}
+	
+	@Override
+	public List<MenuDto> getMenuListForOurStore(int situ_num) {
+		return dao.getMenuListForOurStore(situ_num);
+	}
 
 }

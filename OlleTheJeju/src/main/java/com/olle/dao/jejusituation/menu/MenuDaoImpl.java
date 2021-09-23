@@ -51,4 +51,10 @@ public class MenuDaoImpl implements MenuDao {
 		List<MenuDto> list=session.selectList(NAMESPACE+"getPageMenuList",pg);
 		return list;
 	}
+	
+	@Override
+	public List<MenuDto> getMenuListForOurStore(int situ_num) {
+		List<MenuDto> list=session.selectList(NAMESPACE+"getMenuListForStore", situ_num);
+		return list;
+	}
 }
