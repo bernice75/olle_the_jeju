@@ -41,7 +41,7 @@ public class CustomDaoImpl implements CustomDao{
 
 	@Override
 	public CustomDto selectOne(int plan_num) {
-		return null;
+		return sqlSession.selectOne(NAMESPACE + "selectOne", plan_num);
 	}
 
 	@Override
@@ -61,6 +61,11 @@ public class CustomDaoImpl implements CustomDao{
 	@Override
 	public int update(CustomDto dto) {
 		return 0;
+	}
+	
+	@Override
+	public int updateView(int plan_num) {
+		return sqlSession.update(NAMESPACE + "viewsUpdate", plan_num);
 	}
 
 	@Override

@@ -10,7 +10,6 @@
 		<link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/mypage/mypageplan.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/footer.css" rel="stylesheet" type="text/css" />
-        
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -48,13 +47,13 @@
 	            <div class="plan_thum">
 	                <!-- jstl core foreach로 썸네일 목록 반복 -->
 	                <c:choose>
-	                	<c:when test="${empty list }">
+	                	<c:when test="${empty planList }">
 	                		<tr>
 								<td colspan ="4">----내가 작성한 글이 존재하지 않습니다----</td>
 							</tr>
 	                	</c:when>
 	                	<c:otherwise>
-	                		<c:forEach var="plan" items="${list }">
+	                		<c:forEach var="plan" items="${planList }">
 	                			<div class="thum_item" onclick="location.href='#'">
 				                    <div class="img_thum">
 			                            <div class="nail_img">

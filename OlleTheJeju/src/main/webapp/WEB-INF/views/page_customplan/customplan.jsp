@@ -34,7 +34,14 @@
                         <br>
                         <p class="main-img-box-p2">나만의 일정을 모두와 공유하는</p>
                         <p class="main-img-box-p2">함께하는 JEJU 여행!!</p>
-                        <input class="btn btn-primary" type="button" value="나만의 일정 만들기" onclick="location.href='customplan_insertForm.do'">
+                        <c:choose>
+                        	<c:when test="${empty sessionScope.user_id }">
+                        		<input class="btn btn-primary" type="button" value="나만의 일정 만들기" onclick="location.href='customplan_insertForm.do'" disabled>
+                        	</c:when>
+                        	<c:otherwise>
+                        		<input class="btn btn-primary" type="button" value="나만의 일정 만들기" onclick="location.href='customplan_insertForm.do'">
+                        	</c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
 
