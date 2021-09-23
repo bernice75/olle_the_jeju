@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.olle.biz.etc.BookingBiz;
-import com.olle.biz.etc.ImageBiz;
+import com.olle.biz.etc.ImgBiz;
 import com.olle.biz.jejusituation.JejuBiz;
 import com.olle.biz.jejusituation.menu.MenuBiz;
 import com.olle.biz.member.MemberBiz;
@@ -52,7 +52,7 @@ public class JejusituationController {
 	@Autowired
 	private MemberBiz memberBiz;
 	@Autowired
-	private ImageBiz imageBiz;
+	private ImgBiz imageBiz;
 	@Autowired
 	private MenuBiz menuBiz;
 	@Autowired

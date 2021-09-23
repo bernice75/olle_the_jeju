@@ -38,6 +38,7 @@
                            <label>장소 키워드로 검색: &nbsp;&nbsp;</label><input class="form-control search1" name="keyword" type="search" placeholder="검색어 입력"/>
                     <button class="btn btn-outline-secondary search2" onclick="searchKeyword();"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
+
                 <br><br>
             <!--모달창<-아이템-->
             <div class="my-modal">
@@ -112,7 +113,7 @@
                 <div class="paging">
                 	<%-- 이전버튼을 보여줄 필요가 있음 --%> 
                 	<c:if test="${prevFlag == true}">
-						<a class="prev" href="jejusituation_search_gubun.do?gubun=${paginationMetaInfo.gubun}&page=${paginationMetaInfo.listBtnStartIdx-5}">이전</a>
+						<a class="prev" href="searchByKeyword.do?keyword=${paginationMetaInfo.keyword}&page=${paginationMetaInfo.listBtnStartIdx-5}">이전</a>
 					</c:if>
 					<%-- 리스트버튼을 보여줄 필요가 있음 --%>
 					<c:choose>
@@ -120,7 +121,7 @@
 						<c:when test="${not empty paginationMetaInfo.jeju }">
 							  <c:forEach begin="${paginationMetaInfo.listBtnStartIdx}" end="${paginationMetaInfo.listBtnStartIdx+4}" var="item">
 						  		<c:if test="${item le paginationMetaInfo.totalPages}">
-						  			<a href="jejusituation_search_gubun.do?gubun=${paginationMetaInfo.gubun}&page=${item }">${item }</a>
+						  			<a href="searchByKeyword.do?keyword=${paginationMetaInfo.keyword}&page=${item }">${item }</a>
 						  		</c:if>
 						  </c:forEach>
 							
@@ -128,7 +129,7 @@
 					</c:choose>
 							<%-- 이후버튼을 보여줄 필요가 있음 --%>
 					 	<c:if test="${nextFlag eq true}">
-						 	<a class="next" href="jejusituation_search_gubun.do?gubun=${paginationMetaInfo.gubun}&page=${paginationMetaInfo.listBtnStartIdx+5}">이후</a>
+						 	<a class="next" href="searchByKeyword.do?keyword=${paginationMetaInfo.keyword}&page=${paginationMetaInfo.listBtnStartIdx+5}">이후</a>
 					 	</c:if>
                 </div>
                 <br><br><br>
@@ -158,12 +159,11 @@
         		});
         	}
         	
-            
             function searchKeyword(){
-        	 var keyword=document.getElementsByClassName("search1")[0].value;//키워드 검색명
-           	 console.log("keyword: "+keyword);
-           	 location.href="searchByKeyword.do?keyword="+keyword+"&page=1";
-            }
+           	 var keyword=document.getElementsByClassName("search1")[0].value;//키워드 검색명
+              	 console.log("keyword: "+keyword);
+              	 location.href="searchByKeyword.do?keyword="+keyword+"&page=1";
+               }
         </script>
     </body>
 </html>

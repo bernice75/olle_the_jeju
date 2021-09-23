@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
-import com.olle.dto.jejusituation.menu.MenuDto;
+import com.olle.dto.jejusituation.MenuDto;
 import com.olle.mapper.MenuMapper;
 
 @Service

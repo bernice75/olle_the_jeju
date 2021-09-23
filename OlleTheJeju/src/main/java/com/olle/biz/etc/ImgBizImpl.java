@@ -9,7 +9,7 @@ import com.olle.dao.etc.ImgDao;
 import com.olle.dto.etc.ImgDto;
 
 @Service
-public class ImageBizImpl implements ImageBiz{
+public class ImgBizImpl implements ImgBiz{
 	
 	@Autowired
 	private ImgDao dao;
@@ -52,6 +52,18 @@ public class ImageBizImpl implements ImageBiz{
 	@Override
 	public List<ImgDto> selectList(int board_num) {
 		return dao.selectList(board_num);
+	}
+
+	@Override
+	public List<ImgDto> getStoreImgByKeyword(String keyword, int startIdx, int endIdx) {
+		// TODO Auto-generated method stub
+		return dao.getStoreImgByKeyword(keyword, startIdx, endIdx);
+	}
+
+	@Override
+	public ImgDto getDetailImage(int situ_num) {
+		// TODO Auto-generated method stub
+		return dao.getDetailImage(situ_num);
 	}
 
 //	@Override
