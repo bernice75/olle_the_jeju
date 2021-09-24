@@ -1,9 +1,6 @@
 package com.olle.controller;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,7 +10,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -29,19 +25,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.olle.biz.admin.ReportBiz;
 import com.olle.biz.customplan.CustomBiz;
 import com.olle.biz.etc.DateBiz;
 import com.olle.biz.etc.DibBiz;
 import com.olle.biz.etc.HashBiz;
 import com.olle.biz.etc.ImgBiz;
-import com.olle.biz.member.MemberBiz;
 import com.olle.biz.mypage.MypageBiz;
+import com.olle.dto.admin.ReportDto;
 import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.DateDto;
 import com.olle.dto.etc.DibDto;
 import com.olle.dto.etc.HashtagDto;
 import com.olle.dto.etc.ImgDto;
-import com.olle.dto.member.MemberDto;
 import com.olle.dto.pagination.Paging;
 
 @Controller
@@ -64,6 +60,9 @@ public class CustomplanController {
 	
 	@Autowired
 	private DibBiz dBiz;
+	
+	@Autowired
+	private ReportBiz repbiz;
 	
 	@RequestMapping(value = "customplan_main.do", method = RequestMethod.GET)
 	public String customplan_main(Model model, String search, @RequestParam(value="page", defaultValue="1") int page) {
@@ -550,5 +549,45 @@ public class CustomplanController {
 					+ "location.href='customplan_detail.do?plan_num=" + plan_num + "';</script>");
 			writer.close();
 		}
+	}
+	
+	//신고하기
+	@RequestMapping(value="reportInsert.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String reportInsert(String user_id, int plan_num, HttpServletRequest req) {
+		String result="";
+		
+		//해당유저가 해당글을 신고한게 있는지 확인
+		ReportDto chk = new ReportDto();
+		chk.setPlan_num(plan_num);
+		chk.setUser_id(user_id);
+		int repChk = repbiz.repChk(chk);
+		
+		if(repChk>0) {
+			//신고된 목록이 있는것 확인
+			result = "already";
+		}else {
+			String rep_user = req.getParameter("rep_user"); 
+			String rep_reson =req.getParameter("report_reson");
+			
+			ReportDto dto = new ReportDto();
+			int repNum = repbiz.maxNum();
+			dto.setPlan_num(plan_num);
+			dto.setRep_num(repNum + 1);
+			dto.setRep_reson(rep_reson);
+			dto.setRep_user(rep_user);
+			dto.setUser_id(user_id);
+			
+			int res = repbiz.reportInsert(dto);
+			
+			if(res>0) {
+				//신고 후 해당 게시물 비공개처리
+				int hideRes = cusbiz.update_hide(plan_num);
+				result = "true";
+			}else {
+				result = "false";
+			}	
+		}	
+		return result;
 	}
 }

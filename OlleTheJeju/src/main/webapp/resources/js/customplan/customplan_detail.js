@@ -68,3 +68,39 @@ function dibPlan() {
 		});
 	}
 }
+
+//신고접수
+function report() {
+	var user_id = $("#user_id").val();
+	var plan_num = $("#plan_num").val();
+	var rep_user = $("#rep_user").val();
+	var report_reson = $("#report_reson").val();
+	
+	if(confirm("신고 하시겠습니까?")) {
+		$.ajax({
+			url: "reportInsert.do",
+			type: "POST",
+			data: {user_id: user_id, plan_num: plan_num, rep_user: rep_user, report_reson: report_reson},
+			dataType: "text",
+			success: function(data){
+				console.log(data);
+				if(data != null || data != "") {
+					if(data == "true") {
+						alert("해당 게시물 신고했습니다.");
+						location.reload();
+					} else if(data == "already") {
+						alert("이미 신고한 게시물입니다.");
+					} else {
+						alert("신고하지 못했습니다.");
+					}
+					
+				} else {
+					alert("게시물을 신고하지 못했습니다.");
+				}
+			},
+			error: function(){
+			    alert("게시물을 신고 할 수 없습니다. \n 관리자에게 문의하세요.");
+			}
+		});
+	}
+}

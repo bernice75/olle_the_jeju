@@ -131,6 +131,25 @@
                         </div>
                     </div>
                 </div>
+                <!-- 로그인한 유저와 글작성자가 같으면 신고 버튼 비활성화 -->
+                <c:choose>
+                	<c:when test="${CustomDto.plan_writer eq sessionScope.user_id }">
+                		<button type="button" class="btn btn-danger btn-block" id="reportbtn" disabled>신고</button>
+                	</c:when>
+                	<c:otherwise>
+                		<!-- 로그인을 하지 않은 유저일 경우 신고 버튼 비활성화 -->
+	                	<c:choose>
+	                		<c:when test="${empty sessionScope.user_id }">
+	                			<button type="button" class="btn btn-danger btn-block" id="reportbtn" disabled>신고</button>
+	                		</c:when>
+	                		<c:otherwise>
+	                			<!-- 신고버튼 --><!-- 로그인을 하고 글작성자가 아닌경우 신고 버튼 활성화 -->
+				                <button type="button" class="btn btn-danger btn-block" id="reportbtn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">신고</button>
+				                <!--  -->
+	                		</c:otherwise>
+	                	</c:choose>
+                	</c:otherwise>
+                </c:choose>
                 <br><br>
                 <div class="bottom-btn-group2">
                     <input id="btn1" class="btn btn-secondary" type="button" value="목록" onclick="location.href='customplan_main.do'">
@@ -146,6 +165,54 @@
                     </c:choose>
                 </div>
                 <br><br>
+                <!-- 신고 버튼 클릭시 Modal 시작 -->
+	             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	                 <div class="modal-dialog">
+	                 <div class="modal-content">
+	                     <div class="modal-header">
+	                     <h5 class="modal-title" id="staticBackdropLabel">신고 접수</h5>
+	                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	                     </div>
+	                     <form name="reportmodal" method="post">
+	                     <input type="hidden" value="${dto.user_id }">
+	                         <div class="modal-body">
+	                         	<br>
+	                             <p class="modal-text1">해당 게시글을 신고 하시겠습니까?</p>
+			                     <div class="mb-3 row">
+			                        <label for="text" class="col-sm-3 col-form-label">대상 글 번호 : </label>
+			                        <div class="col-sm-6">
+			                            <input type="text" class="form-control" id="plan_num" name="plan_num" value="${CustomDto.plan_num }" readonly="readonly">
+			                        </div>
+			                     </div>
+	                             <div class="mb-3 row">
+			                        <label for="text" class="col-sm-3 col-form-label">신고자 : </label>
+			                        <div class="col-sm-6">
+			                           <input type="text" class="form-control" id="user_id" name="user_id" value="${sessionScope.user_id }" readonly="readonly">
+			                        </div>
+			                     </div>
+			                     <div class="mb-3 row">
+			                        <label for="text" class="col-sm-3 col-form-label">신고대상 : </label>
+			                        <div class="col-sm-6">
+			                            <input type="text" class="form-control" id="rep_user" name="rep_user" value="${CustomDto.plan_writer }" readonly="readonly">
+			                        </div>
+			                    </div>
+	                   			<br>
+	                        	<p class="modal-text1">신고 사유를 작성해주세요.</p>
+			                    <div class="col">
+			                    	<textarea rows="5" cols="60"  class="report_reson" id="report_reson" name="report_reson" placeholder="내용을 입력하세요."></textarea>
+			                        <!-- <input type="text" class="form-control" id="rep_reson" name="rep_reson" value="" > -->
+			                    </div>
+	                    		<br><br>
+	                         </div>
+	                         <div class="modal-footer">
+	                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	                             <button type="button" class="btn btn-danger" id="report-btn" onclick="report();">신고하기</button>
+	                         </div>
+	                     </form>
+	                 </div>
+	                 </div>
+	             </div>
+	             <!-- 신고 Modal 끝-->
 			</div>
 			<jsp:include page="../include/footer.jsp"></jsp:include>
 		</div>
