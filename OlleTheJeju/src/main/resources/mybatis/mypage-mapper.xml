@@ -74,8 +74,8 @@
   	<!-- 문의내역 채팅  / 작성해야함 -->
   	
   	<!-- 신고확인  / 수정 해야되나 ?-->
-	<select id="mypageWarn" parameterType="String" resultType="memberDto">
-	  	SELECT *
+	<select id="mypageWarn" parameterType="string" resultType="int">
+	  	SELECT USER_WARNING
 	  	FROM OLLE_USER 
 	  	WHERE USER_ID=#{user_id}
   	</select>

@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="nail3 items">
-                        <a href="#"><img class="corona-situation2" src="./resources/img/line_up.png" alt="맛집 예약 및 현황"/></a>
+                        <a href="jejusituation_rest.do?user_id=${sessionScope.user_id}"><img class="corona-situation2" src="./resources/img/line_up.png" alt="맛집 예약 및 현황"/></a>
                         <div class="nail-title">
                             <p>맛집 예약 및 현황</p>
                         </div>

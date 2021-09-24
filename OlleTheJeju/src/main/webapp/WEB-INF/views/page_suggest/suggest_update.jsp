@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>추천일정 insert</title>
+		<title>추천일정 UPDATE</title>
 		<link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/suggest/suggest_insert.css?var=2" rel="stylesheet" type="text/css" />
         <link href="./resources/css/footer.css" rel="stylesheet" type="text/css" />
@@ -15,12 +15,134 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx142479165b1048a5b99ae1b5a05f5d1b"></script>
-        <script src="./resources/js/suggest/suggest_insert.js?var=1" type="text/javascript"></script>
         <script type="text/javascript">
-		var map, marker;
+		var marker;
 		var markerArr = [], labelArr = [];
-		var resultMarkerArr = [];
 		var Polyline = new Tmapv2.Polyline();
+		
+        var Jdata; //json 객체
+        var startX,startY;
+        var endX,endY;
+        var lon,lat; 
+        var map; //Tmapv2 객체
+        var latArr=[];
+        var lonArr=[];
+        var marker_s, marekr_e, waypoint;
+		var resultMarkerArr = [];
+		//경로그림정보
+		var drawInfoArr = [];
+		var resultInfoArr = [];
+        $(function(){
+        	var sug_num = $("#sug_num").val();
+        	console.log("${dto.sug_kategorie}");
+        	var kategorie = $("input:radio[value=${dto.sug_kategorie}]");
+        	kategorie.attr("checked",true);
+        	
+        	var tendency = $("input:radio[value=${dto.sug_tendency}]");
+        	tendency.attr("checked",true);
+        	
+        	$.ajax({
+        		url:"suggest_detail_ajax.do?sug_num="+sug_num,
+        		dataType:"JSON",
+        		method:"GET",
+        		success: function(data){
+        			console.log(data[0].day[0].name);
+        			Jdata = data;
+        			console.log(Jdata);
+        		
+        		    
+        		}
+        	})
+        	
+        });
+        
+        function changeList(obj){
+            var class_name = $(obj).attr('class'); //클래스명 저장
+            class_name = class_name.split(' ')[2];
+            
+            var date = $(obj).text(); //내용 저장
+            
+            $(obj).siblings().attr('disabled', false); //나를 제외한 형제들 활성화
+
+            //map_list 클래스를 가진 div가 있는가
+            if($('div').hasClass("map_list") == true) {
+                //이미 존재하는 map_list 중 버튼과 동일한 클래스를 가진 것이 있는가
+                if($('.map_list').hasClass(class_name) == true) {
+                	$('.map_list.'+class_name).siblings("div[name=map_show]").attr('name','map_list');
+                    $('.map_list.'+class_name).siblings("div[name=map_list]").hide();
+                    $('.map_list.'+class_name).show();
+                    $('.map_list.'+class_name).attr('name','map_show');
+                    mapMaker(class_name);
+                } else {
+                    $('.map_list').hide();
+                    var map_list = document.createElement('div'); //일정목록을 감싸는 div
+                    map_list.setAttribute('class', 'map_list ' + class_name);
+                    map_list.setAttribute('name','map_show');
+                    $('.main-second').append(map_list);
+                    $('.map_list.'+class_name).siblings("div[name=map_show]").attr('name','map_list');
+                    //div 클래스 중 버튼과 동일한 클래스인 경우에만 글 삽입
+                    if($('.map_list.'+class_name).children().length == 0) {
+                        var br = document.createElement('br');
+                        var h5 = document.createElement('h5'); //n일차 지도리스트
+                        var ta = document.createElement('input');
+                        ta.setAttribute('name','sug_addr_arr');
+                        ta.setAttribute('value','일수');
+                        ta.setAttribute('type','hidden');
+                        h5.setAttribute('name',class_name);
+                        h5.innerHTML = date + " 지도리스트";
+                        $('.map_list.'+class_name).append(h5);
+                        $('.map_list.'+class_name).append(ta);
+                        mapMaker(class_name);
+                        
+                    }
+                }
+            } else {
+                var map_list = document.createElement('div'); //일정목록을 감싸는 div
+                map_list.setAttribute('class', 'map_list ' + class_name);
+                map_list.setAttribute('name','map_show');
+                var br = document.createElement('br');
+                var h5 = document.createElement('h5'); //n일차 지도리스트
+                h5.setAttribute('name',class_name);
+                h5.innerHTML = date + " 지도리스트";
+                $('.main-second').append(map_list);
+                $('.map_list').append(h5);
+                $('.map_list').append(ta);
+               	mapMaker(class_name);
+         }
+        } 
+        
+        function mapMaker(class_name){
+        	var cnt = class_name-1;
+        	var length = Jdata[cnt].day.length;
+        	var x=3;
+        	var hasSapn = $("div[name=map_show]").children("span").length;
+        	
+        	for(var i=0; i<length; i++){
+        		lat = Jdata[cnt].day[i].lat;
+        		lon = Jdata[cnt].day[i].lon;
+        		name = Jdata[cnt].day[i].name;
+        		var json = {
+						name : name,
+						lat : lat,
+						lon : lon
+				}
+				var jjson = JSON.stringify(json)+'자르기';
+        		
+        		var text = "<span name='"+name+"' style='margin: 20px;' >"+name+"<input type='button' name='"+name+"' value='삭제' onclick='delete_list(this.name);'><input type='hidden' name='sug_addr_arr' value='"+jjson+"'></span>"; 
+        		lonArr[i] = lon;
+        		latArr[i] = lat;
+        		
+				if(hasSapn<length){
+					$("div[name=map_show]").append(text);	
+				}        		
+        	}
+        }
+		
+        function delete_list(name){
+			$("span[name='"+name+"']").remove();
+		}
+		
+		
 		function initTmap() {
 			// 1. 지도 띄우기
 			map = new Tmapv2.Map("map_div", {
@@ -35,6 +157,7 @@
 			// 2. POI 통합 검색 API 요청
 			$("#btn_search").click(
 				function() {
+					//resettingMap();
 					var searchKeyword = $('#searchKeyword').val(); // 검색 키워드
 					$.ajax({
 						method : "GET", // 요청 방식
@@ -136,6 +259,7 @@
 					});
 				});
 		}
+		//목록에 추가하기
 		var st=0;
 		function start(poiId) {
 			console.log(poiId);
@@ -172,9 +296,8 @@
 							lat : lat,
 							lon : lon
 					}
-					
 					var jjson = JSON.stringify(json)+'자르기';
-					var text = "<span name='"+name+"' style='margin: 20px;' >"+name+"<input type='button' name='"+name+"' value='삭제' onclick='delete_list(this.name);'><input type='hidden' name='sug_addr_arr' value='"+jjson+"'></span>"
+					var text = "<span name='"+name+"' style='margin: 20px;' >"+name+"<input type='button' name='"+name+"' value='삭제' onclick='delete_list(this.name);'><input type='hidden' name='sug_addr_arr' value='"+jjson+"'></span>";
 					
 					$("div[name=map_show]").append(text);
 					
@@ -184,13 +307,6 @@
 						
 					});
 					
-/* 					
-					marker = new Tmapv2.Marker({
-						position : new Tmapv2.LatLng(lat, lon),
-						icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png",
-						iconSize : new Tmapv2.Size(24, 38),
-						map:map
-					}); */
 					
 					resultMarkerArr.push(marker);
 					
@@ -208,32 +324,51 @@
 		function delete_list(name){
 			$("div[name=map_show]").children("span[name='"+name+"']").remove();
 		}
+
+	function date() {
+		var length = $('.day-btn').children('button').length;
+		$('#sug_term').remove();
+	    var start = $('.sug_term_start').val() instanceof Date ? $('.sug_term_start').val() : new Date($('.sug_term_start').val());
+	    var end = $('.sug_term_end').val() instanceof Date ? $('.sug_term_end').val() : new Date($('.sug_term_end').val());
+
+	    start = new Date(start.getFullYear(), start.getMonth() + 1, start.getDate());
+	    end = new Date(end.getFullYear(), end.getMonth() + 1, end.getDate());
+
+	    var diff = Math.abs(end.getTime() - start.getTime());
+	    diff = Math.ceil(diff / (1000 * 3600 * 24));
+		var value = diff+"박"+(diff+1)+"일";
 		
-	
-		//초기화 기능
-		function resettingMap() {
-			//기존마커는 삭제
-			marker_s.setMap(null);
-			marker_e.setMap(null);
-
-			if (resultMarkerArr.length > 0) {
-				for (var i = 0; i < resultMarkerArr.length; i++) {
-					resultMarkerArr[i].setMap(null);
-				}
-			}
-
-			if (resultdrawArr.length > 0) {
-				for (var i = 0; i < resultdrawArr.length; i++) {
-					resultdrawArr[i].setMap(null);
-				}
-			}
-
-			chktraffic = [];
-			drawInfoArr = [];
-			resultMarkerArr = [];
-			resultdrawArr = [];
-		}
 		
+		var sug_term = "<input type='hidden' name='sug_term' value='"+value+"'>";
+		
+		$('.day-btn').append(sug_term);
+	    console.log(value);
+		
+	    if(length>diff){
+			$('.day-btn').empty();
+			$('div[name=map_list]').remove();
+			$('div[name=map_show]').remove();
+	    	for(var i = 0; i < (diff+1); i++) {
+	        	var button = document.createElement('button');
+	        	button.setAttribute('class', 'btn btn-outline-dark ' +(i+1));
+	        	button.setAttribute('type', 'button');
+	        	button.setAttribute('onclick', 'changeList(this);');
+	        	var btnText = document.createTextNode((i+1) + "일차");
+	        	button.appendChild(btnText);
+	        	$('.day-btn').append(button);
+	    	}
+	    }else{
+	    	for(var i = length; i < (diff+1); i++) {
+	        	var button = document.createElement('button');
+	        	button.setAttribute('class', 'btn btn-outline-dark ' +(i+1));
+	        	button.setAttribute('type', 'button');
+	        	button.setAttribute('onclick', 'changeList(this);');
+	        	var btnText = document.createTextNode((i+1) + "일차");
+	        	button.appendChild(btnText);
+	        	$('.day-btn').append(button);
+	    	}
+	    }
+	}
 		
 		</script>
 	</head>
@@ -246,7 +381,8 @@
                     <h2>추천일정 등록</h2>
                 </div>
                 <br><br>
-                <form action="suggest_insert_db.do" method="get">
+                <form action="suggest_update_db.do" method="get">
+                <input type="hidden" id="sug_num" name="sug_num" value="${dto.sug_num }">
                     <div class="main-place">
                         <div id="carouselExampleFade" class="carousel slide carousel-fade slider" data-bs-ride="carousel">
                             <div class="carousel-inner imgs">
@@ -273,11 +409,11 @@
                             <fieldset>
                                 <section>
                                     <label for="sug_title">제목 : </label>
-                                    <input type="text" class="form-control" name="sug_title" maxlength='21' required>
+                                    <input type="text" class="form-control" name="sug_title" maxlength='21' value="${dto.sug_title }">
                                 </section>
                                 <section>
                                     <label for="sug_content">내용 : </label>
-                                    <textarea rows="10" cols="40" class="form-control" name="sug_content"></textarea>
+                                    <textarea rows="10" cols="40" class="form-control" name="sug_content" >${dto.sug_content }</textarea>
                                 </section>
                                 <section>
                                		<input type="hidden" name="writer" value="${sessionScope.user_id}">

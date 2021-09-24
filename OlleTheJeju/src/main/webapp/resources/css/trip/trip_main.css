@@ -33,6 +33,11 @@
 }
 .menu div:hover {
     background: lightgray;
+    
+}
+
+.menu4:hover{
+	cursor: pointer;
 }
 
 .nail {
@@ -58,7 +63,7 @@
 .nail_img{
     background-color: antiquewhite;
     width: 270px;
-    height: 155px;
+    height: 190px;
     margin: 15px;
     border-radius: 10px;
     background-image: url('https://cdnweb01.wikitree.co.kr/webdata/editor/202007/01/img_20200701143323_2ced7627.webp');

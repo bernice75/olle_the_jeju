@@ -15,7 +15,7 @@
     
     <!-- 테이블 메세지 번호 -->
     <select id="maxNum" resultType="int">
-		SELECT MAX(TO_NUMBER(MESSAGE_ID))
+		SELECT NVL(MAX(TO_NUMBER(MESSAGE_ID)), 0)
 		FROM OLLE_CHAT
 	</select>
 	

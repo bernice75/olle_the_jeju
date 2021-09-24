@@ -47,6 +47,8 @@ function imgChk() {
 }
 
 function date() {
+	$('.day-btn').empty();
+	$('#sug_term').remove();
     var start = $('.sug_term_start').val() instanceof Date ? $('.sug_term_start').val() : new Date($('.sug_term_start').val());
     var end = $('.sug_term_end').val() instanceof Date ? $('.sug_term_end').val() : new Date($('.sug_term_end').val());
 
@@ -55,8 +57,13 @@ function date() {
 
     var diff = Math.abs(end.getTime() - start.getTime());
     diff = Math.ceil(diff / (1000 * 3600 * 24));
-
-    console.log(diff + "일차");
+	var value = diff+"박"+(diff+1)+"일";
+	
+	var sug_term = "<input type='hidden' name='sug_term' value='"+value+"'>";
+	
+	$('.day-btn').append(sug_term);
+    console.log(value);
+    
 
     for(var i = 0; i < (diff + 1); i++) {
         var button = document.createElement('button');
@@ -94,31 +101,45 @@ function createList(obj) {
     if($('div').hasClass("map_list") == true) {
         //이미 존재하는 map_list 중 버튼과 동일한 클래스를 가진 것이 있는가
         if($('.map_list').hasClass(class_name) == true) {
-            $('.map_list.'+class_name).siblings().hide();
+        	$('.map_list.'+class_name).siblings("div[name=map_show]").attr('name','map_list');
+            $('.map_list.'+class_name).siblings("div[name=map_list]").hide();
             $('.map_list.'+class_name).show();
+            $('.map_list.'+class_name).attr('name','map_show');
         } else {
             $('.map_list').hide();
             var map_list = document.createElement('div'); //일정목록을 감싸는 div
             map_list.setAttribute('class', 'map_list ' + class_name);
-            $('.main-map').append(map_list);
+            map_list.setAttribute('name','map_show');
+            $('.main-second').append(map_list);
+            $('.map_list.'+class_name).siblings("div[name=map_show]").attr('name','map_list');
             //div 클래스 중 버튼과 동일한 클래스인 경우에만 글 삽입
             if($('.map_list.'+class_name).children().length == 0) {
                 var br = document.createElement('br');
                 var h5 = document.createElement('h5'); //n일차 지도리스트
+                var ta = document.createElement('input');
+                ta.setAttribute('name','sug_addr_arr');
+                ta.setAttribute('value','일수');
+                ta.setAttribute('type','hidden');
+                h5.setAttribute('name',class_name);
                 h5.innerHTML = date + " 지도리스트";
                 $('.map_list.'+class_name).append(br);
                 $('.map_list.'+class_name).append(h5);
+                $('.map_list.'+class_name).append(ta);
+                
             }
         }
     } else {
         var map_list = document.createElement('div'); //일정목록을 감싸는 div
         map_list.setAttribute('class', 'map_list ' + class_name);
+        map_list.setAttribute('name','map_show');
         var br = document.createElement('br');
         var h5 = document.createElement('h5'); //n일차 지도리스트
+        h5.setAttribute('name',class_name);
         h5.innerHTML = date + " 지도리스트";
-        $('.main-map').append(map_list);
+        $('.main-second').append(map_list);
         $('.map_list').append(br);
         $('.map_list').append(h5);
+        
     }
     
     //이건 마커에서 장소 추가를 눌렀을 때 나오게하면 될듯

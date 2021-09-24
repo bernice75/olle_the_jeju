@@ -33,7 +33,13 @@
 }
 .menu div:hover {
     background: lightgray;
+    cursor: pointer;
 }
+
+.menu4:hover{
+	cursor: pointer;
+}
+
 .search{
     text-align: center;
     display: flex;
@@ -48,7 +54,6 @@
 .desc {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    height: 600px;
     width: 1080px;
     margin: 0 auto;
 }
@@ -57,11 +62,9 @@
     grid-column-end: 3;
     height: 100%;
     width: 100%;
-
     justify-self: end;
 }
 .dialect table {
-    height: 600px;
     text-align: center;
     vertical-align: middle !important;
     border: 1px solid #d4d4d4;
