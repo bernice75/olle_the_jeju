@@ -13,24 +13,28 @@
 		<result property="rep_regdate" column="REP_REGDATE"/>
 	</resultMap>
 	
+	<select id="maxNum" resultType="int">
+		SELECT NVL(MAX(REP_NUM), 0)
+		FROM OLLE_REPORT
+	</select>
+	
 	<select id="selectList" resultMap="reportMap">
 		SELECT *
 		FROM OLLE_REPORT
 	</select>
 	
-	<select id="selectOne" resultType="reportDto">
-
+	<!-- 나만의일정 detail에서 신고 중복 체크 -->
+	<select id="repChk" parameterType="reportDto" resultType="int">
+		SELECT NVL(REP_NUM, 0)
+		FROM OLLE_REPORT
+		WHERE PLAN_NUM = #{plan_num} AND USER_ID = #{user_id}
 	</select>
 	
+	<!-- 나만의일정 detail에서 신고접수 -->
 	<insert id="insert" parameterType="reportDto">
 		INSERT INTO OLLE_REPORT
-		VALUES(#{rep_num},#{user_id},#{rep_reson},#{rep_user},#{plan_num},SYSDATE);
+		VALUES(#{rep_num},#{user_id},#{rep_reson},#{rep_user},#{plan_num},SYSDATE)
 	</insert>
-	
-	<update id="update" parameterType="reportDto">
-		UPDATE OLLE_REPORT
-		SET 
-	</update>
 	
 	<delete id="delete" parameterType="int">
 		DELETE FROM OLLE_REPORT

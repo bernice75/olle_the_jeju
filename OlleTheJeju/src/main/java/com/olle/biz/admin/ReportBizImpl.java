@@ -28,4 +28,14 @@ public class ReportBizImpl implements ReportBiz {
 	public int reportInsert(ReportDto dto) {
 		return dao.reportInsert(dto);
 	}
+	
+	@Override
+	public int repChk(ReportDto dto) {
+		return dao.repChk(dto);
+	}
+	
+	@Override
+	public int maxNum() {
+		return dao.maxNum();
+	}
 }

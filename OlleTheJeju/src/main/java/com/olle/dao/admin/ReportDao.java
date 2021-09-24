@@ -12,4 +12,8 @@ public interface ReportDao {
 	public int delete(int rep_num);
 	
 	public int reportInsert(ReportDto dto);
+	
+	public int repChk(ReportDto dto);
+	
+	public int maxNum();
 }

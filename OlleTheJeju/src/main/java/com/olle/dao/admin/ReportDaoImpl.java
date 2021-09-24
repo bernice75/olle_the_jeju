@@ -26,8 +26,21 @@ public class ReportDaoImpl implements ReportDao {
 
 	@Override
 	public int reportInsert(ReportDto dto) {
-		return sqlSession.insert(NAMESPACE + "Insert", dto);
+		return sqlSession.insert(NAMESPACE + "insert", dto);
+	}
+	
+	@Override
+	public int maxNum() {
+		return sqlSession.selectOne(NAMESPACE + "maxNum");
 	}
 
+	@Override
+	public int repChk(ReportDto dto) {
+		int rep_num = 0;
+		if(sqlSession.selectOne(NAMESPACE + "repChk", dto) != null) {
+			rep_num = sqlSession.selectOne(NAMESPACE + "repChk", dto);
+		}
+		return rep_num;
+	}
 	
 }

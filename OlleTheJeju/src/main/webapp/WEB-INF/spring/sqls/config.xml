@@ -23,7 +23,7 @@
 		<typeAlias type="com.olle.dto.etc.BookingDto" alias="bookingDto"/>
 		<typeAlias type="com.olle.dto.faq.FaqDto" alias="faqDto"/>
 		<typeAlias type="com.olle.dto.etc.SupportDto" alias="supportDto"/>
-		<typeAlias type="com.olle.dto.etc.ReportDto" alias="reportDto"/>
+		<typeAlias type="com.olle.dto.admin.ReportDto" alias="reportDto"/>
 		<typeAlias type="com.olle.dto.etc.FoodDto" alias="foodDto"/>
 		<typeAlias type="com.olle.dto.etc.DateDto" alias="dateDto"/>
 		<typeAlias type="com.olle.dto.etc.ChatMessage" alias="chatMessage"/>

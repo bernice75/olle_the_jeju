@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.olle.dto.etc.DibDto;
 import com.olle.dto.etc.HashtagDto;
-import com.olle.dto.etc.ReportDto;
+import com.olle.dto.admin.ReportDto;
 import com.olle.dto.suggest.SuggestDto;
 
 @Repository

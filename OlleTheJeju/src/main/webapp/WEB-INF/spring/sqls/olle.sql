@@ -46,6 +46,17 @@ values('12345', '12345', 'user123245', 24, '관악구 남부순환로 1497','1�
 insert into olle_user
 values('12346', '12346', 'user123246', 24, '관악구 남부순환로 1497','1층', '010-1234-1234', '12346@naver.com', '개인', 'N', 0, SYSDATE, null, 'test.jpg', '12346');
 
+INSERT INTO OLLE_USER
+VALUES('JEJU_CEO1','1234','김길동',30,'서울', '가나다','123-4567-8901','123@123.CO.KR','사업자','N',0,SYSDATE,null,'test.png', '호호식당');
+
+INSERT INTO OLLE_USER
+VALUES('JEJU_USER1','1234','나길동',30,'서울','가나다','123-4567-8903','133@123.CO.KR','개인','N',0,SYSDATE,null,'test.png', '나길동');
+
+INSERT INTO OLLE_USER
+VALUES('JEJU_USER2','1234','길동',30,'서울','가나다','122-4567-8903','135@123.CO.KR','개인','N',0,SYSDATE,null,'test.png', '호빵');
+
+INSERT INTO OLLE_USER
+VALUES('JEJU_CEO2','1234','다길동',30,'서울','가나다','123-4567-8911','123@123.CO.KR','사업자','N',0,SYSDATE,null,'test.png', '길길이');
 
 COMMENT ON COLUMN OLLE_USER.USER_ID IS '아이디';
 COMMENT ON COLUMN OLLE_USER.USER_PW IS '비밀번호';
