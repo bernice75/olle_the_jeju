@@ -65,4 +65,9 @@ public class HashDaoImpl implements HashDao {
 		
 		return res;
 	}
+
+	@Override
+	public int update(HashtagDto dto) {
+		return sqlSession.update(NAMESPACE + "update", dto);
+	}
 }

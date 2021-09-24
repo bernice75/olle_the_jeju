@@ -104,7 +104,6 @@
                 </div>
                 <br>
                 <div class="write">
-                    <!-- <button class="btn btn-outline-secondary" name="createrest" onclick="openModal2();">맛집등록</button> -->
                     <button class="btn btn-outline-secondary" name="createrest" onclick="registerStoreForm();">맛집등록</button>
                 </div>
                 <br><br>

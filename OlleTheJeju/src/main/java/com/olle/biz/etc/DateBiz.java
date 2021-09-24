@@ -10,4 +10,5 @@ public interface DateBiz {
 	public DateDto selectOne(int plan_num);
 	public List<DateDto> selectList(int plan_num);
 	public int delete(int plan_num);
+	public int count(int plan_num);
 }

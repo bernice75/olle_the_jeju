@@ -28,11 +28,6 @@ public class CustomBizImpl implements CustomBiz{
 	public int insert(CustomDto dto) {
 		return dao.insert(dto);
 	}
-
-	@Override
-	public int update(CustomDto dto) {
-		return dao.update(dto);
-	}
 	
 	@Override
 	public int updateView(int plan_num) {
@@ -64,4 +59,8 @@ public class CustomBizImpl implements CustomBiz{
 		return dao.getAllCount(search);
 	}
 	
+	@Override
+	public int cusUpdate(CustomDto dto) {
+		return dao.cusUpdate(dto);
+	}
 }

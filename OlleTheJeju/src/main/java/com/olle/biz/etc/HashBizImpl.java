@@ -37,4 +37,9 @@ public class HashBizImpl implements HashBiz {
 	public int delete(int plan_num) {
 		return dao.delete(plan_num);
 	}
+
+	@Override
+	public int update(HashtagDto dto) {
+		return dao.update(dto);
+	}
 }

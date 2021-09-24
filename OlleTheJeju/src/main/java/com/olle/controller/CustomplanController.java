@@ -391,6 +391,164 @@ public class CustomplanController {
 		}else {
 			return "redirect:customplan_detail.do?plan_num="+plan_num;
 		}
+	}
+	
+	@RequestMapping(value="customplan_updateform.do", method=RequestMethod.GET)
+	public String customplan_updateform(Model model, int plan_num, HttpServletRequest req) throws ParseException {
 		
+		//======관광지 정보 받아오기
+		JSONParser trip_parser = new JSONParser();
+		JSONArray trip = new JSONArray();
+		
+		try {
+			Reader trip_reader = new FileReader(req.getSession().getServletContext().getRealPath("/") + "/resources/json/trip.json");
+			JSONObject trip_obj = (JSONObject)trip_parser.parse(trip_reader);
+			
+			trip = (JSONArray)trip_obj.get("trip");
+			
+			model.addAttribute("trip", trip);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		//======관광지 정보 받아오기 끝
+		
+		//나만의 일정 디테일 페이지 값 가져오기
+		model.addAttribute("CustomDto", cusbiz.selectOne(plan_num));
+		
+		//나만의 일정 이미지 가져오기
+		model.addAttribute("ImgDto", imgBiz.selectDetailList(plan_num));
+		
+		//나만의 일정 지도 부분 가져오기
+		model.addAttribute("DateDto", datebiz.selectList(plan_num));
+		
+		//나만의 일정 해쉬태그 가져오기
+		model.addAttribute("HashDto", hashbiz.selectOne(plan_num));
+		
+		return "page_customplan/customplan_update";
+	}
+	
+	//나만의 일정 업데이트
+	@RequestMapping(value="customplan_update.do", method = RequestMethod.POST)
+	public void customplan_update(HttpServletRequest req,HttpServletResponse res) throws IOException {
+		int result = 0;
+		
+		//글정보 업데이트
+		CustomDto cusdto = new CustomDto();
+		int plan_num = Integer.parseInt(req.getParameter("plan_num"));
+		String plan_title = req.getParameter("plan_title");
+		String plan_content = req.getParameter("plan_content");
+		String plan_tendency = req.getParameter("tend_content");
+		String plan_term = req.getParameter("plan_term");
+		
+		cusdto.setPlan_title(plan_title);
+		cusdto.setPlan_content(plan_content);
+		cusdto.setPlan_num(plan_num);
+		cusdto.setPlan_tendency(plan_tendency);
+		cusdto.setPlan_term(plan_term);
+		
+		int cusRes = cusbiz.cusUpdate(cusdto);
+		
+		if(cusRes > 0) {
+			result++;
+		}
+		
+		//해시태그 정보 업데이트
+		int hash_num = Integer.parseInt(req.getParameter("hash_num"));
+		String hash = req.getParameter("hash_content");
+		HashtagDto hashDto = new HashtagDto();
+		hashDto.setHash_num(hash_num);
+		hashDto.setBoard_num(3);
+		hashDto.setTable_num(plan_num);
+		hashDto.setHash_content(hash);
+		System.out.println("게시판 번호: " + hashDto.getBoard_num() + ", 게시물번호: " + hashDto.getTable_num() + ", 태그내용: " + hashDto.getHash_content());
+		
+		int Hashres = hashbiz.update(hashDto);
+		
+		if(Hashres > 0) {
+			result++;
+		}
+		
+		//코스정보 업데이트
+		int dateCount = datebiz.count(plan_num);
+		
+		if(dateCount > 0) {
+			int dateRes = datebiz.delete(plan_num);
+			
+			if(dateRes > 0) {
+				//3. 지도 관련 저장
+				String[] lst_title = req.getParameterValues("lst_title");
+				String[] lst_addr =  req.getParameterValues("lst_addr");
+				String[] lst_phone = req.getParameterValues("lst_phone");
+				String[] lst_lat = req.getParameterValues("lst_lat");
+				String[] lst_lon = req.getParameterValues("lst_lon");
+				
+				int mapRes = 0;
+				
+				for(int i = 0; i < lst_title.length; i++) {
+					DateDto date = new DateDto();
+					date.setDate_num(datebiz.maxNum() + 1);
+					date.setBoard_num(3);
+					date.setTable_num(plan_num);
+					date.setGroup_num(i+1);
+					date.setDate_lat(Double.parseDouble(lst_lat[i]));
+					date.setDate_lon(Double.parseDouble(lst_lon[i]));
+					date.setDate_name(lst_title[i]);
+					date.setDate_addr(lst_addr[i]);
+					date.setDate_phone(lst_phone[i]);
+					
+					int lstRes = datebiz.insert(date);
+					
+					if(lstRes > 0) {
+						mapRes++;
+					}
+				}
+				
+				if(mapRes > 0) {
+					System.out.println("지도 관련 저장 완료");
+					result++;
+				}
+			}
+		} else {
+			//3. 지도 관련 저장
+			String[] lst_title = req.getParameterValues("lst_title");
+			String[] lst_addr =  req.getParameterValues("lst_addr");
+			String[] lst_phone = req.getParameterValues("lst_phone");
+			String[] lst_lat = req.getParameterValues("lst_lat");
+			String[] lst_lon = req.getParameterValues("lst_lon");
+			
+			int mapRes = 0;
+			
+			for(int i = 0; i < lst_title.length; i++) {
+				DateDto date = new DateDto();
+				date.setDate_num(datebiz.maxNum() + 1);
+				date.setBoard_num(3);
+				date.setTable_num(plan_num);
+				date.setGroup_num(i+1);
+				date.setDate_lat(Double.parseDouble(lst_lat[i]));
+				date.setDate_lon(Double.parseDouble(lst_lon[i]));
+				date.setDate_name(lst_title[i]);
+				date.setDate_addr(lst_addr[i]);
+				date.setDate_phone(lst_phone[i]);
+				
+				int lstRes = datebiz.insert(date);
+				
+				if(lstRes > 0) {
+					mapRes++;
+				}
+			}
+			
+			if(mapRes > 0) {
+				System.out.println("지도 관련 저장 완료");
+				result++;
+			}
+		}
+		
+		if(result == 3) {
+			res.setContentType("text/html; charset=UTF-8");
+			PrintWriter writer = res.getWriter();
+			writer.println("<script>alert('성공적으로 수정했습니다.');"
+					+ "location.href='customplan_detail.do?plan_num=" + plan_num + "';</script>");
+			writer.close();
+		}
 	}
 }

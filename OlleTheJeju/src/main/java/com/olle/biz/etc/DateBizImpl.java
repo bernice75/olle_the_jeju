@@ -38,4 +38,9 @@ public class DateBizImpl implements DateBiz {
 	public int delete(int plan_num) {
 		return dao.delete(plan_num);
 	}
+
+	@Override
+	public int count(int plan_num) {
+		return dao.count(plan_num);
+	}
 }
