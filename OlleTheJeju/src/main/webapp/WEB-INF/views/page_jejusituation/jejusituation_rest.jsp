@@ -35,9 +35,10 @@
                 </div>
                 <br>
                 <div class="search">
-                    <input class="form-control search1" type="search" placeholder="검색어 입력">
-                    <button class="btn btn-outline-secondary search2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                           <label>장소 키워드로 검색: &nbsp;&nbsp;</label><input class="form-control search1" name="keyword" type="search" placeholder="검색어 입력"/>
+                    <button class="btn btn-outline-secondary search2" onclick="searchKeyword();"><i class="fa fa-search" aria-hidden="true"></i></button>
                 </div>
+
                 <br><br>
             <!--모달창<-아이템-->
             <div class="my-modal">
@@ -104,6 +105,7 @@
                 </div>
                 <br>
                 <div class="write">
+                    <!-- <button class="btn btn-outline-secondary" name="createrest" onclick="openModal2();">맛집등록</button> -->
                     <button class="btn btn-outline-secondary" name="createrest" onclick="registerStoreForm();">맛집등록</button>
                 </div>
                 <br><br>
@@ -156,7 +158,13 @@
         			}
         		});
         	}
-        	
+            
+            function searchKeyword(){
+            var keyword=document.getElementsByClassName("search1")[0].value;//키워드 검색명
+           	 console.log("keyword: "+keyword);
+           	 location.href="searchByKeyword.do?keyword="+keyword+"&page=1";
+            }
+
         </script>
     </body>
 </html>

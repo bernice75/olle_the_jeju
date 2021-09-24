@@ -3,6 +3,7 @@ package com.olle.biz.jejusituation;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -123,5 +124,11 @@ public class CoronaBizImpl implements CoronaBiz{
 		  }
 		  return val.getNodeValue();
 	  }
+
+	@Override
+	public List<HashMap<String,String>> coronaList() {
+		// TODO Auto-generated method stub
+		return dao.coronaList();
+	}
 
 }

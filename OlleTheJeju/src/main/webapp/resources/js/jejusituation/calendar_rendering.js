@@ -1,6 +1,7 @@
 var target=document.querySelector("#calendar");
 var chk=document.querySelectorAll(".time");
 var counter=document.querySelector("#cnt");
+var num=document.getElementsByName("situ_num")[0].value;
 
 var res=0;//선택시간
 var day;//선택일자
@@ -12,9 +13,6 @@ var nameIn=document.getElementsByName("name")[0];
 //연락처
 var u_tel;
 var telIn=document.getElementsByName("phone")[0];
-//이메일
-var u_email;
-var eIn=document.getElementsByName("email")[0];
 //요청사항
 var u_req;
 var rIn=document.getElementsByName("require")[0];
@@ -74,7 +72,6 @@ function getCounter(){
 function personalInfo(){
   u_name=nameIn.value;
   u_req=rIn.value;
-  u_email=eIn.value;
   u_tel=telIn.value;
 }
 
@@ -101,18 +98,47 @@ document.addEventListener('DOMContentLoaded', function() {
     //사용자
     jsonUser={
       name:u_name,
-      email:u_email,
       phone:u_tel,
       require:u_req
     };
     //전체 json
     json={
-      user:jsonUser,
+      name:u_name,
+      phone:u_tel,
+      require:u_req,
       date:day,
       time:res,
-      cnt:regCnt
+      cnt:regCnt,
+      situ_num:num
     };
+    
     preChk.innerHTML=`${u_name}님, ${day} ${res}에 ${regCnt}명을 예약하시겠습니까?`;
     console.log("이용자: ",jsonUser);
     console.log("전체 요청: ",json);
   });
+  
+  function sendData(situ_num){
+	  json=JSON.stringify(json);
+
+	  console.log("data: "+json);
+	  $.ajax({
+		  type:"post",
+		  url:"jejusituation_reservation.do",
+		  contentType:'application/json',
+		 data:json,
+		 dataType:"json",
+		 success:function(msg){
+			 console.log(msg);
+			 if(msg.message==="예약되었습니다"){
+				 alert("예약성공");
+				 location.href="jejusituation_main.do";
+			 }else{
+				 alert("30명을 초과하여 더 이상 예약할 수 없습니다");
+			 }
+		 },
+		 error:function(msg){
+			 console.log(msg);
+			 alert("30명을 초과하여 더 이상 예약할 수 없습니다");
+		 }
+	  });
+  }

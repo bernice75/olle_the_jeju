@@ -46,4 +46,8 @@
         	<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
         </websocket:handshake-interceptors>
     </websocket:handlers>
+
+		<!-- task scheduler -->
+	<task:annotation-driven/>
+
 </beans:beans>

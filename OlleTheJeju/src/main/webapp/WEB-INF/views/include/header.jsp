@@ -46,9 +46,9 @@
                <li>
                    <a href="jejusituation_main.do?user_id=${sessionScope.user_id}">제주상황<i class="fa fa-arrow-down" aria-hidden="true"></i></a>
                    <ul class="slide two">
-                       <li><a href="#">코로나상황</a></li>
-                       <li><a href="#">관광지혼잡도</a></li>
-                       <li><a href="jejusituation_rest.do?user_id=${sessionScope.user_id}">맛집예약/현황</a></li>
+                     <li><a href="corona.do" title="코로나 상황">코로나상황</a></li>
+                     <li><a href="https://www.visitjeju.net/kr/bigdatamap/" title="관광지 혼잡도" target="_blank">관광지혼잡도</a></li>
+                     <li><a href="jejusituation_rest.do?page=1" title="맛집예약/현황">맛집예약/현황</a></li>
                    </ul>
                </li>
                <li><a href="notice_main.do?user_id=${sessionScope.user_id}">고객지원</a></li>

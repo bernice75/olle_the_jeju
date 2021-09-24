@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -42,7 +43,7 @@ import com.olle.dto.jejusituation.MenuDto;
 import com.olle.dto.jejusituation.ReservationRequest;
 import com.olle.dto.member.MemberDto;
 import com.olle.dto.pagination.JejuPage;
-import com.olle.mapper.MenuBatchService;
+import com.olle.mapper.biz.MenuBatchService;
 
 @Controller
 public class JejusituationController {
@@ -494,7 +495,44 @@ public class JejusituationController {
 //	}
 	@RequestMapping(value="/corona.do")
 	public String jejusituation_save_corona(Model model) {
-		cBiz.searchData();
+		//저장된 데이터 가져오기
+		List<HashMap<String,String>> list=cBiz.coronaList();
+		logger.info("corona data:{}",list);
+		//x를 " " 기준으로 split하여 그룹1만 담고,
+		//def_cnt는 데이터로 담기
+		List<String> labels=new ArrayList<String>();
+		List<Long> dataSet=new ArrayList<Long>();
+		
+		Iterator iter=list.iterator();
+		
+		while(iter.hasNext()) {
+			HashMap<String,String> map=(HashMap<String, String>) iter.next();
+			String def=String.valueOf(map.get("DEF_CNT"));
+			String x=String.valueOf(map.get("X"));
+			logger.info("x: "+x);
+			String temp=x.substring(0,11);
+			labels.add(temp.trim());
+			dataSet.add(Long.valueOf(def));
+		}
+		
+		logger.info("labels:{}",labels);
+		logger.info("dataSet:{}",dataSet);
+		
+		model.addAttribute("label1",labels.get(0));
+		model.addAttribute("label2",labels.get(1));
+		model.addAttribute("label3",labels.get(2));
+		model.addAttribute("label4",labels.get(3));
+		model.addAttribute("label5",labels.get(4));
+		model.addAttribute("label6",labels.get(5));
+		model.addAttribute("label7",labels.get(6));
+		model.addAttribute("data1",dataSet.get(0));
+		model.addAttribute("data2",dataSet.get(1));
+		model.addAttribute("data3",dataSet.get(2));
+		model.addAttribute("data4",dataSet.get(3));
+		model.addAttribute("data5",dataSet.get(4));
+		model.addAttribute("data6",dataSet.get(5));
+		model.addAttribute("data7",dataSet.get(6));
+		
 		return "page_jejusituation/jejusituation_corona";
 	}
 	
