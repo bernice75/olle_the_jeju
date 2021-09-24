@@ -18,6 +18,7 @@ import com.olle.biz.admin.ReportBiz;
 import com.olle.biz.customplan.CustomBiz;
 import com.olle.biz.member.MemberBiz;
 import com.olle.dto.admin.ReportDto;
+import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.ChatMessage;
 import com.olle.dto.member.MemberDto;
 
@@ -98,6 +99,15 @@ public class AdminController {
 	public String admin_warn(Model model) {
 		List<ReportDto> rep = repBiz.selectList();
 		model.addAttribute("report", rep);
+		
+		List<CustomDto> cusList = new ArrayList<CustomDto>();
+		
+		for(int i = 0; i < rep.size(); i++) {
+			int plan_num = rep.get(i).getPlan_num();
+			CustomDto cus = cusBiz.selectOne(plan_num);
+			cusList.add(i, cus);
+		}
+		model.addAttribute("cusList", cusList);
 		
 		return "page_admin/admin_warn";
 	}
