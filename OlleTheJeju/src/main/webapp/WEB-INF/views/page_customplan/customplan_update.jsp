@@ -269,11 +269,11 @@
 				                        <p class=list_phone><b>3. 전화번호</b></p>
 				                        <p class=list_phone><input type=text value= "${date.date_phone }" style=width:200px readonly=readonly></p>
 	                    			</div>
-                        			<input type="hidden" id="date_lat" value="${date.date_lat }">
-                        			<input type="hidden" id="date_lon" value="${date.date_lon }">
-                        			<input type="hidden" id="date_name" value="${date.date_name }">
-                        			<input type="hidden" id="date_addr" value="${date.date_addr }">
-                        			<input type="hidden" id="date_phone" value="${date.date_phone }">
+                        			<input type="hidden" id="date_lat" name="lst_lat" value="${date.date_lat }">
+                        			<input type="hidden" id="date_lon" name="lst_lon" value="${date.date_lon }">
+                        			<input type="hidden" id="date_name" name="lst_title" value="${date.date_name }">
+                        			<input type="hidden" id="date_addr" name="lst_addr" value="${date.date_addr }">
+                        			<input type="hidden" id="date_phone" name="lst_phone" value="${date.date_phone }">
                         		</c:forEach>
                         	</c:otherwise>
                         </c:choose>

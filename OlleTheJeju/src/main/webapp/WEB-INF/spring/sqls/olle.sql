@@ -1,3 +1,4 @@
+DROP TABLE OLLE_CHAT;
 DROP TABLE OLLE_TRIP;
 DROP TABLE OLLE_SUGGEST;
 DROP TABLE OLLE_DATE;
@@ -12,9 +13,6 @@ DROP TABLE OLLE_SUPPORT;
 DROP TABLE OLLE_REPORT;
 DROP TABLE OLLE_SITUATION;
 DROP TABLE OLLE_USER CASCADE CONSTRAINTS;
-
-select * from olle_date
-order by TO_NUMBER(date_num);
 
 -- OLLE_USER Table Create SQL
 CREATE TABLE OLLE_USER(
@@ -35,13 +33,10 @@ CREATE TABLE OLLE_USER(
 	USER_NICK VARCHAR2(500) NOT NULL
 );
 
-select * from olle_user where user_id != 'admin';
+ALTER TABLE OLLE_USER ADD CONSTRAINT USER_MEMBER_CHK CHECK (USER_MEMBER IN ('개인', '사업자', '관리자'));
+ALTER TABLE OLLE_USER ADD CONSTRAINT USER_WARNING_CHK CHECK(USER_WARNING < 6);
+ALTER TABLE OLLE_USER ADD CONSTRAINT USER_STATUS_CHK CHECK(USER_STATUS IN ('Y','N'));
 
-SELECT COUNT(USER_ID)
-		FROM OLLE_USER
-		WHERE USER_ID = '1234';
-select * from olle_user;
-commit;
 insert into olle_user
 values('admin', 'admin', 'admin', 0, '서울','4층', '010-4568-1234', 'admin@ac.kr', '개인', 'N', 0, SYSDATE, null, 'test.jpg', 'admin');
 insert into olle_user
@@ -51,9 +46,6 @@ values('12345', '12345', 'user123245', 24, '관악구 남부순환로 1497','1�
 insert into olle_user
 values('12346', '12346', 'user123246', 24, '관악구 남부순환로 1497','1층', '010-1234-1234', '12346@naver.com', '개인', 'N', 0, SYSDATE, null, 'test.jpg', '12346');
 
-ALTER TABLE OLLE_USER ADD CONSTRAINT USER_MEMBER_CHK CHECK (USER_MEMBER IN ('개인', '사업자'));
-ALTER TABLE OLLE_USER ADD CONSTRAINT USER_WARNING_CHK CHECK(USER_WARNING < 6);
-ALTER TABLE OLLE_USER ADD CONSTRAINT USER_STATUS_CHK CHECK(USER_STATUS IN ('Y','N'));
 
 COMMENT ON COLUMN OLLE_USER.USER_ID IS '아이디';
 COMMENT ON COLUMN OLLE_USER.USER_PW IS '비밀번호';
@@ -71,20 +63,19 @@ COMMENT ON COLUMN OLLE_USER.USER_SECDATE IS '탈퇴일';
 COMMENT ON COLUMN OLLE_USER.USER_IMG IS '프로필';
 COMMENT ON COLUMN OLLE_USER.USER_NICK IS '닉네임';
 
-
 -- OLLE_TRIP Table Create SQL
 CREATE TABLE OLLE_TRIP(
-	TRIP_NUM  NUMBER PRIMARY KEY, 
-	TRIP_KATEGORIE VARCHAR2(500) NOT NULL, 
-	TRIP_TITLE VARCHAR2(300) NOT NULL, 
-	TRIP_CONTENT VARCHAR2(4000)NOT NULL, 
-	TRIP_WRITER VARCHAR2(300) NOT NULL, 
-	TRIP_REGDATE  DATE  DEFAULT SYSDATE NOT NULL, 
-	TRIP_NAIL VARCHAR2(1000) NOT NULL, 
-	TRIP_ADDR VARCHAR2(3000) NOT NULL, 
-	TRIP_PHONE VARCHAR2(300) NOT NULL, 
-	TRIP_VIEWS NUMBER NOT NULL, 
-	TRIP_PUSH NUMBER NOT NULL
+    TRIP_NUM  NUMBER PRIMARY KEY, 
+    TRIP_KATEGORIE VARCHAR2(500) NOT NULL, 
+    TRIP_TITLE VARCHAR2(300) NOT NULL, 
+    TRIP_CONTENT VARCHAR2(4000)NOT NULL, 
+    TRIP_WRITER VARCHAR2(300) NOT NULL, 
+    TRIP_REGDATE  DATE  DEFAULT SYSDATE NOT NULL,
+    TRIP_ADDR VARCHAR2(3000) NOT NULL, 
+    TRIP_PHONE VARCHAR2(300) NOT NULL,
+    TRIP_DETAIL VARCHAR2(4000)NOT NULL,
+    TRIP_VIEWS NUMBER NOT NULL, 
+    TRIP_PUSH NUMBER NOT NULL
 );
 
 ALTER TABLE OLLE_TRIP ADD CONSTRAINT TRIP_KATEGORIE_CHK CHECK (TRIP_KATEGORIE IN ('명소', '가격', '맛집', '방언'));
@@ -110,27 +101,16 @@ CREATE TABLE OLLE_IMG(
     GROUP_NUM NUMBER NOT NULL
 );
 
-SELECT DIB_NUM
-		FROM OLLE_DIB
-		WHERE TABLE_NUM = 3 AND USER_ID = 'good12388';
+ALTER TABLE OLLE_IMG ADD CONSTRAINT BOARD_NUM_CHK CHECK (BOARD_NUM IN (1, 2, 3, 4));
 
 insert into olle_img
 values((select max(img_num) from olle_img)+1, 3, 11, 'KakaoTalk_20210224_190043790_10.png', 1);
-
 insert into olle_img
 values((select max(img_num) from olle_img)+1, 3,11, 'KakaoTalk_20210224_190043790_21.jpg', 2);
-
 insert into olle_img
 values((select max(img_num) from olle_img)+1, 3, 11, 'KakaoTalk_20210315_215420498.jpg', 3);
 
 
-insert into olle_hashtag
-values(11, 3,2, '힐링');
-
-commit;
-
-
-ALTER TABLE OLLE_IMG ADD CONSTRAINT BOARD_NUM_CHK CHECK (BOARD_NUM IN (1, 2, 3, 4));
 --1 : 관광일정, 2 : 추천일정, 3 : 나만의 일정, 4 : 제주상황
 
 COMMENT ON TABLE OLLE_IMG IS '이미지 경로 저장 테이블';
@@ -140,7 +120,7 @@ COMMENT ON COLUMN OLLE_IMG.TABLE_NUM IS '게시글 번호';
 COMMENT ON COLUMN OLLE_IMG.IMG_TITLE IS '이미지 경로';
 COMMENT ON COLUMN OLLE_IMG.GROUP_NUM IS '이미지 순서';
 
-
+select * from olle_suggest;
 -- OLLE_SUGGEST Table Create SQL
 CREATE TABLE OLLE_SUGGEST(
 	SUG_NUM  NUMBER PRIMARY KEY, 
@@ -149,7 +129,6 @@ CREATE TABLE OLLE_SUGGEST(
 	SUG_CONTENT VARCHAR2(4000) NOT NULL, 
 	SUG_WRITER VARCHAR2(500) NOT NULL, 
 	SUG_REGDATE  DATE  DEFAULT SYSDATE NOT NULL, 
-	SUG_NAIL VARCHAR2(1000) NOT NULL, 
 	SUG_TENDENCY VARCHAR2(300) NOT NULL, 
 	SUG_ADDR VARCHAR2(3000) NOT NULL, 
 	SUG_TERM VARCHAR2(500) NOT NULL, 
@@ -195,11 +174,6 @@ values(1, '나홀로 제주에', '혼자 제주도를 가는 느낌이란 참 �
 insert into OLLE_PLAN
 values(2, '나홀로 제주에', '혼자 제주도를 가는 느낌이란 참 특별합니다.', 'user1', SYSDATE, '혼자',  '1박2일', 13, 15, 1);
 
-select * from OLLE_plan;
-update olle_plan set plan_hide = 0 where plan_hide = 1;
-delete from OLLE_hashtag;
-commit;
-
 COMMENT ON COLUMN OLLE_PLAN.PLAN_NUM IS '글번호';
 COMMENT ON COLUMN OLLE_PLAN.PLAN_TITLE IS '제목';
 COMMENT ON COLUMN OLLE_PLAN.PLAN_CONTENT IS '내용';
@@ -212,9 +186,7 @@ COMMENT ON COLUMN OLLE_PLAN.PLAN_TERM IS '여행 기간';
 COMMENT ON COLUMN OLLE_PLAN.PLAN_VIEWS IS '조회수';
 COMMENT ON COLUMN OLLE_PLAN.PLAN_PUSH IS '추천수';
 COMMENT ON COLUMN OLLE_PLAN.PLAN_HIDE IS '비공개 여부(IN(0, 1))';
-select * from olle_hashtag;
-delete from olle_plan where plan_num = 3;
-commit;
+
 -- OLLE_HASHTAG Table Create SQL
 CREATE TABLE OLLE_HASHTAG(
 	HASH_NUM NUMBER PRIMARY KEY, 
@@ -265,8 +237,6 @@ CREATE TABLE OLLE_SITUATION(
 	SITU_GUBUN VARCHAR2(500)
 );
 
-select * from olle_situation;
-commit;
 insert into OLLE_SITUATION
 values((select NVL(max(situ_num), 0) from OLLE_SITUATION) + 1,123, '김길동', '21/09/16', 123, 123, '09:00', '06:00', '한식');
 
@@ -353,9 +323,6 @@ insert into OLLE_REPORT
 values(1, 'user1', '욕설, 비속어', '1234', 1, SYSDATE);
 update olle_plan set PLAN_HIDE = 1 where plan_num = 1;
 
-select * from olle_user;
-commit;
-
 COMMENT ON TABLE OLLE_REPORT IS '신고내역 테이블';
 COMMENT ON COLUMN OLLE_REPORT.REP_NUM IS '신고번호';
 COMMENT ON COLUMN OLLE_REPORT.USER_ID IS '신고자';
@@ -373,7 +340,6 @@ CREATE TABLE OLLE_FOOD(
 	CONSTRAINT FOOD_SITU_NUM_FK FOREIGN KEY(SITU_NUM) REFERENCES OLLE_SITUATION(SITU_NUM) ON DELETE CASCADE
 );
 
-select * from OLLE_DATE;
 COMMENT ON COLUMN OLLE_FOOD.FOOD_NUM IS '메뉴 번호';
 COMMENT ON COLUMN OLLE_FOOD.SITU_NUM IS '음식점 번호';
 COMMENT ON COLUMN OLLE_FOOD.GROUP_NUM IS '그룹 번호';
@@ -411,7 +377,29 @@ CREATE TABLE OLLE_CHAT(
     MESSAGE_REGDATE DATE NOT NULL
 );
 
-DROP TABLE OLLE_CHAT;
+insert into olle_chat
+values(1, 'user1', 'user1', 'admin', '안낭하세요. 여쭤볼게 있어 문의드려요', SYSDATE);
+insert into olle_chat
+values(2, 'user1', 'admin', 'user1', '네, 안녕하세요. 무엇을 도와드릴까요?', SYSDATE);
+insert into olle_chat
+values(3, 'user1', 'user1', 'admin', '일정을 등록하는 과정에서 문제가 생겨서요', SYSDATE);
+insert into olle_chat
+values(4, 'user1', 'admin', 'user1', '혹시 어떤 문제가 발생하시는 걸까요??', SYSDATE);
+insert into olle_chat
+values(5, 'user1', 'user1', 'admin', '일정기간을  선택하고 나서 수정하려고 바꾸면 중첩으로 들어가더라구요...', SYSDATE);
+
+insert into olle_chat
+values(6, 'good12388', 'good12388', 'admin', '안녕하세요. 여쭤볼게 있어 문의드려요', SYSDATE);
+insert into olle_chat
+values(7, 'good12388', 'admin', 'good12388', '네, 안녕하세요. 무엇을 도와드릴까요?', SYSDATE);
+insert into olle_chat
+values(8, 'good12388', 'good12388', 'admin', '일정을 등록하는 과정에서 문제가 생겨서요', SYSDATE);
+insert into olle_chat
+values(9, 'good12388', 'admin', 'good12388', '혹시 어떤 문제가 발생하시는 걸까요??', SYSDATE);
+insert into olle_chat
+values(10, 'good12388', 'good12388', 'admin', '일정기간을  선택하고 나서 수정하려고 바꾸면 중첩으로 들어가더라구요...', SYSDATE);
+
+commit;
 
 select ROWNUM AS RNUM, C.*
 from (
@@ -452,29 +440,53 @@ SELECT * FROM OLLE_CHAT
     	WHERE ROOM_ID = 'good12388'
     	ORDER BY TO_NUMBER(MESSAGE_ID);
         
-SELECT * FROM OLLE_chat;
+SELECT * FROM OLLE_trip;
 commit;
 
-insert into olle_chat
-values(1, 'user1', 'user1', 'admin', '안낭하세요. 여쭤볼게 있어 문의드려요', SYSDATE);
-insert into olle_chat
-values(2, 'user1', 'admin', 'user1', '네, 안녕하세요. 무엇을 도와드릴까요?', SYSDATE);
-insert into olle_chat
-values(3, 'user1', 'user1', 'admin', '일정을 등록하는 과정에서 문제가 생겨서요', SYSDATE);
-insert into olle_chat
-values(4, 'user1', 'admin', 'user1', '혹시 어떤 문제가 발생하시는 걸까요??', SYSDATE);
-insert into olle_chat
-values(5, 'user1', 'user1', 'admin', '일정기간을  선택하고 나서 수정하려고 바꾸면 중첩으로 들어가더라구요...', SYSDATE);
-
-insert into olle_chat
-values(6, 'good12388', 'good12388', 'admin', '안녕하세요. 여쭤볼게 있어 문의드려요', SYSDATE);
-insert into olle_chat
-values(7, 'good12388', 'admin', 'good12388', '네, 안녕하세요. 무엇을 도와드릴까요?', SYSDATE);
-insert into olle_chat
-values(8, 'good12388', 'good12388', 'admin', '일정을 등록하는 과정에서 문제가 생겨서요', SYSDATE);
-insert into olle_chat
-values(9, 'good12388', 'admin', 'good12388', '혹시 어떤 문제가 발생하시는 걸까요??', SYSDATE);
-insert into olle_chat
-values(10, 'good12388', 'good12388', 'admin', '일정기간을  선택하고 나서 수정하려고 바꾸면 중첩으로 들어가더라구요...', SYSDATE);
+--trip 테이블 더미 데이터
+CREATE SEQUENCE SUGSEQ NOCACHE;
+CREATE SEQUENCE TRIPSEQ NOCACHE;
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '맛집','제목2','내용2','admin',SYSDATE,'주소2','01011112222','상세2','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '맛집','제목3','내용3','admin',SYSDATE,'주소3','01011112222','상세3','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '맛집','제목4','내용4','admin',SYSDATE,'주소4','01011112222','상세4','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '맛집','제목5','내용5','admin',SYSDATE,'주소5','01011112222','상세5','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '맛집','제목6','내용6','admin',SYSDATE,'주소6','01011112222','상세6','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '맛집','제목7','내용7','admin',SYSDATE,'주소7','01011112222','상세7','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '맛집','제목8','내용8','admin',SYSDATE,'주소8','01011112222','상세8','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '맛집','제목9','내용9','admin',SYSDATE,'주소9','01011112222','상세9','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '맛집','제목10','내용10','admin',SYSDATE,'주소10','01011112222','상세10','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '맛집','제목11','내용11','admin',SYSDATE,'주소11','01011112222','상세11','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '맛집','제목12','내용12','admin',SYSDATE,'주소12','01011112222','상세12','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '맛집','제목13','내용13','admin',SYSDATE,'주소13','01011112222','상세13','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '명소','제목2','내용2','admin',SYSDATE,'주소2','01011112222','상세2','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '명소','제목3','내용3','admin',SYSDATE,'주소3','01011112222','상세3','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '명소','제목4','내용4','admin',SYSDATE,'주소4','01011112222','상세4','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '명소','제목5','내용5','admin',SYSDATE,'주소5','01011112222','상세5','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '명소','제목6','내용6','admin',SYSDATE,'주소6','01011112222','상세6','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '명소','제목7','내용7','admin',SYSDATE,'주소7','01011112222','상세7','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '명소','제목8','내용8','admin',SYSDATE,'주소8','01011112222','상세8','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '명소','제목9','내용9','admin',SYSDATE,'주소9','01011112222','상세9','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '명소','제목10','내용10','admin',SYSDATE,'주소10','01011112222','상세10','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '명소','제목11','내용11','admin',SYSDATE,'주소11','01011112222','상세11','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '명소','제목12','내용12','admin',SYSDATE,'주소12','01011112222','상세12','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '명소','제목13','내용13','admin',SYSDATE,'주소13','01011112222','상세13','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '가격','제목2','내용2','admin',SYSDATE,'주소2','01011112222','상세2','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '가격','제목3','내용3','admin',SYSDATE,'주소3','01011112222','상세3','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '가격','제목4','내용4','admin',SYSDATE,'주소4','01011112222','상세4','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '가격','제목5','내용5','admin',SYSDATE,'주소5','01011112222','상세5','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '가격','제목6','내용6','admin',SYSDATE,'주소6','01011112222','상세6','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '가격','제목7','내용7','admin',SYSDATE,'주소7','01011112222','상세7','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '가격','제목8','내용8','admin',SYSDATE,'주소8','01011112222','상세8','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '가격','제목9','내용9','admin',SYSDATE,'주소9','01011112222','상세9','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '가격','제목10','내용10','admin',SYSDATE,'주소10','01011112222','상세10','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '가격','제목11','내용11','admin',SYSDATE,'주소11','01011112222','상세11','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '가격','제목12','내용12','admin',SYSDATE,'주소12','01011112222','상세12','0','0');
+INSERT INTO OLLE_TRIP VALUES(TRIPSEQ.NEXTVAL, '가격','제목13','내용13','admin',SYSDATE,'주소13','01011112222','상세13','0','0');
 
 commit;
+delete from olle_img where table_num = 6;
+
+select * from olle_img where board_num = 1;
+INSERT INTO OLLE_img VALUES((select max(img_num) from olle_img)+1, 1,10, '1.png', 1);
+INSERT INTO OLLE_img VALUES((select max(img_num) from olle_img)+1, 1,10, 'test.jpg', 2);
+INSERT INTO OLLE_img VALUES((select max(img_num) from olle_img)+1, 1,10, 'dlpin.png', 3);

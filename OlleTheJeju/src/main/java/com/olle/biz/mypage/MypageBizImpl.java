@@ -73,12 +73,10 @@ public class MypageBizImpl implements MypageBiz {
 	public List<DibDto> myDibList(int table_num) {
 		return dao.myDibList(table_num);
 	}
-
-	//문의사항 (실시간 채팅)
 	
 	//신고확인
 	@Override
-	public MemberDto mypageWarn(String user_id) {
+	public int mypageWarn(String user_id) {
 		return dao.mypageWarn(user_id);
 	}
 }

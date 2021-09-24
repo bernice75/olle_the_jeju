@@ -14,14 +14,14 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx142479165b1048a5b99ae1b5a05f5d1b"></script>
+        <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx60b01b193faa4edfb9e48b40119f50fe"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
         <script src="./resources/js/customplan/customplan_detail.js" type="text/javascript"></script>
         
 	</head>
-	<body>
+	<body onload="initTmap()">
 		<div class="wrapper">
 			<jsp:include page="../include/header.jsp"></jsp:include>
 			<div class="main">
@@ -119,12 +119,12 @@
 				                        <p class=list_addr><input type=text value= "${date.date_addr }" style=width:200px readonly=readonly></p>
 				                        <p class=list_phone><b>3. 전화번호</b></p>
 				                        <p class=list_phone><input type=text value= "${date.date_phone }" style=width:200px readonly=readonly></p>
+				                        <input type="hidden" id="date_lat" value="${date.date_lat }">
+	                        			<input type="hidden" id="date_lon" value="${date.date_lon }">
+	                        			<input type="hidden" id="date_name" value="${date.date_name }">
+	                        			<input type="hidden" id="date_addr" value="${date.date_addr }">
+	                        			<input type="hidden" id="date_phone" value="${date.date_phone }">
 	                    			</div>
-                        			<input type="hidden" id="date_lat" value="${date.date_lat }">
-                        			<input type="hidden" id="date_lon" value="${date.date_lon }">
-                        			<input type="hidden" id="date_name" value="${date.date_name }">
-                        			<input type="hidden" id="date_addr" value="${date.date_addr }">
-                        			<input type="hidden" id="date_phone" value="${date.date_phone }">
                         		</c:forEach>
                         	</c:otherwise>
                         </c:choose>
@@ -149,5 +149,95 @@
 			</div>
 			<jsp:include page="../include/footer.jsp"></jsp:include>
 		</div>
+		<script type="text/javascript">
+	        var map;
+	        var markers = []; //마커병합 저장
+	        
+	        var list_size;
+        	var trip_title = [];
+        	var trip_lat = [];
+        	var trip_lon = [];
+        	var trip_addr = [];
+        	var trip_phone = [];
+        	var trip_marker = [];
+        	
+       		list_size = $(".list_inner").length;
+       		
+       		for(var i = 0; i < list_size; i++) {
+           		trip_title[i] = document.getElementsByClassName("list_inner")[i].children.date_name.value;
+           		trip_lat[i] = document.getElementsByClassName("list_inner")[i].children.date_lat.value;
+           		trip_lon[i] = document.getElementsByClassName("list_inner")[i].children.date_lon.value;
+           		trip_addr[i] = document.getElementsByClassName("list_inner")[i].children.date_addr.value;
+           		trip_phone[i] = document.getElementsByClassName("list_inner")[i].children.date_phone.value;
+           	}
+           	
+           	for(var i = 0; i < list_size; i++) {
+           		trip_marker[i] = new Tmapv2.LatLng(trip_lat[i], trip_lon[i]);
+           	}
+        	
+		    // 페이지가 로딩이 된 후 호출하는 함수입니다.
+			function initTmap(){
+				// map 생성
+				// Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다
+				map = new Tmapv2.Map("map_div", {
+				 	center: new Tmapv2.LatLng(33.506336, 126.49514),// 지도 초기 좌표
+				 	width: "770px", // map의 width 설정
+				 	height: "600px" // map의 height 설정
+			 	});
+				
+				for (var i = 0; i < list_size; i++) {
+					//마커 객체 생성
+					var marker_trip = new Tmapv2.Marker({
+						position: trip_marker[i], //Marker의 중심좌표 설정.
+						icon: "./resources/img/marker_trip.png",
+ 						label: (i+1) + "번째 코스", //Marker의 라벨.
+ 						title: trip_title[i], //Marker 타이틀.
+						map: map //Marker가 표시될 Map 설정.
+					});
+					marker_trip.setMap(map); //Marker가 표시될 Map 설정.
+		            markers.push(marker_trip);
+					
+		            var content= "<div class='popup' style='position: static; top: 320px; left : 320px; height: fit-content !important; display: flex; font-size: 14px; box-shadow: 5px 5px 5px #00000040; border-radius: 10px; width : 400px; height:100px; background-color: rgba(0, 0, 0, 0.6); align-items: center; padding: 5px; color: #fff;'>"+
+					   "<div class='info-box' style='margin-left: 10px;'>"+
+					   "<p style='margin-bottom: 7px;'>"+
+					   "<span class='tit' style=' font-size: 16px; font-weight: bold;'>"+trip_title[i]+"</span>"+
+					   "<p>"+
+					   "<span class='new-addr'>"+trip_addr[i]+"</span>"+
+					   "</p>"+
+					   "<p>"+
+					   "<span class='old-addr'>"+trip_phone[i]+"</span>"+
+					   "</p>"+
+					   "</div>"+
+					   "<button type='button' class='btn-close' aria-label='close' style='position: absolute; top: 10px; right: 10px; display: block; width: 15px; height: 15px;' onclick='infoWindow.setVisible(false);'></button>" +
+					   "</div>";
+		         	//클릭 시 팝업창 오픈
+	            	openPopup(trip_marker[i], content);
+				}
+				
+				function openPopup(trip_marker, content) {
+	        		marker_trip.addListener("click", function(evt) {
+	        			//Popup 객체 생성.
+	        			infoWindow = new Tmapv2.InfoWindow({
+	        			position: trip_marker, //Popup 이 표출될 맵 좌표
+	        			content: content, //Popup 표시될 text
+	        			type: 2, //Popup의 type 설정.
+	        			map: map //Popup이 표시될 맵 객체
+	        			});
+	    			});
+	        	}
+				
+				function onClose(popup){
+	        		infoWindow.setVisible(false);
+	        	}
+		 	}
+				
+			// 모든 마커를 제거하는 함수입니다.
+			function removeMarkers() {
+				for (var i = 0; i < markers.length; i++) {
+					markers[i].setMap(null);
+				}
+				markers = [];
+			}
+        </script>
 	</body>
 </html>

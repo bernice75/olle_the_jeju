@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<title>관광일정 detail</title>
 		<link href="./resources/css/navi.css" rel="stylesheet" type="text/css" />
-        <link href="./resources/css/trip/trip_detail.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/trip/trip_detail.css?var=1" rel="stylesheet" type="text/css" />
         <link href="./resources/css/footer.css" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
@@ -14,7 +15,7 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        
+		<script src="./resources/js/trip/trip_detail.js"></script>		
 	</head>
 	<body>
 		<div class="wrapper">
@@ -53,24 +54,26 @@
                         </button>
                     </div>
                     <div class="content_info">
+                    	<input type="hidden" id="trip_num" value="${dto.trip_num }">
                         <br>
-                        <h4>제주 국제 공항</h4>
+                        <h4>${dto.trip_title }</h4>
                         <div class="name">
-                            <h6><strong>작성자</strong> | 관리자</h6>
-                            <h6 class="like"><i class="fa fa-heart-o" aria-hidden="true"></i> | 100</h6>
-                            <h6><i class="fa fa-thumb-tack" aria-hidden="true"></i> | 100</h6>
-                            <h6>조회수 | 100</h6>
+                            <h6><strong>작성자</strong> | ${dto.trip_writer }</h6>
+                            <h6 class="like" id="pText" onclick="like();" ><i id="push"class="fa fa-heart-o" aria-hidden="true" style="font-weight:normal;"> | <span id="text">${dto.trip_push }</span></i> </h6>
+                            <h6>조회수 | ${dto.trip_views }</h6>
                         </div>
                         <div class="content">
-                            <h6>기본정보 : </h6>
+                            <h6>기본정보 : ${dto.trip_content } </h6>
                             <br>
-                            <h6>주소 : </h6>
+                            <h6>주소 : ${dto.trip_addr }</h6>
                             <br>
-                            <h6>전화번호 : </h6>
+                            <h6>전화번호 : ${dto.trip_phone } </h6>
                         </div>
                         <br>
                         <div class="find_btn">
-                            <button class="btn btn-outline-success chk-btn" type="button">길찾기</button>
+                        <c:if test="${dto.trip_kategorie eq '가격' }">
+                            <button class="btn btn-outline-success chk-btn" type="button">예약하기</button>
+                        </c:if>
                         </div>
                     </div>
                 </div>
@@ -80,12 +83,15 @@
                     <hr class="line">
                     <br>
                     <div class="main-second">
+                    	<textarea style="width: 1080px; height: 600px; resize: none;" readonly="readonly" name='trip_detail'>${dto.trip_detail }</textarea>
                     </div>
                 </div>
                 <div class="bottom-btn-group2">
-                    <input id="btn1" class="btn btn-secondary" type="button" value="목록" onclick="location.href='trip_main.do'">
-                    <input id="btn2" class="btn btn-primary" type="button" value="수정" onclick="">
-                    <input id="btn3" class="btn btn-danger" type="button" value="삭제" onclick="">
+                    <input id="btn1" class="btn btn-secondary" type="button" value="목록" onclick="location.href='trip_main.do?kategorie=${dto.trip_kategorie}&page=1&user_id=${sessionScope.user_id}'">
+                    <c:if test="${sessionScope.user_id eq 'admin'}">
+                    	<input id="btn2" class="btn btn-primary" type="button" value="수정" onclick="location.href='trip_update.do?trip_num=${dto.trip_num}'">
+                    	<input id="btn3" class="btn btn-danger" type="button" value="삭제" onclick="location.href='trip_delete.do?trip_num=${dto.trip_num}&trip_kategorie=${dto.trip_kategorie }'">
+                    </c:if>	
                 </div>
                 <br><br>
 			</div>

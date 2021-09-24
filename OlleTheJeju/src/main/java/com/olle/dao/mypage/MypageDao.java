@@ -44,5 +44,5 @@ public interface MypageDao {
 	//문의사항 (실시간 채팅)
 	
 	//신고확인
-	public MemberDto mypageWarn(String user_id);
+	public int mypageWarn(String user_id);
 }

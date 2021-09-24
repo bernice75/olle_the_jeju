@@ -2,6 +2,10 @@ package com.olle.dto.suggest;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+
+@Component
 public class SuggestDto {
 	private int sug_num;
 	private String sug_kategorie;
@@ -15,7 +19,7 @@ public class SuggestDto {
 	private String sug_term;
 	private int sug_views;
 	private int sug_push;
-	
+	private int dib;
 	public SuggestDto() {
 		super();
 	}
@@ -37,6 +41,32 @@ public class SuggestDto {
 		this.sug_push = sug_push;
 	}
 	
+	
+	public SuggestDto(int sug_num, String sug_kategorie, String sug_title, String sug_content, String sug_writer,
+			Date sug_regdate, String sug_nail, String sug_tendency, String sug_addr, String sug_term, int sug_views,
+			int sug_push, int dib) {
+		super();
+		this.sug_num = sug_num;
+		this.sug_kategorie = sug_kategorie;
+		this.sug_title = sug_title;
+		this.sug_content = sug_content;
+		this.sug_writer = sug_writer;
+		this.sug_regdate = sug_regdate;
+		this.sug_nail = sug_nail;
+		this.sug_tendency = sug_tendency;
+		this.sug_addr = sug_addr;
+		this.sug_term = sug_term;
+		this.sug_views = sug_views;
+		this.sug_push = sug_push;
+		this.dib = dib;
+	}
+	
+	public int getDib() {
+		return dib;
+	}
+	public void setDib(int dib) {
+		this.dib = dib;
+	}
 	public int getSug_num() {
 		return sug_num;
 	}
@@ -108,5 +138,12 @@ public class SuggestDto {
 	}
 	public void setSug_push(int sug_push) {
 		this.sug_push = sug_push;
+	}
+	@Override
+	public String toString() {
+		return "SuggestDto [sug_num=" + sug_num + ", sug_kategorie=" + sug_kategorie + ", sug_title=" + sug_title
+				+ ", sug_content=" + sug_content + ", sug_writer=" + sug_writer + ", sug_regdate=" + sug_regdate
+				+ ", sug_nail=" + sug_nail + ", sug_tendency=" + sug_tendency + ", sug_addr=" + sug_addr + ", sug_term="
+				+ sug_term + ", sug_views=" + sug_views + ", sug_push=" + sug_push + ", dib=" + dib + "]";
 	}
 }
