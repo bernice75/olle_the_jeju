@@ -26,12 +26,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.olle.biz.admin.ChatBiz;
+import com.olle.biz.customplan.CustomBiz;
 import com.olle.biz.etc.DateBiz;
+import com.olle.biz.etc.DibBiz;
 import com.olle.biz.etc.HashBiz;
 import com.olle.biz.etc.ImgBiz;
 import com.olle.biz.mypage.MypageBiz;
 import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.ChatMessage;
+import com.olle.dto.etc.DibDto;
 import com.olle.dto.etc.HashtagDto;
 import com.olle.dto.etc.ImgDto;
 import com.olle.dto.member.Criteria;
@@ -146,18 +149,6 @@ public class MypageController {
 		
 	
 	}
-		
-	//회원정보 수정 비밀번호 체크
-	/*
-	 * @RequestMapping(value="info_update.do", method=RequestMethod.GET) public
-	 * String mypage_updateChk(@ModelAttribute MemberDto dto, Model model) { boolean
-	 * result = biz.checkPw(dto.getUser_id(), dto.getUser_pw());
-	 * 
-	 * if(result) { biz.mypageInfoUpdate(dto); //비밀번호 일치 하다면 수정 처리, 리턴으로 페이지 이동은
-	 * 없는것으로 return ""; }else { MemberDto dto2 = biz.mypageInfo(dto.getUser_id());
-	 * model.addAttribute("dto", dto); model.addAttribute("message", "비밀번호 불일치");
-	 * //비밀번호 불일치시 메시지창 띄우고 페이지 이동 없음 return ""; } }
-	 */
 	
 	//회원 강제 탈퇴 - 보류중 / 작업해야함
 	@RequestMapping(value="", method= RequestMethod.POST)
@@ -215,51 +206,13 @@ public class MypageController {
 		List<HashtagDto> hashList = hashbiz.selectList(3);
 		
 		model.addAttribute("hashList", hashList);
-		/*
-		 * logger.info("mypage_plan, plan_writer: " + plan_writer);
-		 * 
-		 * System.out.println("확인"); System.out.println("getPage:::"+cri.getPage());
-		 * System.out.println("getRowEnd:::"+cri.getRowEnd());
-		 * System.out.println("getRowStart:::"+cri.getRowStart());
-		 * 
-		 * //게시글 정보 조회 List<CustomDto> list = new ArrayList<CustomDto>(); list =
-		 * biz.myWriteList(plan_writer, cri);
-		 * 
-		 * //해시태그 조회 CustomDto dto = new CustomDto(); int plan_num = 0; List<HashtagDto>
-		 * hash = new ArrayList<HashtagDto>(); for(int i = 0; i < list.size(); i++) {
-		 * dto.setPlan_num(list.get(i).getPlan_num()); plan_num = dto.getPlan_num();
-		 * hash.add(i, biz.hashList(plan_num)); } //해시태그 형식은 해시1, 해시2 이런 방식이므로 대표 1개의
-		 * 해시태그만 끊어오려면 split을 사용 List<HashtagDto> hashList = new
-		 * ArrayList<HashtagDto>(); for(int i = 0; i < hash.size(); i++) { HashtagDto
-		 * hashTag = new HashtagDto(); hashTag.setHash_num(hash.get(i).getHash_num());
-		 * hashTag.setBoard_num(hash.get(i).getBoard_num());
-		 * hashTag.setTable_num(hash.get(i).getTable_num());
-		 * hashTag.setHash_content(hash.get(i).getHash_content().split(",")[0]);
-		 * hashList.add(i, hashTag); } //찜 조회 List<List<DibDto>> dibList = new
-		 * ArrayList<List<DibDto>>(); for(int i = 0; i < list.size(); i++) {
-		 * dto.setPlan_num(list.get(i).getPlan_num()); plan_num = dto.getPlan_num();
-		 * List<DibDto> dib = biz.myDibList(plan_num); dibList.add(i, dib); }
-		 * 
-		 * 
-		 * for(int i = 0; i < dibList.size(); i++) { for(int j = 0; j <
-		 * dibList.get(i).size(); j++) {
-		 * System.out.println(dibList.get(i).get(j).getTable_num()); } }
-		 * 
-		 * //게시글 정보 if(list.size() > 0) { model.addAttribute("list", list); //해시태그
-		 * if(hashList.size() > 0) { model.addAttribute("tag", hashList); }else {
-		 * model.addAttribute("tag", null); } } else { model.addAttribute("list", null);
-		 * }
-		 * 
-		 * //찜 정보 if(dibList.size() > 0) { model.addAttribute("zzim", dibList); }else {
-		 * model.addAttribute("zzim", null); }
-		 */
 		
 		//페이징
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(biz.listCount());
 		
-		model.addAttribute("pageMaker", pageMaker);
+		model.addAttribute("PageMaker", pageMaker);
 		
 		return "page_mypage/mypage_plan";
 	}

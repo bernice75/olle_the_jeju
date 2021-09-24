@@ -162,16 +162,16 @@ public class MypageDaoImpl implements MypageDao {
 	
 	//신고확인
 	@Override
-	public MemberDto mypageWarn(String user_id) {
+	public int mypageWarn(String user_id) {
 		
-		MemberDto dto = null;
+		int res = 0;
 		
 		try {
-			dto = sqlSession.selectOne(NAMESPACE+"mypageWarn", user_id);
+			res = sqlSession.selectOne(NAMESPACE+"mypageWarn", user_id);
 		} catch (Exception e) {
 			System.out.println("[error] : mypageWarn");
 			e.printStackTrace();
 		}
-		return dto;
+		return res;
 	}
 }

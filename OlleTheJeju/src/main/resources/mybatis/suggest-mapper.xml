@@ -20,25 +20,85 @@
 	</resultMap>
 	
 	<select id="selectList" resultMap="suggestMap">
-
+	<![CDATA[
+		SELECT *    
+		FROM (SELECT ROWNUM AS ROW_NUM, A.* 
+    	    FROM (SELECT * 
+                FROM OLLE_SUGGEST
+                WHERE SUG_KATEGORIE=#{name}
+                ORDER BY SUG_NUM DESC)
+     	   A) 
+		WHERE ROW_NUM<=#{pageN} AND ROW_NUM>#{pageP}]]>
+	</select>
+	<select id="selectListAll" resultMap="suggestMap">
+	<![CDATA[
+		SELECT * 
+		FROM (SELECT ROWNUM AS ROW_NUM, A.* 
+    	    FROM (SELECT * 
+                FROM OLLE_SUGGEST
+                ORDER BY SUG_NUM DESC)
+     	   A) 
+		WHERE ROW_NUM<=#{pageN} AND ROW_NUM>#{pageP}]]>
+	</select>
+	
+	<select id="selectSearch" resultMap="suggestMap">
+		<![CDATA[
+		SELECT *    
+		FROM (SELECT ROWNUM AS ROW_NUM, A.* 
+    	    FROM (SELECT * 
+                FROM OLLE_SUGGEST
+                ORDER BY SUG_NUM DESC)
+     	   A) 
+		WHERE ROW_NUM<=#{pageN} AND ROW_NUM>#{pageP} AND (SUG_TITLE=#{search} OR SUG_CONTENT=#{search})]]>
 	</select>
 	
 	<select id="selectOne" resultType="suggestDto">
-
+		SELECT *
+		FROM OLLE_SUGGEST
+		WHERE SUG_NUM=#{sug_num} 
 	</select>
 	
 	<insert id="insert" parameterType="suggestDto">
 		INSERT INTO OLLE_SUGGEST
-		VALUES()
+		VALUES(SUGSEQ.NEXTVAL, #{sug_kategorie}, #{sug_title}, #{sug_content}, 'admin',SYSDATE,'nail',#{sug_tendency},#{sug_addr},#{sug_term},#{sug_views},#{sug_push})
 	</insert>
 	
 	<update id="update" parameterType="suggestDto">
 		UPDATE OLLE_SUGGEST
-		SET 
+		SET SUG_KATEGORIE=#{sug_kategorie}, SUG_TITLE=#{sug_title}, SUG_CONTENT=#{sug_content}, SUG_TENDENCY=#{sug_tendency}, SUG_ADDR=#{sug_addr}, SUG_TERM=#{sug_term}
+		WHERE SUG_NUM=#{sug_num}
 	</update>
 	
 	<delete id="delete" parameterType="int">
 		DELETE FROM OLLE_SUGGEST
 		WHERE SUG_NUM = #{sug_num}
 	</delete>
+	
+	<select id="count" resultType="int" parameterType="String">
+		SELECT COUNT(*)
+		FROM OLLE_SUGGEST
+		WHERE SUG_KATEGORIE=#{kategorie}
+	</select>
+	
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*)
+		FROM OLLE_SUGGEST
+	</select>
+	
+	<select id="countSearch" resultType="int">
+		SELECT COUNT(*)
+		FROM OLLE_SUGGEST
+		WHERE SUG_TITLE=#{search} OR SUG_CONTENT=#{search}
+	</select>
+	
+	<update id="viewsUpdate" parameterType="int">
+		UPDATE OLLE_SUGGEST
+		SET SUG_VIEWS=(SELECT SUG_VIEWS FROM OLLE_SUGGEST WHERE SUG_NUM=#{sug_num})+1 WHERE SUG_NUM=#{sug_num}
+	</update>
+	
+	<update id="likeUpdate" parameterType="int">
+		UPDATE OLLE_SUGGEST
+		SET SUG_PUSH=(SELECT SUG_PUSH FROM OLLE_SUGGEST WHERE SUG_NUM=#{sug_num})+1 WHERE SUG_NUM=#{sug_num}	
+	</update>
+	
 </mapper>

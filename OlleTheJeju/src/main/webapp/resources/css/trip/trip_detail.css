@@ -111,3 +111,6 @@
     width: 70px;
     margin-left: 25px;
 }
+#pText:hover{
+	cursor: pointer;
+}

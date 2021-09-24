@@ -12,14 +12,16 @@ public class TripDto {
 	private String trip_nail;
 	private String trip_addr;
 	private String trip_phone;
-	private int views;
+	private String trip_detail;
+	private int trip_views;
 	private int trip_push;
-	
+	private int dib;
 	public TripDto() {
 		super();
 	}
 	public TripDto(int trip_num, String trip_kategorie, String trip_title, String trip_content, String trip_writer,
-			Date trip_regdate, String trip_nail, String trip_addr, String trip_phone, int views, int trip_push) {
+			Date trip_regdate, String trip_nail, String trip_addr, String trip_phone, String trip_detail, int trip_views,
+			int trip_push) {
 		super();
 		this.trip_num = trip_num;
 		this.trip_kategorie = trip_kategorie;
@@ -30,10 +32,36 @@ public class TripDto {
 		this.trip_nail = trip_nail;
 		this.trip_addr = trip_addr;
 		this.trip_phone = trip_phone;
-		this.views = views;
+		this.trip_detail = trip_detail;
+		this.trip_views = trip_views;
 		this.trip_push = trip_push;
 	}
 	
+	public TripDto(int trip_num, String trip_kategorie, String trip_title, String trip_content, String trip_writer,
+			Date trip_regdate, String trip_nail, String trip_addr, String trip_phone, String trip_detail,
+			int trip_views, int trip_push, int dib) {
+		super();
+		this.trip_num = trip_num;
+		this.trip_kategorie = trip_kategorie;
+		this.trip_title = trip_title;
+		this.trip_content = trip_content;
+		this.trip_writer = trip_writer;
+		this.trip_regdate = trip_regdate;
+		this.trip_nail = trip_nail;
+		this.trip_addr = trip_addr;
+		this.trip_phone = trip_phone;
+		this.trip_detail = trip_detail;
+		this.trip_views = trip_views;
+		this.trip_push = trip_push;
+		this.dib = dib;
+	}
+	
+	public int getDib() {
+		return dib;
+	}
+	public void setDib(int dib) {
+		this.dib = dib;
+	}
 	public int getTrip_num() {
 		return trip_num;
 	}
@@ -88,16 +116,29 @@ public class TripDto {
 	public void setTrip_phone(String trip_phone) {
 		this.trip_phone = trip_phone;
 	}
-	public int getViews() {
-		return views;
+	public String getTrip_detail() {
+		return trip_detail;
 	}
-	public void setViews(int views) {
-		this.views = views;
+	public void setTrip_detail(String trip_detail) {
+		this.trip_detail = trip_detail;
 	}
 	public int getTrip_push() {
 		return trip_push;
 	}
 	public void setTrip_push(int trip_push) {
 		this.trip_push = trip_push;
+	}
+	public int getTrip_views() {
+		return trip_views;
+	}
+	public void setTrip_views(int trip_views) {
+		this.trip_views = trip_views;
+	}
+	@Override
+	public String toString() {
+		return "TripDto [trip_num=" + trip_num + ", trip_kategorie=" + trip_kategorie + ", trip_title=" + trip_title
+				+ ", trip_content=" + trip_content + ", trip_writer=" + trip_writer + ", trip_regdate=" + trip_regdate
+				+ ", trip_nail=" + trip_nail + ", trip_addr=" + trip_addr + ", trip_phone=" + trip_phone
+				+ ", trip_detail=" + trip_detail + ", trip_views=" + trip_views + ", trip_push=" + trip_push + "]";
 	}
 }

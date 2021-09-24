@@ -124,10 +124,10 @@
 	    		//엔터 누르면 메세지 전송되도록 설정
 				document.addEventListener("keypress", function(e){
 					if(e.keyCode == 13){
-						var option ={
+						var option = {
 		    				type: "message",
-		    				room_id : `${sessionScope.user_id}`,DBWJ
-		    				from_user : `${sessionScope.user_id}`,
+		    				room_id : ${sessionScope.user_id},
+		    				from_user : ${sessionScope.user_id},
 		    				to_user : "admin",
 		    				msg : $("#msg").val()
 		    			}
