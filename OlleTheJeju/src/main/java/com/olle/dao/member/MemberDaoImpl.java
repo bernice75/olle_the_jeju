@@ -107,4 +107,14 @@ public class MemberDaoImpl implements MemberDao {
 	public int warn_update(String user_id) {
 		return sqlSession.update(NAMESPACE + "warn_update", user_id);
 	}
+
+	@Override
+	public String findId(String user_email) {
+		return sqlSession.selectOne(NAMESPACE + "findId", user_email);
+	}
+
+	@Override
+	public String findPw(String user_id) {
+		return sqlSession.selectOne(NAMESPACE + "findPw", user_id);
+	}
 }

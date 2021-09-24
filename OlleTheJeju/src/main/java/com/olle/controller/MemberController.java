@@ -11,7 +11,15 @@ import com.olle.biz.member.MemberBiz;
 import com.olle.dto.member.MemberDto;
 
 import java.io.IOException;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -63,6 +71,116 @@ public class MemberController {
 			}
 		}
 		
+		return res;
+	}
+	
+	@RequestMapping(value = "findId.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String findId(String user_email) {
+		String res = null;
+		String user_id = memberBiz.findId(user_email);
+		if(user_id == "" || user_id == null) {
+			res = null;
+		} else {
+			//메일 서버 생성
+			String host = "smtp.naver.com";
+			final String user = ""; // 자신의 네이버 계정('@naver.com'은 적지 말 것)
+			final String password = "";// 자신의 네이버 패스워드
+			int port = 465;
+			// 메일 받을 주소
+			System.out.println("user_email: " + user_email);
+			
+			// SMTP 서버 정보를 설정
+			Properties props = System.getProperties();
+			props.put("mail.smtp.host", host);
+			props.put("mail.smtp.port", port);
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.ssl.enable", "true");
+			props.put("mail.smtp.ssl.trust", host);
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.debug", "true");
+			
+			Session e_session = Session.getDefaultInstance(props, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(user, password);
+				}
+			});
+			
+			// email 전송
+			try {
+				MimeMessage msg = new MimeMessage(e_session);
+				msg.setFrom(new InternetAddress(user + "@naver.com", "OLLE THE JEJU"));
+				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(user_email));
+
+				// 메일 제목
+				msg.setSubject("안녕하세요.  OLLE THE JEJU 인증 메일입니다.");
+				// 메일 내용
+				msg.setText("회원님의 id는 " + user_id + "입니다.");
+
+				Transport.send(msg);
+				res = "success";
+				System.out.println("이메일 전송 완료");
+
+			} catch (Exception e) {
+				res = "error";
+				e.printStackTrace();
+			}
+		}
+		return res;
+	}
+	
+	@RequestMapping(value = "findPw.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String findPw(String user_id, String user_email) {
+		String res = null;
+		String user_pw = memberBiz.findPw(user_id);
+		if(user_pw == "" || user_pw == null) {
+			res = null;
+		} else {
+			//메일 서버 생성
+			String host = "smtp.naver.com";
+			final String user = ""; // 자신의 네이버 계정('@naver.com'은 적지 말 것)
+			final String password = "";// 자신의 네이버 패스워드
+			int port = 465;
+			// 메일 받을 주소
+			System.out.println("user_email: " + user_email);
+			
+			// SMTP 서버 정보를 설정
+			Properties props = System.getProperties();
+			props.put("mail.smtp.host", host);
+			props.put("mail.smtp.port", port);
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.ssl.enable", "true");
+			props.put("mail.smtp.ssl.trust", host);
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.debug", "true");
+			
+			Session e_session = Session.getDefaultInstance(props, new Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(user, password);
+				}
+			});
+			
+			// email 전송
+			try {
+				MimeMessage msg = new MimeMessage(e_session);
+				msg.setFrom(new InternetAddress(user + "@naver.com", "OLLE THE JEJU"));
+				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(user_email));
+
+				// 메일 제목
+				msg.setSubject("안녕하세요.  OLLE THE JEJU 인증 메일입니다.");
+				// 메일 내용
+				msg.setText("회원님의 pw는 " + user_pw + "입니다.");
+
+				Transport.send(msg);
+				res = "success";
+				System.out.println("이메일 전송 완료");
+
+			} catch (Exception e) {
+				res = "error";
+				e.printStackTrace();
+			}
+		}
 		return res;
 	}
 	
