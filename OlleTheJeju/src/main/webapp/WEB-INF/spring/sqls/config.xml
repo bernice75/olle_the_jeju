@@ -15,6 +15,8 @@
 		<typeAlias type="com.olle.dto.jejusituation.MenuDto" alias="menuDto"/>
 		<typeAlias type="com.olle.dto.trip.TripDto" alias="tripDto"/>
 		<typeAlias type="com.olle.dto.etc.ImgDto" alias="imgDto"/>
+		<typeAlias type="com.olle.mapper.MenuMapper" alias="menuMapper"/>
+		<typeAlias type="com.olle.dto.pagination.JejuPage" alias="jejuPageDto"/>
 		<typeAlias type="com.olle.dto.suggest.SuggestDto" alias="suggestDto"/>
 		<typeAlias type="com.olle.dto.etc.HashtagDto" alias="hashtagDto"/>
 		<typeAlias type="com.olle.dto.etc.DibDto" alias="dibDto"/>

@@ -1,10 +1,10 @@
 package com.olle.dao.jejusituation;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import com.olle.dto.jejusituation.CoronaDto;
@@ -21,6 +21,14 @@ public class CoronaDaoImpl implements CoronaDao{
 		// TODO Auto-generated method stub
 		int merge=session.update(NAMESPACE+"merge",list);
 		System.out.println("merge corona result: "+merge);
+	}
+
+
+	@Override
+	public List<HashMap<String,String>> coronaList() {
+		// TODO Auto-generated method stub
+		List<HashMap<String,String>> list=session.selectList(NAMESPACE+"coronaList");
+		return list;
 	}
 
 }

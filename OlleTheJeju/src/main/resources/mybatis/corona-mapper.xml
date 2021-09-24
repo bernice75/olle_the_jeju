@@ -19,7 +19,18 @@
   		<result property="overFlowCnt" column="OVERFLOW_CNT"/>
   		<result property="qurRate" column="QUR_RATE"/>
   	</resultMap>
-  	
+  	<resultMap id="pickedCoronaDto" type="pickedCoronaDto">
+	<result property="date" column="X"/>
+	<result property="defCnt" column="DEF_CNT"/>
+  	</resultMap>
+  	<!-- 코로나 데이터 구간별 조회 -->
+  	<select id="coronaList" resultType="java.util.HashMap">
+  		SELECT A.*
+		FROM 
+			(SELECT TO_DATE(SUBSTR(CREATE_DT,0,10),'YYYY-MM-DD') AS X, DEF_CNT
+			FROM OLLE_CORONA) A
+		WHERE A. X BETWEEN SYSDATE-7 AND SYSDATE
+  	</select>
   	<!-- insert or update -->
   	<update id="merge" parameterType="java.util.List">
   	<selectKey  resultType="long" keyProperty="seq" order="BEFORE">

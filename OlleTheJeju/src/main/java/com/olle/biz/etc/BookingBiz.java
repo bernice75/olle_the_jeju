@@ -7,4 +7,5 @@ public interface BookingBiz {
 	int preCheckPeople(BookingDto dto);
 	//인원수 체크 결과에 따른 insert
 	int reservation(BookingDto dto);
+
 }

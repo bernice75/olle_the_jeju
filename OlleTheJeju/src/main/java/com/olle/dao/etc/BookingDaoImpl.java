@@ -8,13 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.olle.dto.etc.BookingDto;
 
 @Repository
-public class BookingDaoImpl implements BookingDao {
+public class BookingDaoImpl implements BookingDao{
+
 	@Autowired
-	private SqlSessionTemplate sqlSession;
+	private SqlSessionTemplate session;
 	
 	@Override
 	public int preCheckPeople(BookingDto dto) {
-		int res=sqlSession.selectOne(NAMESPACE+"limit",dto);
+		// TODO Auto-generated method stub
+		int res=session.selectOne(NAMESPACE+"limit",dto);
 		System.out.println("res: "+res);
 		return res;
 	}
@@ -22,14 +24,16 @@ public class BookingDaoImpl implements BookingDao {
 	@Transactional
 	@Override
 	public int reservation(BookingDto dto) {
+		// TODO Auto-generated method stub
 		int r1=preCheckPeople(dto);
 		System.out.println("BookingDao check people before reservation: "+r1);
 		int res=0;
 		
 		if(r1<30) {
-			res=sqlSession.insert(NAMESPACE+"insert",dto);
+			res=session.insert(NAMESPACE+"insert",dto);
 		}
 		
 		return res;
 	}
+
 }

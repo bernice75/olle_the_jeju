@@ -10,6 +10,7 @@ public class PaginationIdxes {
 	
 	public PaginationIdxes() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 
@@ -61,8 +62,13 @@ public class PaginationIdxes {
 		this.keyword = keyword;
 	}
 
+
 	@Override
 	public String toString() {
-		return "PaginationIdxes [startIdx=" + startIdx + ", endIdx=" + endIdx + ", situ_gubun=" + situ_gubun + "]";
+		return "PaginationIdxes [startIdx=" + startIdx + ", endIdx=" + endIdx + ", situ_gubun=" + situ_gubun
+				+ ", keyword=" + keyword + "]";
 	}
+
+
+
 }

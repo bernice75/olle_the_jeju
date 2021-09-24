@@ -76,4 +76,11 @@ public class BookingDto {
 	public void setBook_content(String book_content) {
 		this.book_content = book_content;
 	}
+	@Override
+	public String toString() {
+		return "BookingDto [book_num=" + book_num + ", situ_num=" + situ_num + ", book_name=" + book_name
+				+ ", book_people=" + book_people + ", book_regdate=" + book_regdate + ", book_time=" + book_time
+				+ ", book_phone=" + book_phone + ", book_content=" + book_content + "]";
+	}
+	
 }

@@ -14,11 +14,8 @@
 		<result property="situ_open_time" column="SITU_OPEN_TIME"/>
 		<result property="situ_close_time" column="SITU_CLOSE_TIME"/>
 		<result property="situ_gubun" column="SITU_GUBUN"/>
+<!-- 		<collection property="menuList" resultMap="menu.menuUnit"></collection> -->
 	</resultMap>
-	
-	<select id="selectList" parameterType="int" resultMap="jejuMap">
-	
-	</select>
 	
 	<select id="selectOne" parameterType="int" resultType="jejuDto">
 	  SELECT SITU_NUM,SITU_NAME,SITU_WRITER,SITU_REGDATE,SITU_PHONE,
@@ -56,7 +53,6 @@
 			)B
 			WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
 	</select>
-	
 	<!--주소 조건 페이징 조회 -->
 	<!-- 갯수 카운트 -->
 	<select id="countForKeywordPaging" parameterType="String" resultType="int">
@@ -77,7 +73,6 @@
 		)B
 		WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
 	</select>
-	
 	<!-- 구분    조건 페이징 조회 -->
 	<select id="storeGubunPagination" parameterType="paginationIdxDto" resultType="jejuDto">
 		SELECT B.*
@@ -93,7 +88,6 @@
 		)B
 		WHERE B.RN BETWEEN #{startIdx} AND #{endIdx}
 	</select>
-	
 	<insert id="insertSit" parameterType="jejuDto">
 		<selectKey resultType="int" keyProperty="situ_num" order="BEFORE">
 		  SELECT (NVL2(MAX(SITU_NUM)+1,MAX(SITU_NUM)+1,1)) AS PRI  FROM OLLE_SITUATION
@@ -101,11 +95,8 @@
 		INSERT INTO OLLE_SITUATION(SITU_NUM,SITU_NAME,SITU_WRITER,SITU_PHONE,SITU_ADDR,SITU_OPEN_TIME,SITU_CLOSE_TIME,SITU_GUBUN)
 		VALUES(#{situ_num},#{situ_name},#{situ_writer},#{situ_phone},#{situ_addr},#{situ_open_time},#{situ_close_time},#{situ_gubun})
 	</insert>
+
 	
-	<update id="update" parameterType="jejuDto">
-		UPDATE OLLE_SITUATION
-		SET 
-	</update>
 	
 	<delete id="delete" parameterType="int">
 		DELETE FROM OLLE_SITUATION

@@ -1,3 +1,4 @@
+
 @font-face {
     font-family: 'cafe24_ddh';
     src: url('../../font/Cafe24Dangdanghae.ttf');
@@ -49,7 +50,7 @@ body {
     grid-gap: 40px;
     padding-left: 40px;
     padding-right: 40px;
-    height: 250px;
+    height: 150px;
     justify-content: center;
 }
 .nail1 {
@@ -59,6 +60,9 @@ body {
     border:2px solid black;
     border-radius:5px;
     color: black;
+}
+.nail1 img{
+	width:50px;
 }
 .nail2 {
     grid-column-start: 2;
@@ -122,4 +126,5 @@ body {
 .my-modal iframe{
     width: 800px;
     height: 730px;
+
 }
