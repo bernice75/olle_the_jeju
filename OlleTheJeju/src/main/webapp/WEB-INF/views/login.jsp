@@ -51,10 +51,44 @@
                         	<a type="button" class="btn-u btn-u-lg" onclick="loginForm();">로그인</a>
                         	<a type="button" class="btn-u btn-u-lg" onclick="location.href='joinForm.do'">회원가입</a>
                             <br><br>
-                            <a href="" class="find">아이디 비밀번호 찾기</a>
+                            <p class="find" style="text-decoration: underline; cursor: help;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">아이디/비밀번호 찾기</p>
                         </div>
                     </fieldset>
                 </form>
+                <!-- Modal 시작 -->
+				<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			        <div class="modal-dialog">
+				        <div class="modal-content">
+				            <div class="modal-header">
+					            <h5 class="modal-title" id="staticBackdropLabel">아이디, 비밀번호 찾기</h5>
+					            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				            </div>
+				            <div class="modal-body chatMiddle">
+				            	<h6>아이디 찾기</h6>
+				            	<div class="input-group mb-3">
+									<input type="email" class="form-control user_email1" placeholder="이메일을 입력해주세요." aria-label="이메일을 입력해주세요." aria-describedby="button-addon2">
+									<button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="findId();">전송</button>
+									<br>
+								</div>
+				            	<p class="findid" style="display: none; color: red;">이메일이 전송되었습니다. 확인해주세요.</p>
+				            	<br><hr><br>
+				            	<h6>비밀번호 찾기</h6>
+				            	<input type="text" class="form-control user_id" placeholder="아이디를 입력해주세요.">
+				            	<br>
+				            	<div class="input-group mb-3">
+									<input type="email" class="form-control user_email2" placeholder="이메일을 입력해주세요." aria-label="이메일을 입력해주세요." aria-describedby="button-addon2">
+									<button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="findPw();">전송</button>
+									<br>
+								</div>
+								<p class="findpw" style="display: none; color: red;">이메일이 전송되었습니다.</p>
+			                </div>
+			                <div class="modal-footer">
+			                    <button type="button" class="btn btn-secondary" id="send">전송</button>
+			                </div>
+				        </div>
+			        </div>
+			    </div>
+			    <!-- Modal 끝-->
             </div>
 			<jsp:include page="include/footer.jsp"></jsp:include>
 		</div>
