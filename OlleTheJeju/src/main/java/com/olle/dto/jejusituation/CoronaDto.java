@@ -123,4 +123,13 @@ public class CoronaDto {
 	public void setStdDay(String stdDay) {
 		this.stdDay = stdDay;
 	}
+	@Override
+	public String toString() {
+		return "CoronaDto [createDt=" + createDt + ", updateDt=" + updateDt + ", deathCnt=" + deathCnt + ", defCnt="
+				+ defCnt + ", gubun=" + gubun + ", gubunCn=" + gubunCn + ", gubunEn=" + gubunEn + ", incDec=" + incDec
+				+ ", isolClearCnt=" + isolClearCnt + ", localOccCnt=" + localOccCnt + ", overFlowCnt=" + overFlowCnt
+				+ ", qurRate=" + qurRate + ", seq=" + seq + ", stdDay=" + stdDay + "]";
+	}
+	
+	
 }
