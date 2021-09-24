@@ -46,7 +46,8 @@
 	
 	<update id="update" parameterType="hashtagDto">
 		UPDATE OLLE_HASHTAG
-		SET 
+		SET HASH_CONTENT = #{hash_content}
+		WHERE HASH_NUM = #{hash_num}
 	</update>
 	
 	<delete id="delete" parameterType="int">

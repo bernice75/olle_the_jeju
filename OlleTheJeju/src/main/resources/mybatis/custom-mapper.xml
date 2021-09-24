@@ -95,9 +95,10 @@
 		VALUES(#{plan_num}, #{plan_title}, #{plan_content}, #{plan_writer}, SYSDATE, #{plan_tendency}, #{plan_term}, 0, 0, 0)
 	</insert>
 	
-	<update id="update" parameterType="customDto">
+	<update id="cusUpdate" parameterType="customDto">
 		UPDATE OLLE_PLAN
-		SET 
+		SET PLAN_TITLE =#{plan_title} ,PLAN_CONTENT= #{plan_content}, PLAN_TENDENCY = #{plan_tendency}, PLAN_TERM = #{plan_term}
+		WHERE PLAN_NUM = #{plan_num}
 	</update>
 	
 	<update id="update_hide" parameterType="int">

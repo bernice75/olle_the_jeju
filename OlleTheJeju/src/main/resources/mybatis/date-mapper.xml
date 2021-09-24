@@ -21,6 +21,12 @@
 		FROM OLLE_DATE
 	</select>
 	
+	<select id="count" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM OLLE_DATE
+		WHERE TABLE_NUM = #{plan_num}
+	</select>
+	
 	<!-- 나만의 일정 디테일 list -->
 	<select id="selectList" resultMap="dateMap" parameterType="int">
 		SELECT * FROM OLLE_DATE

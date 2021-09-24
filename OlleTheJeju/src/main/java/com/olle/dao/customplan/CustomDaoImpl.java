@@ -57,11 +57,6 @@ public class CustomDaoImpl implements CustomDao{
 
 		return res;
 	}
-
-	@Override
-	public int update(CustomDto dto) {
-		return 0;
-	}
 	
 	@Override
 	public int updateView(int plan_num) {
@@ -116,5 +111,20 @@ public class CustomDaoImpl implements CustomDao{
 		}
 		
 		return cnt;
+	}
+	
+	@Override
+	public int cusUpdate(CustomDto dto) {
+
+		int res = 0;
+		
+		try {
+			res = sqlSession.update(NAMESPACE + "cusUpdate", dto);
+		} catch (Exception e) {
+			System.out.println("[error] : 나만의 일정 글 수정 실패");
+			e.printStackTrace();
+		}
+		
+		return res;
 	}
 }

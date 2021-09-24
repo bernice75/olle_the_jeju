@@ -122,6 +122,32 @@
 				}
 				markers = [];
 			}
+			
+			//유효성 검사
+/* 			$(document).ready(function(){
+				$("#btn1").attr("disabled",true);
+			    // 라디오버튼 클릭시 이벤트 발생
+			    $("input[name=tend_content]").click(function(){
+			        if($("input[name=tend_content]:checked").val() != ""){
+			            $("#btn1").attr("disabled",false);
+			            // 성향 버튼의 value 값이 null이 아니라면 활성화
+			        }
+			    }); */
+			
+				function updateChk(){
+			    	alert("일정을 수정합니다.");
+					if($(".btn-check").val() == ""){
+						alert("성향을 체크해주세요");
+						$(".btn-check").focus();
+						return false;
+					}
+					
+					return true;
+				}
+			
+			
+/* 			}); */
+
         </script>
 	</head>
 	<body onload="initTmap()">
@@ -134,24 +160,27 @@
                     <p style="font-family: 'cafe24_sph'; font-size: 18px;">세계적으로 유명한 유네스코 자연유산과 세계지질공원 등을 직접 찾아가보는 여행코스는 남다른 의미가 있습니다!<br>
                         당일 여행부터 4일 이상의 여행까지,<br>
                         개인의 취향과 시간에 맞게 다양한 여행 일정을 계획해 더욱 즐거운 제주도 여행을 경험하세요!</p><br><br>
-                    <h2>사진 첨부 및 게시글 등록</h2>
-                    </p>
+                    <h2>사진 첨부 및 게시글  수정</h2>
                 </div>
                 <br>
-                <form action="customplan_insert.do" method="post" enctype="multipart/form-data">
+                <form action="customplan_update.do" method="post" enctype="multipart/form-data">
+                	<input type="hidden" name="plan_num" value="${CustomDto.plan_num}">
                 	<input type="hidden" name="plan_writer" value="${sessionScope.user_id }">
                     <div class="main-place">
                         <div id="carouselExampleFade" class="carousel slide carousel-fade slider" data-bs-ride="carousel">
                             <div class="carousel-inner imgs">
-                                <div class="carousel-item active">
-                                    <img class="d-block w-100" alt="...">
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="d-block w-100" alt="...">
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="d-block w-100" alt="...">
-                                </div>
+                               <c:choose>
+		                            <c:when test="${empty ImgDto} ">
+		                            
+		                            </c:when>
+		                            	<c:otherwise>
+		                            	<c:forEach var="img" items="${ImgDto}">
+			                            	<div class="carousel-item active">
+			                                	<img src="./resources/plan/${img.img_title}" class="d-block w-100" alt="...">
+			                            	</div>
+		                            	</c:forEach>
+		                            </c:otherwise>
+		                        </c:choose>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -166,15 +195,16 @@
                             <fieldset>
                                 <section>
                                     <label for="sug_title">제목 : </label>
-                                    <input type="text" class="form-control" name="plan_title">
+                                    <input type="text" class="form-control" name="plan_title" value="${CustomDto.plan_title }">
                                 </section>
                                 <section>
                                     <label for="sug_content">내용 : </label>
-                                    <textarea rows="10" cols="40" class="form-control" name="plan_content"></textarea>
+                                    <textarea rows="10" cols="40" class="form-control" name="plan_content">${CustomDto.plan_content }</textarea>
                                 </section>
                                 <section>
                                     <label for="plan_term" style="margin-right: 90px;">시작일 : <input type="date" id="plan_term" class="form-control plan_term_start" name="plan_term_start"></label>
                                     <label for="plan_term">마감일 : <input type="date" class="form-control plan_term_end" name="plan_term_end" onchange="date();"></label>
+                                    <input type="hidden" name="plan_term" value="${CustomDto.plan_term }">
                                 </section>
                                 <section>
                                     <label for="tendency">성향 : </label>
@@ -198,8 +228,9 @@
                                 </section>
                                 <section>
                                     <label for="hash_content">해시태그 : </label>
-                                    <input type="text" class="form-control" id="hashtag" placeholder="콤마(,)로 구분" onchange="hash();">
+                                    <input type="text" class="form-control" id="hashtag" placeholder="콤마(,)로 구분" onchange="hash();" value="${HashDto.hash_content }">
                                     <input type="hidden" class="form-control hashtag" name="hash_content">
+                                    <input type="hidden" class="form-control hashNum" name="hash_num" value="${HashDto.hash_num }">
                                     <div class="hash_inner"></div>
                                 </section>
                             </fieldset>
@@ -222,13 +253,38 @@
                         <hr class="line">
                         <div class="main-second">
                             <div id="map_div"></div>
-                            <div class="map_list"></div>
+                            <div class="map_list">
+                            
+                            <c:choose>
+                        	<c:when test="${empty DateDto }">
+                        		
+                        	</c:when>
+                        	<c:otherwise>
+                        		<c:forEach var="date" items="${DateDto }">
+                        			<div class=list_inner>
+				                        <p class=list_title ><b>1. 코스명</b></p>
+				                        <p class=list_title><input type=text value= "${date.date_name }" style=width:200px readonly=readonly></p>
+				                        <p class=list_addr><b>2. 주소</b></p>
+				                        <p class=list_addr><input type=text value= "${date.date_addr }" style=width:200px readonly=readonly></p>
+				                        <p class=list_phone><b>3. 전화번호</b></p>
+				                        <p class=list_phone><input type=text value= "${date.date_phone }" style=width:200px readonly=readonly></p>
+	                    			</div>
+                        			<input type="hidden" id="date_lat" value="${date.date_lat }">
+                        			<input type="hidden" id="date_lon" value="${date.date_lon }">
+                        			<input type="hidden" id="date_name" value="${date.date_name }">
+                        			<input type="hidden" id="date_addr" value="${date.date_addr }">
+                        			<input type="hidden" id="date_phone" value="${date.date_phone }">
+                        		</c:forEach>
+                        	</c:otherwise>
+                        </c:choose>
+                            
+                            </div>
                         </div>
                     </div>
                     <br><br>
                     <div class="bottom-btn-group2">
-                        <input id="btn1" type="submit" class="btn btn-primary" value="등록" onclick="">
-                        <input id="btn2" type="button" class="btn btn-secondary" value="취소" onclick="location.href='customplan_main.do'">
+                        <input id="btn1" type="submit" class="btn btn-primary" value="수정" onclick="return updateChk();">
+                        <input id="btn2" type="button" class="btn btn-secondary" value="취소" onclick="location.href='customplan_detail.do?plan_num=${CustomDto.plan_num}'">
                     </div>
                 </form>
                 <br><br>

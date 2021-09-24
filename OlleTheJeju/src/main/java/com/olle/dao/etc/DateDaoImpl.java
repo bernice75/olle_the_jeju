@@ -66,4 +66,9 @@ public class DateDaoImpl implements DateDao {
 		
 		return res;
 	}
+
+	@Override
+	public int count(int plan_num) {
+		return sqlSession.selectOne(NAMESPACE + "count", plan_num);
+	}
 }
