@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="corona">
+  	<resultMap type="coronaDto" id="coronaMap">
+  		<result property="seq" column="SEQ"/>
+  		<result property="createDt" column="CREATE_DT"/>
+  		<result property="updateDt" column="UPDATE_DT"/>
+  		<result property="stdDay" column="STD_DAY"/>
+  		<result property="deathCnt" column="DEATH_CNT"/>
+  		<result property="defCnt" column="DEF_CNT"/>
+  		<result property="gubun" column="GUBUN"/>
+  		<result property="gubunCn" column="GUBUN_CN"/>
+  		<result property="gubunEn" column="GUBUN_EN"/>
+  		<result property="incDec" column="INC_DEC"/>
+  		<result property="isolClearCnt" column="ISOL_CLEAR_CNT"/>
+  		<result property="localOccCnt" column="LOCAL_OCC_CNT"/>
+  		<result property="overFlowCnt" column="OVERFLOW_CNT"/>
+  		<result property="qurRate" column="QUR_RATE"/>
+  	</resultMap>
+  	
+  	<!-- insert or update -->
+  	<update id="merge" parameterType="java.util.List">
+  	<selectKey  resultType="long" keyProperty="seq" order="BEFORE">
+  	SELECT NVL2(MAX(SEQ)+1, MAX(SEQ)+1,1) AS PRI FROM OLLE_CORONA
+  	</selectKey>
+  	  	MERGE INTO OLLE_CORONA C
+  		USING (
+  		<foreach collection="list" item="item" open="" close="" separator="UNION" index="idx">
+  		        SELECT
+					#{seq}+#{idx} as seq,
+					#{item.createDt} as createDt,
+  				 	#{item.updateDt} as updateDt,
+  				 	#{item.stdDay} as stdDay,
+  			 		#{item.deathCnt} as deathCnt,
+  			 		#{item.defCnt} as defCnt,	
+  			 		#{item.gubun} as gubun,
+  			 		#{item.gubunCn} as gubunCn,
+  			 		#{item.gubunEn} as gubunEn,
+  			 		#{item.incDec} as incDec,
+  			 		#{item.isolClearCnt} as isolClearCnt,
+  			 		#{item.localOccCnt} as localOccCnt,
+  			 		#{item.overFlowCnt} as  overFlowCnt,
+  			 		#{item.qurRate} as qurRate
+  			 	FROM DUAL	
+  		</foreach>
+  			 ) T
+  			 ON(C.CREATE_DT=T.createDt)
+  			 WHEN MATCHED THEN
+  			 UPDATE SET
+  			 	C.SEQ=T.seq,
+  			 	C.UPDATE_DT=T.updateDt,
+  			 	C.STD_DAY=T.stdDay,
+  			 	C.DEATH_CNT=T.deathCnt,
+  			 	C.DEF_CNT=T.defCnt,
+  			 	C.GUBUN=T.gubun,
+  			 	C.GUBUN_CN=T.gubunCn,
+  			 	C.GUBUN_EN=T.gubunEn,
+  			 	C.INC_DEC=T.incDec,
+  			 	C.ISOL_CLEAR_CNT=T.isolClearCnt,
+  			 	C.LOCAL_OCC_CNT=T.localOccCnt,
+  			 	C.OVERFLOW_CNT=T.overFlowCnt,
+  			 	C.QUR_RATE=T.qurRate
+  			 WHEN NOT MATCHED THEN
+  			 INSERT(
+  			 	SEQ,CREATE_DT,UPDATE_DT,STD_DAY,DEATH_CNT,DEF_CNT,GUBUN,GUBUN_CN,GUBUN_EN,
+  			 	INC_DEC,ISOL_CLEAR_CNT,LOCAL_OCC_CNT,OVERFLOW_CNT,QUR_RATE
+  			 )
+  			 VALUES(
+  			 	T.seq,T.createDt,T.updateDt,T.stdDay,T.deathCnt,T.defCnt,
+  			 	T.gubun,T.gubunCn,T.gubunEn,T.incDec,T.isolClearCnt,T.localOccCnt,
+  			 	T.overFlowCnt,T.qurRate
+  			 )
+  	</update>
+  	
+  </mapper>

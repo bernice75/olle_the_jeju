@@ -30,19 +30,19 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.olle.biz.etc.BookingBiz;
 import com.olle.biz.etc.ImgBiz;
+import com.olle.biz.jejusituation.CoronaBiz;
 import com.olle.biz.jejusituation.JejuBiz;
 import com.olle.biz.jejusituation.menu.MenuBiz;
 import com.olle.biz.member.MemberBiz;
 import com.olle.biz.pagination.JejuPageBiz;
 import com.olle.dto.etc.BookingDto;
 import com.olle.dto.etc.ImgDto;
-import com.olle.dto.jejusituation.CoronaDto;
 import com.olle.dto.jejusituation.JejuDto;
 import com.olle.dto.jejusituation.MenuDto;
 import com.olle.dto.jejusituation.ReservationRequest;
 import com.olle.dto.member.MemberDto;
 import com.olle.dto.pagination.JejuPage;
-import com.olle.mapper.MenuBatchService;
+import com.olle.mapper.biz.MenuBatchService;
 
 @Controller
 public class JejusituationController {
@@ -61,7 +61,8 @@ public class JejusituationController {
 	private MenuBatchService mBatchService;
 	@Autowired
 	private BookingBiz bookingBiz;
-
+	@Autowired
+	private CoronaBiz cBiz;
 
 	
 	private static Logger logger=LoggerFactory.getLogger(JejusituationController.class);
@@ -140,6 +141,7 @@ public class JejusituationController {
 		//가게들에 대한 메뉴정보
 		int mStartIdx=36*page-35;
 		logger.info("menuList startIdx: {}",mStartIdx);
+	//	List<MenuDto> menuList=menuBiz.getPageMenuList(mStartIdx, page);
 		//이미지에 대한 정보
 		List<ImgDto> imgList=pBiz.getImgElementsPerPage(indexes[0], indexes[1], page);
 		
@@ -155,6 +157,7 @@ public class JejusituationController {
 		
 		logger.info("defaultPage-jeju:{}",jeju);
 		logger.info("jejusize: {}",jeju.size());
+	//	logger.info("defaultPage-menuList:{}",menuList);
 		logger.info("defaultPage-img:{}",imgList);
 		//model에 6개를 뽑아서 전달하기
 		//그런데 그 전에 몇 개가 그 페이지에 들어가는지 확인해야 할 것
@@ -239,6 +242,7 @@ public class JejusituationController {
 		//가게들에 대한 메뉴정보
 		int mStartIdx=36*page-35;
 		logger.info("menuList startIdx: {}",mStartIdx);
+	//	List<MenuDto> menuList=menuBiz.getPageMenuList(mStartIdx, page);
 		//이미지에 대한 정보
 		List<ImgDto> imgList=pBiz.getImgElementsByGubun(gubun, indexes[0],indexes[1], page);
 		
@@ -341,6 +345,7 @@ public class JejusituationController {
 		//가게들에 대한 메뉴정보
 		int mStartIdx=36*page-35;
 		logger.info("menuList startIdx: {}",mStartIdx);
+	//	List<MenuDto> menuList=menuBiz.getPageMenuList(mStartIdx, page);
 		//이미지에 대한 정보
 		List<ImgDto> imgList=pBiz.getStoreImgElementsByKeyword(keyword, indexes[0],indexes[1], page);
 		
@@ -419,8 +424,8 @@ public class JejusituationController {
 	}
 	
 	//예약요청
-	@RequestMapping(value="/jejusituation_reservation.do",method=RequestMethod.POST)
 	@ResponseBody
+	@RequestMapping(value="/jejusituation_reservation.do",method=RequestMethod.POST)
 	public Map<String,String> jejusituation_reservation(@RequestBody ReservationRequest req) throws ParseException {
 		Map<String,String> response=new HashMap<String,String>();
 		BookingDto booking=new BookingDto();
@@ -437,8 +442,13 @@ public class JejusituationController {
 		booking.setBook_content(req.getRequire().trim());
 		booking.setBook_phone(req.getPhone().trim());
 		
+		/*
+		 * StoreStatus store=new StoreStatus(); store.setSitu_num(req.getSitu_num());
+		 * store.setTime_range(req.getTime());
+		 */
 		logger.info("request:{}",req);
 		logger.info("booking req:{}",booking);
+	//	logger.info("store status :{}",store);
 		
 		
 		int res=bookingBiz.reservation(booking);
@@ -471,16 +481,21 @@ public class JejusituationController {
 		return "page_jejusituation/jejusituation_rest_create";
 	}
 	
-	@RequestMapping(value="/saveCoronaData.do")
-	public String jejusituation_save_data(Model model) {
-		
-		List<CoronaDto> list=biz.searchData();
-		
-		model.addAttribute("list", list);
-		logger.info("corona info: {}",list);
-		
-		return "page_jejusituation/test";
-		
+//	@RequestMapping(value="/saveCoronaData.do")
+//	public String jejusituation_save_data(Model model) {
+//		
+//		List<CoronaDto> list=biz.searchData();
+//		
+//		model.addAttribute("list", list);
+//		logger.info("corona info: {}",list);
+//		
+//		return "page_jejusituation/test";
+//		
+//	}
+	@RequestMapping(value="/corona.do")
+	public String jejusituation_save_corona(Model model) {
+		cBiz.searchData();
+		return "page_jejusituation/jejusituation_corona";
 	}
 	
 	@RequestMapping(value="/jejuSituationValidUser.do")
@@ -524,6 +539,7 @@ public class JejusituationController {
 
 		JejuDto jeju=new JejuDto();
 		String[] arr=request.getParameter("time").split("~");
+	//	jeju.setSitu_num(boardNo);
 		jeju.setSitu_name(request.getParameter("company"));
 		jeju.setSitu_phone(request.getParameter("phone"));
 		jeju.setSitu_addr(request.getParameter("address"));
@@ -603,6 +619,7 @@ public class JejusituationController {
 		
 		File toSave=new File(full,originName);
 		//파일 저장
+		//multipartFile.transferTo(toSave);
 		if(!toSave.exists()) {
 			toSave.createNewFile();
 		}
@@ -640,4 +657,19 @@ public class JejusituationController {
 		return "redirect:jejusituation_main.do";
 	}
 	
+//	@Transactional
+//	public int saveStore(JejuDto jeju,ImgDto img,HashMap<String, Object> map) {
+//		int tot=0;
+//		int res1=biz.saveStore(jeju);
+//		int res2=imageBiz.saveStoreImg(img);
+//		int res3=menuBiz.saveMenu(map);
+//		
+//		
+//		if(res1>0&&res2>0&&res3>0) {
+//			tot=1;
+//		}else {
+//			tot=-1;
+//		}
+//		return tot;
+//	}
 }

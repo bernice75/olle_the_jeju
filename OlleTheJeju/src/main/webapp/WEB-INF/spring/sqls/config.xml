@@ -3,6 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<settings>
+		<setting name="callSettersOnNulls" value="true"/>
+		<setting name="returnInstanceForEmptyRow" value="true"/>
+	</settings>
 	<typeAliases>
 		<typeAlias type="com.olle.dto.member.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.olle.dto.customplan.CustomDto" alias="customDto"/>
@@ -42,6 +46,7 @@
 		<mapper resource="/mybatis/date-mapper.xml"/>
 		<mapper resource="/mybatis/menu-batch.xml"/>
 		<mapper resource="/mybatis/menu-mapper.xml"/>
+		<mapper resource="/mybatis/corona-mapper.xml"/>
 	</mappers>
 
 
