@@ -121,7 +121,7 @@
 						<c:when test="${not empty paginationMetaInfo.jeju }">
 							  <c:forEach begin="${paginationMetaInfo.listBtnStartIdx}" end="${paginationMetaInfo.listBtnStartIdx+4}" var="item">
 						  		<c:if test="${item le paginationMetaInfo.totalPages}">
-						  			<a href="jejusituation_rest.do?page=${item }">${item }</a>
+						  			<a href="jejusituation_rest.do?page=${item }">${item }</a>&nbsp;&nbsp;
 						  		</c:if>
 						  </c:forEach>
 							
