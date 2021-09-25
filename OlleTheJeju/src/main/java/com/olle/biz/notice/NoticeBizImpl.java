@@ -24,4 +24,14 @@ public class NoticeBizImpl implements NoticeBiz {
 		return dao.faqList();
 	}
 
+	@Override
+	public int update(FaqDto dto) {
+		return dao.update(dto);
+	}
+
+	@Override
+	public int delete(int faq_num) {
+		return dao.delete(faq_num);
+	}
+
 }

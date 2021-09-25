@@ -33,4 +33,14 @@ public class NoticeDaoImpl implements NoticeDao {
 		return list;
 	}
 
+	@Override
+	public int update(FaqDto dto) {
+		return sqlSession.update(NAMESPACE + "update", dto);
+	}
+
+	@Override
+	public int delete(int faq_num) {
+		return sqlSession.delete(NAMESPACE + "delete", faq_num);
+	}
+
 }

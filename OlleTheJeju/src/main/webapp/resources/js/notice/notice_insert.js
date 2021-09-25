@@ -20,10 +20,10 @@ function insert() {
          dataType: "text",
          success: function(data){
             if(data == 1) {
-               alert("성공적으로 저장.");
+               alert("성공적으로 등록했습니다.");
                location.href="notice_main.do";
             } else if(data == 0) {
-               alert("저장실패");
+               alert("저장에 실패했습니다.");
             }
          },
          error: function(){
