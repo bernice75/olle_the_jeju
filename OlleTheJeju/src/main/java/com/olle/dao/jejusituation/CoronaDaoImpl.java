@@ -25,9 +25,9 @@ public class CoronaDaoImpl implements CoronaDao{
 
 
 	@Override
-	public List<HashMap<String,String>> coronaList() {
+	public List<HashMap<String,String>> coronaList(HashMap<String,String> map) {
 		// TODO Auto-generated method stub
-		List<HashMap<String,String>> list=session.selectList(NAMESPACE+"coronaList");
+		List<HashMap<String,String>> list=session.selectList(NAMESPACE+"coronaList",map);
 		return list;
 	}
 

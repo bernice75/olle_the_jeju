@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -496,8 +497,22 @@ public class JejusituationController {
 //	}
 	@RequestMapping(value="/corona.do")
 	public String jejusituation_save_corona(Model model) {
+		LocalDate today=LocalDate.now();
+		HashMap<String,String> map=new HashMap<String,String>();
+		DayOfWeek end=today.getDayOfWeek();
+		DayOfWeek start=today.minusDays(7).getDayOfWeek();
+		
+		if(end.equals(DayOfWeek.SATURDAY)) {
+			today=today.minusDays(1);
+		}else if(end.equals(DayOfWeek.SUNDAY)) {
+			today=today.minusDays(2);
+		}
+		
+		map.put("start",today.minusDays(7).toString());
+		map.put("end",today.toString());
+		logger.info("corona map: {}",map);
 		//저장된 데이터 가져오기
-		List<HashMap<String,String>> list=cBiz.coronaList();
+		List<HashMap<String,String>> list=cBiz.coronaList(map);
 		logger.info("corona data:{}",list);
 		//x를 " " 기준으로 split하여 그룹1만 담고,
 		//def_cnt는 데이터로 담기
@@ -507,9 +522,9 @@ public class JejusituationController {
 		Iterator iter=list.iterator();
 		
 		while(iter.hasNext()) {
-			HashMap<String,String> map=(HashMap<String, String>) iter.next();
-			String def=String.valueOf(map.get("DEF_CNT"));
-			String x=String.valueOf(map.get("X"));
+			HashMap<String,String> map2=(HashMap<String, String>) iter.next();
+			String def=String.valueOf(map2.get("DEF_CNT"));
+			String x=String.valueOf(map2.get("X"));
 			logger.info("x: "+x);
 			String temp=x.substring(0,11);
 			labels.add(temp.trim());
