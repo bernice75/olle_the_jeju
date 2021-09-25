@@ -17,6 +17,15 @@ public class CustomDaoImpl implements CustomDao{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	@Override
+	public List<Integer> topten() {
+		return sqlSession.selectList(NAMESPACE + "topten");
+	}
+	
+	@Override
+	public CustomDto selectTopten(int plan_num) {
+		return sqlSession.selectOne(NAMESPACE + "selectTopten", plan_num);
+	}
 	
 	@Override
 	public List<CustomDto> selectList(String search, int page) {
@@ -34,6 +43,27 @@ public class CustomDaoImpl implements CustomDao{
 		} else {
 			map.put("search", search);
 			list = sqlSession.selectList(NAMESPACE + "selectList", map);
+		}
+		System.out.println("목록 개수 : " + list.size());
+		return list;
+	}
+	
+	@Override
+	public List<CustomDto> selectHide(String search, int page) {
+		List<CustomDto> list = new ArrayList<CustomDto>();
+		
+		int pageP = (page-1)*6;
+		int pageN = page*6;
+		
+		Map map = new HashMap();
+		map.put("pageP", pageP);
+		map.put("pageN", pageN);
+		
+		if(search.equals("전체")) {
+			list = sqlSession.selectList(NAMESPACE + "selectHide", map);
+		} else {
+			map.put("search", search);
+			list = sqlSession.selectList(NAMESPACE + "selectHide", map);
 		}
 		System.out.println("목록 개수 : " + list.size());
 		return list;
@@ -100,6 +130,26 @@ public class CustomDaoImpl implements CustomDao{
 		try {
 			if(search.equals("전체")) {
 				sql = "countAll";
+			} else {
+				sql = "count";
+			}
+			
+			cnt = sqlSession.selectOne(NAMESPACE + sql, search);
+		}catch (Exception e) {
+			System.out.println("[ERROR : COUNT]");
+	        e.printStackTrace();
+		}
+		
+		return cnt;
+	}
+	
+	@Override
+	public int countAllHide(String search) {
+		int cnt = 0;
+		String sql = "";
+		try {
+			if(search.equals("전체")) {
+				sql = "countAllHide";
 			} else {
 				sql = "count";
 			}
