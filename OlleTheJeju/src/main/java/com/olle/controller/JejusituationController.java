@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -43,7 +44,7 @@ import com.olle.dto.jejusituation.MenuDto;
 import com.olle.dto.jejusituation.ReservationRequest;
 import com.olle.dto.member.MemberDto;
 import com.olle.dto.pagination.JejuPage;
-import com.olle.mapper.MenuBatchService;
+import com.olle.mapper.biz.MenuBatchService;
 
 @Controller
 public class JejusituationController {
@@ -517,6 +518,11 @@ public class JejusituationController {
 		
 		logger.info("labels:{}",labels);
 		logger.info("dataSet:{}",dataSet);
+		
+		if(labels.size()==6) {
+			labels.add(LocalDate.now().toString());
+			dataSet.add(0L);
+		}
 		
 		model.addAttribute("label1",labels.get(0));
 		model.addAttribute("label2",labels.get(1));
