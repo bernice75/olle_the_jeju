@@ -20,12 +20,13 @@
   		<result property="qurRate" column="QUR_RATE"/>
   	</resultMap>
   	<!-- 코로나 데이터 구간별 조회 -->
-  	<select id="coronaList" resultType="java.util.HashMap">
+  	<select id="coronaList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
   		SELECT A.*
 		FROM 
 			(SELECT TO_DATE(SUBSTR(CREATE_DT,0,10),'YYYY-MM-DD') AS X, DEF_CNT
 			FROM OLLE_CORONA) A
-		WHERE A. X BETWEEN SYSDATE-7 AND SYSDATE
+		WHERE A. X BETWEEN #{start} AND #{end}
+		ORDER BY X
   	</select>
   	<!-- insert or update -->
   	<update id="merge" parameterType="java.util.List">
