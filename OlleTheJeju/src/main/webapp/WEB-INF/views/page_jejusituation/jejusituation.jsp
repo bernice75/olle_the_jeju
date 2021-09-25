@@ -36,20 +36,20 @@
                     <div class="middle-text">
                         어떤 것을 확인해볼 수 있나요?
                     </div>
-                    <div class="nail1 items">  
-                        <a href="#"><img class="corona-situation" src="./resources/img/jeju_map.PNG" alt=""/></a>
+                    <div class="nail1 items"  onclick="location.href='corona.do';">  
+                        <img class="corona-situation" src="./resources/img/jeju_map.PNG" alt=""/>
                         <div class="nail-title">
                             <p>제주 코로나 상황</p>
                         </div>
                     </div>                   
-                    <div class="nail2 items" onclick="location.href='';">
+                    <div class="nail2 items" onclick="location.href='https://www.visitjeju.net/kr/bigdatamap/';">
                         <img class="corona-situation" src="./resources/img/traffic.jpg" alt="실시간 관광지 혼잡도"/>
                         <div class="nail-title">
                             <p>실시간 관광지 혼잡도</p>
                         </div>
                     </div>
-                    <div class="nail3 items">
-                        <a href="jejusituation_rest.do?user_id=${sessionScope.user_id}"><img class="corona-situation2" src="./resources/img/line_up.png" alt="맛집 예약 및 현황"/></a>
+                    <div class="nail3 items"  onclick="location.href='jejusituation_rest.do?page=1';">
+                        <img class="corona-situation2" src="./resources/img/line_up.png" alt="맛집 예약 및 현황"/>
                         <div class="nail-title">
                             <p>맛집 예약 및 현황</p>
                         </div>
