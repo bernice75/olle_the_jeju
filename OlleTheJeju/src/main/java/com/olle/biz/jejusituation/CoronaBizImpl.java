@@ -126,9 +126,9 @@ public class CoronaBizImpl implements CoronaBiz{
 	  }
 
 	@Override
-	public List<HashMap<String,String>> coronaList() {
+	public List<HashMap<String,String>> coronaList(HashMap<String,String> map) {
 		// TODO Auto-generated method stub
-		return dao.coronaList();
+		return dao.coronaList(map);
 	}
 
 }
