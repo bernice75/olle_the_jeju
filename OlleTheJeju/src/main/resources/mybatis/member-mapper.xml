@@ -40,6 +40,18 @@
 		WHERE USER_ID = #{user_id} AND USER_PW = #{user_pw}
 	</select>
 	
+	<select id="findId" parameterType="string" resultType="string">
+		SELECT USER_ID
+		FROM OLLE_USER
+		WHERE USER_EMAIL = #{user_email}
+	</select>
+	
+	<select id="findPw">
+		SELECT USER_PW
+		FROM OLLE_USER
+		WHERE USER_ID = #{user_id}
+	</select>
+	
 	<select id="selectList" resultMap="memberMap">
 		SELECT *
 		FROM OLLE_USER

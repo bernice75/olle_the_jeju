@@ -51,7 +51,7 @@ img {
     justify-content: flex-start;
 }
 
-.input-group {
+fieldset .input-group {
 	width: 40% !important;
 }
 

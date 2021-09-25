@@ -51,4 +51,14 @@ public class MemberBizImpl implements MemberBiz{
 	public int warn_update(String user_id) {
 		return memberDao.warn_update(user_id);
 	}
+
+@Override
+public String findId(String user_email) {
+	return memberDao.findId(user_email);
+}
+
+@Override
+public String findPw(String user_id) {
+	return memberDao.findPw(user_id);
+}
 }
