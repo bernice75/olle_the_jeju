@@ -2,6 +2,8 @@ package com.olle.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,4 +50,43 @@ public class NoticeController {
 		return res;
 	}
 	
+	@RequestMapping(value = "notice_update.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String notice_update(HttpServletRequest req) {
+		String result = "";
+		int faq_num = Integer.parseInt(req.getParameter("faq_num"));
+		String faq_title = req.getParameter("faq_title");
+		String faq_content = req.getParameter("faq_content");
+		
+		FaqDto dto = new FaqDto();
+		dto.setFaq_num(faq_num);
+		dto.setFaq_title(faq_title);
+		dto.setFaq_content(faq_content);
+		
+		int res = biz.update(dto);
+		
+		if(res > 0) {
+			result="true";
+		} else {
+			result="false";
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "notice_delete.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String notice_delete(int faq_num) {
+		String result = "";
+		
+		int res = biz.delete(faq_num);
+		
+		if(res > 0) {
+			result="true";
+		} else {
+			result="false";
+		}
+		
+		return result;
+	}
 }

@@ -25,11 +25,12 @@
 	
 	<update id="update" parameterType="faqDto">
 		UPDATE OLLE_FAQ
-		SET 
+		SET FAQ_TITLE = #{faq_title}, FAQ_CONTENT = #{faq_content}
+		WHERE FAQ_NUM = #{faq_num}
 	</update>
 	
 	<delete id="delete" parameterType="int">
 		DELETE FROM OLLE_FAQ
-		WHERE FAQ_NUM = #{fAQ_num}
+		WHERE FAQ_NUM = #{faq_num}
 	</delete>
 </mapper>

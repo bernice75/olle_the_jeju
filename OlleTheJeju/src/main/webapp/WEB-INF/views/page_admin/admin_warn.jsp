@@ -68,11 +68,11 @@
 		                    			<td>${rep.rep_reson }</td>
 		                    			<c:choose>
 		                    				<c:when test="${empty cusList }">
-		                    					<td>${rep.plan_num }</td>
+		                    					<td>해당 게시물이 없습니다.</td>
 		                    				</c:when>
 		                    				<c:otherwise>
-		                    					<c:forEach var="cus" items="${cusList }">
-		                    						<td data-bs-toggle="modal" data-bs-target="#staticBackdrop">${rep.plan_num }</td>
+	                    						<td data-bs-toggle="modal" data-bs-target="#staticBackdrop">${rep.plan_num }</td>
+	                    						<c:forEach var="cus" items="${cusList }">
 		                    						<!-- Modal 시작 -->
 													<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 												        <div class="modal-dialog">
@@ -101,7 +101,7 @@
 												        </div>
 												    </div>
 												    <!-- Modal 끝-->
-		                    					</c:forEach>
+	                    					</c:forEach>
 		                    				</c:otherwise>
 		                    			</c:choose>
 		                    			<fmt:formatDate var="rep_regdate" value="${rep.rep_regdate }" pattern="yyyy.MM.dd"/>
