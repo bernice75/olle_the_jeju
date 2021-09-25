@@ -12,14 +12,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.olle.biz.admin.ChatBiz;
 import com.olle.biz.admin.ReportBiz;
 import com.olle.biz.customplan.CustomBiz;
 import com.olle.biz.member.MemberBiz;
 import com.olle.dto.admin.ReportDto;
+import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.ChatMessage;
 import com.olle.dto.member.MemberDto;
+import com.olle.dto.pagination.Paging;
 
 @Controller
 public class AdminController {
@@ -47,7 +50,30 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "admin_plan.do", method = RequestMethod.GET)
-	public String admin_plan() {
+	public String admin_plan(Model model, String search, @RequestParam(value="page", defaultValue="1") int page) {
+		if(search == null||search == "") {
+			search = "전체";
+		}
+		//일반 게시물
+		Paging pg = new Paging();
+		pg.setPage(page);
+		pg.setBeginPage(page);
+      	pg.setTotalCount(cusBiz.getAllCount(search));
+      	model.addAttribute("paging", pg);
+      	
+      	List<CustomDto> plan = cusBiz.selectList(search, page);
+      	model.addAttribute("planList", plan);
+      	
+      	//신고된 게시물
+      	Paging pg2 = new Paging();
+      	pg2.setPage(page);
+      	pg2.setBeginPage(page);
+      	pg2.setTotalCount(cusBiz.countAllHide(search));
+      	model.addAttribute("paging2", pg2);
+      	
+      	List<CustomDto> plan2 = cusBiz.selectHide(search, page);
+      	model.addAttribute("planList2", plan2);
+      	
 		return "page_admin/admin_plan";
 	}
 	
@@ -98,6 +124,15 @@ public class AdminController {
 	public String admin_warn(Model model) {
 		List<ReportDto> rep = repBiz.selectList();
 		model.addAttribute("report", rep);
+		
+		List<CustomDto> cusList = new ArrayList<CustomDto>();
+		
+		for(int i = 0; i < rep.size(); i++) {
+			int plan_num = rep.get(i).getPlan_num();
+			CustomDto cus = cusBiz.selectOne(plan_num);
+			cusList.add(i, cus);
+		}
+		model.addAttribute("cusList", cusList);
 		
 		return "page_admin/admin_warn";
 	}

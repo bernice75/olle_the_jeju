@@ -15,8 +15,23 @@ public class CustomBizImpl implements CustomBiz{
 	private CustomDao dao;
 	
 	@Override
+	public List<Integer> topten() {
+		return dao.topten();
+	}
+	
+	@Override
+	public CustomDto selectTopten(int plan_num) {
+		return dao.selectTopten(plan_num);
+	}
+	
+	@Override
 	public List<CustomDto> selectList(String search, int page) {
 		return dao.selectList(search, page);
+	}
+	
+	@Override
+	public List<CustomDto> selectHide(String search, int page) {
+		return dao.selectHide(search, page);
 	}
 
 	@Override
@@ -57,6 +72,11 @@ public class CustomBizImpl implements CustomBiz{
 	@Override
 	public int getAllCount(String search) {
 		return dao.getAllCount(search);
+	}
+	
+	@Override
+	public int countAllHide(String search) {
+		return dao.countAllHide(search);
 	}
 	
 	@Override

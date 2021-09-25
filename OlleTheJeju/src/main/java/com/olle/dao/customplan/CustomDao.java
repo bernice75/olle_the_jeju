@@ -7,8 +7,11 @@ import com.olle.dto.customplan.CustomDto;
 public interface CustomDao {
 	
 	String NAMESPACE = "customplan.";
-
+	
+	public List<Integer> topten();
+	public CustomDto selectTopten(int plan_num);
 	public List<CustomDto> selectList(String search, int page);
+	public List<CustomDto> selectHide(String search, int page);
 	public CustomDto selectOne(int plan_num);
 	public int insert(CustomDto dto);
 	public int updateView(int plan_num);
@@ -17,5 +20,6 @@ public interface CustomDao {
 	public int delete(int plan_num);
 	public int maxNum();
 	public int getAllCount(String search);
+	public int countAllHide(String search);
 	public int cusUpdate(CustomDto dto);
 }

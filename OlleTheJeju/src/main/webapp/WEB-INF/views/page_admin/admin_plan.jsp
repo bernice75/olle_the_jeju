@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -44,142 +46,105 @@
 	                    <h3>게시글 관리</h3>
 	                </div>
 	            <br>
-	        <!-- 관광 정보 -->
+	        <!-- 나만의 일정 -->
 	        <div class="tour_info">
 	            <div class="tour_info_title">
-	                <p>관광정보</p>
+	                <p>나만의 일정</p>
 	            </div>
 	            <br>
 	            <table class="table" border="1">
 	                <tr>
 	                    <th style="text-align: center;">번호</th>
-	                    <th style="text-align: center;">카테고리</th>
 	                    <th style="text-align: center;">제목</th>
 	                    <th style="text-align: center;">글쓴이</th>
 	                    <th style="text-align: center;">작성일</th>
 	                    <th style="text-align: center;">조회</th>
 	                    <th style="text-align: center;">추천</th>
 	                </tr>
-	                <tr>
-	                    <td>1</td>
-	                    <td>명소</td>
-	                    <td><a href="" onclick="showPopup();">제주도 초보 여행 루트</a></td>
-	                    <td>관리자</td>
-	                    <td>20.05.12</td>
-	                    <td>25</td>
-	                    <td>0</td>
-	                </tr>
+	                <c:choose>
+	                	<c:when test="${empty planList }">
+	                		<td colspan="6">=======게시물이 없습니다.========</td>
+	                	</c:when>
+	                	<c:otherwise>
+	                		<c:forEach var="plan" items="${planList }" varStatus="status">
+	                			<tr>
+		                			<td>${status.count }</td>
+		                			<td>${plan.plan_title }</td>
+		                			<td>${plan.plan_writer }</td>
+		                			<td>
+		                				<fmt:formatDate var="Regdate" value="${plan.plan_regdate }" pattern="yyyy.MM.dd"/>
+		                				${Regdate }
+	                				</td>
+		                			<td>${plan.plan_views }</td>
+		                			<td>${plan.plan_push }</td>
+	                			</tr>
+	                		</c:forEach>
+	                	</c:otherwise>
+	                </c:choose>
 	            </table>
 	        </div>
 	        <br>
-	        <!-- 기능구현시 수정해야함 (연결하기)(아이콘 안보임)-->
-	        <nav class="paging" aria-label="Page navigation example">
-	            <ul class="pagination">
-	                <li class="page-item">
-	                <a class="page-link" href="#" aria-label="Previous">
-	                    <span aria-hidden="true">&laquo;</span>
-	                </a>
-	                </li>
-	                <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                <li class="page-item">
-	                <a class="page-link" href="#" aria-label="Next">
-	                    <span aria-hidden="true">&raquo;</span>
-	                </a>
-	                </li>
-	            </ul>
-	        </nav>
+	        <!-- 페이징 처리 -->
+            <div class="paging">
+            	<nav aria-label="Page navigation example">
+            		<ul class="pagination">
+           				<li class="page-item"><a class="page-link" href="admin_plan.do?search=&page=${paging.beginPage}">처음으로</a></li>
+            			<c:forEach begin="${paging.beginPage}" end="${paging.endPage }" step="1" var="index">
+            				<li class="page-item"><a class="page-link" href="admin_plan.do?search=&page=${index}">${index}</a></li>
+					    </c:forEach>
+				    	<li class="page-item"><a class="page-link" href="admin_plan.do?search=&page=${paging.beginPage+1}">다음</a></li>
+            		</ul>
+            	</nav>
+           	</div>
 	        <hr>
 	        <br><br><br><br>
-	        <!-- 추천 일정 -->
+	        <!-- 신고된 게시물 목록 -->
 	        <div class="pick_plan">
                 <div class="pick_plan_title">
-                    <p>추천일정</p>
+                    <p>신고된 게시물</p>
                 </div>
 	            <br>
 	            <table class="table" border="1">
 	                <tr>
 	                    <th style="text-align: center;">번호</th>
-	                    <th style="text-align: center;">카테고리</th>
 	                    <th style="text-align: center;">제목</th>
 	                    <th style="text-align: center;">글쓴이</th>
 	                    <th style="text-align: center;">작성일</th>
 	                </tr>
-	                <tr>
-	                    <td>1</td>
-	                    <td>편안</td>
-	                    <td><a href="" onclick="showPopup();">제주도 초보 여행 루트</a></td>
-	                    <td>관리자</td>
-	                    <td>20.05.12</td>
-	                </tr>
+	                <c:choose>
+	                	<c:when test="${empty planList2 }">
+	                		<td colspan="6">=======게시물이 없습니다.========</td>
+	                	</c:when>
+	                	<c:otherwise>
+	                		<c:forEach var="plan2" items="${planList2 }" varStatus="status">
+	                			<tr>
+		                			<td>${status.count }</td>
+		                			<td>${plan2.plan_title }</td>
+		                			<td>${plan2.plan_writer }</td>
+		                			<td>
+		                				<fmt:formatDate var="Regdate" value="${plan2.plan_regdate }" pattern="yyyy.MM.dd"/>
+		                				${Regdate }
+	                				</td>
+	                			</tr>
+	                		</c:forEach>
+	                	</c:otherwise>
+	                </c:choose>
 	            </table>
 	        </div>
 	        <br>
-	        <!-- 기능구현시 수정해야함 (연결하기)(아이콘 안보임)-->
-	        <nav class="paging" aria-label="Page navigation example">
-	            <ul class="pagination">
-	                <li class="page-item">
-	                <a class="page-link" href="#" aria-label="Previous">
-	                    <span aria-hidden="true">&laquo;</span>
-	                </a>
-	                </li>
-	                <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                <li class="page-item">
-	                <a class="page-link" href="#" aria-label="Next">
-	                    <span aria-hidden="true">&raquo;</span>
-	                </a>
-	                </li>
-	            </ul>
-	        </nav>
-	        <hr>
-	        <br><br><br><br>
-	        <!-- 제주 상황 -->
-	        <div class="jeju_wrong">
-                <div class="jeju_wrong_title">
-                    <p>제주 상황</p>
-                </div>
-                <br>
-	            <table class="table" border="1">
-	                <tr>
-	                    <td><input type="checkbox"></td>
-	                    <th style="text-align: center;">번호</th>
-	                    <th style="text-align: center;">맛집 이름</th>
-	                    <th style="text-align: center;">내용</th>
-	                    <th style="text-align: center;">글쓴이</th>
-	                    <th style="text-align: center;">작성일</th>
-	                </tr>
-	                <tr>
-	                    <td><input type="checkbox"></td>
-	                    <td>1</td>
-	                    <td>흑돼지 삼겹살 장인</td>
-	                    <td><a href="" onclick="showPopup();">여기가 바로 맛집이다</a></td>
-	                    <td>user</td>
-	                    <td>20.05.12</td>
-	                </tr>
-	            </table>
-	        </div>
-	        <br>
-	        <!-- 기능구현시 수정해야함 (연결하기)(아이콘 안보임)-->
-	        <nav class="paging" aria-label="Page navigation example">
-	            <ul class="pagination">
-	                <li class="page-item">
-	                <a class="page-link" href="#" aria-label="Previous">
-	                    <span aria-hidden="true">&laquo;</span>
-	                </a>
-	                </li>
-	                <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                <li class="page-item">
-	                <a class="page-link" href="#" aria-label="Next">
-	                    <span aria-hidden="true">&raquo;</span>
-	                </a>
-	                </li>
-	            </ul>
-	        </nav>
+	        <!-- 페이징 처리 -->
+            <div class="paging">
+            	<nav aria-label="Page navigation example">
+            		<ul class="pagination">
+           				<li class="page-item"><a class="page-link" href="admin_plan.do?search=&page=${paging2.beginPage}">처음으로</a></li>
+            			<c:forEach begin="${paging2.beginPage}" end="${paging2.endPage }" step="1" var="index">
+            				<li class="page-item"><a class="page-link" href="admin_plan.do?search=&page=${index}">${index}</a></li>
+					    </c:forEach>
+				    	<li class="page-item"><a class="page-link" href="admin_plan.do?search=&page=${paging2.beginPage+1}">다음</a></li>
+            		</ul>
+            	</nav>
+           	</div>
+	        
 	        <br><br><br>
 	        </main>
 			<jsp:include page="../include/footer.jsp"></jsp:include>

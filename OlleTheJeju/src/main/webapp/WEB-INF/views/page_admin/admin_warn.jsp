@@ -49,7 +49,7 @@
 	                        <th>신고사유</th>
 	                        <th>글번호</th>
 	                        <th>신고 일자</th>
-	                        <th>삭제여부</th>
+	                        <th>처리여부</th>
 	                        <th>경고처리</th>
 	                    </tr>
 	                    <c:choose>
@@ -66,10 +66,47 @@
 		                    			<td>${rep.user_id }</td>
 		                    			<td>${rep.rep_user }</td>
 		                    			<td>${rep.rep_reson }</td>
-		                    			<td>${rep.plan_num }</td>
+		                    			<c:choose>
+		                    				<c:when test="${empty cusList }">
+		                    					<td>${rep.plan_num }</td>
+		                    				</c:when>
+		                    				<c:otherwise>
+		                    					<c:forEach var="cus" items="${cusList }">
+		                    						<td data-bs-toggle="modal" data-bs-target="#staticBackdrop">${rep.plan_num }</td>
+		                    						<!-- Modal 시작 -->
+													<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+												        <div class="modal-dialog">
+													        <div class="modal-content">
+													            <div class="modal-header">
+													            	<h5>신고 게시물 내용</h5>
+													            	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													            </div>
+													            <div class="model-body" style="padding: 30px;">
+													            	<div class="title">
+															            <h4>${cus.plan_title }</h4>
+															        </div>
+															        <div class="content">
+															        	<h6>${cus.plan_content }</h6>
+															        </div>
+															        <div class="term">
+															        	<h6>기간 : ${cus.plan_term }</h6>
+															        </div>
+															        <div class="tendency">
+															        	<h6>기간 : ${cus.plan_tendency }</h6>
+															        </div>
+													            </div>
+												                <div class="modal-footer">
+												                </div>
+													        </div>
+												        </div>
+												    </div>
+												    <!-- Modal 끝-->
+		                    					</c:forEach>
+		                    				</c:otherwise>
+		                    			</c:choose>
 		                    			<fmt:formatDate var="rep_regdate" value="${rep.rep_regdate }" pattern="yyyy.MM.dd"/>
 		                    			<td>${rep_regdate }</td>
-		                    			<td><button class="btn btn-primary btn-block" onclick="location.href='rep_delete.do?rep_num=${rep.rep_num }&plan_num=${rep.plan_num }'">삭제</button></td>
+		                    			<td><button class="btn btn-primary btn-block" onclick="location.href='rep_delete.do?rep_num=${rep.rep_num }&plan_num=${rep.plan_num }'">공개</button></td>
 		                    			<td><button class="btn btn-primary btn-block" onclick="location.href='rep_warn.do?user_id=${rep.rep_user }'">경고</button></td>
 		                    		</tr>
 	                    		</c:forEach>
@@ -80,5 +117,6 @@
 	        </main>
 			<jsp:include page="../include/footer.jsp"></jsp:include>
 		</div>
+		
 	</body>
 </html>

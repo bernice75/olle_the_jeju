@@ -1,6 +1,8 @@
 package com.olle.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
@@ -24,10 +26,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.olle.biz.customplan.CustomBiz;
+import com.olle.biz.etc.ImgBiz;
 import com.olle.biz.member.NaverLoginBO;
+import com.olle.dto.customplan.CustomDto;
+import com.olle.dto.etc.ImgDto;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	private CustomBiz cusBiz;
+	
+	@Autowired
+	private ImgBiz imgBiz;
 	
 	// NaverLoginBO
 	private NaverLoginBO naverLoginBO;
@@ -39,7 +51,28 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "home.do", method = RequestMethod.GET)
-	public String home(HttpServletRequest req, HttpSession session) {
+	public String home(Model model, HttpServletRequest req, HttpSession session) {
+		List<Integer> planNumList = cusBiz.topten();
+		List<CustomDto> titleList = new ArrayList<CustomDto>();
+		
+		for(int i = 0; i < planNumList.size(); i++) {
+			titleList.add(i, cusBiz.selectTopten(planNumList.get(i)));
+		}
+		model.addAttribute("titleList", titleList);
+		
+		List<ImgDto> imgList = imgBiz.selectList(3);
+		List<ImgDto> nameList = new ArrayList<ImgDto>();
+		for(ImgDto idx : imgList) {
+			for(Integer pidx : planNumList) {
+				if(pidx == idx.getTable_num()) {
+					if(idx.getGroup_num() == 3) {
+						nameList.add(idx);
+					}
+				}
+			}
+		}
+		model.addAttribute("nameList", nameList);
+		
 		String user_id = req.getParameter("user_id");
 		
 		if(user_id == null || user_id == "") {

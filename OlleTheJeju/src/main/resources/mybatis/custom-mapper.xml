@@ -16,6 +16,26 @@
 		<result property="plan_hide" column="PLAN_HIDE"/>
 	</resultMap>
 	
+	<select id="topten" resultType="int">
+		SELECT PLAN_NUM
+		FROM (
+			SELECT ROWNUM AS RNUM, PLAN_NUM
+			FROM (
+				SELECT PLAN_NUM
+				FROM OLLE_PLAN
+				WHERE PLAN_HIDE = 0
+				ORDER BY PLAN_VIEWS DESC
+			)
+		)
+		<![CDATA[WHERE RNUM < 11]]>
+	</select>
+	
+	<select id="selectTopten" parameterType="int" resultType="CustomDto">
+		SELECT PLAN_NUM, PLAN_TITLE
+		FROM OLLE_PLAN
+		WHERE PLAN_NUM = #{plan_num}
+	</select>
+	
 	<!-- 마이페이지 내가 작성한 게시글 총 갯수 페이징 -->
   	<select id="listCount" resultType="int">
 		SELECT COUNT(PLAN_NUM)
@@ -46,12 +66,19 @@
 	<select id="countAll" resultType="int">
 		SELECT COUNT(*)
 		FROM OLLE_PLAN
+		WHERE PLAN_HIDE = 0
+	</select>
+	
+	<select id="countAllHide" resultType="int">
+		SELECT COUNT(*)
+		FROM OLLE_PLAN
+		WHERE PLAN_HIDE = 1
 	</select>
 	
 	<select id="count" parameterType="string" resultType="int">
 		SELECT COUNT(*)
 		FROM OLLE_PLAN
-		WHERE PLAN_TITLE = #{search} OR PLAN_CONTENT = #{search}
+		WHERE (PLAN_TITLE = #{search} OR PLAN_CONTENT = #{search}) AND PLAN_HIDE = 0
 	</select>
 	
 	<select id="selectAll" parameterType="int" resultMap="customMap">
@@ -59,9 +86,24 @@
 		FROM (
 			SELECT ROWNUM AS RNUM, P.*
 			FROM (
-				SELECT PLAN_NUM, PLAN_TITLE, PLAN_TENDENCY, PLAN_TERM, PLAN_VIEWS, PLAN_PUSH
+				SELECT *
 				FROM OLLE_PLAN
 				WHERE PLAN_HIDE = 0
+				ORDER BY TO_NUMBER(PLAN_NUM) DESC
+			) P
+		)
+		<![CDATA[WHERE RNUM <= #{pageN} AND RNUM > #{pageP}]]>
+		ORDER BY PLAN_NUM DESC
+	</select>
+	
+	<select id="selectHide" parameterType="int" resultMap="customMap">
+		SELECT *
+		FROM (
+			SELECT ROWNUM AS RNUM, P.*
+			FROM (
+				SELECT *
+				FROM OLLE_PLAN
+				WHERE PLAN_HIDE = 1
 				ORDER BY TO_NUMBER(PLAN_NUM) DESC
 			) P
 		)
