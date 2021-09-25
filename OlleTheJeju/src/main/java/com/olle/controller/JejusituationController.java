@@ -45,7 +45,7 @@ import com.olle.dto.jejusituation.MenuDto;
 import com.olle.dto.jejusituation.ReservationRequest;
 import com.olle.dto.member.MemberDto;
 import com.olle.dto.pagination.JejuPage;
-import com.olle.mapper.biz.MenuBatchService;
+import com.olle.mapper.MenuBatchService;
 
 @Controller
 public class JejusituationController {

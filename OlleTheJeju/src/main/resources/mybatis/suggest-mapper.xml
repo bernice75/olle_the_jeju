@@ -60,7 +60,10 @@
 	
 	<insert id="insert" parameterType="suggestDto">
 		INSERT INTO OLLE_SUGGEST
-		VALUES(SUGSEQ.NEXTVAL, #{sug_kategorie}, #{sug_title}, #{sug_content}, 'admin',SYSDATE,'nail',#{sug_tendency},#{sug_addr},#{sug_term},#{sug_views},#{sug_push})
+		VALUES(
+			(SELECT NVL(MAX(SUG_NUM), 0) FROM OLLE_SUGGEST) + 1,
+			#{sug_kategorie}, #{sug_title}, #{sug_content}, 'admin',SYSDATE,#{sug_tendency},#{sug_addr},#{sug_term}, 0, 0
+		)
 	</insert>
 	
 	<update id="update" parameterType="suggestDto">

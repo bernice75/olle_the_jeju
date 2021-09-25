@@ -184,14 +184,6 @@
 						
 					});
 					
-/* 					
-					marker = new Tmapv2.Marker({
-						position : new Tmapv2.LatLng(lat, lon),
-						icon : "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png",
-						iconSize : new Tmapv2.Size(24, 38),
-						map:map
-					}); */
-					
 					resultMarkerArr.push(marker);
 					
 					labelArr.push(labelInfo);
