@@ -27,7 +27,7 @@
 
 |파트|구현 기능
 |--|--|
-|회원가입,로그인(소셜)|소셜 로그인, 일반 로그인, 회원가입,아이디 찾기, 비밀번호 찾기,  다음 우편 api, ajax, 아이디/닉네임 중복체크, 우편주소 찾기(다음 우편 api), 메일인증(자바 mail  api)
+|회원가입,로그인(소셜)|소셜 로그인, 일반 로그인, 회원가입,아이디 찾기, 비밀번호 찾기,  다음 우편 api, ajax, 아이디/닉네임 중복체크, 우편주소 찾기(다음 우편 api), 메일인증(자바 mail  api,naver smtp api)
 |마이페이지|회원정보수정(주소, 비밀번호, 프로필), 나의 일정(작성한 일정, 찜한 일정 페이징), 문의내역(웹소켓, 관리자와 1:1 채팅), 신고확인(누적 경고 수 확인)
 |관광정보|글 목록(카테고리별 검색, 방언사전 api, 페이징), 글 등록/수정/삭제
 |추천일정|글 목록(카테고리별 검색, 페이징), 글 등록(티맵 지도 api, 일차별 코스)/수정/삭제
@@ -48,7 +48,7 @@
 |Framework|Spring, MyBatis3, Bootstrap
 |Library|JSTL, Jquery, Jackson, Commons,java mail api, web-socket, json-simple, CGLIB
 |VCS|git bash , sourceTree
-|API|다음 우편 API, chart.js, , 공공데이터 포털 코로나 및 관광지 api, 티맵 api, 비짓 제주 api, CK Editor
+|API|다음 우편 API, chart.js, , 공공데이터 포털 코로나 및 관광지 api, 티맵 api, 비짓 제주 api, CK Editor, java mail api(smtp-Naver), naver smtp api
 
 ##  ✅ 팀원 소개
 - [김미림](https://github.com/olleTheJeju)
