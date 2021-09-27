@@ -28,7 +28,7 @@
 	                <br>
 	                <ul style="list-style: none;">
 	                    <li><a href="mypage_main.do?user_id=${sessionScope.user_id}">회원 정보 수정</a></li>
-	                    <li><a href="mypage_plan.do?plan_writer=${sessionScope.user_id}">나의 일정</a></li>
+	                    <li><a href="mypage_plan.do?plan_writer=&page=${index}">나의 일정</a></li>
 	                    <li><a href="mypage_inquire.do?user_id=${sessionScope.user_id}">문의 내역</a></li>
 	                    <li><a href="mypage_warn.do?user_id=${sessionScope.user_id}">신고 확인</a></li>
 	              </ul>
@@ -54,7 +54,7 @@
 	                	</c:when>
 	                	<c:otherwise>
 	                		<c:forEach var="plan" items="${planList }">
-	                			<div class="thum_item" onclick="location.href='#'">
+	                			<div class="thum_item" onclick="location.href='customplan_detail.do?plan_num=${plan.plan_num}'">
 				                    <div class="img_thum">
 			                            <div class="nail_img">
 			                            	<!-- 기간 정보 데이터 받아와서 삽입 -->
@@ -71,11 +71,11 @@
 				                        <div style="font-size: 20px;">${plan.plan_title }</div>
 				                        <span class="thum_text_span1" style="font-size: 12px;">${plan.plan_tendency } | </span>
 				                        <c:choose>
-				                        	<c:when test="${empty tag }">
+				                        	<c:when test="${empty hashList }">
 				                        		<span class="thum_text_span1"style="font-size: 12px;">해시태그 정보없음</span>
 				                        	</c:when>
 				                        	<c:otherwise>
-				                        		<c:forEach var="tag" items="${tag }">
+				                        		<c:forEach var="tag" items="${hashList }">
 				                        			<c:if test="${plan.plan_num eq tag.table_num }">
 	                        							<span class="thum_text_span1" style="font-size: 12px;">${tag.hash_content }</span>
 	                        						</c:if>
@@ -96,25 +96,36 @@
 	                
 	            </div>
 	            <br>
-	            <!-- 페이징처리 -->
-	           <div class="paging">
+	           <!-- 페이징처리 -->
+	           <%-- <div class="paging">
 	            	<nav aria-label="Page navigation example">
 					  <ul class="pagination">
-					    <%-- <c:if test="${pageMaker.prev}"> --%>
-					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(pageMaker.startPage - 1)}&plan_writer=${sessionScope.user_id}">이전</a></li>
-					    <%-- </c:if>  --%>
-					    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(idx)}&plan_writer=${sessionScope.user_id}">${idx}</a></li>
+					    <c:if test="${pageMaker.prev}"> 
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do?plan_writer=&cri=${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
+					    </c:if>
+					    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" step="1" var="idx">
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do?plan_writer=&cri=${pageMaker.makeQuery(idx)}">${idx}</a></li>
 					    </c:forEach>
-					    <%-- <c:if test="${pageMaker.next && pageMaker.endPage > 0}"> --%>
-					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(pageMaker.endPage + 1)}&plan_writer=${sessionScope.user_id}">다음</a></li>
-					    <%-- </c:if>  --%>
+					    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do?plan_writer=&cri=${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
+					    </c:if>
 					  </ul>
 				 	 </nav>
-				</div>
+				</div> --%>
+				<div class="paging">
+                	<nav aria-label="Page navigation example">
+                		<ul class="pagination">
+               				<li class="page-item"><a class="page-link" href="mypage_plan.do?plan_writer=&page=${paging.beginPage}">처음으로</a></li>
+                			<c:forEach begin="${paging.beginPage}" end="${paging.endPage }" step="1" var="index">
+                				<li class="page-item"><a class="page-link" href="mypage_plan.do?plan_writer=&page=${index}">${index}</a></li>
+						    </c:forEach>
+					    	<li class="page-item"><a class="page-link" href="mypage_plan.do?plan_writer=&page=${paging.beginPage+1}">다음</a></li>
+                		</ul>
+                	</nav>
+                </div>
 	            <br><br>
 	
-	            <!-- 내가 찜한 일정 -->
+	           <%--  <!-- 내가 찜한 일정 -->
 	            <div class="user_pick">
 	                <div class="pick_title">
 	                    내가 찜한 일정
@@ -148,11 +159,11 @@
 				                        <!-- 내가 작성한 게시글의 성향ㄴ 데이터를 받아와서 삽입-->
 				                        <span class="thum_text_span1" style="font-size: 12px;">|</span>
 				                        <c:choose>
-				                        	<c:when test="${empty tag }">
+				                        	<c:when test="${empty hashList }">
 				                        		<span class="thum_text_span1"style="font-size: 12px;">해시태그 정보없음</span>
 				                        	</c:when>
 				                        	<c:otherwise>
-				                        		<c:forEach var="tag" items="${tag }">
+				                        		<c:forEach var="tag" items="${hashList }">
 				                        			<c:if test="${plan.plan_num eq tag.table_num }">
 		                        						<span class="thum_text_span1"style="font-size: 12px;">${tag.hash_content }</span>
 		                        					</c:if>
@@ -192,18 +203,18 @@
 	            <div class="paging">
 	            	<nav aria-label="Page navigation example">
 					  <ul class="pagination">
-					    <%-- <c:if test="${pageMaker.prev}"> --%>
+					    <c:if test="${pageMaker.prev}">
 					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(pageMaker.startPage - 1)}&plan_writer=${sessionScope.user_id}">이전</a></li>
-					    <%-- </c:if>  --%>
+					    </c:if> 
 					    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
 					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(idx)}&plan_writer=${sessionScope.user_id}">${idx}</a></li>
 					    </c:forEach>
-					    <%-- <c:if test="${pageMaker.next && pageMaker.endPage > 0}"> --%>
+					    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 					    	<li class="page-item"><a class="page-link" href="mypage_plan.do${pageMaker.makeQuery(pageMaker.endPage + 1)}&plan_writer=${sessionScope.user_id}">다음</a></li>
-					    <%-- </c:if>  --%>
+					    </c:if> 
 					  </ul>
 				 	 </nav>
-				</div>
+				</div> --%>
 	            <br><br><br><br>
 	        </main>
 	        <!-- main 끝 -->

@@ -1,11 +1,7 @@
 package com.olle.controller;
 
-
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,18 +24,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.olle.biz.admin.ChatBiz;
 import com.olle.biz.customplan.CustomBiz;
 import com.olle.biz.etc.DateBiz;
-import com.olle.biz.etc.DibBiz;
 import com.olle.biz.etc.HashBiz;
 import com.olle.biz.etc.ImgBiz;
 import com.olle.biz.mypage.MypageBiz;
 import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.ChatMessage;
-import com.olle.dto.etc.DibDto;
 import com.olle.dto.etc.HashtagDto;
 import com.olle.dto.etc.ImgDto;
-import com.olle.dto.member.Criteria;
 import com.olle.dto.member.MemberDto;
-import com.olle.dto.member.PageMaker;
+import com.olle.dto.pagination.Paging;
 
 @Controller
 public class MypageController {
@@ -51,11 +44,8 @@ public class MypageController {
 	private MypageBiz biz;
 	
 	@Autowired
-	private HashBiz hashbiz;
+	private CustomBiz cusbiz;
 
-	@Autowired
-	private DateBiz datebiz;
-	
 	@Autowired
 	private ImgBiz imgBiz;
 	
@@ -140,13 +130,12 @@ public class MypageController {
 			pw.println("<script>alert('프로필 이미지가 등록되었습니다.'); location.href='mypage_main.do?user_id="+user_id+"';</script>");
 			pw.flush();
         } else {
-		System.out.println("프로필 이미지 저장에 실패했습니다.");
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter pw = response.getWriter();
-		pw.println("<script>alert('프로필 이미지 등록을 실패했습니다.'); location.href='history.back()';</script>");
-		pw.flush();
-	}
-		
+			System.out.println("프로필 이미지 저장에 실패했습니다.");
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter pw = response.getWriter();
+			pw.println("<script>alert('프로필 이미지 등록을 실패했습니다.'); location.href='history.back()';</script>");
+			pw.flush();
+        }
 	
 	}
 	
@@ -178,9 +167,23 @@ public class MypageController {
 	
 	//내가쓴 게시글 조회 - 작업완료
 	@RequestMapping(value = "mypage_plan.do", method = RequestMethod.GET)
-	public String myWriteList(Model model, String plan_writer, Criteria cri) {
+	public String myWriteList(Model model, String plan_writer, @RequestParam(value="page", defaultValue="1") int page) {
+		System.out.println("search : " + plan_writer);
+		if(plan_writer == null||plan_writer == "") {
+			plan_writer = "전체";
+		}
 		
-		List<CustomDto> plan = biz.myWriteList(plan_writer, cri);
+		Paging pg = new Paging();
+		pg.setPage(page);
+		pg.setBeginPage(page);
+      	pg.setTotalCount(cusbiz.getAllCount(plan_writer));
+      	
+      	model.addAttribute("paging", pg);
+      	
+      	//------------------페이지 관련 --------------------------
+		
+		//글받아오기
+		List<CustomDto> plan = biz.myWriteList(plan_writer, page);
 		System.out.println("넘어온 게시물 개수 : " + plan.size());
 		model.addAttribute("planList", plan);
 		
@@ -203,16 +206,27 @@ public class MypageController {
 		model.addAttribute("imgList", nameList);
 		
 		//나만의 일정 게시판에 대한 해시태그 받아오기
-		List<HashtagDto> hashList = hashbiz.selectList(3);
-		
-		model.addAttribute("hashList", hashList);
-		
-		//페이징
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(biz.listCount());
-		
-		model.addAttribute("PageMaker", pageMaker);
+		//해시태그 조회
+				CustomDto dto = new CustomDto();
+				int plan_num = 0;
+				List<HashtagDto> hash = new ArrayList<HashtagDto>();
+				for(int i = 0; i < plan.size(); i++) {
+					dto.setPlan_num(plan.get(i).getPlan_num());
+					plan_num = dto.getPlan_num();
+					hash.add(i, biz.hashList(plan_num));
+				}
+				//해시태그 형식은 해시1, 해시2 이런 방식이므로 대표 1개의 해시태그만 끊어오려면 split을 사용
+				List<HashtagDto> hashList = new ArrayList<HashtagDto>();
+				for(int i = 0; i < hash.size(); i++) {
+					HashtagDto hashTag = new HashtagDto();
+					hashTag.setHash_num(hash.get(i).getHash_num());
+					hashTag.setBoard_num(hash.get(i).getBoard_num());
+					hashTag.setTable_num(hash.get(i).getTable_num());
+					hashTag.setHash_content(hash.get(i).getHash_content().split(",")[0]);
+					hashList.add(i, hashTag);
+				}
+				
+				model.addAttribute("hashList", hashList);
 		
 		return "page_mypage/mypage_plan";
 	}
@@ -224,11 +238,6 @@ public class MypageController {
 		
 		//해당 유저에 대한 메세지 목록 가져오기
 		List<ChatMessage> dto_list = chatBiz.selectList(user_id);
-		/*
-		for(int i = 0; i < dto_list.size(); i++) {
-			System.out.println(dto_list.get(i).getMessage_content());
-		}
-		*/
 		if(dto_list.size() > 0) {
 			model.addAttribute("message_list", dto_list);
 		} else {

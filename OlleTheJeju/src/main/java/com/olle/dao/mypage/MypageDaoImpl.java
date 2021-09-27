@@ -110,28 +110,21 @@ public class MypageDaoImpl implements MypageDao {
 	//내가 작성한 게시글 조회
 	//썸네일 부분 전체
 	@Override
-	public List<CustomDto> myWriteList(String plan_writer, Criteria cri) {
+	public List<CustomDto> myWriteList(String plan_writer, int page) {
 		List<CustomDto> list = new ArrayList<CustomDto>();
 		
-		Map<String, Object> map = new HashMap<String, Object>();;
+		int pageP = (page-1)*6;
+		int pageN = page*6;
+		
+		Map map = new HashMap();
+		map.put("pageP", pageP);
+		map.put("pageN", pageN);
 		map.put("plan_writer", plan_writer);
-		map.put("rowStart", cri.getRowStart());
-		map.put("rowEnd", cri.getRowEnd());
 		
-		System.out.println("myWriteList::plan_writer{}"+plan_writer);
-		System.out.println("myWriteList::getRowStart{}"+cri.getRowStart());
-		System.out.println("myWriteList::getRowEnd{}"+cri.getRowEnd());
 		
-		try {
-			list = sqlSession.selectList("customplan.mywritelist", map);
-			
-			System.out.println("쿼리호출후::건수{}"+list.size());
-			
-			
-		} catch (Exception e) {
-			System.out.println("[error] : myWriteList");
-			e.printStackTrace();
-		}
+		list = sqlSession.selectList("customplan.selectAll", map);
+		
+		System.out.println("목록 개수 : " + list.size());
 		return list;
 	}
 	
@@ -145,8 +138,23 @@ public class MypageDaoImpl implements MypageDao {
 	
 	//내가 작성한 게시글 총 갯수
 	@Override
-	public int listCount() {
-		return sqlSession.selectOne("customplan.listCount");
+	public int listCount(String plan_writer) {
+		int cnt = 0;
+		String sql = "";
+		try {
+			if(plan_writer.equals("전체")) {
+				sql = "countAll";
+			} else {
+				sql = "count";
+			}
+			
+			cnt = sqlSession.selectOne(NAMESPACE + sql, plan_writer);
+		}catch (Exception e) {
+			System.out.println("[ERROR : COUNT]");
+	        e.printStackTrace();
+		}
+		
+		return cnt;
 	}
 	
 	//내가 찜한 게시글 조회에서는 찜 목록만 추가

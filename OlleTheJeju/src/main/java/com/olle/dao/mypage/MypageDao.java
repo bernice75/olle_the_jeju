@@ -32,11 +32,11 @@ public interface MypageDao {
 	public int deleteUser(String user_id, String user_pw);
 	
 	//내가 작성한 게시글 조회
-	public List<CustomDto> myWriteList(String plan_writer, Criteria cri);
+	public List<CustomDto> myWriteList(String plan_writer, int page);
 	public HashtagDto hashList(int table_num);
 	
 	//내가 작성한 게시글 총 갯수
-	public int listCount();
+	public int listCount(String plan_writer);
 	
 	//내가 찜한 게시글 조회 
 	public List<DibDto> myDibList(int table_num);
