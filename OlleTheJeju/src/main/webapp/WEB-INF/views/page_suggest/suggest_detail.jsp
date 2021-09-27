@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
 <!DOCTYPE html>
 <html>
@@ -18,13 +18,13 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=발급받은app key"></script>
+        <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=발급받은 app key"></script>
         <script src="./resources/js/suggest/suggest_detail.js?var=2" type="text/javascript"></script>
         <script type="text/javascript">
         var Jdata; //json 객체
         var startX,startY;
         var endX,endY;
-        var lon,lat;
+        var lon,lat; 
         var map; //Tmapv2 객체
         var latArr=[];
         var lonArr=[];
@@ -33,10 +33,10 @@
 		//경로그림정보
 		var drawInfoArr = [];
 		var resultInfoArr = [];
-
+        
         $(function(){
         	var sug_num = $("#sug_num").val();
-
+        	
         	$.ajax({
         		url:"suggest_detail_ajax.do?sug_num="+sug_num,
         		dataType:"JSON",
@@ -45,7 +45,7 @@
         			console.log(data[0].day[0].name);
         			Jdata = data;
         			console.log(Jdata);
-
+        			
         		    for(var i = 0; i < data.length; i++) {
         		        var button = document.createElement('button');
         		        button.setAttribute('class', 'btn btn-outline-dark ' +(i+1));
@@ -58,9 +58,9 @@
         		    }
         		}
         	})
-
+        	
         });
-
+        
 		function initTmap() {
 			// 1. 지도 띄우기
 			map = new Tmapv2.Map("map_div", {
@@ -72,7 +72,7 @@
 				scrollwheel : true
 			});
 		}
-
+		
 		// 2. 시작, 도착 심볼찍기
 		function startM(lon,lat){// 시작
 			if(resultMarkerArr.length>0){
@@ -89,7 +89,7 @@
 			});
 			resultMarkerArr.push(marker_s);
 		}
-
+		
 		function endM(lon, lat){// 도착
 			marker_e = new Tmapv2.Marker({
 				position : new Tmapv2.LatLng(lat, lon),
@@ -99,7 +99,7 @@
 			});
 			resultMarkerArr.push(marker_e);
 		}
-
+		
 		function passM(lon,lat){// 3. 경유지 심볼 찍기
 			marker = new Tmapv2.Marker({
 				position : new Tmapv2.LatLng(lat, lon),
@@ -111,28 +111,28 @@
 		}
         function mapMaker(class_name){
         	$("div[name=map_show]").children("p").remove();
-
+        	
         	var cnt = class_name-1;
         	var length = Jdata[cnt].day.length;
         	var x=3;
         	for(var i=0; i<length; i++){
         		lat = Jdata[cnt].day[i].lat;
         		lon = Jdata[cnt].day[i].lon;
-        		var text ="<p>"+(i+1)+". &nbsp;"+Jdata[cnt].day[i].name+"<p>";
+        		var text ="<p>"+(i+1)+". &nbsp;"+Jdata[cnt].day[i].name+"<p>"; 
         		lonArr[i] = lon;
         		latArr[i] = lat;
         		if(i==0){ //시작시
         			startX=lon;
         			startY=lat;
-
+        			
         			startM(lon,lat); //시작마커
-
+        			
         		}else if(i==(length-1)){ //끌날때
         			endX=lon;
         			endY=lat;
-
-					endM(lon,lat); //엔드 마커
-
+        			
+					endM(lon,lat); //엔드 마커		
+					
         		}else{
         			passM(lon,lat)
         		}
@@ -140,15 +140,15 @@
         	}
         	drawLine(cnt,length);
         }
-
+        
      // 4. 경로탐색 API 사용요청
-		var routeLayer;
+		var routeLayer; 
 		function drawLine(cnt,length){
-
-			var headers = {};
+			
+			var headers = {}; 
 			headers["appKey"]="l7xx142479165b1048a5b99ae1b5a05f5d1b";
 			headers["Content-Type"]="application/json";
-
+			
 			var via = new Object();
 			via.startName="출발";
 			via.startX = ''+startX+'';
@@ -158,7 +158,7 @@
 			via.endX = ''+endX+'';
 			via.endY = ''+endY+'';
 			via.viaPoints = new Array();
-
+			
 			for(var i=0; i<length; i++){
 				via.viaPoints.push({
 					 "viaPointId" : "test0"+i,
@@ -166,17 +166,17 @@
 					 "viaX" : ''+Jdata[cnt].day[i].lon+'',
 					 "viaY" : ''+Jdata[cnt].day[i].lat+''
 				 });
-
+				
 			}
 			via.reqCoordType="WGS84GEO";
 			via.resCoordType="EPSG3857";
 			via.searchOption="0";
 			console.log(JSON.stringify(via));
-
+			
 			var param = JSON.stringify(via);
-
+			
 			console.log(param);
-
+			
 	 		$.ajax({
 					method:"POST",
 					url:"https://apis.openapi.sk.com/tmap/routes/routeSequential30?version=1&format=json",//
@@ -187,16 +187,16 @@
 						console.log(response);
 						var resultData = response.properties;
 						var resultFeatures = response.features;
-
+						
 						// 결과 출력
 						var tDistance = "총 거리 : " + resultData.totalDistance + "km,  ";
 						var tTime = "총 시간 : " + resultData.totalTime + "분,  ";
 						var tFare = "총 요금 : " + resultData.totalFare + "원";
-
+						
 						$("#result").text(tDistance+tTime+tFare);
-
+						
 						//기존  라인 초기화
-
+						
 						if(resultInfoArr.length>0){
 							for(var i in resultInfoArr){
 								resultInfoArr[i].setMap(null);
@@ -204,25 +204,26 @@
 							resultInfoArr=[];
 						}
 
+						
 						for(var i in resultFeatures) {
 							var geometry = resultFeatures[i].geometry;
 							var properties = resultFeatures[i].properties;
 							var polyline_;
-
+							
 							drawInfoArr = [];
-
+							
 							if(geometry.type == "LineString") {
 								for(var j in geometry.coordinates){
-									// 경로들의 결과값(구간)들을 포인트 객체로 변환
+									// 경로들의 결과값(구간)들을 포인트 객체로 변환 
 									var latlng = new Tmapv2.Point(geometry.coordinates[j][0], geometry.coordinates[j][1]);
 									// 포인트 객체를 받아 좌표값으로 변환
 									var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
 									// 포인트객체의 정보로 좌표값 변환 객체로 저장
 									var convertChange = new Tmapv2.LatLng(convertPoint._lat, convertPoint._lng);
-
+									
 									drawInfoArr.push(convertChange);
 								}
-
+	
 								polyline_ = new Tmapv2.Polyline({
 									path : drawInfoArr,
 									strokeColor : "#FF0000",
@@ -230,13 +231,13 @@
 									map : map
 								});
 								resultInfoArr.push(polyline_);
-
+								
 							}else{
 								var markerImg = "";
 								var size = "";			//아이콘 크기 설정합니다.
-
+								
 								if(properties.pointType == "S"){	//출발지 마커
-									markerImg = "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png";
+									markerImg = "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png";	
 									size = new Tmapv2.Size(24, 38);
 								}else if(properties.pointType == "E"){	//도착지 마커
 									markerImg = "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png";
@@ -245,45 +246,46 @@
 									markerImg = "http://topopen.tmap.co.kr/imgs/point.png";
 									size = new Tmapv2.Size(8, 8);
 								}
-
-								// 경로들의 결과값들을 포인트 객체로 변환
+								
+								// 경로들의 결과값들을 포인트 객체로 변환 
 								var latlon = new Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]);
 								// 포인트 객체를 받아 좌표값으로 다시 변환
 								var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
-
+							  	
 							  	marker_p = new Tmapv2.Marker({
 							  		position: new Tmapv2.LatLng(convertPoint._lat, convertPoint._lng),
 							  		icon : markerImg,
 							  		iconSize : size,
 							  		map:map
 							  	});
-
+							  	
 							  	resultMarkerArr.push(marker_p);
 							}
 						}
-
+						
 						var PTbounds = new Tmapv2.LatLngBounds();//영역 설정 객체 생성
-
+						
 							for(var i=0; i<length; i++){
 								var linePt = new Tmapv2.LatLng(latArr[i], lonArr[i]); //좌표객체 생성
 								PTbounds.extend(linePt); //영역 객체 extend함수(영역 확장)으로 좌표 보내기
 							}
 						map.fitBounds(PTbounds, 200);//영역 객체를 포함하는 위치로 지도 이동
-
+						
 					},
 					error:function(request,status,error){
 						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
-				});
+				}); 
 		}
-
+	
 	function addComma(num) {
 		  var regexp = /\B(?=(\d{3})+(?!\d))/g;
 		   return num.toString().replace(regexp, ',');
 	}
 
-
-
+        
+        
+       
         </script>
 	</head>
 	<body onload="initTmap();">
@@ -352,7 +354,7 @@
                     <div class="main-second">
                         <div class="main-map">
        						<div class="map" style="width: 30%; float: left;">
-							</div>
+							</div>                 
                            <div id="map_div" style="float: left; margin-bottom: 10px;"></div>
                         </div>
                     </div>
