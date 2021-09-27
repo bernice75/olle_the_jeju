@@ -164,7 +164,7 @@
 						url : "https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result", // url 주소
 						async : false, // 동기설정
 						data : { // 요청 데이터 정보
-							"appKey" : "l7xx142479165b1048a5b99ae1b5a05f5d1b", // 발급받은 Appkey
+							"appKey" : "발급받은 app key", // 발급받은 Appkey
 							"searchKeyword" : searchKeyword, // 검색 키워드
 							"resCoordType" : "EPSG3857", // 요청 좌표계
 							"reqCoordType" : "WGS84GEO", // 응답 좌표계
@@ -269,7 +269,7 @@
 				url : "https://apis.openapi.sk.com/tmap/pois/"
 						+ poiId // 상세보기를 누른 아이템의 POI ID
 						+ "?version=1&resCoordType=EPSG3857&format=json&callback=result&appKey="
-						+ "l7xx142479165b1048a5b99ae1b5a05f5d1b", // 발급받은 Appkey
+						+ "발급받은 app key", // 발급받은 Appkey
 				async : false, // 동기 설정
 				success : function(response) {
 					console.log(response);
