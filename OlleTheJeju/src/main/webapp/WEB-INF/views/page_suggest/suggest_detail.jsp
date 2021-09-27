@@ -146,7 +146,7 @@
 		function drawLine(cnt,length){
 			
 			var headers = {}; 
-			headers["appKey"]="l7xx142479165b1048a5b99ae1b5a05f5d1b";
+			headers["appKey"]="발급받은 app key";
 			headers["Content-Type"]="application/json";
 			
 			var via = new Object();
