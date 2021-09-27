@@ -678,7 +678,6 @@ public class JejusituationController {
 		
 		File toSave=new File(full,originName);
 		//파일 저장
-		//multipartFile.transferTo(toSave);
 		if(!toSave.exists()) {
 			toSave.createNewFile();
 		}
@@ -715,20 +714,4 @@ public class JejusituationController {
 
 		return "redirect:jejusituation_main.do";
 	}
-	
-//	@Transactional
-//	public int saveStore(JejuDto jeju,ImgDto img,HashMap<String, Object> map) {
-//		int tot=0;
-//		int res1=biz.saveStore(jeju);
-//		int res2=imageBiz.saveStoreImg(img);
-//		int res3=menuBiz.saveMenu(map);
-//		
-//		
-//		if(res1>0&&res2>0&&res3>0) {
-//			tot=1;
-//		}else {
-//			tot=-1;
-//		}
-//		return tot;
-//	}
 }
