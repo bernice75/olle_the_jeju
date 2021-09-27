@@ -1,6 +1,6 @@
 
 
-![header](https://capsule-render.vercel.app/api?width=600&height=400&text=Olle%20The%20Jeju&desc=Plan%20Your%20Travel%20with%20Us!&fontColor=FFFFFF)
+![header](https://capsule-render.vercel.app/api?height=400&text=Olle%20The%20Jeju&desc=Plan%20Your%20Travel%20with%20Us!&fontColor=FFFFFF)
 
 <p align="center">
 <img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white"/>
