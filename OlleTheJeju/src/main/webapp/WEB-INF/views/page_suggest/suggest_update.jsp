@@ -14,16 +14,16 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-        <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx142479165b1048a5b99ae1b5a05f5d1b"></script>
+        <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey="발급받은 app key"></script>
         <script type="text/javascript">
 		var marker;
 		var markerArr = [], labelArr = [];
 		var Polyline = new Tmapv2.Polyline();
-		
+
         var Jdata; //json 객체
         var startX,startY;
         var endX,endY;
-        var lon,lat; 
+        var lon,lat;
         var map; //Tmapv2 객체
         var latArr=[];
         var lonArr=[];
@@ -37,10 +37,10 @@
         	console.log("${dto.sug_kategorie}");
         	var kategorie = $("input:radio[value=${dto.sug_kategorie}]");
         	kategorie.attr("checked",true);
-        	
+
         	var tendency = $("input:radio[value=${dto.sug_tendency}]");
         	tendency.attr("checked",true);
-        	
+
         	$.ajax({
         		url:"suggest_detail_ajax.do?sug_num="+sug_num,
         		dataType:"JSON",
@@ -49,19 +49,19 @@
         			console.log(data[0].day[0].name);
         			Jdata = data;
         			console.log(Jdata);
-        		
-        		    
+
+
         		}
         	})
-        	
+
         });
-        
+
         function changeList(obj){
             var class_name = $(obj).attr('class'); //클래스명 저장
             class_name = class_name.split(' ')[2];
-            
+
             var date = $(obj).text(); //내용 저장
-            
+
             $(obj).siblings().attr('disabled', false); //나를 제외한 형제들 활성화
 
             //map_list 클래스를 가진 div가 있는가
@@ -93,7 +93,7 @@
                         $('.map_list.'+class_name).append(h5);
                         $('.map_list.'+class_name).append(ta);
                         mapMaker(class_name);
-                        
+
                     }
                 }
             } else {
@@ -109,14 +109,14 @@
                 $('.map_list').append(ta);
                	mapMaker(class_name);
          }
-        } 
-        
+        }
+
         function mapMaker(class_name){
         	var cnt = class_name-1;
         	var length = Jdata[cnt].day.length;
         	var x=3;
         	var hasSapn = $("div[name=map_show]").children("span").length;
-        	
+
         	for(var i=0; i<length; i++){
         		lat = Jdata[cnt].day[i].lat;
         		lon = Jdata[cnt].day[i].lon;
@@ -127,22 +127,22 @@
 						lon : lon
 				}
 				var jjson = JSON.stringify(json)+'자르기';
-        		
-        		var text = "<span name='"+name+"' style='margin: 20px;' >"+name+"<input type='button' name='"+name+"' value='삭제' onclick='delete_list(this.name);'><input type='hidden' name='sug_addr_arr' value='"+jjson+"'></span>"; 
+
+        		var text = "<span name='"+name+"' style='margin: 20px;' >"+name+"<input type='button' name='"+name+"' value='삭제' onclick='delete_list(this.name);'><input type='hidden' name='sug_addr_arr' value='"+jjson+"'></span>";
         		lonArr[i] = lon;
         		latArr[i] = lat;
-        		
+
 				if(hasSapn<length){
-					$("div[name=map_show]").append(text);	
-				}        		
+					$("div[name=map_show]").append(text);
+				}
         	}
         }
-		
+
         function delete_list(name){
 			$("span[name='"+name+"']").remove();
 		}
-		
-		
+
+
 		function initTmap() {
 			// 1. 지도 띄우기
 			map = new Tmapv2.Map("map_div", {
@@ -153,7 +153,7 @@
 				zoomControl : true,
 				scrollwheel : true
 			});
-	
+
 			// 2. POI 통합 검색 API 요청
 			$("#btn_search").click(
 				function() {
@@ -169,12 +169,12 @@
 							"resCoordType" : "EPSG3857", // 요청 좌표계
 							"reqCoordType" : "WGS84GEO", // 응답 좌표계
 							"centerLon" : 126.49514, //POI검색시 중앙좌표의 경도입니다.
-				            "centerLat" : 33.506336,	//POI검색시 중앙좌표의 위도입니다. 
+				            "centerLat" : 33.506336,	//POI검색시 중앙좌표의 위도입니다.
 							"count" : 10 // 가져올 갯수
 						},
 						success : function(response) {
 							var resultpoisData = response.searchPoiInfo.pois.poi;
-	
+
 							// 2. 기존 마커, 팝업 제거
 							if (markerArr.length > 0) {
 								for(var i in markerArr) {
@@ -182,43 +182,43 @@
 								}
 								markerArr = [];
 							}
-							
+
 							if (labelArr.length > 0) {
 								for (var i in labelArr) {
 									labelArr[i].setMap(null);
 								}
 								labelArr = [];
 							}
-	
+
 							var innerHtml = ""; // Search Reulsts 결과값 노출 위한 변수
 							//맵에 결과물 확인 하기 위한 LatLngBounds객체 생성
-							var positionBounds = new Tmapv2.LatLngBounds(); 
-	
+							var positionBounds = new Tmapv2.LatLngBounds();
+
 							// 3. POI 마커 표시
 							for (var k in resultpoisData) {
 								// POI 마커 정보 저장
 								var noorLat = Number(resultpoisData[k].noorLat);
 								var noorLon = Number(resultpoisData[k].noorLon);
 								var name = resultpoisData[k].name;
-								
+
 								// POI 정보의 ID
 								var id = resultpoisData[k].id;
-	
+
 								// 좌표 객체 생성
 								var pointCng = new Tmapv2.Point(
 										noorLon, noorLat);
-								
+
 								// EPSG3857좌표계를 WGS84GEO좌표계로 변환
 								var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
 										pointCng);
-	
+
 								var lat = projectionCng._lat;
 								var lon = projectionCng._lng;
-	
+
 								// 좌표 설정
 								var markerPosition = new Tmapv2.LatLng(
 										lat, lon);
-	
+
 								// Marker 설정
 								marker = new Tmapv2.Marker(
 									{
@@ -232,19 +232,19 @@
 										title : name, // 마커 타이틀
 										map : map // 마커가 등록될 지도 객체
 									});
-	
+
 								// 결과창에 나타날 검색 결과 html
 								innerHtml += "<li><div><img src='http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_" + k + ".png' style='vertical-align:middle;'/><span>"
 										+ name
 										+ "</span>  <input type='button' name='sendBtn' onClick='start("
 										+ id
 										+ ");' value='일정 추가'></div></li>"
-								
+
 								// 마커들을 담을 배열에 마커 저장
 								markerArr.push(marker);
 								positionBounds.extend(markerPosition); // LatLngBounds의 객체 확장
 							}
-	
+
 							$("#searchResult").html(innerHtml); //searchResult 결과값 노출
 							map.panToBounds(positionBounds); // 확장된 bounds의 중심으로 이동시키기
 							map.zoomOut();
@@ -263,7 +263,7 @@
 		var st=0;
 		function start(poiId) {
 			console.log(poiId);
-	
+
 			$.ajax({
 				method : "GET", // 요청 방식
 				url : "https://apis.openapi.sk.com/tmap/pois/"
@@ -273,22 +273,22 @@
 				async : false, // 동기 설정
 				success : function(response) {
 					console.log(response);
-		
+
 					// 응답받은 POI 정보
 					var detailInfo = response.poiDetailInfo;
 					var name = detailInfo.name;
 					var address = detailInfo.address;
-		
+
 					var noorLat = Number(detailInfo.frontLat);
 					var noorLon = Number(detailInfo.frontLon);
-		
+
 					var pointCng = new Tmapv2.Point(noorLon, noorLat);
 					var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
 							pointCng);
-		
+
 					var lat = projectionCng._lat;
 					var lon = projectionCng._lng;
-		
+
 					var labelPosition = new Tmapv2.LatLng(lat, lon);
 					name, lat, lon
 					var json = {
@@ -298,20 +298,20 @@
 					}
 					var jjson = JSON.stringify(json)+'자르기';
 					var text = "<span name='"+name+"' style='margin: 20px;' >"+name+"<input type='button' name='"+name+"' value='삭제' onclick='delete_list(this.name);'><input type='hidden' name='sug_addr_arr' value='"+jjson+"'></span>";
-					
+
 					$("div[name=map_show]").append(text);
-					
+
 					var labelInfo = new Tmapv2.Label({
 						position : labelPosition,
 						map : map
-						
+
 					});
-					
-					
+
+
 					resultMarkerArr.push(marker);
-					
+
 					labelArr.push(labelInfo);
-					
+
 				},
 				error : function(request, status, error) {
 					console.log("code:" + request.status + "\n"
@@ -320,7 +320,7 @@
 				}
 			});
 		}
-		
+
 		function delete_list(name){
 			$("div[name=map_show]").children("span[name='"+name+"']").remove();
 		}
@@ -337,13 +337,13 @@
 	    var diff = Math.abs(end.getTime() - start.getTime());
 	    diff = Math.ceil(diff / (1000 * 3600 * 24));
 		var value = diff+"박"+(diff+1)+"일";
-		
-		
+
+
 		var sug_term = "<input type='hidden' name='sug_term' value='"+value+"'>";
-		
+
 		$('.day-btn').append(sug_term);
 	    console.log(value);
-		
+
 	    if(length>diff){
 			$('.day-btn').empty();
 			$('div[name=map_list]').remove();
@@ -369,7 +369,7 @@
 	    	}
 	    }
 	}
-		
+
 		</script>
 	</head>
 	<body onload="initTmap()">
@@ -437,7 +437,7 @@
                                         </label>
                                         <label class="btn">
                                             <input type="radio" name="sug_tendency" value="가족"> 가족
-                                        </label>  
+                                        </label>
                                     </div>
                                 </section>
                                 <section>
