@@ -30,7 +30,7 @@
 	                <br>
 	                <ul style="list-style: none;">
 	                    <li><a href="mypage_main.do?user_id=${sessionScope.user_id}">회원 정보 수정</a></li>
-	                    <li><a href="mypage_plan.do?plan_writer=${sessionScope.user_id}">나의 일정</a></li>
+	                    <li><a href="mypage_plan.do?plan_writer=&page=${index}">나의 일정</a></li>
 	                    <li><a href="mypage_inquire.do?user_id=${sessionScope.user_id}">문의 내역</a></li>
 	                    <li><a href="mypage_warn.do?user_id=${sessionScope.user_id}">신고 확인</a></li>
 	              </ul>

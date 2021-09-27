@@ -54,8 +54,8 @@ public class MypageBizImpl implements MypageBiz {
 	//내가 작성한 게시글 조회
 	//썸네일 부분 전체
 	@Override
-	public List<CustomDto> myWriteList(String plan_writer, Criteria cri) {
-		return dao.myWriteList(plan_writer, cri);
+	public List<CustomDto> myWriteList(String plan_writer, int page) {
+		return dao.myWriteList(plan_writer, page);
 	}
 	
 	@Override
@@ -65,8 +65,8 @@ public class MypageBizImpl implements MypageBiz {
 	
 	//내가 작성한 게시글 총 갯수
 	@Override
-	public int listCount() {
-		return dao.listCount();
+	public int listCount(String plan_writer) {
+		return dao.listCount(plan_writer);
 	}
 	//내가 찜한 게시글 조회 
 	@Override
