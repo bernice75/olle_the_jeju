@@ -204,7 +204,6 @@
 							resultInfoArr=[];
 						}
 
-
 						for(var i in resultFeatures) {
 							var geometry = resultFeatures[i].geometry;
 							var properties = resultFeatures[i].properties;
@@ -282,7 +281,6 @@
 		  var regexp = /\B(?=(\d{3})+(?!\d))/g;
 		   return num.toString().replace(regexp, ',');
 	}
-
 
 
 
