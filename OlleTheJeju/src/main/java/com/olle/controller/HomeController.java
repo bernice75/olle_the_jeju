@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.olle.biz.customplan.CustomBiz;
 import com.olle.biz.etc.ImgBiz;
+import com.olle.biz.jejusituation.CoronaBiz;
 import com.olle.biz.member.NaverLoginBO;
 import com.olle.dto.customplan.CustomDto;
 import com.olle.dto.etc.ImgDto;
@@ -40,6 +40,9 @@ public class HomeController {
 	
 	@Autowired
 	private ImgBiz imgBiz;
+	
+	@Autowired
+	private CoronaBiz cBiz;
 	
 	// NaverLoginBO
 	private NaverLoginBO naverLoginBO;
@@ -81,6 +84,8 @@ public class HomeController {
 			session.setAttribute("idChk", true);
 			session.setAttribute("user_id", user_id);
 		}
+		
+		cBiz.searchData();
 		return "home";
 	}
 	
